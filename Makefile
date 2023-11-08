@@ -38,6 +38,25 @@ IFLAGS			:=	-I $(INCLUDES_DIR)
 
 RM				:=	rm -rf
 
+
+ANSI_NC			:=	"\e[0m"
+ANSI_FG_BLA		:=	"\e[30m"
+ANSI_FG_RED		:=	"\e[31m"
+ANSI_FG_GRE		:=	"\e[32m"
+ANSI_FG_YEL		:=	"\e[33m"
+ANSI_FG_BLU		:=	"\e[34m"
+ANSI_FG_MAG		:=	"\e[35m"
+ANSI_FG_CYA		:=	"\e[36m"
+ANSI_FG_WHI		:=	"\e[37m"
+ANSI_FG_BBLA	:=	"\e[90m"
+ANSI_FG_BRED	:=	"\e[91m"
+ANSI_FG_BGRE	:=	"\e[92m"
+ANSI_FG_BYEL	:=	"\e[93m"
+ANSI_FG_BBLU	:=	"\e[94m"
+ANSI_FG_BMAG	:=	"\e[95m"
+ANSI_FG_BCYA	:=	"\e[96m"
+ANSI_FG_BWHI	:=	"\e[97m"
+
 # **************************************************************************** #
 
 all:	$(NAME)
@@ -98,4 +117,17 @@ $(LFT_ARCHS_DEPEND):	$(LFT_ARCHS_SRCS) | $(ARCHIVES_DIR)
 
 # **************************************************************************** #
 
-.PHONY:	all clean fclean dclean minilibx minilibx-% re
+help:
+	@echo "All available rules (* = any name):";													\
+	echo $(ANSI_FG_BYEL)" making      "$(ANSI_NC)"> all re help";									\
+	echo $(ANSI_FG_GRE)" files       "$(ANSI_NC)"> $(NAME) $(OBJS_DIR)/*.o $(ARCHIVES_DIR)/*.a";	\
+	echo $(ANSI_FG_BBLU)" directories "$(ANSI_NC)"> $(OBJS_DIR) $(ARCHIVES_DIR)";					\
+	echo $(ANSI_FG_RED)" cleanup     "$(ANSI_NC)"> clean fclean lclean dclean""\n";					\
+	echo $(ANSI_FG_BYEL)" mlx making  "$(ANSI_NC)"> minilibx minilibx-*";							\
+	echo $(ANSI_FG_GRE)" mlx files   "$(ANSI_NC)"> $(MLX_SRCS_DIR)/*.a\n";							\
+	echo $(ANSI_FG_BYEL)" lft making  "$(ANSI_NC)"> libft libft-*";									\
+	echo $(ANSI_FG_GRE)" lft files   "$(ANSI_NC)"> $(LFT_SRCS_DIR)/*.a"
+
+# **************************************************************************** #
+
+.PHONY:	all clean fclean lclean dclean libft libft-% minilibx minilibx-% re

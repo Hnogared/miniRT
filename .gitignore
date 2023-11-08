@@ -1,2 +1,3 @@
 objs
 miniRT
+*.o

@@ -12,7 +12,7 @@ OBJS_DIR		:=	objs
 OBJS			:=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
                 
 CC				:=	gcc
-CFLAGS			:=	-Wall -Werror -Wextra
+CFLAGS			:=	-g -Wall -Werror -Wextra
 
 RM				:=	rm -rf
 
@@ -45,7 +45,7 @@ $(NAME):	$(MLX_ARCHS_DEPEND) $(LFT_ARCHS_DEPEND) $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(OBJS) -I $(INCLUDES_DIR) $(LIBFLAGS_DIR) $(LIBFLAGS)
 
 $(OBJS_DIR)/%.o:	%.c | $(OBJS_DIR)
-	$(CC) $(CFLAGS) -c -o $@ $< -I $(INCLUDES_DIR) $(LIBFLAGS_DIR) $(LIBFLAGS)
+	$(CC) $(CFLAGS) -c $< -o $@ -I $(INCLUDES_DIR) $(LIBFLAGS_DIR) $(LIBFLAGS)
 
 $(OBJS_DIR):
 	mkdir $(OBJS_DIR)

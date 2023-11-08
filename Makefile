@@ -118,15 +118,21 @@ $(LFT_ARCHS_DEPEND):	$(LFT_ARCHS_SRCS) | $(ARCHIVES_DIR)
 # **************************************************************************** #
 
 help:
-	@echo "All available rules (* = any name):";													\
-	echo $(ANSI_FG_BYEL)" making      "$(ANSI_NC)"> all re help";									\
-	echo $(ANSI_FG_GRE)" files       "$(ANSI_NC)"> $(NAME) $(OBJS_DIR)/*.o $(ARCHIVES_DIR)/*.a";	\
-	echo $(ANSI_FG_BBLU)" directories "$(ANSI_NC)"> $(OBJS_DIR) $(ARCHIVES_DIR)";					\
-	echo $(ANSI_FG_RED)" cleanup     "$(ANSI_NC)"> clean fclean lclean dclean""\n";					\
-	echo $(ANSI_FG_BYEL)" mlx making  "$(ANSI_NC)"> minilibx minilibx-*";							\
-	echo $(ANSI_FG_GRE)" mlx files   "$(ANSI_NC)"> $(MLX_SRCS_DIR)/*.a\n";							\
-	echo $(ANSI_FG_BYEL)" lft making  "$(ANSI_NC)"> libft libft-*";									\
-	echo $(ANSI_FG_GRE)" lft files   "$(ANSI_NC)"> $(LFT_SRCS_DIR)/*.a"
+	@echo "All available rules ("$(ANSI_FG_RED)"*"$(ANSI_NC)" = any name):";			\
+	echo $(ANSI_FG_BYEL)" making      "$(ANSI_NC)"> all  re  help";						\
+	echo -n $(ANSI_FG_GRE)" files       "$(ANSI_NC)"> $(NAME)  ";						\
+	echo -n "$(OBJS_DIR)/"$(ANSI_FG_RED)"*"$(ANSI_NC)".o  ";							\
+	echo "$(ARCHIVES_DIR)/"$(ANSI_FG_RED)"*"$(ANSI_NC)".a";								\
+	echo $(ANSI_FG_BBLU)" directories "$(ANSI_NC)"> $(OBJS_DIR)  $(ARCHIVES_DIR)";		\
+	echo $(ANSI_FG_RED)" cleanup     "$(ANSI_NC)"> clean  fclean  lclean  dclean\n";	\
+	echo -n $(ANSI_FG_BYEL)" mlx making  "$(ANSI_NC)"> minilibx  ";						\
+	echo "minilibx-"$(ANSI_FG_RED)"*"$(ANSI_NC);										\
+	echo -n $(ANSI_FG_GRE)" mlx files   "$(ANSI_NC)"> ";								\
+	echo "$(MLX_SRCS_DIR)/"$(ANSI_FG_RED)"*"$(ANSI_NC)".a\n";							\
+	echo -n $(ANSI_FG_BYEL)" lft making  "$(ANSI_NC)"> libft  ";						\
+	echo "libft-"$(ANSI_FG_RED)"*"$(ANSI_NC);											\
+	echo -n $(ANSI_FG_GRE)" lft files   "$(ANSI_NC)"> ";								\
+	echo "$(LFT_SRCS_DIR)/"$(ANSI_FG_RED)"*"$(ANSI_NC)".a"
 
 # **************************************************************************** #
 

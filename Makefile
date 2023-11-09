@@ -136,4 +136,4 @@ help:
 
 # **************************************************************************** #
 
-.PHONY:	all clean fclean lclean dclean libft libft-% minilibx minilibx-% re
+.PHONY:	all clean fclean lclean dclean libft libft-% minilibx minilibx-% re help

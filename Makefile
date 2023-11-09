@@ -17,12 +17,18 @@ OBJS			:=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
  
 INCLUDES_DIR	:=	includes
 
+MLX_INCLUDES	:=	mlx.h mlx_int.h
+MLX_INCL_SRCS	:=	$(addprefix $(MLX_SRCS_DIR)/, $(MLX_INCLUDES))
+MLX_INCL_DEPEND	:=	$(addprefix $(INCLUDES_DIR)/, $(MLX_INCLUDES))
+LFT_INCLUDES	:=	libft.h
+LFT_INCL_SRCS	:=	$(addprefix $(LFT_SRCS_DIR)/, $(LFT_INCLUDES))
+LFT_INCL_DEPEND	:=	$(addprefix $(INCLUDES_DIR)/, $(LFT_INCLUDES))
+
 ARCHIVES_DIR	:=	archives
 
 MLX_ARCHIVES	:=	libmlx.a libmlx_Linux.a
 MLX_ARCHS_SRCS	:=	$(addprefix $(MLX_SRCS_DIR)/, $(MLX_ARCHIVES))
 MLX_ARCHS_DEPEND:=	$(addprefix $(ARCHIVES_DIR)/, $(MLX_ARCHIVES))
-
 LFT_ARCHIVES	:=	libextended_ft.a
 LFT_ARCHS_SRCS	:=	$(addprefix $(LFT_SRCS_DIR)/, $(LFT_ARCHIVES))
 LFT_ARCHS_DEPEND:=	$(addprefix $(ARCHIVES_DIR)/, $(LFT_ARCHIVES))

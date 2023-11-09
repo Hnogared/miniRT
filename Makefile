@@ -9,7 +9,8 @@ VPATH			:=	srcs:
 SRCS_DIR		:=	srcs
 MLX_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, minilibx-linux)
 LFT_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, extended_libft)
-SRCS			:=	main.c
+SRCS			:=	main.c \
+				check_file.c \
  
 OBJS_DIR		:=	objs
 OBJS			:=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))

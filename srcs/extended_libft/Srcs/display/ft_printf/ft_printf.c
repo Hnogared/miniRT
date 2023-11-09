@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 22:22:07 by hnogared          #+#    #+#             */
-/*   Updated: 2023/06/13 21:25:05 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/09 17:58:09 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_check_input(const char *input)
 	return (0);
 }
 
-int	ft_print_nbrconv(const char conv, va_list args)
+int	ft_print_nbrconv(const char conv, va_list args, int fd)
 {
 	unsigned long	tempaddress;
 
@@ -37,40 +37,40 @@ int	ft_print_nbrconv(const char conv, va_list args)
 	{
 		tempaddress = (unsigned long) va_arg(args, unsigned long);
 		if (!tempaddress)
-			return (ft_putstr_fdout("(nil)", 1));
-		return (ft_putstr_fdout("0x", 1)
-			+ ft_puthex_fdout(tempaddress, 0, conv, 1));
+			return (ft_putstr_fdout("(nil)", fd));
+		return (ft_putstr_fdout("0x", fd)
+			+ ft_puthex_fdout(tempaddress, 0, conv, fd));
 	}
 	if (conv == 'd' || conv == 'i')
-		return (ft_putnbr_fdout((int) va_arg(args, int), 0, 1));
+		return (ft_putnbr_fdout((int) va_arg(args, int), 0, fd));
 	if (conv == 'u')
-		return (ft_putunsigned_fdout(va_arg(args, unsigned int), 0, 1));
+		return (ft_putunsigned_fdout(va_arg(args, unsigned int), 0, fd));
 	if (conv == 'x' || conv == 'X')
-		return (ft_puthex_fdout(va_arg(args, unsigned int), 0, conv, 1));
+		return (ft_puthex_fdout(va_arg(args, unsigned int), 0, conv, fd));
 	return (0);
 }
 
-int	ft_print_chrconv(const char conv, va_list args)
+int	ft_print_chrconv(const char conv, va_list args, int fd)
 {
 	int				count;
 	char			*tempstr;
 
 	count = 0;
 	if (conv == 'c')
-		count += ft_putchar_fdout((int) va_arg(args, int), 1);
+		count += ft_putchar_fdout((int) va_arg(args, int), fd);
 	if (conv == 's')
 	{
 		tempstr = (char *) va_arg(args, char *);
 		if (!tempstr)
-			return (ft_putstr_fdout("(null)", 1));
-		count += ft_putstr_fdout(tempstr, 1);
+			return (ft_putstr_fdout("(null)", fd));
+		count += ft_putstr_fdout(tempstr, fd);
 	}
 	if (conv == '%')
-		count += ft_putchar_fdout('%', 1);
+		count += ft_putchar_fdout('%', fd);
 	return (count);
 }
 
-int	ft_print_input(char *input, va_list args)
+int	ft_print_input(char *input, va_list args, int fd)
 {
 	int		count;
 	size_t	i;
@@ -83,15 +83,15 @@ int	ft_print_input(char *input, va_list args)
 		j = 0;
 		while (input[i + j] && input[i + j] != '%')
 			j++;
-		write(1, input + i, j);
+		write(fd, input + i, j);
 		i += j;
 		count += j;
 		if (input[i] == '%')
 		{
 			if (ft_check_char(input[i + 1], "pdiuxX"))
-				count += ft_print_nbrconv(input[i + 1], args);
+				count += ft_print_nbrconv(input[i + 1], args, fd);
 			if (ft_check_char(input[i + 1], "cs%"))
-				count += ft_print_chrconv(input[i + 1], args);
+				count += ft_print_chrconv(input[i + 1], args, fd);
 			i += 2;
 		}
 	}
@@ -107,7 +107,7 @@ int	ft_printf(const char *input, ...)
 	if (ft_check_input(input) == ERROR)
 		return (0);
 	va_start(args, input);
-	count += ft_print_input((char *) input, args);
+	count += ft_print_input((char *) input, args, STDOUT_FILENO);
 	va_end(args);
 	return (count);
 }

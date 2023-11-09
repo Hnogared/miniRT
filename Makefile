@@ -75,10 +75,11 @@ dclean:	clean
 test:
 	clear
 	@echo -n "\e[0;0H\e[s"
-#	$(call put_square, 34, 10, $(ANSI_BG_BLA))
-	$(call put_frame, 55, 12, $(FRAME_CHARS), $(ANSI_BG_BLA)$(ANSI_FG_BBLA))
-	@echo -n "\e[u\e[B\e[10C"
-	@echo $(ANSI_FG_WHI)$(ANSI_BG_BLA)$(ASCII_MINI)$(ANSI_NC)
+	$(call put_frame, 60, 11, $(FRAME_CHARS), $(ANSI_BG_BLA)$(ANSI_FG_BBLA))
+	@echo -n "\e[u\e[B\e[9C"
+	@echo -n $(ANSI_FG_WHI)$(ANSI_BG_BLA)$(ASCII_MINI)$(ANSI_NC)
+	@echo -n "\e[3A\e[4D"
+	@echo $(ANSI_FG_RED)$(ANSI_BG_BLA)$(ASCII_RT)$(ANSI_NC)
 	@echo
 
 re:	fclean all
@@ -163,16 +164,20 @@ ANSI_FG_BWHI	:=	"\\e[97m"
 
 ANSI_BG_BLA		:=	"\\e[40m"
 
-ASCII_MINI	:=	"@   @@@@  @@@@@@    @@@@@   @@@@ @"				\
-				"\\e[B\\e[35D@   @@@@  @@@@@@    @@@@@   @@@@ @"	\
-				"\\e[B\\e[35D@@ @@@@@  @@@@@@    @@@@@@  @@@@ @"	\
-				"\\e[B\\e[35D@@@@@@@@  @@@@@@    @@@@@@  @@@@ @"	\
-				"\\e[B\\e[35D@@@@@@@@  @@@@@@    @@@@@@  @@@@ @"	\
-				"\\e[B\\e[35D@@@@@@@@  @@@@@@    @@@@@@@ @@@@ @"	\
-				"\\e[B\\e[35D@ @ @@@@  @@@@@@    @@@@@@@@@@@@ @"	\
-				"\\e[B\\e[35D@   @@@@  @@@@@@    @@@@@@@@@@@@ @"	\
-				"\\e[B\\e[35D@   @@@@  @@@@@@    @@@@@  @@@@@ @"	\
-				"\\e[B\\e[35D@   @@@@  @@@@@@    @@@@@   @@@@ @"
+ASCII_MINI	:=	"@   @@@@   @@@@@    @@@@@   @@@@ @"	\
+				"\\e[B\\e[35D@@ @@@@@   @@@@@    @@@@@   @@@@ @"	\
+				"\\e[B\\e[35D@@@@@@@@   @@@@@    @@@@@@  @@@@ @"	\
+				"\\e[B\\e[35D@@@@@@@@   @@@@@    @@@@@@  @@@@ @"	\
+				"\\e[B\\e[35D@@@@@@@@   @@@@@    @@@@@@@ @@@@ @"	\
+				"\\e[B\\e[35D@ @ @@@@   @@@@@    @@@@@@@@@@@@ @"	\
+				"\\e[B\\e[35D@   @@@@   @@@@@    @@@@@@@@@@@@ @"	\
+				"\\e[B\\e[35D@   @@@@   @@@@@    @@@@@  @@@@@ @"	\
+				"\\e[B\\e[35D@   @@@@   @@@@@    @@@@@   @@@@ @"
+
+ASCII_RT	:=	"%%%%%  %%%%%%"	\
+				"\\e[B\\e[14D%%  %%   %%"	\
+				"\\e[B\\e[12D%%%%%    %%"	\
+				"\\e[B\\e[12D%%  %%   %%"
 
 FRAME_CHARS	:=	"═" "║" "╔" "╗" "╚" "╝"
 

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:21:46 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/09 18:06:46 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/09 18:37:32 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	check_file(char *scene)
 		errno = EISNAM;
 		perror(".rt");
 	}
-		/*
-	while (*scene)
-	{
-		printf("%c\n", *scene);
+	/*
+	   while (*scene)
+	   {
+	   printf("%c\n", *scene);
 
-		scene++;
-	}
+	   scene++;
+	   }
 	*/
 	return (0);
 }

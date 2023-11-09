@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 07:19:57 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/03 12:17:22 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/09 17:03:24 by motoko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ PRINTF_SRCS	=	ft_printf.c		\
 OBJS_D	= Objs
 OBJS	= $(addprefix $(OBJS_D)/, $(LIB_SRCS:.c=.o) $(PRINTF_SRCS:.c=.o))
 
-CC		= gcc
+CC		= gcc -g
 CFLAGS	= -Werror -Wall -Wextra
 
 AR		= ar rcs

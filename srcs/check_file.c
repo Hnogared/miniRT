@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/09 16:20:46 by motoko           ###   ########.fr       */
+/*   Created: 2023/11/09 16:21:46 by motoko            #+#    #+#             */
+/*   Updated: 2023/11/09 18:06:46 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-int	main(int argc, char **argv)
+int	check_file(char *scene)
 {
-	if (argc == 2)
-		check_file(argv[1]);
+	char	*file_type;
+
+	file_type = ft_strrchr(scene, '.');
+	if (!(!ft_strncmp(file_type, ".rt", 3) && ft_strlen(file_type) == 3))
+	{
+		errno = EISNAM;
+		perror(".rt");
+	}
+		/*
+	while (*scene)
+	{
+		printf("%c\n", *scene);
+
+		scene++;
+	}
+	*/
 	return (0);
 }

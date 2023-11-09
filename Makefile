@@ -9,8 +9,8 @@ VPATH			:=	srcs:
 SRCS_DIR		:=	srcs
 MLX_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, minilibx-linux)
 LFT_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, extended_libft)
-SRCS			:=	main.c \
-				check_file.c \
+SRCS			:=	main.c			\
+					check_file.c	\
  
 OBJS_DIR		:=	objs
 OBJS			:=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
@@ -20,9 +20,8 @@ INCLUDES_DIR	:=	includes
 MLX_INCLUDES	:=	mlx.h mlx_int.h
 MLX_INCL_SRCS	:=	$(addprefix $(MLX_SRCS_DIR)/, $(MLX_INCLUDES))
 MLX_INCL_DEPEND	:=	$(addprefix $(INCLUDES_DIR)/, $(MLX_INCLUDES))
-LFT_INCLUDES	:=	libft.h
-LFT_INCL_SRCS	:=	$(addprefix $(LFT_SRCS_DIR)/, $(LFT_INCLUDES))
-LFT_INCL_DEPEND	:=	$(addprefix $(INCLUDES_DIR)/, $(LFT_INCLUDES))
+
+INCL_DPEND		:=	$(MLX_INCL_DEPEND) $(LFT_INCL_DEPEND)
 
 ARCHIVES_DIR	:=	archives
 
@@ -33,7 +32,7 @@ LFT_ARCHIVES	:=	libextended_ft.a
 LFT_ARCHS_SRCS	:=	$(addprefix $(LFT_SRCS_DIR)/, $(LFT_ARCHIVES))
 LFT_ARCHS_DEPEND:=	$(addprefix $(ARCHIVES_DIR)/, $(LFT_ARCHIVES))
 
-ARCHS_DEPEND	:=	$(MLX_ARCHS_DEPEND) $(LFT_ARCHS_DEPEND)
+ARCHS_DEPEND	:=
 
 MLX_LFLAGS		:=	-lmlx -lmlx_Linux -lX11 -lXext
 LFT_LFLAGS		:=	-lextended_ft
@@ -68,7 +67,7 @@ ANSI_FG_BWHI	:=	"\e[97m"
 
 all:	$(NAME)
 
-$(NAME):	$(ARCHS_DEPEND) $(OBJS)
+$(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(OBJS) $(IFLAGS) $(LFLAGS)
 
 $(OBJS_DIR)/%.o:	%.c | $(OBJS_DIR)
@@ -144,3 +143,7 @@ help:
 # **************************************************************************** #
 
 .PHONY:	all clean fclean lclean dclean libft libft-% minilibx minilibx-% re help
+
+#LFT_INCLUDES	:=	libft.h
+#LFT_INCL_SRCS	:=	$(addprefix $(LFT_SRCS_DIR)/, $(LFT_INCLUDES))
+#LFT_INCL_DEPEND	:=	$(addprefix $(INCLUDES_DIR)/, $(LFT_INCLUDES))

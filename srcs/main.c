@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/09 18:38:24 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/09 19:20:46 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,7 @@ int	main(int argc, char **argv)
 {
 	if (argc == 2)
 		check_file(argv[1]);
+	errno = MY_TEST;
+	perror(NULL);
 	return (0);
 }

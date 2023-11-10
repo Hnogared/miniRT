@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_file.c                                       :+:      :+:    :+:   */
+/*   miniRT_macro.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 16:21:46 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/10 18:13:03 by hnogared         ###   ########.fr       */
+/*   Created: 2023/11/10 15:18:25 by motoko            #+#    #+#             */
+/*   Updated: 2023/11/10 15:36:20 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#ifndef MINIRT_MACRO_H
+# define MINIRT_MACRO_H
 
-int	check_file(char *scene)
-{
-	char	*file_type;
+# define BUFFER_SIZE 1000
 
-	file_type = ft_strrchr(scene, '.');
-	if (!(!ft_strncmp(file_type, ".rt", 4)))
-		printf(FILE_NAME);
-	return (0);
-}
+# define FILE_NAME "error: must end with .rt" 
+# define OPEN_FILE "error: open file"
+
+#endif

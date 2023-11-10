@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/10 14:06:00 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/10 15:21:10 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ typedef struct s_coords
 
 typedef struct s_rgb_color
 {
-	int	red;
-	int	green;
-	int	blue;
+	char	red;
+	char	green;
+	char	blue;
 }				t_rgb_color;
 
 typedef struct s_ambient_lighting
@@ -130,6 +130,13 @@ typedef struct s_data
 
 int	check_file(char *scene);
 
+
+t_object	*new_light(t_object *to_set, t_coords *coords,
+	t_vector *orientation_vector, int brightness);
+
+t_object	*new_camera(t_object *to_set, t_coords *coords,
+	t_vector *orientation_vector, int fov);
+
 /* Srcs/debug */
 /* print_object_data.c */
 void	print_object_data(t_object object);
@@ -138,14 +145,6 @@ void	print_vector(t_vector vector);
 void	print_rgb_color(t_rgb_color color);
 
 /* print_object_data_2.c */
-/*
-void	print_camera_data(t_camera camera);
-void	print_sphere_data(t_sphere sphere);
-void	print_light_data(t_light light);
-void	print_plane_data(t_plane plane);
-void	print_cylinder_data(t_cylinder cylinder);
-*/
-
 void	print_camera_data(t_special_data camera);
 void	print_sphere_data(t_special_data sphere);
 void	print_light_data(t_special_data light);

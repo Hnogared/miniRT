@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/10 14:05:11 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/10 15:19:21 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ int	main(int argc, char **argv)
 
 	if (argc == 2)
 		check_file(argv[1]);
-	ft_bzero(&object, sizeof(t_object));
-	object.special_data.camera.fov = 2000;
-	object.type = CAMERA_OBJ;
-	object.data_print_func = &print_camera_data;
-//	object.data_print_func(object.special_data);
+	new_light(&object, NULL, NULL, 1);
 	print_object_data(object);
 	return (0);
 }

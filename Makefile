@@ -13,7 +13,8 @@ MLX_SRCS_DIR	:=	$(addprefix $(LIBS_SRCS_DIR)/, minilibx-linux)
 LFT_SRCS_DIR	:=	$(addprefix $(LIBS_SRCS_DIR)/, extended_libft)
 SRCS			:=	main.c					\
 					check_file.c			\
-					print_objects_data.c
+					print_objects_data.c	\
+					print_objects_data_2.c
  
 OBJS_DIR		:=	objs
 OBJS			:=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))

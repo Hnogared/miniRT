@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/10 12:08:02 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/10 14:06:00 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,23 @@ typedef struct s_cylinder
 
 typedef union
 {
-	void	(*print_camera_func)(t_camera camera);
-} t_print_func;
+	t_camera	camera;
+	t_light		light;
+	t_sphere	sphere;
+	t_plane		plane;
+	t_cylinder	cylinder;
+} t_special_data;
 
+typedef struct s_object
+{
+	unsigned short	type;
+	t_coords		coords;
+	t_vector		orientation_vector;
+	t_special_data	special_data;
+	void			(*data_print_func)(t_special_data special_data);
+}				t_object;
+
+/*
 typedef struct s_object
 {
 	unsigned short	type;
@@ -107,7 +121,7 @@ typedef struct s_object
 	};
 	//t_special_data	special_data;
 }				t_object;
-
+*/
 
 typedef struct s_data
 {
@@ -123,10 +137,19 @@ void	print_coords(t_coords coords);
 void	print_vector(t_vector vector);
 void	print_rgb_color(t_rgb_color color);
 
+/* print_object_data_2.c */
+/*
 void	print_camera_data(t_camera camera);
 void	print_sphere_data(t_sphere sphere);
 void	print_light_data(t_light light);
 void	print_plane_data(t_plane plane);
 void	print_cylinder_data(t_cylinder cylinder);
+*/
+
+void	print_camera_data(t_special_data camera);
+void	print_sphere_data(t_special_data sphere);
+void	print_light_data(t_special_data light);
+void	print_plane_data(t_special_data plane);
+void	print_cylinder_data(t_special_data cylinder);
 
 #endif

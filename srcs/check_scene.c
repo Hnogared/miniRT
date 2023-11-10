@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:03:44 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/10 18:02:11 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/10 18:29:52 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,16 @@ void	check_char(char ***block)
 	char	**tab_char;
 	char	**tab_string;
 
-	tab_char = ft_split("A C L", ' ');
-	tab_string = ft_split("pl sp cy", ' ');
+	tab_char = (char *[]) {"A", "C", "L", NULL};
+	tab_string = (char *[]) {"pl", "sp", "cy", NULL};
 	while (block[i])
 	{
 		j = 0;
-		while (tab_char[j])
+		while (tab_char[j] && tab_string[j])
 		{
-			if (!strcmp(block[i][0], tab_char[j]) && ft_strlen(block[i][0]) == 1)
+			if (!ft_strncmp(block[i][0], tab_char[j], 2))
 				printf("%s\n", block[i][0]);
-			j++;
-		}
-		j = 0;
-		while (tab_string[j])
-		{
-			if (!strcmp(block[i][0], tab_string[j]) && ft_strlen(block[i][0]) == 2)
+			if (!ft_strncmp(block[i][0], tab_string[j], 3))
 				printf("%s\n", block[i][0]);
 			j++;
 		}

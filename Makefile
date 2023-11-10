@@ -4,8 +4,7 @@
 
 NAME			:=	miniRT
  
-VPATH			:=	srcs:		\
-					srcs:miniRT:
+VPATH			:=	srcs:
 
 SRCS_DIR		:=	srcs
 LIBS_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, "libraries")
@@ -34,7 +33,7 @@ LFT_ARCHIVES	:=	libextended_ft.a
 LFT_ARCHS_SRCS	:=	$(addprefix $(LFT_SRCS_DIR)/, $(LFT_ARCHIVES))
 LFT_ARCHS_DEPEND:=	$(addprefix $(ARCHIVES_DIR)/, $(LFT_ARCHIVES))
 
-ARCHS_DEPEND	:=
+ARCHS_DEPEND	:=	$(MLX_ARCHS_DEPEND) $(LFT_ARCHS_DEPEND)
 
 MLX_LFLAGS		:=	-lmlx -lmlx_Linux -lX11 -lXext
 LFT_LFLAGS		:=	-lextended_ft

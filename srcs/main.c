@@ -14,5 +14,12 @@
 
 int	main(void)
 {
+	t_rgb_color	test;
+
+	test = malloc(sizeof(t_rgb_color) * 1);
+	test.red = "255";
+	test.blue = "255";
+	test.green = "255";
+	printf("la couleur vaut : %s", conv(test));
 	return (0);
 }

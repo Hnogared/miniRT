@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/10 15:49:41 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:30:25 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <errno.h>
+# include <stdbool.h>
 
 # include "libft.h"
 # include "mlx.h"
@@ -46,9 +47,9 @@ typedef struct s_coords
 
 typedef struct s_rgb_color
 {
-	char	red;
-	char	green;
-	char	blue;
+	unsigned char	red;
+	unsigned char	green;
+	unsigned char	blue;
 }				t_rgb_color;
 
 typedef struct s_ambient_lighting
@@ -98,30 +99,12 @@ typedef union
 typedef struct s_object
 {
 	unsigned short	type;
+	bool			has_color;
 	t_coords		coords;
 	t_vector		orientation_vector;
 	t_special_data	special_data;
 	void			(*data_print_func)(t_special_data special_data);
 }				t_object;
-
-/*
-typedef struct s_object
-{
-	unsigned short	type;
-	t_coords		coords;
-	t_vector		orientation_vector;
-	//t_print_func	data_print_func;
-	union
-	{
-		t_camera	camera_data;
-		t_light		light_data;
-		t_sphere	sphere_data;
-		t_plane		plane_data;
-		t_cylinder	cylinder_data;
-	};
-	//t_special_data	special_data;
-}				t_object;
-*/
 
 typedef struct s_data
 {
@@ -132,17 +115,18 @@ int	check_file(char *scene);
 
 
 /* SRCS/OBJECT_MANAGEMENT */
-/* create_object.c */
-t_object	*new_camera(t_object *to_set, t_coords *coords,
-	t_vector *orientation_vector, int fov);
-t_object	*new_light(t_object *to_set, t_coords *coords,
-	t_vector *orientation_vector, int brightness);
-t_object	*new_sphere(t_object *to_set, t_coords *coords,
-	t_vector *orientation_vector, float diameter);
-t_object	*new_plane(t_object *to_set, t_coords *coords,
-	t_vector *orientation_vector);
-t_object	*new_cylinder(t_object *to_set, t_coords *coords,
-	t_vector *orientation_vector, float dimensions[2]);
+/* object_creation.c */
+t_object	*new_camera(t_object *to_set, t_coords *coords, int fov);
+t_object	*new_light(t_object *to_set, t_coords *coords, int brightness);
+t_object	*new_sphere(t_object *to_set, t_coords *coords, float diameter);
+t_object	*new_plane(t_object *to_set, t_coords *coords);
+t_object	*new_cylinder(t_object *to_set, t_coords *coords, float diameter,
+	float height);
+
+/* object_modification.c */
+t_object	*set_object_coords(t_object *to_set, t_coords *coords);
+t_object	*set_object_orientation(t_object *to_set, t_vector *orient_vector);
+t_object	*set_object_color(t_object *to_set, t_rgb_color *color);
 
 /* print_object_data.c */
 void		print_object_data(t_object object);

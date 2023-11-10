@@ -14,6 +14,7 @@ LFT_SRCS_DIR	:=	$(addprefix $(LIBS_SRCS_DIR)/, extended_libft)
 SRCS			:=	main.c					\
 					check_file.c			\
 					object_creation.c		\
+					object_modification.c	\
 					print_object_data.c		\
 					print_object_data_2.c
  

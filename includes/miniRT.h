@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/10 12:08:02 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:17:48 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include "libft.h"
 # include "mlx.h"
 # include "mlx_int.h"
+
+# include "miniRT_macro.h"
 
 # define SYNTAX_ERROR 2
 
@@ -114,7 +116,9 @@ typedef struct s_data
 	t_object	*scene_objects;
 }				t_data;
 
-int	check_file(char *scene);
+int		check_file(char *scene);
+char	*get_file(char *scene);
+char	***check_scene(char **tab);
 
 /* Srcs/debug */
 /* print_object_data.c */

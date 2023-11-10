@@ -4,11 +4,13 @@
 
 NAME			:=	miniRT
  
-VPATH			:=	srcs:
+VPATH			:=	srcs:		\
+					srcs:miniRT:
 
 SRCS_DIR		:=	srcs
-MLX_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, minilibx-linux)
-LFT_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, extended_libft)
+LIBS_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, "libraries")
+MLX_SRCS_DIR	:=	$(addprefix $(LIBS_SRCS_DIR)/, "minilibx-linux")
+LFT_SRCS_DIR	:=	$(addprefix $(LIBS_SRCS_DIR)/, "extended_libft")
 SRCS			:=	main.c			\
 					check_file.c	\
  

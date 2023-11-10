@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/10 15:21:10 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/10 15:49:41 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,24 +131,30 @@ typedef struct s_data
 int	check_file(char *scene);
 
 
-t_object	*new_light(t_object *to_set, t_coords *coords,
-	t_vector *orientation_vector, int brightness);
-
+/* SRCS/OBJECT_MANAGEMENT */
+/* create_object.c */
 t_object	*new_camera(t_object *to_set, t_coords *coords,
 	t_vector *orientation_vector, int fov);
+t_object	*new_light(t_object *to_set, t_coords *coords,
+	t_vector *orientation_vector, int brightness);
+t_object	*new_sphere(t_object *to_set, t_coords *coords,
+	t_vector *orientation_vector, float diameter);
+t_object	*new_plane(t_object *to_set, t_coords *coords,
+	t_vector *orientation_vector);
+t_object	*new_cylinder(t_object *to_set, t_coords *coords,
+	t_vector *orientation_vector, float dimensions[2]);
 
-/* Srcs/debug */
 /* print_object_data.c */
-void	print_object_data(t_object object);
-void	print_coords(t_coords coords);
-void	print_vector(t_vector vector);
-void	print_rgb_color(t_rgb_color color);
+void		print_object_data(t_object object);
+void		print_coords(t_coords coords);
+void		print_vector(t_vector vector);
+void		print_rgb_color(t_rgb_color color);
 
 /* print_object_data_2.c */
-void	print_camera_data(t_special_data camera);
-void	print_sphere_data(t_special_data sphere);
-void	print_light_data(t_special_data light);
-void	print_plane_data(t_special_data plane);
-void	print_cylinder_data(t_special_data cylinder);
+void		print_camera_data(t_special_data camera);
+void		print_sphere_data(t_special_data sphere);
+void		print_light_data(t_special_data light);
+void		print_plane_data(t_special_data plane);
+void		print_cylinder_data(t_special_data cylinder);
 
 #endif

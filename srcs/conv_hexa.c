@@ -10,7 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+//#include "miniRT.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+int	ft_strlen(char *str);
+
+typedef struct s_rgb_color
+{
+	char	*red;
+	char	*green;
+	char	*blue;
+}				t_rgb_color;
 
 char	*ft_strjoin_and_free(char *s1, char *s2)
 {
@@ -41,7 +52,7 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
 	return (str);
 }
 
-int	change_hexa(int nb)
+char	*change_hexa(int nb)
 {
 	char	*str;
 	int		r;
@@ -49,27 +60,30 @@ int	change_hexa(int nb)
 
 	str = malloc(sizeof(char) * 3);
 	r = nb % 16;
-	i = 0;
-	while (r)
+	str[2] = 0;
+	//str[1] = '0';
+	//str[0] = '0';
+	i = 1;
+	while (i >= 0)
 	{
 		if (r <= 9)
 			str[i] = '0' + r;
 		else
-			str[i] = 'a' + r - 10;
-		i++;
+			str[i] = 'A' + r - 10;
+		i--;
 		nb = nb /16;
 		r = nb % 16;
 	}
-	str[i] = 0;
+	//str[i] = 0;
 	return (str);
 }
 
-char    add_col(char *fcolor, char color)
+char    *add_col(char *fcolor, char *color)
 {
     int		col;
 	char	*col_s;
 
-	col = ft_atoi(color);
+	col = atoi(color);
 	col_s = change_hexa(col);
 	fcolor = ft_strjoin_and_free(fcolor, col_s);
 	return (fcolor);

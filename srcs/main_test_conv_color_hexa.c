@@ -10,16 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+//#include "miniRT.h"
+#include <stdio.h>
+
+
+typedef struct s_rgb_color
+{
+	char	*red;
+	char	*green;
+	char	*blue;
+}				t_rgb_color;
+
+char    *conv(t_rgb_color color);
+
+int	ft_strlen(char *str)
+{
+	int	i = 0;
+
+	while (str[i])
+		i++;
+	return (i);
+}
 
 int	main(void)
 {
 	t_rgb_color	test;
 
-	test = malloc(sizeof(t_rgb_color) * 1);
-	test.red = "255";
-	test.blue = "255";
-	test.green = "255";
-	printf("la couleur vaut : %s", conv(test));
+	//test = malloc(sizeof(t_rgb_color) * 1);
+	test.red = "56";
+	test.green = "200";
+	test.blue = "13";
+	printf("la couleur vaut : %s\n", conv(test));
 	return (0);
 }

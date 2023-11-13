@@ -2,15 +2,31 @@
 #    Makefile                                                                  #
 # **************************************************************************** #
 
-NAME			:=	miniRT
- 
-VPATH			:=	srcs:		\
-					srcs/object_management:
+# * SETUP VARIABLES ********************************************************** #
 
+#######################
+## Project structure ##
+#######################
+# Executable name
+NAME			:=	miniRT
+
+# Source code directories
 SRCS_DIR		:=	srcs
 LIBS_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, libraries)
 MLX_SRCS_DIR	:=	$(addprefix $(LIBS_SRCS_DIR)/, minilibx-linux)
 LFT_SRCS_DIR	:=	$(addprefix $(LIBS_SRCS_DIR)/, extended_libft)
+
+# Object, archive and header files directories respectively
+OBJS_DIR		:=	objs
+ARCHIVES_DIR	:=	archives
+INCLUDES_DIR	:=	includes
+
+# Complementary paths to all source code files 
+VPATH			:=	$(SRCS_DIR):					\
+					$(SRCS_DIR)/object_management:	\
+					$(SRCS_DIR)/display:
+
+# Source files names
 SRCS			:=	main.c					\
 					check_file.c			\
 					get_file.c				\
@@ -19,49 +35,91 @@ SRCS			:=	main.c					\
 					object_creation.c		\
 					object_modification.c	\
 					print_object_data.c		\
-					print_object_data_2.c
+					print_object_data_2.c	\
+					window_management.c		\
+					image_management.c
 
-OBJS_DIR		:=	objs
-OBJS			:=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
- 
-INCLUDES_DIR	:=	includes
 
+#####################
+## Libraries files ##
+#####################
+# Minilibx and libft header files
 MLX_INCLUDES	:=	mlx.h mlx_int.h
+
+
+# Minilibx and libft archive files
+MLX_ARCHIVES	:=	libmlx.a libmlx_Linux.a
+LFT_ARCHIVES	:=	libextended_ft.a
+
+
+######################
+## Files management ##
+######################
+# Compilation method and flags
+CC				:=	gcc
+CFLAGS			:=	-g -Wall -Werror -Wextra
+IFLAGS			:=
+LFLAGS			:=	-lX11 -lXext -lm
+
+# File deletion method
+RM				:=	rm -rf
+
+
+# * AUTOMATIC VARIABLES ****************************************************** #
+
+###############################
+## Automatic files variables ##
+###############################
+# Object files depending on the source files
+OBJS			:=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
+
+# Minilibx header files source path
 MLX_INCL_SRCS	:=	$(addprefix $(MLX_SRCS_DIR)/, $(MLX_INCLUDES))
+# Minilibx header files dependencies for compilation
 MLX_INCL_DEPEND	:=	$(addprefix $(INCLUDES_DIR)/, $(MLX_INCLUDES))
 
-INCL_DPEND		:=	$(MLX_INCL_DEPEND) $(LFT_INCL_DEPEND)
 
-ARCHIVES_DIR	:=	archives
+# Minilibx and libft header files dependencies for compilation
+INCL_DEPEND		:=	$(MLX_INCL_DEPEND) $(LFT_INCL_DEPEND)
 
-MLX_ARCHIVES	:=	libmlx.a libmlx_Linux.a
+# Minilibx archive files source path
 MLX_ARCHS_SRCS	:=	$(addprefix $(MLX_SRCS_DIR)/, $(MLX_ARCHIVES))
+# Minilibx archive files dependencies for compilation
 MLX_ARCHS_DEPEND:=	$(addprefix $(ARCHIVES_DIR)/, $(MLX_ARCHIVES))
-LFT_ARCHIVES	:=	libextended_ft.a
+
+# Libft archive files source path
 LFT_ARCHS_SRCS	:=	$(addprefix $(LFT_SRCS_DIR)/, $(LFT_ARCHIVES))
+# Libft archive files dependencies for compilation
 LFT_ARCHS_DEPEND:=	$(addprefix $(ARCHIVES_DIR)/, $(LFT_ARCHIVES))
 
 ARCHS_DEPEND	:=	$(MLX_ARCHS_DEPEND) $(LFT_ARCHS_DEPEND)
 
-MLX_LFLAGS		:=	-lmlx -lmlx_Linux -lX11 -lXext
-LFT_LFLAGS		:=	-lextended_ft
+MLX_LFLAGS		:=	$(patsubst lib%.a,-l%,$(MLX_ARCHIVES))
+LFT_LFLAGS		:=	$(patsubst lib%.a,-l%,$(LFT_ARCHIVES))
 
-CC				:=	gcc
-CFLAGS			:=	-g -Wall -Werror -Wextra
-LFLAGS			:=	-L $(ARCHIVES_DIR) $(MLX_LFLAGS) $(LFT_LFLAGS) -lm
-IFLAGS			:=	-I $(INCLUDES_DIR)
+AUTO_LFLAGS		:=	-L $(ARCHIVES_DIR) $(MLX_LFLAGS) $(LFT_LFLAGS) $(LFLAGS) 
+AUTO_IFLAGS		:=	$(IFLAGS) -I $(INCLUDES_DIR)
 
-RM				:=	rm -rf
+
+# * PARAMETER VARIABLES ****************************************************** #
+
+ifdef WIN_WIDTH
+CFLAGS	+=	-D WIN_WIDTH=$(WIN_WIDTH)
+endif
+
+ifdef WIN_HEIGHT
+CFLAGS	+=	-D WIN_HEIGHT=$(WIN_HEIGHT)
+endif
 
 # **************************************************************************** #
 
 all:	$(NAME)
 
 $(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS) $(IFLAGS) $(LFLAGS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(AUTO_IFLAGS) $(AUTO_LFLAGS)
 
 $(OBJS_DIR)/%.o:	%.c | $(OBJS_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@ $(IFLAGS) $(LFLAGS)
+	$(CC) $(CFLAGS) -c $< -o $@ $(AUTO_IFLAGS) $(AUTO_LFLAGS)
 
 $(OBJS_DIR):
 	mkdir $(OBJS_DIR)

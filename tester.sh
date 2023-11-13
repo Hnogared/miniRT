@@ -9,7 +9,7 @@ make
 echo "${#file_syntax[@]}"
 
 for file_name in "${file_syntax[@]}"; do
-	echo "$file_name :"
+	echo -n "$file_name :"
 	./miniRT $file_name
 	echo
 done

@@ -4,8 +4,9 @@
 
 NAME			:=	miniRT
  
-VPATH			:=	srcs:		\
-					srcs/object_management:
+VPATH			:=	srcs:					\
+					srcs/object_management:	\
+					srcs/display:
 
 SRCS_DIR		:=	srcs
 LIBS_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, libraries)
@@ -19,7 +20,9 @@ SRCS			:=	main.c					\
 					object_creation.c		\
 					object_modification.c	\
 					print_object_data.c		\
-					print_object_data_2.c
+					print_object_data_2.c	\
+					window_management.c		\
+					image_management.c
 
 OBJS_DIR		:=	objs
 OBJS			:=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))

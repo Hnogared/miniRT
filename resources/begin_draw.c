@@ -1,24 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   begin_draw.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 10:34:05 by tlorne            #+#    #+#             */
-/*   Updated: 2023/11/06 10:34:32 by tlorne           ###   ########.fr       */
+/*   Updated: 2023/11/13 15:07:33 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
 
 int	close_cross(int keycode, t_data *data)
 {
@@ -27,6 +19,7 @@ int	close_cross(int keycode, t_data *data)
 	exit(0);
 }
 
+/*
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -52,4 +45,4 @@ int	main(int argc, char **argv)
 	mlx_hook(data.mlx_win, 4, 1L<<0, close, &data); // evenement souris
 	mlx_loop(data.mlx);
 	return (0);
-}
+}*/

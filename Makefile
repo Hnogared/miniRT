@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/13 22:16:00 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/13 22:21:14 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -257,8 +257,3 @@ help:
 .PHONY:	all clean fclean lclean dclean libft libft-% minilibx minilibx-% re help
 
 # **************************************************************************** #
-
-
-#LFT_INCLUDES	:=	libft.h
-#LFT_INCL_SRCS	:=	$(addprefix $(LFT_SRCS_DIR)/, $(LFT_INCLUDES))
-#LFT_INCL_DEPEND	:=	$(addprefix $(INCLUDES_DIR)/, $(LFT_INCLUDES))

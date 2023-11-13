@@ -56,6 +56,14 @@ IFLAGS			:=	-I $(INCLUDES_DIR)
 
 RM				:=	rm -rf
 
+ifeq ($(shell [ $(WIN_WIDTH) -gt 0 ] && echo 1 || echo 0), 1)
+CFLAGS	+=	-D WIN_WIDTH=$(WIN_WIDTH)
+endif
+
+ifeq ($(shell [ $(WIN_HEIGHT) -gt 0 ] && echo 1 || echo 0), 1)
+CFLAGS	+=	-D WIN_HEIGHT=$(WIN_HEIGHT)
+endif
+
 # **************************************************************************** #
 
 all:	$(NAME)

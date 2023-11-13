@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/13 15:29:12 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:01:30 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ void		print_sphere_data(t_special_data sphere);
 void		print_light_data(t_special_data light);
 void		print_plane_data(t_special_data plane);
 void		print_cylinder_data(t_special_data cylinder);
-
 
 /* SRCS/DISPLAY */
 /* image_management.c */

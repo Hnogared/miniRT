@@ -6,28 +6,12 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/13 15:30:50 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:28:42 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include <stdnoreturn.h>
-
-/*
-int	main(int argc, char **argv)
-{
-	char		*line;
-	char		**tab;
-
-	if (argc != 2)
-		return (0);
-	check_file(argv[1]);
-	line = get_file(argv[1]);
-	tab = ft_split(line, '\n');
-	check_scene(tab);
-	return (0);
-}
-*/
 
 void	free_data(t_data *data)
 {
@@ -42,23 +26,50 @@ noreturn int	free_and_exit(t_data *data)
 	exit(0);
 }
 
+int	key_handler(int keycode, t_data *data)
+{
+	if (keycode == XK_Escape)
+		free_and_exit(data);
+	return (0);
+}
+
 void	init_loops(t_data *data)
 {
 //	mlx_loop_hook(data->ptr, &disp_main_image, data);
-//	mlx_hook(data->win, KeyPress, KeyPressMask, &key_handler, data);
+	mlx_hook(data->main_window.ptr, KeyPress, KeyPressMask, &key_handler, data);
 	mlx_hook(data->main_window.ptr, 17, 0, &free_and_exit, data);
 	mlx_loop(data->mlx_ptr);
 }
 
-int	main(void)
+void	free_str_tab(char **str_tab)
 {
+	char	**temp;
+
+	temp = str_tab;
+	while (*temp)
+		free(*(temp++));
+	free(str_tab);
+}
+
+int	main(int argc, char **argv)
+{
+	char	*line;
+	char	**tab;
 	t_data	prog_data;
 
+	if (argc != 2)
+		return (1);
+	check_file(argv[1]);
+	line = get_file(argv[1]);
+	tab = ft_split(line, '\n');
+	check_scene(tab);
+
+	ft_bzero(&prog_data, sizeof(t_data));
 	prog_data.mlx_ptr = mlx_init();
 	if (open_main_window(&prog_data, "miniRT"))
 		return (1);
-//	my_new_window(prog_data.mlx_ptr, &prog_data.main_window,
-//		(int []){WIN_WIDTH, WIN_HEIGHT}, "Hello !");
+	free(line);
+	free_str_tab(tab);
 	init_loops(&prog_data);
 	free_data(&prog_data);
 	return (0);

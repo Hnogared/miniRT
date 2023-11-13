@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/10 17:23:40 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/13 11:22:35 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int	main(int argc, char **argv)
 	line = get_file(argv[1]);
 	tab = ft_split(line, '\n');
 	check_scene(tab);
-
-
 
 //	ft_bzero(&object, sizeof(t_object));
 //	object.light_data.brightness = 2000;

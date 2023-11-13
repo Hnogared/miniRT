@@ -24,7 +24,8 @@ INCLUDES_DIR	:=	includes
 # Complementary paths to all source code files 
 VPATH			:=	$(SRCS_DIR):					\
 					$(SRCS_DIR)/object_management:	\
-					$(SRCS_DIR)/display:
+					$(SRCS_DIR)/display:			\
+					$(SRCS_DIR)/parsing
 
 # Source files names
 SRCS			:=	main.c					\
@@ -37,7 +38,8 @@ SRCS			:=	main.c					\
 					print_object_data.c		\
 					print_object_data_2.c	\
 					window_management.c		\
-					image_management.c
+					image_management.c		\
+					utils.c
 
 
 #####################

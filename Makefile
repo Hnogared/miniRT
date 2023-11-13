@@ -60,10 +60,10 @@ RM				:=	rm -rf
 all:	$(NAME)
 
 $(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS)
-	@$(CC) $(CFLAGS) -o $@ $(OBJS) $(IFLAGS) $(LFLAGS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(IFLAGS) $(LFLAGS)
 
 $(OBJS_DIR)/%.o:	%.c | $(OBJS_DIR)
-	@$(CC) $(CFLAGS) -c $< -o $@ $(IFLAGS) $(LFLAGS)
+	$(CC) $(CFLAGS) -c $< -o $@ $(IFLAGS) $(LFLAGS)
 
 $(OBJS_DIR):
 	mkdir $(OBJS_DIR)

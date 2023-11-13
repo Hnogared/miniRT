@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:03:44 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/13 16:10:41 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/13 16:23:32 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	check_numbers(char ***block)
 {
 	int	i;
 	int	j;
-	int	is_present[3];
 
 	i = 0;
 	while (block[i])

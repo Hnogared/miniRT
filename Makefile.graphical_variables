@@ -1,0 +1,66 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile.graphical_variables                       :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/11/13 21:59:24 by hnogared          #+#    #+#              #
+#    Updated: 2023/11/13 22:12:40 by hnogared         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+################################################################
+# Makefile containing the variables used for graphical display #
+################################################################ 
+
+## Text formatting variables ##
+# Reset text formatting #
+ANSI_NC			:=	"\\e[0m"
+# Bold formatting #
+ANSI_BOLD		:=	"\\e[1m"
+
+# Foreground text color formatting #
+ANSI_NFG		:=	"\\e[39m"
+ANSI_FG_BLA		:=	"\\e[30m"
+ANSI_FG_RED		:=	"\\e[31m"
+ANSI_FG_GRE		:=	"\\e[32m"
+ANSI_FG_YEL		:=	"\\e[33m"
+ANSI_FG_BLU		:=	"\\e[34m"
+ANSI_FG_MAG		:=	"\\e[35m"
+ANSI_FG_CYA		:=	"\\e[36m"
+ANSI_FG_WHI		:=	"\\e[37m"
+ANSI_FG_BBLA	:=	"\\e[90m"
+ANSI_FG_BRED	:=	"\\e[91m"
+ANSI_FG_BGRE	:=	"\\e[92m"
+ANSI_FG_BYEL	:=	"\\e[93m"
+ANSI_FG_BBLU	:=	"\\e[94m"
+ANSI_FG_BMAG	:=	"\\e[95m"
+ANSI_FG_BCYA	:=	"\\e[96m"
+ANSI_FG_BWHI	:=	"\\e[97m"
+
+# Background text color formatting #
+ANSI_BG_BLA		:=	"\\e[40m"
+
+
+## Ascii texts ##
+# Mini ascii text #
+ASCII_MINI	:=	"@   @@@@   @@@@@    @@@@@   @@@@ @"	\
+				"\\e[B\\e[35D@@ @@@@@   @@@@@    @@@@@   @@@@ @"	\
+				"\\e[B\\e[35D@@@@@@@@   @@@@@    @@@@@@  @@@@ @"	\
+				"\\e[B\\e[35D@@@@@@@@   @@@@@    @@@@@@  @@@@ @"	\
+				"\\e[B\\e[35D@@@@@@@@   @@@@@    @@@@@@@ @@@@ @"	\
+				"\\e[B\\e[35D@ @ @@@@   @@@@@    @@@@@@@@@@@@ @"	\
+				"\\e[B\\e[35D@   @@@@   @@@@@    @@@@@@@@@@@@ @"	\
+				"\\e[B\\e[35D@   @@@@   @@@@@    @@@@@  @@@@@ @"	\
+				"\\e[B\\e[35D@   @@@@   @@@@@    @@@@@   @@@@ @"
+
+# Rt ascii text #
+ASCII_RT	:=	"%%%%%  %%%%%%"	\
+				"\\e[B\\e[14D%%  %%   %%"	\
+				"\\e[B\\e[12D%%%%%    %%"	\
+				"\\e[B\\e[12D%%  %%   %%"
+
+# Characters used to build frames #
+# Make sure to separate each one with whitespaces and keep the same amount #
+FRAME_CHARS	:=	"═" "║" "╔" "╗" "╚" "╝"

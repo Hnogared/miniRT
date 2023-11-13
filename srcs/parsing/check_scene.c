@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:03:44 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/13 16:23:32 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/13 17:18:25 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,24 @@ void	check_is_digit(char *s)
 	}
 }
 
+void		check_duplicate_obj(char **block, int *is_present)
+{
+	if (!ft_strncmp(block[0], "A", 2))
+		is_present[0] += 1;
+	if (!ft_strncmp(block[0], "C", 2))
+		is_present[1] += 1;
+	if (!ft_strncmp(block[0], "L", 2))
+		is_present[2] += 1;
+}
+
 void	check_numbers(char ***block)
 {
 	int	i;
 	int	j;
+	int	is_present[3];
 
 	i = 0;
+	ft_bzero(is_present, 3 * sizeof(int));
 	while (block[i])
 	{
 		j = 1;
@@ -75,7 +87,14 @@ void	check_numbers(char ***block)
 			check_is_digit(block[i][j]);
 			j++;
 		}
-		//check_duplicate_obj(block[i], is_present);
+		check_duplicate_obj(block[i], is_present);
+		i++;
+	}
+	i = 0;
+	while (i < 3)
+	{
+		if (is_present[i] != 1)
+			err(DUPLICATE_OBJ);
 		i++;
 	}
 }

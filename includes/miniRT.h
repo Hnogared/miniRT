@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/13 11:47:21 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:05:16 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,17 +139,17 @@ char	***check_scene(char **tab);
 
 /* SRCS/OBJECT_MANAGEMENT */
 /* object_creation.c */
-t_object	*new_camera(t_object *to_set, t_coords *coords, int fov);
-t_object	*new_light(t_object *to_set, t_coords *coords, int brightness);
-t_object	*new_sphere(t_object *to_set, t_coords *coords, float diameter);
-t_object	*new_plane(t_object *to_set, t_coords *coords);
-t_object	*new_cylinder(t_object *to_set, t_coords *coords, float diameter,
+t_object	*new_camera(t_object *to_set, t_coords coords, int fov);
+t_object	*new_light(t_object *to_set, t_coords coords, int brightness);
+t_object	*new_sphere(t_object *to_set, t_coords coords, float diameter);
+t_object	*new_plane(t_object *to_set, t_coords coords);
+t_object	*new_cylinder(t_object *to_set, t_coords coords, float diameter,
 	float height);
 
 /* object_modification.c */
-t_object	*set_object_coords(t_object *to_set, t_coords *coords);
-t_object	*set_object_orientation(t_object *to_set, t_vector *orient_vector);
-t_object	*set_object_color(t_object *to_set, t_rgb_color *color);
+t_object	*set_object_coords(t_object *to_set, t_coords coords);
+t_object	*set_object_orientation(t_object *to_set, t_vector orient_vector);
+t_object	*set_object_color(t_object *to_set, t_rgb_color color);
 
 /* print_object_data.c */
 void		print_object_data(t_object object);

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/10 18:09:24 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:05:23 by tlorne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ typedef struct s_object
 	t_vector		orientation_vector;
 	t_special_data	special_data;
 	void			(*data_print_func)(t_special_data special_data);
-}				t_object;
+}	t_object;
 
 typedef struct s_data
 {

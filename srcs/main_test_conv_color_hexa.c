@@ -1,16 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_test_conv_color_hexa.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/10 18:18:32 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:02:41 by tlorne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+//#include "miniRT.h"
+#include <stdio.h>
+
+
+typedef struct s_rgb_color
+{
+	char	*red;
+	char	*green;
+	char	*blue;
+}				t_rgb_color;
+
+char    *conv(t_rgb_color color);
+
+int	ft_strlen(char *str)
+{
+	int	i = 0;
+
+	while (str[i])
+		i++;
+	return (i);
+}
 
 int	main(int argc, char **argv)
 {

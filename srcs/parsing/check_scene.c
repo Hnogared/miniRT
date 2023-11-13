@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:03:44 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/10 18:29:52 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:03:28 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	check_char(char ***block)
 	while (block[i])
 	{
 		j = 0;
+		if (!ft_isdigit(ft_atoi(block[i][0])))
+			err(IS_NOT_NUMBER);
 		while (tab_char[j] && tab_string[j])
 		{
 			if (!ft_strncmp(block[i][0], tab_char[j], 2))
@@ -38,18 +40,36 @@ void	check_char(char ***block)
 	}
 }
 
-char	***check_scene(char **tab)
+void	check_numbers(char ***block)
 {
 	int	i;
-	char ***block;
 
 	i = 0;
-	block = malloc(7 * sizeof(block));
+	while (block[i])
+	{
+
+		printf("////////\n");
+		i++;
+	}
+}
+
+char	***check_scene(char **tab)
+{
+	char ***block;
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (tab[len])
+		len++;
+	block = malloc(len * sizeof(block) + 1);
 	while (tab[i])
 	{
 		block[i] = ft_split(tab[i], ' ');
 		i++;
 	}
 	check_char(block);
+	check_numbers(block);
 	return (block);
 }

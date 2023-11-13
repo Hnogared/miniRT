@@ -4,8 +4,9 @@
 
 NAME			:=	miniRT
  
-VPATH			:=	srcs:		\
-					srcs/object_management:
+VPATH			:=	srcs:					\
+					srcs/object_management: \
+					srcs/parsing			
 
 SRCS_DIR		:=	srcs
 LIBS_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, libraries)
@@ -19,7 +20,8 @@ SRCS			:=	main.c					\
 					object_creation.c		\
 					object_modification.c	\
 					print_object_data.c		\
-					print_object_data_2.c
+					print_object_data_2.c	\
+					utils.c
 
 OBJS_DIR		:=	objs
 OBJS			:=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
@@ -58,10 +60,10 @@ RM				:=	rm -rf
 all:	$(NAME)
 
 $(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS) $(IFLAGS) $(LFLAGS)
+	@$(CC) $(CFLAGS) -o $@ $(OBJS) $(IFLAGS) $(LFLAGS)
 
 $(OBJS_DIR)/%.o:	%.c | $(OBJS_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@ $(IFLAGS) $(LFLAGS)
+	@$(CC) $(CFLAGS) -c $< -o $@ $(IFLAGS) $(LFLAGS)
 
 $(OBJS_DIR):
 	mkdir $(OBJS_DIR)

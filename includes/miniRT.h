@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/13 12:05:16 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:40:42 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <errno.h>
 # include <stdbool.h>
+# include <stdlib.h>
 
 # include "libft.h"
 # include "mlx.h"
@@ -135,7 +136,7 @@ typedef struct s_data
 int		check_file(char *scene);
 char	*get_file(char *scene);
 char	***check_scene(char **tab);
-
+void	err(char *str);
 
 /* SRCS/OBJECT_MANAGEMENT */
 /* object_creation.c */

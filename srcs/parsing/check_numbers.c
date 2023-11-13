@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:07:54 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/13 20:46:28 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/13 21:17:44 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,22 @@ void	check_dot_and_comma(char *s)
 	dot = 0;
 	while (s[i])
 	{
-		j = 0;
-		while (s[j] != ',')
+		dot = 0;
+		j = i;
+		while (s[j] && s[j] != ',')
 		{
 			if (s[j] == '.')
 				dot++;
 			j++;
 		}
-		if (s[i] == ',')
+		if (dot > 1)
+			err(TOO_MANY_DOT);
+		if (s[j])
 			comma++;
-		i += j + 1;
+		if (comma > 2)
+			err(TOO_MANY_COMMA);
+		i = i + j + 1;
 	}
-
-	if (comma > 2)
-		err(TOO_MANY_COMMA);
-	if (dot > 1)
-		err(TOO_MANY_DOT);
 }
 
 void	check_is_digit(char *s)
@@ -51,6 +51,8 @@ void	check_is_digit(char *s)
 	i = 0;
 	len = ft_strlen(s);
 	if (s[len - 1] == ',' || s[len - 1] == '.')
+		err(IS_NOT_NUMBER);
+	if (s[0] == ',' || s[0] == '.')
 		err(IS_NOT_NUMBER);
 	check_dot_and_comma(s);
 	while (s[i])

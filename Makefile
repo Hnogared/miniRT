@@ -6,15 +6,18 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/13 22:21:14 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/14 00:50:39 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# Pathe to the Makefile's includes #
+MK_INCLUDES_DIR	:=	Makefile_includes
+
 # Include the Makefile defining the shell functions #
-include Makefile.functions
+include $(MK_INCLUDES_DIR)/Makefile.functions
 
 # Include the Makefile containing the variables used for graphical displays # 
-include Makefile.graphical_variables
+include $(MK_INCLUDES_DIR)/Makefile.graphical_variables
 
 # * SETUP VARIABLES ********************************************************** #
 

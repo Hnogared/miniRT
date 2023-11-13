@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/13 18:36:25 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/13 21:22:21 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,9 @@ typedef struct s_data
 int		check_file(char *scene);
 char	*get_file(char *scene);
 char	***check_scene(char **tab);
+void	check_char(char ***block);
+void	check_numbers(char ***block);
+void	check_range_numbers(char ***block);
 void	err(char *str);
 
 /* SRCS/OBJECT_MANAGEMENT */

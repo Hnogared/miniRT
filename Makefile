@@ -37,6 +37,8 @@ SRCS			:=	main.c					\
 					check_file.c			\
 					get_file.c				\
 					check_scene.c			\
+					check_numbers.c			\
+					check_range_numbers.c	\
 					conv_hexa.c				\
 					object_creation.c		\
 					object_modification.c	\

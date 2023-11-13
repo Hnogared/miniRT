@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/13 12:05:16 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:06:02 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,25 +107,6 @@ typedef struct s_object
 	t_special_data	special_data;
 	void			(*data_print_func)(t_special_data special_data);
 }				t_object;
-
-/*
-typedef struct s_object
-{
-	unsigned short	type;
-	t_coords		coords;
-	t_vector		orientation_vector;
-	//t_print_func	data_print_func;
-	union
-	{
-		t_camera	camera_data;
-		t_light		light_data;
-		t_sphere	sphere_data;
-		t_plane		plane_data;
-		t_cylinder	cylinder_data;
-	};
-	//t_special_data	special_data;
-}				t_object;
-*/
 
 typedef struct s_data
 {

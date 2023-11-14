@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/13 19:38:38 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/13 21:22:21 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,32 @@ typedef struct s_object
 	t_vector		orientation_vector;
 	t_special_data	special_data;
 	void			(*data_print_func)(t_special_data special_data);
-}	t_object;
+}				t_object;
+
+typedef struct s_image
+{
+	int		width;
+	int		height;
+	int		bits_per_pixel;
+	int		line_size;
+	int		endian;
+	void	*ptr;
+	char	*addr;
+}				t_image;
+
+typedef struct s_window
+{
+	int		width;
+	int		height;
+	t_image	image;
+	void	*ptr;
+}				t_window;
 
 typedef struct s_data
 {
+	t_window	main_window;
 	t_object	*scene_objects;
+	void		*mlx_ptr;
 }				t_data;
 
 int		check_file(char *scene);
@@ -151,5 +172,19 @@ void		print_cylinder_data(t_special_data cylinder);
 
 /* Theouche*/
 char    *conv(t_rgb_color color);
+
+/* SRCS/DISPLAY */
+/* image_management.c */
+t_image		*my_new_image(void *mlx_ptr, t_image *new_img_p, int width,
+	int height);
+void		my_put_pixel_to_image(t_image *image, int x, int y, int color);
+
+/* window_management.c */
+int			open_main_window(t_data *data, char *title);
+t_window	*my_new_window(void *mlx_ptr, t_window *new_window_p,
+	int dimensions[2], char *title);
+void		my_destroy_window(void *mlx_ptr, t_window *window);
+void		my_put_pixel_to_window(t_window *window, int x, int y, int color);
+void		redraw_window(void *mlx_ptr, t_window *window);
 
 #endif

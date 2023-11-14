@@ -6,12 +6,20 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:18:25 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/13 20:43:49 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/13 21:21:59 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_MACRO_H
 # define MINIRT_MACRO_H
+
+# ifndef WIN_WIDTH
+#  define WIN_WIDTH		0
+# endif
+
+# ifndef WIN_HEIGHT
+#  define WIN_HEIGHT	0
+# endif
 
 # define BUFFER_SIZE 1000
 

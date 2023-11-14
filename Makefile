@@ -54,7 +54,6 @@ SRCS			:=	main.c					\
 					object_modification.c	\
 					print_object_data.c		\
 					print_object_data_2.c	\
-					conv_hexa.c
 					window_management.c		\
 					image_management.c		\
 					utils.c

@@ -53,34 +53,34 @@ void	free_str_tab(char **str_tab)
 
 int	main(int argc, char **argv)
 {
-	// (void)argc;
-	// (void)argv;
+	(void)argc;
+	(void)argv;
 	t_object	object;
-	char		*line;
-	char		**tab;
-	t_data	prog_data;
+	// char		*line;
+	// char		**tab;
+	// t_data	prog_data;
 
-	if (argc != 2)
-		return (1);
-	check_file(argv[1]);
-	line = get_file(argv[1]);
-	tab = ft_split(line, '\n');
-	check_scene(tab);
+	// if (argc != 2)
+	// 	return (1);
+	// check_file(argv[1]);
+	// line = get_file(argv[1]);
+	// tab = ft_split(line, '\n');
+	// check_scene(tab);
 
 
 	new_sphere(&object, (t_coords){1, 0, 10}, 1.0);
-	set_object_color(&object, (t_rgb_color){110, 0, 5});
+	set_object_color(&object, (t_rgb_color){120, 40, 5});
 	print_object_data(object);
 	printf("la couleur en hexa vaut : %s\n", conv(object.special_data.sphere.color));
 
-	ft_bzero(&prog_data, sizeof(t_data));
-	prog_data.mlx_ptr = mlx_init();
-	if (open_main_window(&prog_data, "miniRT"))
-		return (1);
-	free(line);
-	free_str_tab(tab);
-	init_loops(&prog_data);
-	free_data(&prog_data);
+	// ft_bzero(&prog_data, sizeof(t_data));
+	// prog_data.mlx_ptr = mlx_init();
+	// if (open_main_window(&prog_data, "miniRT"))
+	// 	return (1);
+	// free(line);
+	// free_str_tab(tab);
+	// init_loops(&prog_data);
+	// free_data(&prog_data);
 	return (0);
 }
 

@@ -10,33 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "miniRT.h"
-#include <stdio.h>
-
-
-typedef struct s_rgb_color
-{
-	char	*red;
-	char	*green;
-	char	*blue;
-}				t_rgb_color;
-
-char    *conv(t_rgb_color color);
-
-int	ft_strlen(char *str)
-{
-	int	i = 0;
-
-	while (str[i])
-		i++;
-	return (i);
-}
+#include "miniRT.h"
 
 int	main(int argc, char **argv)
 {
+	// (void)argc;
+	// (void)argv;
+	t_object	object;
 	char		*line;
 	char		**tab;
-	t_object	object;
+	
 
 	if (argc != 2)
 		return (0);
@@ -45,8 +28,10 @@ int	main(int argc, char **argv)
 	tab = ft_split(line, '\n');
 	check_scene(tab);
 
+
 	new_sphere(&object, &(t_coords){1, 0, 10}, 1.0);
 	set_object_color(&object, &(t_rgb_color){110, 0, 5});
 	print_object_data(object);
+	printf("la couleur en hexa vaut : %s\n", conv(object.special_data.sphere.color));
 	return (0);
 }

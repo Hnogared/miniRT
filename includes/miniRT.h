@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <errno.h>
 # include <stdbool.h>
+# include <stdlib.h>
 
 # include "libft.h"
 # include "mlx.h"
@@ -144,5 +145,8 @@ void		print_sphere_data(t_special_data sphere);
 void		print_light_data(t_special_data light);
 void		print_plane_data(t_special_data plane);
 void		print_cylinder_data(t_special_data cylinder);
+
+/* Theouche*/
+char    *conv(t_rgb_color color);
 
 #endif

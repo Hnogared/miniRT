@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   theouche.h                                         :+:      :+:    :+:   */
+/*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/10 16:04:06 by tlorne            #+#    #+#             */
-/*   Updated: 2023/11/10 16:04:18 by tlorne           ###   ########.fr       */
+/*   Created: 2023/11/09 16:21:46 by motoko            #+#    #+#             */
+/*   Updated: 2023/11/13 13:39:30 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef THEOUCHE_H
-# define THEOUCHE_H
+#include "miniRT.h"
 
-char    *conv(t_rgb_color color);
+int	check_file(char *scene)
+{
+	char	*file_type;
 
-#define THEOUCHE_H
+	file_type = ft_strrchr(scene, '.');
+	if (!file_type)
+		err(FILE_NAME);
+	if (!(!ft_strncmp(file_type, ".rt", 4)))
+		err(FILE_NAME);
+	return (0);
+}

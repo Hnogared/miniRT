@@ -4,8 +4,9 @@
 
 NAME			:=	miniRT
  
-VPATH			:=	srcs:		\
-					srcs/object_management:
+VPATH			:=	srcs:					\
+					srcs/object_management: \
+					srcs/parsing			
 
 SRCS_DIR		:=	srcs
 LIBS_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, libraries)
@@ -15,11 +16,15 @@ SRCS			:=	main.c					\
 					check_file.c			\
 					get_file.c				\
 					check_scene.c			\
+					check_numbers.c			\
+					check_range_numbers.c	\
+					conv_hexa.c				\
 					object_creation.c		\
 					object_modification.c	\
 					print_object_data.c		\
 					print_object_data_2.c	\
 					conv_hexa.c
+					utils.c
 
 OBJS_DIR		:=	objs
 OBJS			:=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))

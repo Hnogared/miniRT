@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/13 13:05:23 by tlorne           ###   ########.fr       */
+/*   Updated: 2023/11/13 19:38:38 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,21 +117,24 @@ typedef struct s_data
 int		check_file(char *scene);
 char	*get_file(char *scene);
 char	***check_scene(char **tab);
-
+void	check_char(char ***block);
+void	check_numbers(char ***block);
+void	check_range_numbers(char ***block);
+void	err(char *str);
 
 /* SRCS/OBJECT_MANAGEMENT */
 /* object_creation.c */
-t_object	*new_camera(t_object *to_set, t_coords *coords, int fov);
-t_object	*new_light(t_object *to_set, t_coords *coords, int brightness);
-t_object	*new_sphere(t_object *to_set, t_coords *coords, float diameter);
-t_object	*new_plane(t_object *to_set, t_coords *coords);
-t_object	*new_cylinder(t_object *to_set, t_coords *coords, float diameter,
+t_object	*new_camera(t_object *to_set, t_coords coords, int fov);
+t_object	*new_light(t_object *to_set, t_coords coords, int brightness);
+t_object	*new_sphere(t_object *to_set, t_coords coords, float diameter);
+t_object	*new_plane(t_object *to_set, t_coords coords);
+t_object	*new_cylinder(t_object *to_set, t_coords coords, float diameter,
 	float height);
 
 /* object_modification.c */
-t_object	*set_object_coords(t_object *to_set, t_coords *coords);
-t_object	*set_object_orientation(t_object *to_set, t_vector *orient_vector);
-t_object	*set_object_color(t_object *to_set, t_rgb_color *color);
+t_object	*set_object_coords(t_object *to_set, t_coords coords);
+t_object	*set_object_orientation(t_object *to_set, t_vector orient_vector);
+t_object	*set_object_color(t_object *to_set, t_rgb_color color);
 
 /* print_object_data.c */
 void		print_object_data(t_object object);

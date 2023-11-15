@@ -16,6 +16,8 @@ SRCS			:=	main.c					\
 					check_file.c			\
 					get_file.c				\
 					check_scene.c			\
+					check_numbers.c			\
+					check_range_numbers.c	\
 					conv_hexa.c				\
 					object_creation.c		\
 					object_modification.c	\
@@ -61,10 +63,10 @@ RM				:=	rm -rf
 all:	$(NAME)
 
 $(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS)
-	@$(CC) $(CFLAGS) -o $@ $(OBJS) $(IFLAGS) $(LFLAGS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(IFLAGS) $(LFLAGS)
 
 $(OBJS_DIR)/%.o:	%.c | $(OBJS_DIR)
-	@$(CC) $(CFLAGS) -c $< -o $@ $(IFLAGS) $(LFLAGS)
+	$(CC) $(CFLAGS) -c $< -o $@ $(IFLAGS) $(LFLAGS)
 
 $(OBJS_DIR):
 	mkdir $(OBJS_DIR)

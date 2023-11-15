@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:03:44 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/13 14:03:28 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/13 19:38:57 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	check_char(char ***block)
 {
 	int	i = 0;
 	int	j = 0;
+	int	is_found = 0;
 
 	char	**tab_char;
 	char	**tab_string;
@@ -25,30 +26,17 @@ void	check_char(char ***block)
 	while (block[i])
 	{
 		j = 0;
-		//if (!ft_isdigit(ft_atoi(block[i][0])))
-		//	err(IS_NOT_NUMBER);
+		is_found = 0;
 		while (tab_char[j] && tab_string[j])
 		{
-			if (!ft_strncmp(block[i][0], tab_char[j], 2))
-				printf("%s\n", block[i][0]);
-			if (!ft_strncmp(block[i][0], tab_string[j], 3))
-				printf("%s\n", block[i][0]);
+			if (!ft_strncmp(tab_char[j], block[i][0], 2))
+				is_found = 1;	
+			if (!ft_strncmp(tab_string[j], block[i][0], 2))
+				is_found = 1;	
 			j++;
 		}
-		printf("////////\n");
-		i++;
-	}
-}
-
-/*void	check_numbers(char ***block)
-{
-	int	i;
-
-	i = 0;
-	while (block[i])
-	{
-
-		printf("////////\n");
+		if (!is_found)
+			err(INVALID_OBJECT);
 		i++;
 	}
 }*/
@@ -72,6 +60,8 @@ char	***check_scene(char **tab)
 	check_char(block);
 	check_num_args(block);
 	check_num_objects(block);
-	//check_numbers(block);
+	check_numbers(block);
+	check_range_numbers(block);
 	return (block);
 }
+

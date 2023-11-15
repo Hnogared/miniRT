@@ -12,102 +12,63 @@
 
 #include "miniRT.h"
 
-int	count_commas(char *block)
+void	check_num_objects1(char	*block)
 {
 	int	i;
-	int	flags;
 
 	i = 0;
-	flags = 0;
 	while (block[i])
-	{
-		if (block[i] == 44)
-			flags += 1;
 		i++;
-	}
-	return (flags);
-}
-
-void	check_num_objects2(char ***block)
-{
-	char	**tab;
-	int	j;
-
-	tab = (char *[]) {"pl", "sp", "cy", NULL};
-	while (block[i])
-	{
-		j = 0;
-		while (block[i][j])
-		{
-			if (!ft_strncmp(block[i][j], tab[2], 3))
-			{
-				while (block[i][j])
-					j++;
-				if (j != 6)
-					err(IS_NOT_NUMBER);
-			}
-			if (!ft_strncmp(block[i][j], tab[0], 3) || (!ft_strncmp(block[i][j], tab[1], 3)))
-			{
-				while (block[0][j])
-					j++;
-				if (j != 4)
-					err(IS_NOT_NUMBER);
-			}
-			i++;
-		}
-	}
+	if (i != 4)
+		err(TOO_MANY_OBJS);
 }
 
 
-void	check_num_objects(char ***block)
-{
-	char	**tab;
-	int	j;
-
-	tab = (char *[]) {"A", "C", "L", NULL};
-	while (block[i])
-	{
-		j = 0;
-		while (block[i][j])
-		{
-			if (!ft_strncmp(block[i][j], tab[0], 2))
-			{
-				while (block[i][j])
-					j++;
-				if (j != 3)
-					err(IS_NOT_NUMBER);
-			}
-			if (!ft_strncmp(block[i][j], tab[1], 2) || (!ft_strncmp(block[i][j], tab[2], 2)))
-			{
-				while (block[0][j])
-					j++;
-				if (j != 4)
-					err(IS_NOT_NUMBER);
-			}
-			i++;
-		}
-	}
-}
-
-void	check_num_args(char ***block)
+void	check_num_objects2(char *block)
 {
 	int	i;
-	int	j;
-	int	flags;
 
 	i = 0;
-	flags = 0;
+	while (block[i])
+		i++;
+	if (i != 6)
+		err(TOO_MANY_OBJS);
+}
+
+void	check_num_objects3(char *block)
+{
+	int	i;
+
+	i = 0;
+	while (block[i])
+		i++;	
+	if (i != 3)
+		err(TOO_MANY_OBJS);
+}
+
+void	check_num_objects(char	***block)
+{
+	char	**tab;
+	char	**tab1;
+	int		i;
+	int		j;
+
+	i = 0;
+	tab = (char *[]) {"A", "C", "L", NULL};
+	tab1 = (char *[]) {"pl", "sp", "cy", NULL};
 	while (block[i])
 	{
 		j = 0;
 		while (block[i][j])
 		{
-			if (j == 3)
-			{
-				flags = count_commas(block[i][j]);
-				if (flags > 2)
-					err(IS_NOT_NUMBER);
-			}
+			if (!ft_strncmp(block[i][j], tab[1], 2) || (!ft_strncmp(block[i][j], tab[2], 2)))
+				check_num_objects1(block[i][j]);
+			if (!ft_strncmp(block[i][j], tab[0], 2))
+				check_num_objects3(block[i][j]);
+			if (!ft_strncmp(block[i][j], tab1[2], 3))
+				check_num_objects2(block[i][j]);
+			if (!ft_strncmp(block[i][j], tab1[0], 3) || (!ft_strncmp(block[i][j], tab1[1], 3)))
+				check_num_objects1(block[i][j]);
 			j++;
 		}
 		i++;

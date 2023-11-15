@@ -39,7 +39,7 @@ void	check_char(char ***block)
 			err(INVALID_OBJECT);
 		i++;
 	}
-}*/
+}
 
 char	***check_scene(char **tab)
 {
@@ -58,7 +58,6 @@ char	***check_scene(char **tab)
 		i++;
 	}
 	check_char(block);
-	check_num_args(block);
 	check_num_objects(block);
 	check_numbers(block);
 	check_range_numbers(block);

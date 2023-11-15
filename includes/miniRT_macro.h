@@ -22,7 +22,8 @@
 # define IS_NOT_VALID "error: not a valid argument"
 # define IS_NOT_NUMBER "error: not a number"
 # define DUPLICATE_OBJ "error: duplicate object"
-# define TOO_MANY_COMMA "error: to many comma in number"
-# define TOO_MANY_DOT "error: to many dot in number"
+# define TOO_MANY_COMMA "error: too many comma in number"
+# define TOO_MANY_DOT "error: too many dot in number"
+# define TOO_MANY_OBJS "error : too many objects"
 
 #endif

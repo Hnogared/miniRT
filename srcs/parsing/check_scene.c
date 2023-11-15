@@ -25,8 +25,8 @@ void	check_char(char ***block)
 	while (block[i])
 	{
 		j = 0;
-		if (!ft_isdigit(ft_atoi(block[i][0])))
-			err(IS_NOT_NUMBER);
+		//if (!ft_isdigit(ft_atoi(block[i][0])))
+		//	err(IS_NOT_NUMBER);
 		while (tab_char[j] && tab_string[j])
 		{
 			if (!ft_strncmp(block[i][0], tab_char[j], 2))
@@ -40,7 +40,7 @@ void	check_char(char ***block)
 	}
 }
 
-void	check_numbers(char ***block)
+/*void	check_numbers(char ***block)
 {
 	int	i;
 
@@ -51,7 +51,7 @@ void	check_numbers(char ***block)
 		printf("////////\n");
 		i++;
 	}
-}
+}*/
 
 char	***check_scene(char **tab)
 {
@@ -70,6 +70,8 @@ char	***check_scene(char **tab)
 		i++;
 	}
 	check_char(block);
-	check_numbers(block);
+	check_num_args(block);
+	check_num_objects(block);
+	//check_numbers(block);
 	return (block);
 }

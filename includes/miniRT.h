@@ -137,6 +137,8 @@ int		check_file(char *scene);
 char	*get_file(char *scene);
 char	***check_scene(char **tab);
 void	err(char *str);
+void	check_num_args(char ***block);
+void	check_num_objects(char ***block);
 
 /* SRCS/OBJECT_MANAGEMENT */
 /* object_creation.c */

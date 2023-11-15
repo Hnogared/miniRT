@@ -21,7 +21,8 @@ SRCS			:=	main.c					\
 					object_modification.c	\
 					print_object_data.c		\
 					print_object_data_2.c	\
-					utils.c
+					utils.c					\
+					check_args.c
 
 OBJS_DIR		:=	objs
 OBJS			:=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))

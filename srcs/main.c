@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/16 14:49:06 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:51:41 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	t_object	object;
-	// char		*line;
-	// char		**tab;
+	char		*line;
+	char		**tab;
 	 t_data	prog_data;
 
-	// if (argc != 2)
-	// 	return (1);
-	// check_file(argv[1]);
-	// line = get_file(argv[1]);
-	// tab = ft_split(line, '\n');
-	// check_scene(tab);
+	if (argc != 2)
+	return (1);
+	check_file(argv[1]);
+	line = get_file(argv[1]);
+	tab = ft_split(line, '\n');
+	check_scene(tab);
 
 	ft_bzero(&prog_data, sizeof(t_data));
 	prog_data.mlx_ptr = mlx_init();

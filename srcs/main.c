@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/16 11:29:36 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:38:45 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int argc, char **argv)
 		return (2);
 	free(line);
 	free_str_tab(tab);
+	prog_data.test = 10;
 	redraw_main_window(&prog_data);
 	init_key_hooks(&prog_data);
 	mlx_loop(prog_data.mlx_ptr);

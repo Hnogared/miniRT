@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/16 11:51:33 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:01:43 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	ray_trace(t_data *data, int x, int y)
 {
 	int	color;
 
-	color = 0 | (unsigned char) y << 16 | (unsigned char) x << 16 | (unsigned char) x << 8;
+	color = 0 | (unsigned char) (y * data->test) << 16
+			| (unsigned char) (x * data->test) << 16
+			| (unsigned char) (x * data->test) << 8;
 	if (data)
 		return (color);
 	return (color);
@@ -29,7 +31,7 @@ void	redraw_main_window(t_data *data)
 	int	color;
 
 	x = 0;
-	y = 0;
+	y = 30;
 	while (y < data->main_window.height)
 	{
 		color = ray_trace(data, x, y);
@@ -40,7 +42,7 @@ void	redraw_main_window(t_data *data)
 		x = 0;
 		y++;
 	}
-	mlx_string_put(data->mlx_ptr, data->main_window.ptr, 0, 0, 0xFF0000,
-		"THIS IS A TEST TKT");
 	redraw_window(data->mlx_ptr, &data->main_window);
+	mlx_string_put(data->mlx_ptr, data->main_window.ptr, 10, 20, 0xFFFFFF,
+		"THIS IS A TEST TKT");
 }

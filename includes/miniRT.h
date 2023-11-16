@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/16 11:14:30 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:58:14 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ typedef struct s_coords
 	float	y;
 	float	z;
 }				t_coords;
+
+typedef struct s_ray
+{
+	t_vector	vector;
+	t_coords	coords;
+}				t_ray;
 
 typedef struct s_rgb_color
 {
@@ -134,6 +140,7 @@ typedef struct s_data
 	t_window	main_window;
 	t_object	*scene_objects;
 	void		*mlx_ptr;
+	int			test;
 }				t_data;
 
 int		check_file(char *scene);

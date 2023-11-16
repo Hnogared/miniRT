@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/16 09:43:45 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/16 10:26:57 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ INCLUDES_DIR	:=	includes
 VPATH			:=	$(SRCS_DIR):					\
 					$(SRCS_DIR)/object_management:	\
 					$(SRCS_DIR)/display:			\
-					$(SRCS_DIR)/parsing
+					$(SRCS_DIR)/parsing:			\
+					$(SRCS_DIR)/user_interface
 
 # Source files names #
 SRCS			:=	main.c					\
@@ -56,6 +57,8 @@ SRCS			:=	main.c					\
 					print_object_data_2.c	\
 					window_management.c		\
 					image_management.c		\
+					keyboard.c				\
+					free_and_exit.c			\
 					utils.c
 
 

@@ -6,55 +6,25 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/15 12:12:01 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:04:07 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-#include <stdnoreturn.h>
-
-void	free_data(t_data *data)
-{
-	my_destroy_window(data->mlx_ptr, &data->main_window);
-	mlx_destroy_display(data->mlx_ptr);
-	free(data->mlx_ptr);
-}
-
-noreturn int	free_and_exit(t_data *data)
-{
-	free_data(data);
-	exit(0);
-}
-
-int	key_handler(int keycode, t_data *data)
-{
-	if (keycode == XK_Escape)
-		free_and_exit(data);
-	return (0);
-}
-
-void	init_loops(t_data *data)
-{
-//	mlx_loop_hook(data->ptr, &disp_main_image, data);
-	mlx_hook(data->main_window.ptr, KeyPress, KeyPressMask, &key_handler, data);
-	mlx_hook(data->main_window.ptr, DestroyNotify, NoEventMask, &free_and_exit,
-		data);
-	mlx_loop(data->mlx_ptr);
-}
-
-void	free_str_tab(char **str_tab)
-{
-	char	**temp;
-
-	temp = str_tab;
-	while (*temp)
-		free(*(temp++));
-	free(str_tab);
-}
 
 int	main(int argc, char **argv)
 {
-	char	*line;
+/*	t_image	image;
+	void	*mlx_ptr;
+	
+	mlx_ptr = mlx_init();
+	image = my_new_image(mlx_ptr, 20, 20);
+	my_put_pixel_to_image(&image, 1, 1, 0xFFFFFF);
+	(void)argv;
+	if (argc)
+		return (0);
+	return (0);
+*/	char	*line;
 	char	**tab;
 	t_data	prog_data;
 
@@ -71,9 +41,11 @@ int	main(int argc, char **argv)
 		return (2);
 	free(line);
 	free_str_tab(tab);
-	init_loops(&prog_data);
+	init_key_hooks(&prog_data);
+	mlx_loop(prog_data.mlx_ptr);
 	free_data(&prog_data);
 	return (0);
+
 }
 
 //	t_object	object;

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/13 21:22:21 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/16 10:49:50 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <errno.h>
 # include <stdbool.h>
 # include <stdlib.h>
+# include <stdnoreturn.h>
 
 # include "libft.h"
 # include "mlx.h"
@@ -143,6 +144,11 @@ void	check_numbers(char ***block);
 void	check_range_numbers(char ***block);
 void	err(char *str);
 
+/* free_and_exit.c */
+noreturn int	free_and_exit(t_data *data);
+void			free_data(t_data *data);
+void			free_str_tab(char **str_tab);
+
 /* SRCS/OBJECT_MANAGEMENT */
 /* object_creation.c */
 t_object	*new_camera(t_object *to_set, t_coords coords, int fov);
@@ -172,16 +178,19 @@ void		print_cylinder_data(t_special_data cylinder);
 
 /* SRCS/DISPLAY */
 /* image_management.c */
-t_image		*my_new_image(void *mlx_ptr, t_image *new_img_p, int width,
-	int height);
+t_image		my_new_image(void *mlx_ptr, int width, int height);
 void		my_put_pixel_to_image(t_image *image, int x, int y, int color);
 
 /* window_management.c */
 int			open_main_window(t_data *data, char *title);
-t_window	*my_new_window(void *mlx_ptr, t_window *new_window_p,
-	int dimensions[2], char *title);
+t_window	my_new_window(void *mlx_ptr, int dimensions[2], char *title);
 void		my_destroy_window(void *mlx_ptr, t_window *window);
 void		my_put_pixel_to_window(t_window *window, int x, int y, int color);
 void		redraw_window(void *mlx_ptr, t_window *window);
+
+/* SRCS_USER_INTERFACE */
+/* keyboard.c */
+int			key_handler(int keycode, t_data *data);
+void		init_key_hooks(t_data *data);
 
 #endif

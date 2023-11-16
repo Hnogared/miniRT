@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/16 13:58:14 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:48:10 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdbool.h>
 # include <stdlib.h>
 # include <stdnoreturn.h>
+# include <math.h>
 
 # include "libft.h"
 # include "mlx.h"
@@ -182,6 +183,9 @@ void		print_sphere_data(t_special_data sphere);
 void		print_light_data(t_special_data light);
 void		print_plane_data(t_special_data plane);
 void		print_cylinder_data(t_special_data cylinder);
+
+/* Theouche*/
+char    *conv(t_rgb_color color);
 
 /* SRCS/DISPLAY */
 /* image_management.c */

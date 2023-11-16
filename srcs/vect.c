@@ -69,13 +69,13 @@ t_vector    cal_plan(t_data *data, t_vector vec_inc, t_coords origin)
     t_vector    r;
     t_object    plan;
 
-    //plan = fonction pour savoir quel sphere ?
+    //plan = fonction pour savoir quel plan ?
     n = normalise(plan.orientation_vector);
     r = calc_ref_form(vec_inc, n);
     return (r);
 }
 
-t_vector    calcul_ref(t_data *data, t_vector vec_inc, t_coords origin)
+t_vector    calcul_ref(t_data *data, t_vector vec_inc, t_coords origin, t_object obj)
 {
     unsigned short	type;
     t_vector    vec_ref;
@@ -97,14 +97,36 @@ t_vector    calcul_ref(t_data *data, t_vector vec_inc, t_coords origin)
     return (vec_ref);
 }
 
+int	try_plan(t_data *data, t_coords pos_test, t_object obj)
+{
+	
+}
+
+int	do_touch(t_data *data, t_coords pos_test, t_object obj)
+{
+	if (obj.type == SPHERE_OBJ)
+		return (try_sphere(data, pos_test, obj));
+	if (obj.type == PLANE_OBJ)
+		return (try_plan(data, pos_test, obj));
+	//if (obj.type == CYLINDER_OBJ)
+	//	return (try_cylinder(data, vec_inc, obj));
+}
+
 t_vector    touch_object(t_data *data, t_vector vec_inc, t_coords pos_test)
 {
     int         i;
     t_vector    vec_ref;
 
     i = 0;
+    vec_ref = vec_inc;
     while (data->scene_objects[i])
     {
-        if ()
+        if (do_touch(data, pos_test, data->scene_objects[i]))
+        {
+			vec_ref = calcul_ref(data, vec_inc, origin, data->scene_objects[i]);
+			break
+        }
+		i++;
     }
+	return (vec_ref);
 }

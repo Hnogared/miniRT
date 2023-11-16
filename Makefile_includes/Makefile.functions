@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 22:06:44 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/14 00:48:12 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/16 14:34:36 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,18 +14,66 @@
 # Makefile defining the functions needed by the main Makefile #
 ###############################################################
 
-SHELL	:=	/bin/bash
+#SHELL	:=	/bin/bash
 
 ## Graphical functions ##
+# SERIOUS variable deactivates fancy display if set to TRUE #
+ifneq ($(SERIOUS), TRUE)
+
+# Function to display a simple command with colors #
+ define custom_command
+	$(eval command = $(1))
+	$(eval custom_command_name = $(2))
+	@echo "$(MAKEFILE_NAME): $(THEME_COLOR)$(custom_command_name)$(NC)";\
+	$(command)
+ endef
+
+# Function to display a time consuming command colored in two times #
+ define custom_loading_command
+	$(eval command = $(1))
+	$(eval custom_command_name = $(2))
+	$(eval start_status := $(subst _, ,\
+		$(word $(shell shuf -i 2-$(words $(STATUS_MSGS)) -n 1), $(STATUS_MSGS))))
+	$(eval end_status := $(subst _, , $(word 1, $(STATUS_MSGS))))
+	@echo "$(MAKEFILE_NAME): [$(start_status)] $(custom_command_name)";		\
+	$(command); 															\
+	tmp=$$?;																\
+	if [ $$tmp -eq 0 ]; then												\
+		echo -n "\e[A\e[K$(MAKEFILE_NAME): [$(end_status)] ";				\
+		echo "$(custom_command_name)";										\
+	else																	\
+		echo "$(MAKEFILE_NAME): [ouch] $(custom_command_name)";				\
+	fi;																		\
+	exit $$tmp
+ endef
+
+else # ifneq ($(SERIOUS), TRUE) #
+
+# Function to execute the command given as parameter #
+ define custom_command
+	$(1)
+ endef
+
+# Function to execute the command given as parameter #
+ define custom_loading_command
+	$(1)
+ endef
+
+endif # ifneq ($(SERIOUS), TRUE) #
+
+define get_load
+	@make -n | grep ""
+endef
+
 # Function to play the Makefile introduction cinematic #
 define play_intro
 	clear
-	@echo -ne "\e[0;0H\e[s"
+	@echo -n "\e[0;0H\e[s"
 	$(call put_frame, 60, 11, $(FRAME_CHARS), $(ANSI_BG_BLA)$(ANSI_FG_BBLA))
-	@echo -ne "\e[u\e[B\e[9C"
-	@echo -ne $(ANSI_FG_WHI)$(ANSI_BG_BLA)$(ASCII_MINI)$(ANSI_NC)
-	@echo -ne "\e[3A\e[4D"
-	@echo -e $(ANSI_FG_RED)$(ANSI_BG_BLA)$(ASCII_RT)$(ANSI_NC)
+	@echo -n "\e[u\e[B\e[9C"
+	@echo -n $(ANSI_FG_WHI)$(ANSI_BG_BLA)$(ASCII_MINI)$(ANSI_NC)
+	@echo -n "\e[3A\e[4D"
+	@echo $(ANSI_FG_RED)$(ANSI_BG_BLA)$(ASCII_RT)$(ANSI_NC)
 	@echo
 endef
 
@@ -45,7 +93,7 @@ define put_logo_light
 		fi;	\
 		new_logo="$$new_logo$$character";	\
 	done < <(echo -ne "$$logo");	\
-	echo -en $$new_logo
+	echo -n $$new_logo
 endef
 
 # Function to display a colored square on terminal at cursor location #
@@ -65,7 +113,7 @@ define put_square
 		square="$$square$$line\e[B\e[$(width)D";	\
 		y=$$(( $$y + 1 ));							\
 	done;											\
-	echo -ne "$(color)$$square$(ANSI_NC)"
+	echo -n "$(color)$$square$(ANSI_NC)"
 endef
 
 # Function to display a colored and filled frame at cursor location #
@@ -97,5 +145,5 @@ define put_frame
 		y=$$(( $$y + 1 ));								\
 	done;												\
 	frame="$$frame$$frame_bottom$(br_corner)";			\
-	echo -ne "$(color)$$frame$(ANSI_NC)"
+	echo -n "$(color)$$frame$(ANSI_NC)"
 endef

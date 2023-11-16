@@ -6,13 +6,20 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 21:59:24 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/13 23:31:15 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/16 10:05:57 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ################################################################
 # Makefile containing the variables used for graphical display #
 ################################################################ 
+
+# Variable to deactivate the fancy display if set to TRUE #
+SERIOUS			:=	FALSE
+
+# Variable used for makefile information display #
+MAKEFILE_NAME	:=	make@miniRT
+
 
 ## Text formatting variables ##
 # Reset text formatting #
@@ -41,6 +48,20 @@ ANSI_FG_BWHI	:=	"\\e[97m"
 
 # Background text color formatting #
 ANSI_BG_BLA		:=	"\\e[40m"
+
+
+## Loading status messages ##
+# List of available messages #
+STATUS_MSGS	:=	OK						\
+				Doing_my_best...		\
+				Working_on_it...		\
+				One_second_please...	\
+				Tracing_rays...			\
+				Constructing_sphere...	\
+				Unnecessary_step
+
+# Color used for the message display #
+THEME_COLOR	:=	$(ANSI_FG_YEL)
 
 
 ## Ascii texts ##

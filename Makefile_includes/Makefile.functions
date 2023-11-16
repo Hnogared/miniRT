@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 22:06:44 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/16 10:04:11 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/16 14:34:36 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,10 @@ else # ifneq ($(SERIOUS), TRUE) #
  endef
 
 endif # ifneq ($(SERIOUS), TRUE) #
+
+define get_load
+	@make -n | grep ""
+endef
 
 # Function to play the Makefile introduction cinematic #
 define play_intro

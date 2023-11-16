@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/16 13:38:45 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:39:12 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	main(int argc, char **argv)
 	mlx_loop(prog_data.mlx_ptr);
 	free_data(&prog_data);
 	return (0);
-
 }
 
 //	t_object	object;

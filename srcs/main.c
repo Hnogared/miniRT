@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/13 16:28:42 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/15 12:12:01 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	init_loops(t_data *data)
 {
 //	mlx_loop_hook(data->ptr, &disp_main_image, data);
 	mlx_hook(data->main_window.ptr, KeyPress, KeyPressMask, &key_handler, data);
-	mlx_hook(data->main_window.ptr, 17, 0, &free_and_exit, data);
+	mlx_hook(data->main_window.ptr, DestroyNotify, NoEventMask, &free_and_exit,
+		data);
 	mlx_loop(data->mlx_ptr);
 }
 
@@ -67,7 +68,7 @@ int	main(int argc, char **argv)
 	ft_bzero(&prog_data, sizeof(t_data));
 	prog_data.mlx_ptr = mlx_init();
 	if (open_main_window(&prog_data, "miniRT"))
-		return (1);
+		return (2);
 	free(line);
 	free_str_tab(tab);
 	init_loops(&prog_data);

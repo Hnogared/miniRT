@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/14 00:50:39 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/16 09:38:04 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -142,44 +142,59 @@ endif
 
 all:	$(NAME)
 
-
 ## Compilation rules ##
 # Compile the executable depending on the libraries archives and header files, #
 #  as well as all the object files #
 $(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS) $(AUTO_IFLAGS) $(AUTO_LFLAGS)
+	$(call custom_loading_command,										\
+		$(CC) $(CFLAGS) -o $@ $(OBJS) $(AUTO_IFLAGS) $(AUTO_LFLAGS),	\
+		"$(THEME_COLOR)Compiling executable : $(NAME)$(ANSI_NC)")
 
 # Compile an object file depending on its source file and the object directory #
 $(OBJS_DIR)/%.o:	%.c | $(OBJS_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@ $(AUTO_IFLAGS) $(AUTO_LFLAGS)
+	$(call custom_loading_command,									\
+		$(CC) $(CFLAGS) -c $< -o $@ $(AUTO_IFLAGS) $(AUTO_LFLAGS),	\
+		"$(THEME_COLOR)Compiling object file : $@$(ANSI_NC)")
 
 
 ## Directories rules ##
 # Create the object directory if missing #
 $(OBJS_DIR):
-	mkdir $(OBJS_DIR)
+	$(call custom_command,										\
+		mkdir $(OBJS_DIR),										\
+		"$(THEME_COLOR)Created the $(OBJS_DIR)/ directory.")
 
 # Create the archive directory if missing #
 $(ARCHIVES_DIR):
-	mkdir $(ARCHIVES_DIR)
+	$(call custom_command,														\
+		mkdir $(ARCHIVES_DIR),													\
+		"$(THEME_COLOR)A wild $(ARCHIVES_DIR)/ directory appeared !$(ANSI_NC)")
 
 
 ## Cleanup rules ##
 # Remove all object files #
 clean:
-	$(RM) $(OBJS)
+	$(call custom_command,										\
+		$(RM) $(OBJS),											\
+		"$(THEME_COLOR)Yeet and delete $(OBJS) !$(ANSI_NC)")
 
 # Remove all object files and the executable #
 fclean:	clean
-	$(RM) $(NAME)
+	$(call custom_command,							\
+		$(RM) $(NAME),								\
+		"$(THEME_COLOR)Removed $(NAME).$(ANSI_NC)")
 
 # Remove all minilibx and libft archives from the archive dir #
 lclean:
-	$(RM) $(MLX_ARCHS_DEPEND) $(LFT_ARCHS_DEPEND)
+	$(call custom_command,												\
+		$(RM) $(MLX_ARCHS_DEPEND) $(LFT_ARCHS_DEPEND),					\
+		"$(THEME_COLOR)Deleted $(ARCHS_DEPEND), it's gone.$(ANSI_NC)")
 
 # Remove all object files and the object directory #
 dclean:	clean
-	$(RM) $(OBJS_DIR)
+	$(call custom_command,												\
+		$(RM) $(OBJS_DIR),												\
+		"$(THEME_COLOR)Deleted the $(OBJS_DIR)/ directory.$(ANSI_NC)")
 
 # Remove all object files and the executable, then recompile everything #
 re:	fclean all

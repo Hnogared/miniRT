@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:47:12 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/13 15:52:28 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/15 12:03:20 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,12 @@ int	open_main_window(t_data *data, char *title)
 t_window	*my_new_window(void *mlx_ptr, t_window *new_window_p,
 	int dimensions[2], char *title)
 {
-	if (!mlx_ptr || !new_window_p)
+	if (!mlx_ptr || !new_window_p || !dimensions || !title)
 		return (NULL);
 	new_window_p->ptr = mlx_new_window(mlx_ptr, dimensions[0], dimensions[1],
 			title);
 	if (!new_window_p->ptr)
 		return (NULL);
-	new_window_p->width = dimensions[0];
-	new_window_p->height = dimensions[1];
 	if (!my_new_image(mlx_ptr, &new_window_p->image, dimensions[0],
 			dimensions[1]))
 	{
@@ -61,6 +59,8 @@ t_window	*my_new_window(void *mlx_ptr, t_window *new_window_p,
 		new_window_p->ptr = NULL;
 		return (NULL);
 	}
+	new_window_p->width = dimensions[0];
+	new_window_p->height = dimensions[1];
 	return (new_window_p);
 }
 
@@ -90,7 +90,7 @@ void	my_destroy_window(void *mlx_ptr, t_window *window)
  */
 void	my_put_pixel_to_window(t_window *window, int x, int y, int color)
 {
-	if (window)
+	if (window && window->image.ptr)
 		my_put_pixel_to_image(window->image.ptr, x, y, color);
 }
 

@@ -60,7 +60,7 @@ char	***check_scene(char **tab)
 	check_char(block);
 	check_num_objects(block);
 	check_numbers(block);
-	check_range_numbers(block);
+	//check_range_numbers(block);
 	return (block);
 }
 

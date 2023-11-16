@@ -25,5 +25,10 @@
 # define TOO_MANY_COMMA "error: too many comma in number"
 # define TOO_MANY_DOT "error: too many dot in number"
 # define TOO_MANY_OBJS "error : too many objects"
+# define COLOR_NOT_GOOD "error : wrong arguments for colors"
+# define WRONG_FOV "error : FOV must be between 0 and 180"
+# define RANGE_VECTOR "error : vectors can only be between -1 and 1"
+# define RANGE_LIGHT "error : light can only be between 0 and 1"
 
 #endif
+.

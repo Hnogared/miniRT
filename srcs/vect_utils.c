@@ -78,9 +78,9 @@ t_vector    prod_vec_int(t_vector a, int k)
     return (c);
 }
 
-int    prod_scal_vec(t_vector a, t_vector b)
+float    prod_scal_vec(t_vector a, t_vector b)
 {
-    int    c;
+    float    c;
 
     c = a.x * b.x + a.y * b.y + a.z * b.z;
 
@@ -100,21 +100,21 @@ t_vector    prod_vec_vec(t_vector a, t_vector b)
 
 t_vector calc_ref_form(t_vector i, t_vector n)
 {
-    t_vector   r;
-	int		scal;
+    t_vector    r;
+	float   	scal;
 
 	scal = prod_scal_vec(i, n);
 	r = sous_vec_vec(i, prod_vec_int(n, 2*scal));
 	return (r);
 }
 
-int	magnitude(t_vector n)
+float	magnitude(t_vector n)
 {
-	int			a;
-	int			nxc;
-	int			nyc;
-    int			nzc;
-    t_vector	nn;
+	float		a;
+	float		nxc;
+	float		nyc;
+    float		nzc;
+    t_vector    nn;
 
     nxc = pow(n.x, 2);
     nyc = pow(n.y, 2);
@@ -123,9 +123,9 @@ int	magnitude(t_vector n)
 	return (a);
 }
 
-int	normalise(t_vector n)
+t_vector	normalise(t_vector n)
 {
-	int			a;
+	float	a;
 	
     a = magnitude(n);
     if (a == 1)
@@ -141,9 +141,9 @@ int	normalise(t_vector n)
 
 int dist(t_coords a, t_coords b)
 {
-    int x;
-    int y;
-    int z;
+    float x;
+    float y;
+    float z;
 
     x = pow((b.x - a.x), 2);
     y = pow((b.y - a.y), 2);

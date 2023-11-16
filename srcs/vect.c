@@ -63,51 +63,91 @@ t_vector    cal_sphere(t_data *data, t_vector vec_inc, t_coords origin)
     return (r);
 }
 
-t_vector    cal_plan(t_data *data, t_vector vec_inc, t_coords origin)
+t_vector    cal_plan(t_vector vec_inc, t_object plan)
 {
     t_vector    n;
     t_vector    r;
-    t_object    plan;
 
-    //plan = fonction pour savoir quel plan ?
     n = normalise(plan.orientation_vector);
     r = calc_ref_form(vec_inc, n);
     return (r);
 }
 
-t_vector    calcul_ref(t_data *data, t_vector vec_inc, t_coords origin, t_object obj)
+t_vector    calcul_ref(t_data *data, t_vector vec_inc, t_object obj)
 {
-    unsigned short	type;
     t_vector    vec_ref;
 
-    type == 3;
-    //type = fonction pour savoit si ca touche les objets 
-    /*if(type == BLANK_OBJ)
-        vec_ref = cal_blank(data, vec_inc);
-    if(type == CAMERA_OBJ)
-        vec_ref = cal_camera(data, vec_inc);
-    if(type == LIGHT_OBJ)
-        vec_ref = cal_light(data, vec_inc);*/
-    if(type == SPHERE_OBJ)
-        //vec_ref = cal_sphere(data, vec_inc, origine);
-    if(type == PLANE_OBJ)
-        //vec_ref = cal_plan(data, vec_inc);
-    if(type == CYLINDER_OBJ)
-        //vec_ref = cal_cylinder(data, vec_inc);
+    if (obj.type == SPHERE_OBJ)
+		vec_ref = cal_sphere(data, vec_inc, origine);
+	if (obj.type == PLANE_OBJ)
+		vec_ref = cal_plan(vec_inc, obj);
+	//if (obj.type == CYLINDER_OBJ)
+	//	vec_ref = cal_cylinder(data, vec_inc);
     return (vec_ref);
 }
 
-int	try_plan(t_data *data, t_coords pos_test, t_object obj)
+int try_sphere(t_data *data, t_coords pos_test, t_object obj, t_vector vec_inc)
 {
-	
+    /*equationa resoudre
+    P=O+t⋅D
+    Où :
+    P est le point d'intersection.
+    O est le point d'origine du rayon.
+    D est la direction normalisée du rayon.
+    t est le paramètre a déterminer.*/
+
+    /*equation d'une sphere :
+    (x-a)^2 + (y−b)^2 + (z-c)^2 = r^2.
+    Où (a,b,c) est le centre de la sphère, et r le rayon.
+    */
+
+    /*pour trouver t, equation a resoudre :
+    ((Ox+t⋅Dx) - a)^2 + ((Oy+t⋅Dy) - b)^2 + ((Oz+t⋅Dz) - c)^2.
+    at^2 + bt + c = 0;
+    a = ||D||^2;
+    b = 2 x D.(O - C) 
+    c = ||O||^2 + ||C||^2 -2x(C.O) - r^2
+    
+    C = centre de la sphere et r son rayon.
+
+    delta = B^2 - 4AC; si pas de solution dans le reel (= delta < 0) alors pas d'intersection.
+
+    pour plus de precision, voir cahier.
+    ici origine du rayon est la position test = FAUX A AMELIORER !!!!.
+    */
+
+    float   a;
+    float   b;
+    float   c;
+    float   delta;
+
+    a = pow(magnitude(vec_inc), 2);
+    b = 2 * prod_scal_vec(vec_inc, add_vec_coord(pos_test, prod_vec_int(obj.coords, -1)));
+    c = pow(magnitude(pos_test), 2) + pow(magnitude(obj.coords), 2) - 2 * prod_scal_vec(obj.coords, pos_test) - pow((obj.special_data.sphere.diameter / 2), 2);
+
 }
 
-int	do_touch(t_data *data, t_coords pos_test, t_object obj)
+int	try_plan(t_coords pos_test, t_object plan)
+{
+    //equation a resoudre (ax + by + cz + d =0) avec vecteur normal du plan (donne dans le sujet) N(a, b, c) et d a determiner avec le point du plan (aussi donne dans le sujet)
+    // d = -(ax + by + cz) avec toujours N(a, b, c) et (x, y, z) les coordonnees du point
+    float   d;
+    float   res;
+
+    d = -(plan.orientation_vector.x * plan.coords.x + plan.orientation_vector.y * plan.coords.y + plan.orientation_vector.z * plan.coords.z);
+    res = plan.orientation_vector.x * pos_test.x + plan.orientation_vector.y * pos_test.y + plan.orientation_vector.z * pos_test.z + d;
+    if (res == 0)
+        return (1);
+    else
+        return (0);
+}
+
+int	do_touch(t_data *data, t_coords pos_test, t_vector vec_inc, t_object obj)
 {
 	if (obj.type == SPHERE_OBJ)
-		return (try_sphere(data, pos_test, obj));
+		return (try_sphere(data, pos_test, obj, vec_inc));
 	if (obj.type == PLANE_OBJ)
-		return (try_plan(data, pos_test, obj));
+		return (try_plan(pos_test, obj, vec_inc));
 	//if (obj.type == CYLINDER_OBJ)
 	//	return (try_cylinder(data, vec_inc, obj));
 }
@@ -121,9 +161,9 @@ t_vector    touch_object(t_data *data, t_vector vec_inc, t_coords pos_test)
     vec_ref = vec_inc;
     while (data->scene_objects[i])
     {
-        if (do_touch(data, pos_test, data->scene_objects[i]))
+        if (do_touch(data, pos_test, vec_inc, data->scene_objects[i]) == 1)
         {
-			vec_ref = calcul_ref(data, vec_inc, origin, data->scene_objects[i]);
+			vec_ref = calcul_ref(data, vec_inc, data->scene_objects[i]);
 			break
         }
 		i++;

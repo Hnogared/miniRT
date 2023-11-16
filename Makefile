@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/16 17:55:17 by motoko           ###   ########.fr        #
+#    Updated: 2023/11/16 18:08:30 by motoko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ VPATH			:=	$(SRCS_DIR):					\
 					$(SRCS_DIR)/object_management:	\
 					$(SRCS_DIR)/display:			\
 					$(SRCS_DIR)/parsing:			\
-					$(SRCS_DIR)/user_interface
+					$(SRCS_DIR)/user_interface		\
+					$(SRCS_DIR)/utils
 
 # Source files names #
 SRCS			:=	main.c					\
@@ -60,7 +61,7 @@ SRCS			:=	main.c					\
 					window_management.c		\
 					keyboard.c				\
 					free_and_exit.c			\
-					utils.c
+					handle_errors.c
 
 
 ## Libraries files ##

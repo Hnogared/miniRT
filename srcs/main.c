@@ -6,11 +6,22 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/16 17:51:30 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/16 18:16:37 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+void	initialize_data(t_data *data, char **tab)
+{
+	int	i;
+	
+	i = 0;
+	while (tab[i])
+		i++;
+	data->scene_objects = (t_object *)malloc(sizeof(t_object) * i);	
+
+}
 
 int	main(int argc, char **argv)
 {
@@ -25,6 +36,7 @@ int	main(int argc, char **argv)
 	line = get_file(argv[1]);
 	tab = ft_split(line, '\n');
 	check_scene(tab);
+	initialize_data(&prog_data, tab);
 
 	free(line);
 	free_str_tab(tab);

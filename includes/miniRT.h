@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/16 10:49:50 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:14:30 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,9 @@ void		print_cylinder_data(t_special_data cylinder);
 /* image_management.c */
 t_image		my_new_image(void *mlx_ptr, int width, int height);
 void		my_put_pixel_to_image(t_image *image, int x, int y, int color);
+
+/* main_window.c */
+void		redraw_main_window(t_data *data);
 
 /* window_management.c */
 int			open_main_window(t_data *data, char *title);

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/16 11:04:07 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:29:36 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,7 @@
 
 int	main(int argc, char **argv)
 {
-/*	t_image	image;
-	void	*mlx_ptr;
-	
-	mlx_ptr = mlx_init();
-	image = my_new_image(mlx_ptr, 20, 20);
-	my_put_pixel_to_image(&image, 1, 1, 0xFFFFFF);
-	(void)argv;
-	if (argc)
-		return (0);
-	return (0);
-*/	char	*line;
+	char	*line;
 	char	**tab;
 	t_data	prog_data;
 
@@ -41,6 +31,7 @@ int	main(int argc, char **argv)
 		return (2);
 	free(line);
 	free_str_tab(tab);
+	redraw_main_window(&prog_data);
 	init_key_hooks(&prog_data);
 	mlx_loop(prog_data.mlx_ptr);
 	free_data(&prog_data);

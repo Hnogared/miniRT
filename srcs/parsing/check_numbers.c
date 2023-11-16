@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:07:54 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/16 13:57:44 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/16 14:07:55 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	check_dot_and_comma(char *s)
 			comma++;
 		if (comma > 2)
 			err(TOO_MANY_COMMA);
-		i = i + j + 1;
+		i = j + 1;
 	}
 }
 
@@ -71,7 +71,7 @@ void	check_is_digit(char *s)
 		}
 		if (i == 0 && !(ft_isdigit(s[i]) || s[i] == '-'))
 				err(IS_NOT_NUMBER);
-		if (s[i - 1] && ((s[i - 1] == ',') || (s[i - 1] == '.' && s[i] == '-')))
+		if (s[i - 1] && ((s[i - 1] == ',') && s[i] == '-'))
 		{
 			i++;
 			continue ;

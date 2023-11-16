@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/16 09:38:04 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/16 09:43:45 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -148,7 +148,7 @@ all:	$(NAME)
 $(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS)
 	$(call custom_loading_command,										\
 		$(CC) $(CFLAGS) -o $@ $(OBJS) $(AUTO_IFLAGS) $(AUTO_LFLAGS),	\
-		"$(THEME_COLOR)Compiling executable : $(NAME)$(ANSI_NC)")
+		"$(THEME_COLOR)Creating executable \ \ : $(NAME)$(ANSI_NC)")
 
 # Compile an object file depending on its source file and the object directory #
 $(OBJS_DIR)/%.o:	%.c | $(OBJS_DIR)

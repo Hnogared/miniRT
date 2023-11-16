@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/16 15:45:16 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/16 18:16:25 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,8 +127,11 @@ AUTO_LFLAGS		:=	-L $(ARCHIVES_DIR) $(MLX_LFLAGS) $(LFT_LFLAGS) $(LFLAGS)
 AUTO_IFLAGS		:=	$(IFLAGS) -I $(INCLUDES_DIR)
 
 
-## 
+## Loading variables ##
+# The total load of a make task #
 LOAD		:=	0
+
+# Track the progress of a make task #
 PROGRESS	:=	0
 
 
@@ -163,6 +166,7 @@ get_obj_load:
 ifndef CALL_MAKE
 	$(eval LOAD := $(shell make -n SERIOUS=TRUE CALL_MAKE=0 | grep '^gcc'\
 		 | grep -v 'miniRT' | wc -l))
+	$(eval PROGRESS := 0)
 endif
 
 # Compile an object file depending on its source file and the object directory #
@@ -170,8 +174,8 @@ $(OBJS_DIR)/%.o:	%.c | get_obj_load $(OBJS_DIR)
 	$(call custom_loading_command,									\
 		$(CC) $(CFLAGS) -c $< -o $@ $(AUTO_IFLAGS) $(AUTO_LFLAGS),	\
 		"$(THEME_COLOR)Compiling object file : $@$(ANSI_NC)")
-	$(call put_loading)
-	$(eval )
+	$(eval PROGRESS := $(shell echo $$(( $(PROGRESS) + 1 ))))
+	$(call put_loading, $(PROGRESS), $(LOAD), $(MAX_PROG_LENGTH))
 
 
 ## Directories rules ##

@@ -10,18 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "miniRT.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-int	ft_strlen(char *str);
-
-typedef struct s_rgb_color
-{
-	char	*red;
-	char	*green;
-	char	*blue;
-}				t_rgb_color;
+#include "miniRT.h"
 
 char	*ft_strjoin_and_free(char *s1, char *s2)
 {
@@ -78,13 +67,11 @@ char	*change_hexa(int nb)
 	return (str);
 }
 
-char    *add_col(char *fcolor, char *color)
+char    *add_col(char *fcolor, unsigned char color)
 {
-    int		col;
 	char	*col_s;
 
-	col = atoi(color);
-	col_s = change_hexa(col);
+	col_s = change_hexa(color);
 	fcolor = ft_strjoin_and_free(fcolor, col_s);
 	return (fcolor);
 }

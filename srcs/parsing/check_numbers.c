@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:07:54 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/13 21:17:44 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/16 14:14:09 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,39 +39,50 @@ void	check_dot_and_comma(char *s)
 			comma++;
 		if (comma > 2)
 			err(TOO_MANY_COMMA);
-		i = i + j + 1;
+		i = j + 1;
 	}
 }
 
-void	check_is_digit(char *s)
+void	check_begin_and_end(char *s)
 {
-	int	i;
 	int	len;
 
-	i = 0;
 	len = ft_strlen(s);
 	if (s[len - 1] == ',' || s[len - 1] == '.')
 		err(IS_NOT_NUMBER);
 	if (s[0] == ',' || s[0] == '.')
 		err(IS_NOT_NUMBER);
+}
+
+void	check_is_digit(char *s)
+{
+	int	i;
+
+	i = 0;
+	check_begin_and_end(s);
 	check_dot_and_comma(s);
 	while (s[i])
 	{
 		if (i != 0 && ((s[i] == ',' || s[i] == '.'))
-				&& ((s[i - 1] != ',' && s[i - 1] != '.')))
+			&& ((s[i - 1] != ',' && s[i - 1] != '.')))
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		if (i == 0 && !(ft_isdigit(s[i]) || s[i] == '-'))
-				err(IS_NOT_NUMBER);
+			err(IS_NOT_NUMBER);
+		if (s[i - 1] && ((s[i - 1] == ',') && s[i] == '-'))
+		{
+			i++;
+			continue ;
+		}
 		if (i != 0 && !ft_isdigit(s[i]))
-				err(IS_NOT_NUMBER);
+			err(IS_NOT_NUMBER);
 		i++;
 	}
 }
 
-void		check_duplicate_obj(char **block, int *is_present)
+void	check_duplicate_obj(char **block, int *is_present)
 {
 	if (!ft_strncmp(block[0], "A", 2))
 		is_present[0] += 1;

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/16 14:51:41 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/16 14:54:05 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	main(int argc, char **argv)
 	prog_data.mlx_ptr = mlx_init();
 	if (open_main_window(&prog_data, "miniRT"))
 		return (2);
-//	free(line);
-//	free_str_tab(tab);
+	free(line);
+	free_str_tab(tab);
 	prog_data.test = 10;
 	redraw_main_window(&prog_data);
 	init_key_hooks(&prog_data);

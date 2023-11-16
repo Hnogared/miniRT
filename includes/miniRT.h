@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/13 19:38:38 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/16 14:48:10 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <errno.h>
 # include <stdbool.h>
 # include <stdlib.h>
+# include <stdnoreturn.h>
+# include <math.h>
 
 # include "libft.h"
 # include "mlx.h"
@@ -47,6 +49,12 @@ typedef struct s_coords
 	float	y;
 	float	z;
 }				t_coords;
+
+typedef struct s_ray
+{
+	t_vector	vector;
+	t_coords	coords;
+}				t_ray;
 
 typedef struct s_rgb_color
 {
@@ -109,28 +117,31 @@ typedef struct s_object
 	void			(*data_print_func)(t_special_data special_data);
 }				t_object;
 
-/*
-typedef struct s_object
+typedef struct s_image
 {
-	unsigned short	type;
-	t_coords		coords;
-	t_vector		orientation_vector;
-	//t_print_func	data_print_func;
-	union
-	{
-		t_camera	camera_data;
-		t_light		light_data;
-		t_sphere	sphere_data;
-		t_plane		plane_data;
-		t_cylinder	cylinder_data;
-	};
-	//t_special_data	special_data;
-}				t_object;
-*/
+	int		width;
+	int		height;
+	int		bits_per_pixel;
+	int		line_size;
+	int		endian;
+	void	*ptr;
+	char	*addr;
+}				t_image;
+
+typedef struct s_window
+{
+	int		width;
+	int		height;
+	t_image	image;
+	void	*ptr;
+}				t_window;
 
 typedef struct s_data
 {
+	t_window	main_window;
 	t_object	*scene_objects;
+	void		*mlx_ptr;
+	int			test;
 }				t_data;
 
 int		check_file(char *scene);
@@ -140,6 +151,11 @@ void	check_char(char ***block);
 void	check_numbers(char ***block);
 void	check_range_numbers(char ***block);
 void	err(char *str);
+
+/* free_and_exit.c */
+noreturn int	free_and_exit(t_data *data);
+void			free_data(t_data *data);
+void			free_str_tab(char **str_tab);
 
 /* SRCS/OBJECT_MANAGEMENT */
 /* object_creation.c */
@@ -167,5 +183,28 @@ void		print_sphere_data(t_special_data sphere);
 void		print_light_data(t_special_data light);
 void		print_plane_data(t_special_data plane);
 void		print_cylinder_data(t_special_data cylinder);
+
+/* Theouche*/
+char    *conv(t_rgb_color color);
+
+/* SRCS/DISPLAY */
+/* image_management.c */
+t_image		my_new_image(void *mlx_ptr, int width, int height);
+void		my_put_pixel_to_image(t_image *image, int x, int y, int color);
+
+/* main_window.c */
+void		redraw_main_window(t_data *data);
+
+/* window_management.c */
+int			open_main_window(t_data *data, char *title);
+t_window	my_new_window(void *mlx_ptr, int dimensions[2], char *title);
+void		my_destroy_window(void *mlx_ptr, t_window *window);
+void		my_put_pixel_to_window(t_window *window, int x, int y, int color);
+void		redraw_window(void *mlx_ptr, t_window *window);
+
+/* SRCS_USER_INTERFACE */
+/* keyboard.c */
+int			key_handler(int keycode, t_data *data);
+void		init_key_hooks(t_data *data);
 
 #endif

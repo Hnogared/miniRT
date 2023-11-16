@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/16 14:42:06 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/16 15:45:16 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -160,13 +160,18 @@ $(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS)
 		"$(THEME_COLOR)Creating executable \ \ : $(NAME)$(ANSI_NC)")
 
 get_obj_load:
-	
+ifndef CALL_MAKE
+	$(eval LOAD := $(shell make -n SERIOUS=TRUE CALL_MAKE=0 | grep '^gcc'\
+		 | grep -v 'miniRT' | wc -l))
+endif
 
 # Compile an object file depending on its source file and the object directory #
 $(OBJS_DIR)/%.o:	%.c | get_obj_load $(OBJS_DIR)
 	$(call custom_loading_command,									\
 		$(CC) $(CFLAGS) -c $< -o $@ $(AUTO_IFLAGS) $(AUTO_LFLAGS),	\
 		"$(THEME_COLOR)Compiling object file : $@$(ANSI_NC)")
+	$(call put_loading)
+	$(eval )
 
 
 ## Directories rules ##

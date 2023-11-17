@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/16 17:52:05 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/17 15:27:40 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <stdnoreturn.h>
 # include <math.h>
+# include <X11/Xlib.h>
 
 # include "libft.h"
 # include "mlx.h"
@@ -84,6 +85,8 @@ int			open_main_window(t_data *data, char *title);
 t_window	my_new_window(void *mlx_ptr, int dimensions[2], char *title);
 void		my_destroy_window(void *mlx_ptr, t_window *window);
 void		my_put_pixel_to_window(t_window *window, int x, int y, int color);
+void		my_put_square_to_window(t_window *window, int start_coords[2],
+	int size[2], int color);
 void		redraw_window(void *mlx_ptr, t_window *window);
 
 /* SRCS_USER_INTERFACE */

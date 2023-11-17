@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:47:12 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/16 16:31:14 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/17 15:27:54 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,28 @@ void	my_put_pixel_to_window(t_window *window, int x, int y, int color)
 {
 	if (window && window->image.ptr)
 		my_put_pixel_to_image(&window->image, x, y, color);
+}
+
+void	my_put_square_to_window(t_window *window, int start_coords[2],
+	int size[2], int color)
+{
+	int	x;
+	int	y;
+
+	if (!window || !window->image.ptr)
+		return ;
+	x = 0;
+	y = 0;
+	while (y < size[1] && start_coords[1] + y <= window->height)
+	{
+		my_put_pixel_to_window(window, start_coords[0] + x, start_coords[1] + y,
+			color);
+		x++;
+		if (x < size[0] && start_coords[0] + x <= window->width)
+			continue ;
+		x = 0;
+		y++;
+	}
 }
 
 /*

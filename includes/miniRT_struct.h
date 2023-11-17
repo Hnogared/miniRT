@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/17 12:37:02 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:51:59 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,7 @@ typedef struct s_window
 /*
  * Structure holding all the program's data.
  *
+ * int pixel_ratio			-> number of pixels used to display one pixel
  * t_window main_window		-> the main window structure to display on the screen
  * t_ambient_light ambient_l-> the scene's ambient lighting data structure
  * t_object *scene_objects	-> pointer to all the scene's objects {plane,light...}
@@ -226,10 +227,11 @@ typedef struct s_window
  */
 typedef struct s_data
 {
+	int				pixel_ratio;
 	t_window		main_window;
 	t_ambient_light	ambient_l;
 	t_object		*scene_objects;
-	void			*mlx_ptr;
+	t_xvar			*mlx_ptr;
 	int				test;
 }				t_data;
 

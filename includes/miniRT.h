@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 17:45:59 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:02:00 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	    *conv(t_rgb_color color);
 /* SRCS/DISPLAY */
 /* image_management.c */
 t_image		my_new_image(void *mlx_ptr, int width, int height);
+size_t		get_image_pixel(t_image image, int x, int y);
 void		my_put_pixel_to_image(t_image *image, int x, int y, int color);
 
 /* main_window.c */

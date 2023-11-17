@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:55:03 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/16 10:57:32 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:12:05 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,31 @@ t_image	my_new_image(void *mlx_ptr, int width, int height)
 }
 
 /*
+ * Function to return the pixel color value of an image at x-y coordinates.
+ *
+ * @param t_image image	-> image structure to get the pixel color from
+ * @param int x			-> x coordinate of the pixel to get
+ * @param int y			-> y coordinate of the pixel to get
+ * @return size_t		-> color value of the retrieved pixel
+ */
+size_t	get_image_pixel(t_image image, int x, int y)
+{
+	return (*(size_t *) image.addr + (y * image.line_size
+			+ x * image.bits_per_pixel / 8));
+}
+
+/*
  * Function to change an image's pixel color at the coordinates x and y.
  *
  * @param t_image *image	-> pointer to the image structure to modify
  * @param int x				-> x coordinate of the pixel to change
  * @param int y				-> y coordinate of the pixel to change
- * @param int color			-> the pixel's new color
+ * @param size_t color		-> the pixel's new color
  */
-void	my_put_pixel_to_image(t_image *image, int x, int y, int color)
+void	my_put_pixel_to_image(t_image *image, int x, int y, size_t color)
 {
 	char	*dst;
 
 	dst = image->addr + (y * image->line_size + x * image->bits_per_pixel / 8);
-	*(unsigned int *)dst = color;
+	*(size_t *)dst = color;
 }

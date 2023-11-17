@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:47:12 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 17:45:05 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:09:47 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	my_destroy_window(void *mlx_ptr, t_window *window)
  * @param t_window *window	-> pointer to the window structure to modify
  * @param int x				-> x coordinate of the pixel to change
  * @param int y				-> y coordinate of the pixel to change
- * @param int color			-> the changed pixel's new color
+ * @param size_t color		-> the changed pixel's new color
  */
-void	my_put_pixel_to_window(t_window *window, int x, int y, int color)
+void	my_put_pixel_to_window(t_window *window, int x, int y, size_t color)
 {
 	if (window && window->image.ptr)
 		my_put_pixel_to_image(&window->image, x, y, color);
@@ -76,13 +76,13 @@ void	my_put_pixel_to_window(t_window *window, int x, int y, int color)
  * Function to draw a colored square on a window image at x-y coordinates. 
  * /!\ This change will only be seen after calling redraw_window afterwards.
  *
- * t_window *window		-> pointer to the window structure to modify
- * int start_coords[2]	-> x-y coordinates of the top left corner of the square
- * int size[2]			-> width and height of the square
- * int color			-> colorof the square
+ * @param t_window *window		-> pointer to the window structure to modify
+ * @param int start_coords[2]	-> x-y coordimates of the square's top left corner
+ * @param int size[2]			-> width and height of the square
+ * @param size_t color			-> colorof the square
  */
 void	my_put_square_to_window(t_window *window, int start_coords[2],
-	int size[2], int color)
+	int size[2], size_t color)
 {
 	int	x;
 	int	y;

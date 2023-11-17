@@ -57,11 +57,13 @@ SRCS			:=	main.c					\
 					object_modification.c	\
 					print_object_data.c		\
 					print_object_data_2.c	\
+					check_args.c			\
 					image_management.c		\
 					main_window.c			\
 					window_management.c		\
 					keyboard.c				\
 					free_and_exit.c			\
+					check_range_numbers1.c	\
 					handle_errors.c
 
 

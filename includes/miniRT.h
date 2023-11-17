@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 18:17:19 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:28:50 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ void			check_char(char ***block);
 void			check_numbers(char ***block);
 void			check_range_numbers(char ***block);
 void			err(char *str);
+void			check_num_args(char ***block);
+void			check_num_objects(char ***block);
+int				check_range_fov(char *fov);
+int				check_range_vectors(char *str);
+int				check_range_color(char *str);
+int				check_range_light(char *str);
 
 /* free_and_exit.c */
 noreturn int	free_and_exit(t_data *data);

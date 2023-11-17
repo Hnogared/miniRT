@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/17 12:38:01 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/17 17:30:02 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -147,6 +147,12 @@ endif
 # Force the program's opened window to the specified height #
 ifdef WIN_HEIGHT
 CFLAGS	+=	-D WIN_HEIGHT=$(WIN_HEIGHT)
+endif
+
+# Force the program's default pixel ratio #
+# Ex: A ratio of 2 would make each calculated pixel to be 2 screen pixels wide #
+ifdef PIXEL_RATIO
+CFLAGS	+=	-D DEFAULT_PIXEL_RATIO=$(PIXEL_RATIO)
 endif
 
 # **************************************************************************** #

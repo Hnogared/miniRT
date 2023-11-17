@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/17 15:51:59 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 16:57:35 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,11 +228,11 @@ typedef struct s_window
 typedef struct s_data
 {
 	int				pixel_ratio;
+	int				test;
 	t_window		main_window;
 	t_ambient_light	ambient_l;
 	t_object		*scene_objects;
 	t_xvar			*mlx_ptr;
-	int				test;
 }				t_data;
 
 #endif

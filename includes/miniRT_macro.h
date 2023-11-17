@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:18:25 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/17 14:34:10 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:36:44 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 /*
  * Program main window width override.
  * If equal to 0, the main window takes the width of the computer screen.
- * Use WIN_WIDTH=<value> with make / the compilation flag -D WIN_WIDTH=<value>.
+ *
+ * Use WIN_WIDTH=<value> with make to set it.
  */
 # ifndef WIN_WIDTH
 #  define WIN_WIDTH		0
@@ -25,10 +26,22 @@
 /*
  * Program main window height override.
  * If equal to 0, the main window takes the height of the computer screen.
- * Use WIN_HEIGHT=<value> with make / the compilation flag -D WIN_HEIGHT=<value>.
+ *
+ * Use WIN_HEIGHT=<value> with make to set it.
  */
 # ifndef WIN_HEIGHT
 #  define WIN_HEIGHT	0
+# endif
+
+/*
+ * The display pixel ratio represents the width and height, in screen pixels,
+ * of one calculated pixel.
+ * If equal or less than 0, the program taks a pixel ratio of 1.
+ *
+ * Use PIXEL_RATIO=<value> with make.
+ */
+# ifndef DEFAULT_PIXEL_RATIO
+#  define DEFAULT_PIXEL_RATIO	3
 # endif
 
 # define BUFFER_SIZE 1000

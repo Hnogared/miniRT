@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 16:01:26 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:30:43 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	initialize_data(t_data *data, char **tab)
 	if (open_main_window(data, "miniRT"))
 		return (2);
 	data->test = 10;
-	data->pixel_ratio = 3;
+	data->pixel_ratio = DEFAULT_PIXEL_RATIO + (DEFAULT_PIXEL_RATIO <= 0);
 	return (0);
 }
 
@@ -58,15 +58,6 @@ int	main(int argc, char **argv)
 	print_object_data(object);
 	//object.data_print_func(special_data);
 	printf("la couleur en hexa vaut : %s\n", conv(object.special_data.sphere.color));
-
-	// ft_bzero(&prog_data, sizeof(t_data));
-	// prog_data.mlx_ptr = mlx_init();
-	// if (open_main_window(&prog_data, "miniRT"))
-	// 	return (1);
-	// free(line);
-	// free_str_tab(tab);
-	// init_loops(&prog_data);
-	// free_data(&prog_data);
 	return (0);
 }
 

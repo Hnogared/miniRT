@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 18:30:05 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:34:42 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	initialize_data(t_data *data, char **tab)
 	data->test = 10;
 	data->pixel_ratio = DEFAULT_PIXEL_RATIO + (DEFAULT_PIXEL_RATIO <= 0);
 	free(data->scene_objects);
+	init_key_hooks(data);
 	return (0);
 }
 
@@ -61,8 +62,9 @@ int	main(int argc, char **argv)
 	free(line);
 	check_scene(tab);
 	initialize_data(&prog_data, tab);
-	free(line);
 	free_str_tab(tab);
+	redraw_main_window(&prog_data);
+	mlx_loop(prog_data.mlx_ptr);
 
 	/*
 	new_sphere(&object, (t_coords){1, 0, 10}, 1.0);

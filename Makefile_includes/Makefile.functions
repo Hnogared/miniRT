@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 22:06:44 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/16 14:34:36 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/16 18:13:12 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,27 @@ ifneq ($(SERIOUS), TRUE)
 	exit $$tmp
  endef
 
+# Function to display a loading bar with a given progress, total load and length #
+define put_loading
+	$(eval progress := $(1))
+	$(eval load := $(2))
+	$(eval bar_length := $(3))
+	@relative_progress=$$(( $(progress) * $(bar_length) / $(load) ));			\
+	status="$(progress) / $(load)";												\
+	if [ $(progress) -ne $(load) ]; then										\
+		echo -n "\n";															\
+	else																		\
+		$(eval end_status := $(subst _, , $(word 1, $(STATUS_MSGS)))) true;		\
+		status=$(end_status);													\
+	fi;																			\
+	echo -n "\e[K$(MAKEFILE_NAME): [$$status] ";								\
+	printf "[%.*s" $$relative_progress "$(MAX_PROG_BAR)";						\
+	printf "%-*s]\n" $$(( $(bar_length) - $$relative_progress )) "";			\
+	if [ $(progress) -ne $(load) ]; then										\
+		echo -n "\e[2A";														\
+	fi
+endef
+
 else # ifneq ($(SERIOUS), TRUE) #
 
 # Function to execute the command given as parameter #
@@ -60,10 +81,6 @@ else # ifneq ($(SERIOUS), TRUE) #
  endef
 
 endif # ifneq ($(SERIOUS), TRUE) #
-
-define get_load
-	@make -n | grep ""
-endef
 
 # Function to play the Makefile introduction cinematic #
 define play_intro

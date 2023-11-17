@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/16 14:01:43 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 10:59:25 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@ int	ray_trace(t_data *data, int x, int y)
 {
 	int	color;
 
-	color = 0 | (unsigned char) (y * data->test) << 16
-			| (unsigned char) (x * data->test) << 16
-			| (unsigned char) (x * data->test) << 8;
-	if (data)
-		return (color);
+	color = *(int *)(unsigned char [4]){0, x * data->test, 
+		(y * data->test) | (x * data->test), 0}; 
 	return (color);
 }
 
@@ -31,7 +28,7 @@ void	redraw_main_window(t_data *data)
 	int	color;
 
 	x = 0;
-	y = 30;
+	y = 30 ;
 	while (y < data->main_window.height)
 	{
 		color = ray_trace(data, x, y);

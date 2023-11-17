@@ -6,41 +6,51 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:07:54 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/16 14:14:09 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/17 17:47:02 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	check_dot_and_comma(char *s)
+void	count_dot_and_comma(char *s, int *dot, int *comma)
 {
-	int	i;
-	int	j;
-	int	comma;
-	int	dot;
+	int		i;
+	int		j;
+	size_t	len;
 
+	len = ft_strlen(s);
 	i = 0;
 	j = 0;
-	comma = 0;
-	dot = 0;
 	while (s[i])
 	{
-		dot = 0;
+		(*dot) = 0;
 		j = i;
 		while (s[j] && s[j] != ',')
 		{
 			if (s[j] == '.')
-				dot++;
+				(*dot)++;
 			j++;
 		}
-		if (dot > 1)
-			err(TOO_MANY_DOT);
 		if (s[j])
-			comma++;
-		if (comma > 2)
-			err(TOO_MANY_COMMA);
+			(*comma)++;
 		i = j + 1;
+		if (i > (int)len)
+			return ;
 	}
+}
+
+void	check_dot_and_comma(char *s)
+{
+	int	dot;
+	int	comma;
+
+	dot = 0;
+	comma = 0;
+	count_dot_and_comma(s, &dot, &comma);
+	if (dot > 1)
+		err(TOO_MANY_DOT);
+	if (comma > 2)
+		err(TOO_MANY_COMMA);
 }
 
 void	check_begin_and_end(char *s)
@@ -71,7 +81,7 @@ void	check_is_digit(char *s)
 		}
 		if (i == 0 && !(ft_isdigit(s[i]) || s[i] == '-'))
 			err(IS_NOT_NUMBER);
-		if (s[i - 1] && ((s[i - 1] == ',') && s[i] == '-'))
+		if (i > 0 && (s[i - 1] && ((s[i - 1] == ',') && s[i] == '-')))
 		{
 			i++;
 			continue ;
@@ -80,16 +90,6 @@ void	check_is_digit(char *s)
 			err(IS_NOT_NUMBER);
 		i++;
 	}
-}
-
-void	check_duplicate_obj(char **block, int *is_present)
-{
-	if (!ft_strncmp(block[0], "A", 2))
-		is_present[0] += 1;
-	if (!ft_strncmp(block[0], "C", 2))
-		is_present[1] += 1;
-	if (!ft_strncmp(block[0], "L", 2))
-		is_present[2] += 1;
 }
 
 void	check_numbers(char ***block)
@@ -108,14 +108,14 @@ void	check_numbers(char ***block)
 			check_is_digit(block[i][j]);
 			j++;
 		}
-		check_duplicate_obj(block[i], is_present);
+		if (!ft_strncmp(block[i][0], "A", 2))
+			is_present[0] += 1;
+		if (!ft_strncmp(block[i][0], "C", 2))
+			is_present[1] += 1;
+		if (!ft_strncmp(block[i][0], "L", 2))
+			is_present[2] += 1;
 		i++;
 	}
-	i = 0;
-	while (i < 3)
-	{
-		if (is_present[i] != 1)
-			err(DUPLICATE_OBJ);
-		i++;
-	}
+	if (is_present[0] != 1 || is_present[1] != 1 || is_present[2] != 1)
+		err(DUPLICATE_OBJ);
 }

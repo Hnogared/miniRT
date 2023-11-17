@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 21:59:24 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/16 10:05:57 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/16 18:11:27 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,3 +85,11 @@ ASCII_RT	:=	"%%%%%  %%%%%%"	\
 # Characters used to build frames #
 # Make sure to separate each one with whitespaces and keep the same amount #
 FRAME_CHARS	:=	"═" "║" "╔" "╗" "╚" "╝"
+
+
+## Loading bar variables ##
+# String containing the longest progress bar possible (100%) #
+MAX_PROG_BAR	:=	"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+
+# Variable limiting the maximum size of the progress bar (100%) #
+MAX_PROG_LENGTH	:=	40

@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/16 14:42:06 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/17 12:38:01 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,9 @@ VPATH			:=	$(SRCS_DIR):					\
 					$(SRCS_DIR)/object_management:	\
 					$(SRCS_DIR)/display:			\
 					$(SRCS_DIR)/parsing:			\
-					$(SRCS_DIR)/user_interface
+					$(SRCS_DIR)/user_interface:		\
+					$(SRCS_DIR)/vector:				\
+					$(SRCS_DIR)/utils
 
 # Source files names #
 SRCS			:=	main.c					\
@@ -61,8 +63,8 @@ SRCS			:=	main.c					\
 					window_management.c		\
 					keyboard.c				\
 					free_and_exit.c			\
-					utils.c					\
-					check_range_numbers1.c
+					check_range_numbers1.c	\
+					handle_errors.c
 
 
 ## Libraries files ##
@@ -129,8 +131,11 @@ AUTO_LFLAGS		:=	-L $(ARCHIVES_DIR) $(MLX_LFLAGS) $(LFT_LFLAGS) $(LFLAGS)
 AUTO_IFLAGS		:=	$(IFLAGS) -I $(INCLUDES_DIR)
 
 
-## 
+## Loading variables ##
+# The total load of a make task #
 LOAD		:=	0
+
+# Track the progress of a make task #
 PROGRESS	:=	0
 
 
@@ -162,13 +167,19 @@ $(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS)
 		"$(THEME_COLOR)Creating executable \ \ : $(NAME)$(ANSI_NC)")
 
 get_obj_load:
-	
+ifndef CALL_MAKE
+	$(eval LOAD := $(shell make -n SERIOUS=TRUE CALL_MAKE=0 | grep '^gcc'\
+		 | grep -v 'miniRT' | wc -l))
+	$(eval PROGRESS := 0)
+endif
 
 # Compile an object file depending on its source file and the object directory #
 $(OBJS_DIR)/%.o:	%.c | get_obj_load $(OBJS_DIR)
 	$(call custom_loading_command,									\
 		$(CC) $(CFLAGS) -c $< -o $@ $(AUTO_IFLAGS) $(AUTO_LFLAGS),	\
 		"$(THEME_COLOR)Compiling object file : $@$(ANSI_NC)")
+	$(eval PROGRESS := $(shell echo $$(( $(PROGRESS) + 1 ))))
+	$(call put_loading, $(PROGRESS), $(LOAD), $(MAX_PROG_LENGTH))
 
 
 ## Directories rules ##
@@ -263,25 +274,25 @@ $(LFT_ARCHS_DEPEND):	$(LFT_ARCHS_SRCS) | $(ARCHIVES_DIR)
 
 # Display a short list of all available rules #
 help:
-	@echo -e "\nMiniRT Makefile help - Available targets\n";				\
-	echo -e "$(ANSI_BOLD)BASIC TARGETS$(ANSI_NC)";							\
-	echo -e "\tall  re  help\n";											\
-	echo -e "$(ANSI_BOLD)FILES TARGETS$(ANSI_NC)";							\
-	echo -e -n "\t$(NAME)";												\
-	echo -e -n "$(OBJS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).o  ";		\
-	echo -e "$(ARCHIVES_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n";		\
-	echo -e "$(ANSI_BOLD)DIRECTORIES TARGETS$(ANSI_NC)";					\
-	echo -e "\t$(OBJS_DIR)  $(ARCHIVES_DIR)\n";							\
-	echo -e "$(ANSI_BOLD)CLEANUP TARGETS$(ANSI_NC)";						\
-	echo -e "\tclean  fclean  lclean  dclean\n\n";							\
-	echo -e "$(ANSI_BOLD)MINILIBX TARGETS$(ANSI_NC)";						\
-	echo -e "\tminilibx  minilibx-$(ANSI_FG_RED)<target>$(ANSI_NC)\n";		\
-	echo -e "$(ANSI_BOLD)MINILIBX FILES TARGETS$(ANSI_NC)";				\
-	echo -e "\t$(MLX_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n\n";	\
-	echo -e "$(ANSI_BOLD)LIBFT TARGETS$(ANSI_NC)";							\
-	echo -e "\tlibft  libft-$(ANSI_FG_RED)<target>$(ANSI_NC)\n";			\
-	echo -e "$(ANSI_BOLD)LIBFT FILES TARGETS$(ANSI_NC)";					\
-	echo -e "\t$(LFT_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n"
+	@echo "\nMiniRT Makefile help - Available targets\n";				\
+	echo "$(ANSI_BOLD)BASIC TARGETS$(ANSI_NC)";							\
+	echo "\tall  re  help\n";											\
+	echo "$(ANSI_BOLD)FILES TARGETS$(ANSI_NC)";							\
+	echo -n "\t$(NAME)";												\
+	echo -n "$(OBJS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).o  ";		\
+	echo "$(ARCHIVES_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n";		\
+	echo "$(ANSI_BOLD)DIRECTORIES TARGETS$(ANSI_NC)";					\
+	echo "\t$(OBJS_DIR)  $(ARCHIVES_DIR)\n";							\
+	echo "$(ANSI_BOLD)CLEANUP TARGETS$(ANSI_NC)";						\
+	echo "\tclean  fclean  lclean  dclean\n\n";							\
+	echo "$(ANSI_BOLD)MINILIBX TARGETS$(ANSI_NC)";						\
+	echo "\tminilibx  minilibx-$(ANSI_FG_RED)<target>$(ANSI_NC)\n";		\
+	echo "$(ANSI_BOLD)MINILIBX FILES TARGETS$(ANSI_NC)";				\
+	echo "\t$(MLX_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n\n";	\
+	echo "$(ANSI_BOLD)LIBFT TARGETS$(ANSI_NC)";							\
+	echo "\tlibft  libft-$(ANSI_FG_RED)<target>$(ANSI_NC)\n";			\
+	echo "$(ANSI_BOLD)LIBFT FILES TARGETS$(ANSI_NC)";					\
+	echo "\t$(LFT_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n"
 
 # **************************************************************************** #
 

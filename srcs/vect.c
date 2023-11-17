@@ -141,15 +141,22 @@ int	try_plan(t_coords pos_test, t_object plan)
 		return (0);
 }
 
-int	try_plan_cyl(t_coords pos_test, t_coords cp, t_vector n)
+int	try_plan_cyl(t_coords pos_test, t_coords cp, t_vector n, t_object obj)
 {
 	float	d;
 	float	res;
+	float	verif;
 
 	d = -(n.x * cp.x + n.y * cp.y + n * cp.z);
 	res = n.x * pos_test.x + n.y * pos_test.y + n.z * pos_test.z + d;
-	if (res == 0)
-		return (1);
+	if (res == 0) // une solution existe, on doit verifier pos_test - C'sup ou pos_test - C'inf soit inferieur a r;
+	{
+		verif = distance(pos_test, cp);
+		if (verif < obj.special_data.cylinder.diameter / 2)
+			return (1);
+		else
+			return (0);
+	}
 	else
 		return (0);
 }
@@ -165,9 +172,9 @@ int	try_cylinder_ext(t_coords pos_test, t_vector vec_inc, t_object obj)
 	cpi = advance_on_vec(obj.coords, obj.orientation_vector, - obj.special_data.cylinder.height / 2);
 
     // teste comme avec un plan mais on doit trouver une solutin et que la distance pos_test - C'sup ou pos_test - C'inf soit inferieur a r;
-	if (try_plan_cyl(pos_test, cps, obj.orientation_vector) == 1)
+	if (try_plan_cyl(pos_test, cps, obj.orientation_vector, obj) == 1)
 		return (2);
-	if (try_plan_cyl(pos_test, cpi, obj.orientation_vector) == 1)
+	if (try_plan_cyl(pos_test, cpi, obj.orientation_vector, obj) == 1)
 		return (3);
 	else
 		return (0);

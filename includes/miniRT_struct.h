@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/17 12:37:02 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 16:51:03 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ typedef struct s_data
 	t_window		main_window;
 	t_ambient_light	ambient_l;
 	t_object		*scene_objects;
+	unsigned short	obj_count;
 	void			*mlx_ptr;
 	int				test;
 }				t_data;

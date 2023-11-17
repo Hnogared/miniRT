@@ -61,6 +61,6 @@ char	***check_scene(char **tab)
 	check_first_el(block);
 	check_num_objects(block);
 	check_numbers(block);
-	//check_range_numbers(block);
+	check_range_numbers(block);
 	return (block);
 }

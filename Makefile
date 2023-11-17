@@ -61,7 +61,8 @@ SRCS			:=	main.c					\
 					window_management.c		\
 					keyboard.c				\
 					free_and_exit.c			\
-					utils.c
+					utils.c					\
+					check_range_numbers1.c
 
 
 ## Libraries files ##

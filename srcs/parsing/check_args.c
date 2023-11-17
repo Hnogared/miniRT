@@ -30,7 +30,7 @@ void	check_num_objects2(char **block)
 	i = 0;
 	while (block[i])
 		i++;
-	if (i != 5)
+	if (i != 6)
 		err(TOO_MANY_OBJS);
 }
 
@@ -40,21 +40,21 @@ void	check_num_objects3(char **block)
 
 	i = 0;
 	while (block[i])
-		i++;	
-	if (i != 2)
+		i++;
+	if (i != 3)
 		err(TOO_MANY_OBJS);
 }
 
 void	check_num_objects(char	***block)
 {
 	char	**tab;
-	//char	**tab1;
+	char	**tab1;
 	int		i;
 	int		j;
 
 	i = 0;
-	tab = (char *[]) {"A", "C", "L", NULL};
-	tab1 = (char *[]) {"pl", "sp", "cy", NULL};
+	tab = (char *[]){"A", "C", "L", NULL};
+	tab1 = (char *[]){"pl", "sp", "cy", NULL};
 	while (block[i])
 	{
 		j = 0;

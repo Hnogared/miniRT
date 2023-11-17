@@ -3,67 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_range_numbers.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: leudelin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 19:37:49 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/13 19:46:58 by motoko           ###   ########.fr       */
+/*   Created: 2023/11/17 14:47:33 by leudelin          #+#    #+#             */
+/*   Updated: 2023/11/17 14:47:35 by leudelin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	check_range_fov(char *fov)
-{
-	if (ft_atoi(fov) < 0 || ft_atoi(fov) > 180)
-		err(WRONG_FOV);
-}
-
-void	check_range_vectors(char *str)
-{
-	char	**split;
-	int		i;
-
-	i = 0;
-	split = ft_split(str, ',');
-	while(split[i])
-	{
-		if (ft_atoi(str) < 0 || ft_atoi(str) > 1)
-			err(RANGE_VECTOR);
-		i++;
-	}
-}
-
-void	check_range_color(char *str)
-{
-	char	**split;
-	int		i;
-
-	i = 0;
-	split = ft_split(str, ',');
-	while (str[i])
-	{
-		if (ft_atoi(split[i]) > 255 || ft_atoi(split[i]) < 0)
-			err(COLOR_NOT_GOOD);
-		i++;
-	}
-}
-
-void	check_range_light(char *str)
-{
-	char	**split;
-	int		i;
-
-	i = 0;
-	split = ft_split(str, ',');
-	while(split[i])
-	{
-		if (ft_atoi(str) < 0 || ft_atoi(str) > 1)
-			err(RANGE_LIGHT);
-		i++;
-	}
-}
-
-void	check_range_numbers(char ***block)
+int	check_range_numbers_part3(char ***block)
 {
 	int	i;
 	int	j;
@@ -71,21 +20,79 @@ void	check_range_numbers(char ***block)
 	i = 0;
 	while (block[i])
 	{
-		j = 1;
+		j = 0;
 		while (block[i][j])
 		{
-			if (!strncmp(block[i][0], "A", 2))
+			if (!ft_strncmp(block[i][0], "pl", 2))
 			{
-				check_range_light_ratio(block[i][1]);
-				check_range_color(block[i][2]);
+				check_range_vectors(block[i][2]);
+				check_range_color(block[i][3]);
 			}
-			if (!ft_strncmp(block[i][0], "C"), 2)
+			if (!strncmp(block[i][0], "cy", 3))
 			{
-				check_range_vectors();
-				check_range_fov();
+				check_range_vectors(block[i][2]);
+				check_range_color(block[i][5]);
 			}
 			j++;
 		}
 		i++;
 	}
+	return (0);
+}
+
+int	check_range_numbers_part2(char ***block)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (block[i])
+	{
+		j = 0;
+		while (block[i][j])
+		{
+			if (!ft_strncmp(block[i][0], "L", 2))
+			{
+				check_range_light(block[i][2]);
+				check_range_color(block[i][3]);
+			}
+			if (!strncmp(block[i][0], "sp", 3))
+			{
+				check_range_color(block[i][3]);
+			}
+			j++;
+		}
+		i++;
+	}
+	check_range_numbers_part3(block);
+	return (0);
+}
+
+int	check_range_numbers(char ***block)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (block[i])
+	{
+		j = 0;
+		while (block[i][j])
+		{
+			if (!strncmp(block[i][0], "A", 2))
+			{
+				check_range_light(block[i][1]);
+				check_range_color(block[i][2]);
+			}
+			if (!ft_strncmp(block[i][0], "C", 2))
+			{
+				check_range_vectors(block[i][2]);
+				check_range_fov(block[i][3]);
+			}
+			j++;
+		}
+		i++;
+	}
+	check_range_numbers_part2(block);
+	return (0);
 }

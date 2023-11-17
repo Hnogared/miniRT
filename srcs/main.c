@@ -19,10 +19,10 @@ int	main(int argc, char **argv)
 	t_object	object;
 	char		*line;
 	char		**tab;
-	 t_data	prog_data;
+	t_data	prog_data;
 
 	if (argc != 2)
-	return (1);
+		return (1);
 	check_file(argv[1]);
 	line = get_file(argv[1]);
 	tab = ft_split(line, '\n');
@@ -55,4 +55,3 @@ int	main(int argc, char **argv)
 	// free_data(&prog_data);
 	return (0);
 }
-

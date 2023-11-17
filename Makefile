@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/17 10:59:51 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/17 12:38:01 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ VPATH			:=	$(SRCS_DIR):					\
 					$(SRCS_DIR)/object_management:	\
 					$(SRCS_DIR)/display:			\
 					$(SRCS_DIR)/parsing:			\
-					$(SRCS_DIR)/user_interface		\
+					$(SRCS_DIR)/user_interface:		\
+					$(SRCS_DIR)/vector:				\
 					$(SRCS_DIR)/utils
 
 # Source files names #

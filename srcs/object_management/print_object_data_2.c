@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:37:20 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/10 17:23:49 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 11:40:03 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_camera_data(t_special_data special_data)
 void	print_light_data(t_special_data special_data)
 {
 	printf("[Light data]\n");
-	printf("Brightness : %d\n", special_data.light.brightness);
+	printf("Brightness : %f\n", special_data.light.brightness);
 }
 
 void	print_sphere_data(t_special_data special_data)

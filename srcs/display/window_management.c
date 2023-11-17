@@ -6,34 +6,11 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:47:12 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 15:27:54 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:45:05 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-/*
- * Function to open the program's main window.
- * The window will have the computer screen's width if WIN_WIDTH <= 0.
- * The window will have the comupter screen's height - 100 if WIN_HEIGHT <= 0.
- *
- * @param t_data *data	-> pointer to the program data
- * @param char *title	-> title of the window seen on the window bar
- * @return int			-> status code of the function
- */
-int	open_main_window(t_data *data, char *title)
-{
-	int	win_size[2];
-
-	mlx_get_screen_size(data->mlx_ptr, &win_size[0], &win_size[1]);
-	win_size[1] -= 100;
-	if (WIN_WIDTH > 0 && WIN_WIDTH < win_size[0])
-		win_size[0] = WIN_WIDTH;
-	if (WIN_HEIGHT > 0 && WIN_HEIGHT < win_size[1])
-		win_size[1] = WIN_HEIGHT;
-	data->main_window = my_new_window(data->mlx_ptr, win_size, title);
-	return (data->main_window.ptr == NULL);
-}
 
 /*
  * Function to open and initialize a t_window structure.
@@ -81,7 +58,7 @@ void	my_destroy_window(void *mlx_ptr, t_window *window)
 }
 
 /*
- * Function to change the color of a window pixel at the x and y coordinates.
+ * Function to change the color of a window image's pixel at x-y coordinates.
  * /!\ This change will only be seen after calling redraw_window afterwards.
  *
  * @param t_window *window	-> pointer to the window structure to modify
@@ -95,6 +72,15 @@ void	my_put_pixel_to_window(t_window *window, int x, int y, int color)
 		my_put_pixel_to_image(&window->image, x, y, color);
 }
 
+/*
+ * Function to draw a colored square on a window image at x-y coordinates. 
+ * /!\ This change will only be seen after calling redraw_window afterwards.
+ *
+ * t_window *window		-> pointer to the window structure to modify
+ * int start_coords[2]	-> x-y coordinates of the top left corner of the square
+ * int size[2]			-> width and height of the square
+ * int color			-> colorof the square
+ */
 void	my_put_square_to_window(t_window *window, int start_coords[2],
 	int size[2], int color)
 {

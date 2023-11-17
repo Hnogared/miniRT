@@ -6,18 +6,41 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 16:54:27 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:40:46 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+/*
+ * Function to open the program's main window.
+ * The window will have the computer screen's width if WIN_WIDTH <= 0.
+ * The window will have the comupter screen's height - 100 if WIN_HEIGHT <= 0.
+ *
+ * @param t_data *data	-> pointer to the program data
+ * @param char *title	-> title of the window seen on the window bar
+ * @return int			-> status code of the function
+ */
+int	open_main_window(t_data *data, char *title)
+{
+	int	win_size[2];
+
+	mlx_get_screen_size(data->mlx_ptr, &win_size[0], &win_size[1]);
+	win_size[1] -= 100;
+	if (WIN_WIDTH > 0 && WIN_WIDTH < win_size[0])
+		win_size[0] = WIN_WIDTH;
+	if (WIN_HEIGHT > 0 && WIN_HEIGHT < win_size[1])
+		win_size[1] = WIN_HEIGHT;
+	data->main_window = my_new_window(data->mlx_ptr, win_size, title);
+	return (data->main_window.ptr == NULL);
+}
+
 int	ray_trace(t_data *data, int x, int y)
 {
 	int	color;
 
-	color = *(int *)(unsigned char [4]){0, x * data->test, 
-		(y * data->test) | (x * data->test), 0}; 
+	color = *(int *)(unsigned char [4]){0, x * data->test,
+		(y * data->test) | (x * data->test), 0};
 	return (color);
 }
 

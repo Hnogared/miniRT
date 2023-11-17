@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 15:27:40 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:45:59 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void		print_plane_data(t_special_data plane);
 void		print_cylinder_data(t_special_data cylinder);
 
 /* Theouche*/
-char    *conv(t_rgb_color color);
+char	    *conv(t_rgb_color color);
 
 /* SRCS/DISPLAY */
 /* image_management.c */
@@ -78,10 +78,10 @@ t_image		my_new_image(void *mlx_ptr, int width, int height);
 void		my_put_pixel_to_image(t_image *image, int x, int y, int color);
 
 /* main_window.c */
+int			open_main_window(t_data *data, char *title);
 void		redraw_main_window(t_data *data);
 
 /* window_management.c */
-int			open_main_window(t_data *data, char *title);
 t_window	my_new_window(void *mlx_ptr, int dimensions[2], char *title);
 void		my_destroy_window(void *mlx_ptr, t_window *window);
 void		my_put_pixel_to_window(t_window *window, int x, int y, int color);

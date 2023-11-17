@@ -6,13 +6,18 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:18:25 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/17 12:29:08 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 14:34:10 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_MACRO_H
 # define MINIRT_MACRO_H
 
+/*
+ * Program main window width override.
+ * If equal to 0, the main window takes the width of the computer screen.
+ * Use WIN_WIDTH=<value> with make / the compilation flag -D WIN_WIDTH=<value>.
+ */
 # ifndef WIN_WIDTH
 #  define WIN_WIDTH		0
 # endif
@@ -20,7 +25,7 @@
 /*
  * Program main window height override.
  * If equal to 0, the main window takes the height of the computer screen.
- * Use the compilation -D WIN_HEIGHT=<value> flag / WIN_HEIGHT=<value> with make.
+ * Use WIN_HEIGHT=<value> with make / the compilation flag -D WIN_HEIGHT=<value>.
  */
 # ifndef WIN_HEIGHT
 #  define WIN_HEIGHT	0

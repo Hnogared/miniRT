@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/16 18:16:25 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/17 10:59:51 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ VPATH			:=	$(SRCS_DIR):					\
 					$(SRCS_DIR)/object_management:	\
 					$(SRCS_DIR)/display:			\
 					$(SRCS_DIR)/parsing:			\
-					$(SRCS_DIR)/user_interface
+					$(SRCS_DIR)/user_interface		\
+					$(SRCS_DIR)/utils
 
 # Source files names #
 SRCS			:=	main.c					\
@@ -60,7 +61,7 @@ SRCS			:=	main.c					\
 					window_management.c		\
 					keyboard.c				\
 					free_and_exit.c			\
-					utils.c
+					handle_errors.c
 
 
 ## Libraries files ##
@@ -270,25 +271,25 @@ $(LFT_ARCHS_DEPEND):	$(LFT_ARCHS_SRCS) | $(ARCHIVES_DIR)
 
 # Display a short list of all available rules #
 help:
-	@echo -e "\nMiniRT Makefile help - Available targets\n";				\
-	echo -e "$(ANSI_BOLD)BASIC TARGETS$(ANSI_NC)";							\
-	echo -e "\tall  re  help\n";											\
-	echo -e "$(ANSI_BOLD)FILES TARGETS$(ANSI_NC)";							\
-	echo -e -n "\t$(NAME)";												\
-	echo -e -n "$(OBJS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).o  ";		\
-	echo -e "$(ARCHIVES_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n";		\
-	echo -e "$(ANSI_BOLD)DIRECTORIES TARGETS$(ANSI_NC)";					\
-	echo -e "\t$(OBJS_DIR)  $(ARCHIVES_DIR)\n";							\
-	echo -e "$(ANSI_BOLD)CLEANUP TARGETS$(ANSI_NC)";						\
-	echo -e "\tclean  fclean  lclean  dclean\n\n";							\
-	echo -e "$(ANSI_BOLD)MINILIBX TARGETS$(ANSI_NC)";						\
-	echo -e "\tminilibx  minilibx-$(ANSI_FG_RED)<target>$(ANSI_NC)\n";		\
-	echo -e "$(ANSI_BOLD)MINILIBX FILES TARGETS$(ANSI_NC)";				\
-	echo -e "\t$(MLX_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n\n";	\
-	echo -e "$(ANSI_BOLD)LIBFT TARGETS$(ANSI_NC)";							\
-	echo -e "\tlibft  libft-$(ANSI_FG_RED)<target>$(ANSI_NC)\n";			\
-	echo -e "$(ANSI_BOLD)LIBFT FILES TARGETS$(ANSI_NC)";					\
-	echo -e "\t$(LFT_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n"
+	@echo "\nMiniRT Makefile help - Available targets\n";				\
+	echo "$(ANSI_BOLD)BASIC TARGETS$(ANSI_NC)";							\
+	echo "\tall  re  help\n";											\
+	echo "$(ANSI_BOLD)FILES TARGETS$(ANSI_NC)";							\
+	echo -n "\t$(NAME)";												\
+	echo -n "$(OBJS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).o  ";		\
+	echo "$(ARCHIVES_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n";		\
+	echo "$(ANSI_BOLD)DIRECTORIES TARGETS$(ANSI_NC)";					\
+	echo "\t$(OBJS_DIR)  $(ARCHIVES_DIR)\n";							\
+	echo "$(ANSI_BOLD)CLEANUP TARGETS$(ANSI_NC)";						\
+	echo "\tclean  fclean  lclean  dclean\n\n";							\
+	echo "$(ANSI_BOLD)MINILIBX TARGETS$(ANSI_NC)";						\
+	echo "\tminilibx  minilibx-$(ANSI_FG_RED)<target>$(ANSI_NC)\n";		\
+	echo "$(ANSI_BOLD)MINILIBX FILES TARGETS$(ANSI_NC)";				\
+	echo "\t$(MLX_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n\n";	\
+	echo "$(ANSI_BOLD)LIBFT TARGETS$(ANSI_NC)";							\
+	echo "\tlibft  libft-$(ANSI_FG_RED)<target>$(ANSI_NC)\n";			\
+	echo "$(ANSI_BOLD)LIBFT FILES TARGETS$(ANSI_NC)";					\
+	echo "\t$(LFT_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n"
 
 # **************************************************************************** #
 

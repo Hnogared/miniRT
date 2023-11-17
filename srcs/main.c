@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 18:27:36 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:30:05 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	object_a(char *s)
 	(void)s;
 }
 
-void	initialize_data(t_data *data, char **tab)
+int	initialize_data(t_data *data, char **tab)
 {
 	int	i;
 	int	len;
@@ -36,14 +36,14 @@ void	initialize_data(t_data *data, char **tab)
 		if (tab[i][0] == 'A')
 			object_a(tab[i]);
 		i++;
+	}
 	data->mlx_ptr = mlx_init();
 	if (open_main_window(data, "miniRT"))
 		return (2);
 	data->test = 10;
 	data->pixel_ratio = DEFAULT_PIXEL_RATIO + (DEFAULT_PIXEL_RATIO <= 0);
-	return (0);
-	}
 	free(data->scene_objects);
+	return (0);
 }
 
 int	main(int argc, char **argv)

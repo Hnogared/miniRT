@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:18:25 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/17 17:36:44 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:18:00 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 
 # define SYNTAX_ERROR 2
 
-/* Different scene object types (see the t_object structure @ miniRT_struct.h) */
+/* Different scene object types (see t_object structure at miniRT_struct.h) */
 # define BLANK_OBJ		0
 # define CAMERA_OBJ		1
 # define LIGHT_OBJ		2

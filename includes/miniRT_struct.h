@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/17 12:06:25 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/17 12:37:02 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ typedef struct s_rgb_color
  * float ratio			-> ratio/strength of the ambient lighting (0.0-1.0)
  * t_rbg_color color	-> color of the ambient lighting in rgb (0-255:0-255:0-255)
  */
-typedef struct s_ambient_lighting
+typedef struct s_ambient_light
 {
 	float		ratio;
 	t_rgb_color	color;
-}				t_ambient_lighting;
+}				t_ambient_light;
 
 /*
  * Camera special data structure used to complement the t_object structure.

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 16:09:40 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/18 17:58:58 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/18 18:00:49 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@
 # define RTERR_NUM_DOT_MSG		"invalid number: too many dots"
 
 
+
 # define FILE_NAME "error: must end with .rt" 
 # define OPEN_FILE "error: open file"
 # define READ_FILE "error: read file"
@@ -75,8 +76,13 @@
 # define IS_NOT_VALID "error: not a valid argument"
 # define IS_NOT_NUMBER "error: not a number"
 # define DUPLICATE_OBJ "error: duplicate object"
-# define TOO_MANY_COMMA "error: to many comma in number"
-# define TOO_MANY_DOT "error: to many dot in number"
+# define TOO_MANY_COMMA "error: too many comma in number"
+# define TOO_MANY_DOT "error: too many dot in number"
+# define TOO_MANY_OBJS "error : too many objects"
+# define COLOR_NOT_GOOD "error : wrong arguments for colors"
+# define WRONG_FOV "error : FOV must be between 0 and 180"
+# define RANGE_VECTOR "error : vectors can only be between -1 and 1"
+# define RANGE_LIGHT "error : light can only be between 0 and 1"
 
 int		ft_perror(char *prefix, char *err_str, int errnum);
 void	init_error_tab(char *error_tab[RTERR_COUNT]);

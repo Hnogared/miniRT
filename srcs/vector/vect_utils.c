@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:03:20 by tlorne            #+#    #+#             */
-/*   Updated: 2023/11/15 11:03:21 by tlorne           ###   ########.fr       */
+/*   Updated: 2023/11/18 15:16:10 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_vector	calc_ref_form(t_vector i, t_vector n)
 	float		scal;
 
 	scal = prod_scal_vec(i, n);
-	r = sous_vec_vec(i, prod_vec_int(n, 2 * scal));
+	r = sous_vec_vec(i, prod_vec_int(n, -2 * scal));
 	return (r);
 }
 

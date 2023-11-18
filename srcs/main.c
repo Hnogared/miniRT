@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 18:34:42 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/18 17:55:58 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ int	main(int argc, char **argv)
 	//t_object	object;
 	t_data		prog_data;
 
+	init_error_tab(prog_data.error_tab);
 	if (argc != 2)
-		return (1);
+		return (ft_perror(RTERR_ARGS_COUNT_MSG, "expected 1", RTERR_ARGS_COUNT));
 	check_file(argv[1]);
 	line = get_file(argv[1]);
 	tab = ft_split(line, '\n');

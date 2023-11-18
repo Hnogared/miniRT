@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 07:19:57 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/09 18:14:01 by motoko           ###   ########.fr        #
+#    Updated: 2023/11/18 16:26:00 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,7 @@ LIB_SRCS	= 	ft_isalpha.c		\
 
 PRINTF_D	=	Srcs/display/ft_printf
 PRINTF_SRCS	=	ft_printf.c		\
+				ft_fprintf.c	\
 				ft_output.c		\
 				ft_output2.c	\
 				ft_strings.c

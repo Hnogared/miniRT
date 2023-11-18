@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:48:18 by tlorne            #+#    #+#             */
-/*   Updated: 2023/11/14 10:48:20 by tlorne           ###   ########.fr       */
+/*   Updated: 2023/11/18 15:49:12 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ t_vector	cal_cylinder_ext(t_vector vec_inc, t_object cylindre, int res)
 	t_vector	r;
 
 	if (res == 2)
-		n = normalise(plan.orientation_vector);
+		n = normalise(cylindre.orientation_vector);
 	else
-		n = normalise(prod_vec_int(plan.orientation_vector, -1));
+		n = normalise(prod_vec_int(cylindre.orientation_vector, -1));
 	r = calc_ref_form(vec_inc, n);
 }
 

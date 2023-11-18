@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 18:31:01 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/18 16:23:43 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 
 # include "miniRT_struct.h"
 # include "miniRT_macro.h"
+# include "miniRT_error.h"
 
 int				check_file(char *scene);
 char			*get_file(char *scene);

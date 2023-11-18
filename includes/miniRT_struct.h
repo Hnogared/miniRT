@@ -6,12 +6,14 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/17 18:28:09 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/18 17:24:16 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_STRUCT_H
 # define MINIRT_STRUCT_H
+
+# include "miniRT_error.h"
 
 /*
  * Vector structure holding its amplitudes in the x, y and z axes.
@@ -229,6 +231,7 @@ typedef struct s_data
 {
 	int				pixel_ratio;
 	int				test;
+	char			*error_tab[RTERR_COUNT];
 	t_window		main_window;
 	t_ambient_light	ambient_l;
 	t_object		*scene_objects;

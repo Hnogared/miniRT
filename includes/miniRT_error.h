@@ -6,22 +6,26 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 16:09:40 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/18 18:00:49 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/18 19:02:32 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_ERROR_H
 # define MINIRT_ERROR_H
 
+/* The program name to display in ft_perror */
 # ifndef PROG_NAME
 #  define PROG_NAME	"miniRT"
 # endif
 
-# define MAX_STD_ERROR	255
+/* Value of the first custom error */
+# define FIRST_ERRVAL	255
 
-# define RTERR_COUNT	17
+/* Total number of errors. Increment to add more errors */
+# define RTERR_COUNT	18
 
-/* */
+/* ************************************************************************** */
+/* Error codes to use for ft_perror */
 # define RTSUCCESS				256
 # define RTERR					257
 
@@ -44,7 +48,8 @@
 # define RTERR_NUM_COMMA		271
 # define RTERR_NUM_DOT			272
 
-/* */
+/* ************************************************************************** */
+/* Error messages displayed by ft_perror */
 # define RTSUCCESS_MSG			"success"
 # define RTERR_MSG				"error"
 
@@ -84,7 +89,8 @@
 # define RANGE_VECTOR "error : vectors can only be between -1 and 1"
 # define RANGE_LIGHT "error : light can only be between 0 and 1"
 
-int		ft_perror(char *prefix, char *err_str, int errnum);
+/* ************************************************************************** */
+int		ft_perror(char *prefix, char *error_tab[RTERR_COUNT], int errnum);
 void	init_error_tab(char *error_tab[RTERR_COUNT]);
 
 #endif

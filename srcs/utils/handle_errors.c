@@ -6,32 +6,51 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:38:24 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/18 17:23:53 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/18 18:57:11 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-int	ft_perror(char *prefix, char *err_str, int errnum)
+int	ft_perror(char *prefix, char *error_tab[RTERR_COUNT], int errnum)
 {
 	ft_fprintf(STDERR_FILENO, PROG_NAME);
-	if (prefix)
-		ft_fprintf(STDERR_FILENO, ": %s", prefix);
-	if (errnum < MAX_STD_ERROR)
+	if (errnum < FIRST_ERRVAL)
 	{
 		ft_fprintf(STDERR_FILENO, ": ");
-		perror(NULL);
+		perror(prefix);
 		return (errnum);
 	}
-	if (err_str)
-		ft_fprintf(STDERR_FILENO, ": %s", err_str);
-	ft_fprintf(STDERR_FILENO, "\n");
-	return (errnum - 1 - MAX_STD_ERROR);
+	if (prefix)
+		ft_fprintf(STDERR_FILENO, ": %s", prefix);
+	ft_fprintf(STDERR_FILENO, ": %s\n", error_tab[errnum - 1 - FIRST_ERRVAL]);
+	return (errnum - 1 - FIRST_ERRVAL);
 }
 
 void	init_error_tab(char *error_tab[RTERR_COUNT])
 {
-	error_tab[0] = "test";
+	error_tab[0] = RTSUCCESS_MSG;
+	error_tab[1] = RTERR_MSG;
+	error_tab[2] = RTERR_ARGS_COUNT_MSG;
+	error_tab[3] = RTERR_INVALID_ARG_MSG;
+	error_tab[4] = RTERR_FILE_NAME_MSG;
+	error_tab[5] = RTERR_OPEN_FILE_MSG;
+	error_tab[6] = RTERR_READ_FILE_MSG;
+	error_tab[7] = RTERR_OBJ_MSG;
+	error_tab[8] = RTERR_DUPLIC_OBJ_MSG;
+	error_tab[9] = RTERR_OBJS_COUNT_MSG;
+	error_tab[10] = RTERR_COLOR_MSG;
+	error_tab[11] = RTERR_FOV_MSG;
+	error_tab[12] = RTERR_VECTOR_MSG;
+	error_tab[13] = RTERR_BRIGHTNESS_MSG;
+	error_tab[14] = RTERR_NUM_MSG;
+	error_tab[15] = RTERR_NUM_COMMA_MSG;
+	error_tab[16] = RTERR_NUM_DOT_MSG;
+}
+
+void	ft_panic(t_data *data, char *prefix, int errnum)
+{
+	exit(ft_perror(prefix, data->error_tab, errnum));
 }
 
 void	err(char *str)

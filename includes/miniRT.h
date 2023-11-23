@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/18 16:23:43 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:14:11 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void			free_str_tab(char **str_tab);
 /* SRCS/OBJECT_MANAGEMENT */
 /* object_creation.c */
 t_object		*new_camera(t_object *to_set, t_coords coords, int fov);
-t_object		*new_light(t_object *to_set, t_coords coords, int brightness);
+t_object		*new_light(t_object *to_set, t_coords coords, float brightness);
 t_object		*new_sphere(t_object *to_set, t_coords coords, float diameter);
 t_object		*new_plane(t_object *to_set, t_coords coords);
 t_object		*new_cylinder(t_object *to_set, t_coords coords, float diameter,

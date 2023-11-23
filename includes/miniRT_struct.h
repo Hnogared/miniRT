@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/18 17:24:16 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/21 11:56:05 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_ambient_light
  */
 typedef struct s_camera
 {
-	int			fov;
+	int	fov;
 }				t_camera;
 
 /*

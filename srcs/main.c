@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/23 15:13:57 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:00:42 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,13 @@ int	main(int argc, char **argv)
 	print_object_data(object);
 	//object.data_print_func(special_data);
 	printf("la couleur en hexa vaut : %s\n", conv(object.special_data.sphere.color));
+
+// Vector rotation test
+	print_vector((t_vector){1, 0, 0});
+	printf("\n");
+	print_vector(rotate_vector((t_vector){0, 1, 0}, 45, (t_vector){0, 0, 1}));
+	(void) argc;
+	(void) argv;
 	*/
 	return (0);
 }

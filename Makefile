@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/17 17:30:02 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/23 18:20:06 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,8 @@ SRCS			:=	main.c					\
 					keyboard.c				\
 					free_and_exit.c			\
 					check_range_numbers1.c	\
-					handle_errors.c
+					handle_errors.c			\
+					raytrace.c
 
 
 ## Libraries files ##

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/23 15:14:11 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:01:18 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ int				check_range_fov(char *fov);
 int				check_range_vectors(char *str);
 int				check_range_color(char *str);
 int				check_range_light(char *str);
+
+/* raytrace.c */
+float			to_rad(float degree_angle);
+t_vector		rotate_vector(t_vector to_rotate, float angle, t_vector axis);
 
 /* free_and_exit.c */
 noreturn int	free_and_exit(t_data *data);

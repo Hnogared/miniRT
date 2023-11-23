@@ -6,11 +6,12 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/23 15:13:57 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/23 17:09:05 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
 
 void	obj_a(t_data *data, char *s)
 {		
@@ -18,7 +19,7 @@ void	obj_a(t_data *data, char *s)
 	char	**color;
 
 	args = ft_split(s, ' ');
-	data->ambient_l.ratio = 0.2;
+	data->ambient_l.ratio = ft_atof(args[1]);
 	color = ft_split(args[2], ',');
 	data->ambient_l.color = (t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]),
 				ft_atoi(color[2])};
@@ -26,15 +27,25 @@ void	obj_a(t_data *data, char *s)
 	free_str_tab(args);
 }
 
+/*
+void	obj_a(t_data *data, char *s)
+{
+	char	**args;
+
+	args = ft_split(s, ' ');
+	new_camera(&(data->scene_objects[pos++]), (t_coords){-50, 0, 20}, 70);
+}
+*/
+
 int	initialize_data(t_data *data, char **tab)
 {
 	int	i;
 	int	len;
-	int	pos;
+	//int	pos;
 	
 	i = 0;
 	len = 0;
-	pos = 0;
+	//pos = 0;
 	ft_bzero(data, sizeof(t_data));
 	while (tab[len])
 		len++;
@@ -46,13 +57,16 @@ int	initialize_data(t_data *data, char **tab)
 	{
 		if (tab[i][0] == 'A')
 			obj_a(data, tab[i]);
+
+		/*
 		if (tab[i][0] == 'C')
-			new_camera(&(data->scene_objects[pos++]), (t_coords){-50, 0, 20}, 70);
+			obj_c(data, tab[i]);
 		if (tab[i][0] == 'L')
 		{
 			new_light(&(data->scene_objects[pos++]), (t_coords){-50, 0, 20}, 0.7);
 			//set_object_color();
 		}
+		*/
 		i++;
 	}
 	data->mlx_ptr = mlx_init();
@@ -80,10 +94,12 @@ int	main(int argc, char **argv)
 	tab = ft_split(line, '\n');
 	free(line);
 	check_scene(tab);
+
 	initialize_data(&prog_data, tab);
+
 	free_str_tab(tab);
-	redraw_main_window(&prog_data);
-	mlx_loop(prog_data.mlx_ptr);
+	//redraw_main_window(&prog_data);
+	//mlx_loop(prog_data.mlx_ptr);
 
 	/*
 	new_sphere(&object, (t_coords){1, 0, 10}, 1.0);

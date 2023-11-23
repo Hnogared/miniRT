@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/17 17:30:02 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/23 16:29:29 by motoko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRCS			:=	main.c					\
 					get_file.c				\
 					check_scene.c			\
 					check_numbers.c			\
+					ft_atof.c				\
 					check_range_numbers.c	\
 					conv_hexa.c				\
 					object_creation.c		\

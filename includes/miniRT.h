@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/23 15:14:11 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/23 16:59:47 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void			check_scene(char **tab);
 void			check_char(char ***block);
 void			check_numbers(char ***block);
 int				check_range_numbers(char ***block);
+float			ft_atof(const char *nptr);
 void			err(char *str);
 void			check_num_args(char ***block);
 void			check_num_objects(char ***block);

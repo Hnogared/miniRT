@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:18:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/13 12:07:03 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/18 18:32:45 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_object	*new_camera(t_object *to_set, t_coords coords, int fov)
  * @param int brightness	-> the light's brightness to set
  * @return t_object *		-> pointer to the newly initialized object structure
  */
-t_object	*new_light(t_object *to_set, t_coords coords, int brightness)
+t_object	*new_light(t_object *to_set, t_coords coords, float brightness)
 {
 	if (!to_set)
 		return (NULL);

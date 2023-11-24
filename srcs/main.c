@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/23 23:06:59 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/24 11:45:42 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	vector_rotation_test(void)
 	print_vector(matrix_vector_rotation(axis, rot_matrix));
 	new_camera(&test, (t_coords){0, 0, 0}, 10);
 	printf("\n");
-	set_object_orientation(&test, (t_vector){0, 0, 1});
+	set_object_orientation(&test, (t_vector){0, 0, -1});
 	print_vector(test.local_axes.x);
 	print_vector(test.local_axes.y);
 	print_vector(test.local_axes.z);

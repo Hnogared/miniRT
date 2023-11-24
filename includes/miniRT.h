@@ -88,6 +88,25 @@ void			print_cylinder_data(t_special_data cylinder);
 
 /* Theouche*/
 char			*conv(t_rgb_color color);
+t_vector		sous_vec_coord(t_coords a, t_coords b);
+t_vector		add_vec_coord(t_coords a, t_coords b);
+t_vector		sous_vec_vec(t_vector a, t_vector b);
+t_vector		add_vec_vec(t_vector a, t_vector b);
+t_coords		add_vec_coord_vec(t_coords a, t_vector b);
+t_vector		prod_vec_int(t_vector a, int k);
+float			prod_scal_vec(t_vector a, t_vector b);
+t_vector		prod_vec_vec(t_vector a, t_vector b);
+t_vector		calc_ref_form(t_vector i, t_vector n);
+float			magnitude(t_vector n);
+t_vector		normalise(t_vector n);
+float			dist(t_coords a, t_coords b);
+t_coords		advance_on_vec(t_coords dep, t_vector dir, int k);
+t_coords		find_pos_touch(t_ray ray, float t);
+t_coords		give_coord(t_coords coord);
+float			good_sol(float delta, float b, float a);
+float			prod_scal_coord(t_coords a, t_coords b);
+float			prod_scal_vec_coord(t_vector a, t_coords b);
+float			magnitude_coord(t_coords n);
 
 /* SRCS/DISPLAY */
 /* image_management.c */

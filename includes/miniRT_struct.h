@@ -22,6 +22,7 @@
  * float y	-> amplitude in the y axis
  * float z	-> amplitude in the z axis
  */
+
 typedef struct s_vector
 {
 	float	x;
@@ -43,19 +44,6 @@ typedef struct s_coords
 	float	z;
 }				t_coords;
 
-/*
- * Ray data structure used for the ray tracing.
- *
- * t_vector vector			-> direction towards which the ray is going in vector form
- * t_coords coords			-> current coordinates of the ray point
- * t_coords origin_coords	-> the coordinates from which the ray originated
- */
-typedef struct s_ray
-{
-	t_vector	vector;
-	t_coords	coords;
-	t_coords	origin_coords;
-}				t_ray;
 
 /*
  * Color structure holding its red, green and blue values.
@@ -190,6 +178,26 @@ typedef struct s_object
 	t_special_data	special_data;
 	void			(*data_print_func)(t_special_data special_data);
 }				t_object;
+
+/*
+ * Ray data structure used for the ray tracing.
+ *
+ * t_vector vector			-> direction towards which the ray is going in vector form
+ * t_coords coords			-> current coordinates of the ray point
+ * t_coords origin_coords	-> the coordinates from which the ray originated
+ */
+typedef struct s_ray
+{
+	t_vector		vector;
+	t_coords		coords;
+	t_coords		origin_coords;
+	t_object		*objects_touch;
+	int				s;
+	int				touch;
+	int				nb_ref;
+}				t_ray;
+
+//give_coord((t_coords){0, 5, 0})
 
 /* Image data structure.
  *

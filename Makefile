@@ -64,7 +64,9 @@ SRCS			:=	main.c					\
 					keyboard.c				\
 					free_and_exit.c			\
 					check_range_numbers1.c	\
-					handle_errors.c
+					handle_errors.c			\
+					vect.c					\
+					vect_utils.c			\
 
 
 ## Libraries files ##

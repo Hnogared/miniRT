@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/18 17:24:16 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/23 22:27:25 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,14 @@ typedef struct s_ambient_light
 	t_rgb_color	color;
 }				t_ambient_light;
 
+typedef struct s_local_axes
+{
+	float		rotation_matrix[3][3];
+	t_vector	x;
+	t_vector	y;
+	t_vector	z;
+}				t_local_axes;
+
 /*
  * Camera special data structure used to complement the t_object structure.
  *
@@ -78,7 +86,7 @@ typedef struct s_ambient_light
  */
 typedef struct s_camera
 {
-	int			fov;
+	int	fov;
 }				t_camera;
 
 /*
@@ -156,6 +164,7 @@ typedef union u_special_data
  * bool has_color				-> boolean true if the object has a color property
  * t_coords coords				-> coordinates structure of the object
  * t_vector orientation_vector	-> normal vector structure to rotate the object
+ * t_local_axes					-> object x,y,z axes depending on the orient. vector
  * t_special_data special_data	-> additional special data (camera/light/... data)
  * void (*data_print_func)		-> pointer to the special data display function
  */
@@ -165,6 +174,7 @@ typedef struct s_object
 	bool			has_color;
 	t_coords		coords;
 	t_vector		orientation_vector;
+	t_local_axes	local_axes;
 	t_special_data	special_data;
 	void			(*data_print_func)(t_special_data special_data);
 }				t_object;

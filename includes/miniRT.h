@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/18 16:23:43 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/23 21:27:22 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,15 @@ int				check_range_vectors(char *str);
 int				check_range_color(char *str);
 int				check_range_light(char *str);
 
+/* raytrace.c */
+float			to_rad(float degree_angle);
+void			get_rotation_matrix(float rot_matrix_to_set[3][3],
+	t_vector vector1, t_vector vector2);
+t_vector		axial_vector_rotation(t_vector to_rotate, float angle,
+	t_vector axis);
+t_vector		matrix_vector_rotation(t_vector to_rotate,
+	float rot_matrix[3][3]);
+
 /* free_and_exit.c */
 noreturn int	free_and_exit(t_data *data);
 void			free_data(t_data *data);
@@ -52,7 +61,7 @@ void			free_str_tab(char **str_tab);
 /* SRCS/OBJECT_MANAGEMENT */
 /* object_creation.c */
 t_object		*new_camera(t_object *to_set, t_coords coords, int fov);
-t_object		*new_light(t_object *to_set, t_coords coords, int brightness);
+t_object		*new_light(t_object *to_set, t_coords coords, float brightness);
 t_object		*new_sphere(t_object *to_set, t_coords coords, float diameter);
 t_object		*new_plane(t_object *to_set, t_coords coords);
 t_object		*new_cylinder(t_object *to_set, t_coords coords, float diameter,

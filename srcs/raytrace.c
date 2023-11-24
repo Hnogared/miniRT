@@ -19,21 +19,23 @@
  * Sinon ca compile pas vraiment mdr tavu, tu peux l'effacer tkt Theo j'en
  * avais juste besoin ASAP pour les fonctions en dessous c'est pour ca que je
  * te l'ai temporairement volee (empruntee) ici.
+
+ Bien recu !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! =D
  */
-float	prod_scal_vec(t_vector a, t_vector b)
+/*float	prod_scal_vec(t_vector a, t_vector b)
 {
 	float	c;
 
 	c = a.x * b.x + a.y * b.y + a.z * b.z;
 	return (c);
-}
+}*/
 
 /*
  * /!\ /!\ /!\ IMPORTANT
  * TODO enlever aussi cette declaration, decidement je voulais vraiment pas que
  * ca compile.
  */
-t_vector	prod_vec_vec(t_vector a, t_vector b)
+/*t_vector	prod_vec_vec(t_vector a, t_vector b)
 {
 	t_vector	c;
 
@@ -41,13 +43,13 @@ t_vector	prod_vec_vec(t_vector a, t_vector b)
 	c.y = a.z * b.x - a.x * b.z;
 	c.z = a.x * b.y - a.y * b.x;
 	return (c);
-}
+}*/
 
 /*
  * /!\ /!\ /!\ IMPORTANT
  * TODO celle la aussi dsl :/
  */
-float	magnitude(t_vector n)
+/*float	magnitude(t_vector n)
 {
 	float		a;
 	float		nxc;
@@ -59,13 +61,13 @@ float	magnitude(t_vector n)
 	nzc = pow(n.z, 2);
 	a = sqrt(nxc + nyc + nzc);
 	return (a);
-}
+}*/
 
 /*
  * /!\ /!\ /!\ IMPORTANT
  * TODO une derniere sur la route ptdr
  */
-t_vector	normalise(t_vector n)
+/*t_vector	normalise(t_vector n)
 {
 	float	a;
 
@@ -80,7 +82,7 @@ t_vector	normalise(t_vector n)
 		return (n);
 	}
 }
-
+*/
 float	to_rad(float degree_angle)
 {
 	return ((degree_angle * PI) / 180);

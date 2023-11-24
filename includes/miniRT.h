@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/23 21:27:22 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/24 11:51:22 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ t_vector		sous_vec_vec(t_vector a, t_vector b);
 t_vector		add_vec_vec(t_vector a, t_vector b);
 t_coords		add_vec_coord_vec(t_coords a, t_vector b);
 t_vector		prod_vec_int(t_vector a, int k);
+t_vector		prod_vec_float(t_vector a, float k);
 float			prod_scal_vec(t_vector a, t_vector b);
 t_vector		prod_vec_vec(t_vector a, t_vector b);
 t_vector		calc_ref_form(t_vector i, t_vector n);

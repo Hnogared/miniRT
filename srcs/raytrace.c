@@ -6,83 +6,18 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/23 23:02:15 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/24 12:04:18 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
 /*
- * /!\ /!\ /!\ IMPORTANT
- * TODO enlever toute cette function declaration lorsque la vraie fonction dans
- * le fichier de Theo sera compilee.
- * Sinon ca compile pas vraiment mdr tavu, tu peux l'effacer tkt Theo j'en
- * avais juste besoin ASAP pour les fonctions en dessous c'est pour ca que je
- * te l'ai temporairement volee (empruntee) ici.
-
- Bien recu !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! =D
+ * Bien recu !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! =D
+ *
+ * hippo - "Teamwork hell yeah :)"
  */
-/*float	prod_scal_vec(t_vector a, t_vector b)
-{
-	float	c;
 
-	c = a.x * b.x + a.y * b.y + a.z * b.z;
-	return (c);
-}*/
-
-/*
- * /!\ /!\ /!\ IMPORTANT
- * TODO enlever aussi cette declaration, decidement je voulais vraiment pas que
- * ca compile.
- */
-/*t_vector	prod_vec_vec(t_vector a, t_vector b)
-{
-	t_vector	c;
-
-	c.x = a.y * b.z - a.z * b.y;
-	c.y = a.z * b.x - a.x * b.z;
-	c.z = a.x * b.y - a.y * b.x;
-	return (c);
-}*/
-
-/*
- * /!\ /!\ /!\ IMPORTANT
- * TODO celle la aussi dsl :/
- */
-/*float	magnitude(t_vector n)
-{
-	float		a;
-	float		nxc;
-	float		nyc;
-	float		nzc;
-
-	nxc = pow(n.x, 2);
-	nyc = pow(n.y, 2);
-	nzc = pow(n.z, 2);
-	a = sqrt(nxc + nyc + nzc);
-	return (a);
-}*/
-
-/*
- * /!\ /!\ /!\ IMPORTANT
- * TODO une derniere sur la route ptdr
- */
-/*t_vector	normalise(t_vector n)
-{
-	float	a;
-
-	a = magnitude(n);
-	if (a == 1)
-		return (n);
-	else
-	{
-		n.x = n.x / a;
-		n.y = n.y / a;
-		n.z = n.z / a;
-		return (n);
-	}
-}
-*/
 float	to_rad(float degree_angle)
 {
 	return ((degree_angle * PI) / 180);

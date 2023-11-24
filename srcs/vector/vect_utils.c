@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:03:20 by tlorne            #+#    #+#             */
-/*   Updated: 2023/11/15 11:03:21 by tlorne           ###   ########.fr       */
+/*   Updated: 2023/11/24 11:51:01 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,16 @@ t_coords	add_vec_coord_vec(t_coords a, t_vector b)
 }
 
 t_vector	prod_vec_int(t_vector a, int k)
+{
+	t_vector	c;
+
+	c.x = a.x * k;
+	c.y = a.y * k;
+	c.z = a.z * k;
+	return (c);
+}
+
+t_vector	prod_vec_float(t_vector a, float k)
 {
 	t_vector	c;
 

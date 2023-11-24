@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/24 12:04:18 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/24 12:26:33 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
  * Bien recu !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! =D
  *
- * hippo - "Teamwork hell yeah :)"
+ * hippo - "Teamwork hell yeah ;)"
  */
 
 float	to_rad(float degree_angle)

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/23 22:27:25 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/24 12:20:48 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,21 @@ typedef struct s_ambient_light
 	t_rgb_color	color;
 }				t_ambient_light;
 
-typedef struct s_local_axes
+/*
+ * Coordinates basis structure comprised of 3 orthonormal normal vectors.
+ * This allows handling coordinates in a rotated coordinates system relative to
+ * the global coordinates system.
+ *
+ * t_vector x	-> x axis normal vector
+ * t_vector y	-> y axis normal vector
+ * t_vector z	-> z axis normal vector
+ */
+typedef struct s_orthonormal_basis
 {
-	float		rotation_matrix[3][3];
 	t_vector	x;
 	t_vector	y;
 	t_vector	z;
-}				t_local_axes;
+}				t_orthonormal_basis;
 
 /*
  * Camera special data structure used to complement the t_object structure.
@@ -164,18 +172,18 @@ typedef union u_special_data
  * bool has_color				-> boolean true if the object has a color property
  * t_coords coords				-> coordinates structure of the object
  * t_vector orientation_vector	-> normal vector structure to rotate the object
- * t_local_axes					-> object x,y,z axes depending on the orient. vector
+ * t_orthonormal_basis loc_basis-> object x,y,z axes relative to the orient. vector
  * t_special_data special_data	-> additional special data (camera/light/... data)
  * void (*data_print_func)		-> pointer to the special data display function
  */
 typedef struct s_object
 {
-	unsigned short	type;
-	bool			has_color;
-	t_coords		coords;
-	t_vector		orientation_vector;
-	t_local_axes	local_axes;
-	t_special_data	special_data;
+	unsigned short		type;
+	bool				has_color;
+	t_coords			coords;
+	t_vector			orientation_vector;
+	t_orthonormal_basis	loc_basis;
+	t_special_data		special_data;
 	void			(*data_print_func)(t_special_data special_data);
 }				t_object;
 

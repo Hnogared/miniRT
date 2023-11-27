@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 13:49:59 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/23 17:01:23 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/27 15:14:33 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,5 @@ float	ft_atof(const char *nptr)
 		divider *= 10;
 		i++;
 	}
-	return (nbr);
+	return (nbr * sign);
 }

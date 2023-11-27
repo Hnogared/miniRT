@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/23 16:59:47 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/27 16:00:17 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ void			print_vector(t_vector vector);
 void			print_rgb_color(t_rgb_color color);
 
 /* print_object_data_2.c */
-void			print_camera_data(t_special_data camera);
-void			print_sphere_data(t_special_data sphere);
-void			print_light_data(t_special_data light);
-void			print_plane_data(t_special_data plane);
-void			print_cylinder_data(t_special_data cylinder);
+void			print_camera_data(t_special_data special_data);
+void			print_sphere_data(t_special_data special_data);
+void			print_light_data(t_special_data special_data);
+void			print_plane_data(t_special_data special_data);
+void			print_cylinder_data(t_special_data special_data);
 
 /* Theouche*/
 char			*conv(t_rgb_color color);

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/23 17:09:05 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/27 16:44:45 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,113 @@ void	obj_a(t_data *data, char *s)
 	free_str_tab(args);
 }
 
-/*
-void	obj_a(t_data *data, char *s)
+void	obj_c(t_data *data, char *s, int *pos)
 {
 	char	**args;
+	char	**coords;
+	char	**vector;
 
 	args = ft_split(s, ' ');
-	new_camera(&(data->scene_objects[pos++]), (t_coords){-50, 0, 20}, 70);
+	coords = ft_split(args[1], ',');
+	vector = ft_split(args[2], ',');
+
+	new_camera(&(data->scene_objects[*pos]), 
+			(t_coords){ft_atof(coords[0]), ft_atof(coords[1]), ft_atof(coords[2])}, 
+			ft_atoi(args[3]));
+	set_object_orientation(&(data->scene_objects[*pos]),
+			(t_vector){ft_atof(vector[0]), ft_atof(vector[1]), ft_atof(vector[2])});
+	(*pos)++;
 }
-*/
+
+void	obj_l(t_data *data, char *s, int *pos)
+{
+	char	**args;
+	char	**coords;
+
+	args = ft_split(s, ' ');
+	coords = ft_split(args[1], ',');
+
+	new_light(&(data->scene_objects[*pos]), 
+			(t_coords){ft_atof(coords[0]), ft_atof(coords[1]), ft_atof(coords[2])}, 
+			ft_atof(args[2]));
+	(*pos)++;
+}
+
+void	obj_pl(t_data *data, char *s, int *pos)
+{
+	char	**args;
+	char	**coords;
+	char	**vector;
+	char	**color;
+
+	args = ft_split(s, ' ');
+	coords = ft_split(args[1], ',');
+	vector = ft_split(args[2], ',');
+	color = ft_split(args[3], ',');
+
+	new_plane(&(data->scene_objects[*pos]), 
+			(t_coords){ft_atof(coords[0]), ft_atof(coords[1]), ft_atof(coords[2])});
+	set_object_orientation(&(data->scene_objects[*pos]),
+			(t_vector){ft_atof(vector[0]), ft_atof(vector[1]), ft_atof(vector[2])});
+	set_object_color(&(data->scene_objects[*pos]),
+			(t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2])});
+	(*pos)++;
+}
+
+void	obj_sp(t_data *data, char *s, int *pos)
+{
+	char	**args;
+	char	**coords;
+	char	**color;
+
+	args = ft_split(s, ' ');
+	coords = ft_split(args[1], ',');
+	color = ft_split(args[3], ',');
+
+	new_sphere(&(data->scene_objects[*pos]), 
+			(t_coords){ft_atof(coords[0]), ft_atof(coords[1]), ft_atof(coords[2])},
+			ft_atof(args[2]));
+	set_object_color(&(data->scene_objects[*pos]),
+			(t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2])});
+	(*pos)++;
+}
+
+void	obj_cy(t_data *data, char *s, int *pos)
+{
+	char	**args;
+	char	**coords;
+	char	**vector;
+	char	**color;
+
+	args = ft_split(s, ' ');
+	coords = ft_split(args[1], ',');
+	vector = ft_split(args[2], ',');
+	color = ft_split(args[5], ',');
+
+	new_cylinder(&(data->scene_objects[*pos]), 
+			(t_coords){ft_atof(coords[0]), ft_atof(coords[1]), ft_atof(coords[2])},
+			ft_atof(args[3]), ft_atof(args[4]));
+	set_object_orientation(&(data->scene_objects[*pos]),
+			(t_vector){ft_atof(vector[0]), ft_atof(vector[1]), ft_atof(vector[2])});
+	set_object_color(&(data->scene_objects[*pos]),
+			(t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2])});
+	(*pos)++;
+}
+
 
 int	initialize_data(t_data *data, char **tab)
 {
 	int	i;
 	int	len;
-	//int	pos;
+	int	pos;
 	
 	i = 0;
 	len = 0;
-	//pos = 0;
+	pos = 0;
 	ft_bzero(data, sizeof(t_data));
 	while (tab[len])
 		len++;
-	data->scene_objects = (t_object *)malloc(sizeof(t_object) * len);	
+	data->scene_objects = (t_object *)ft_calloc(sizeof(t_object), len);	
 	if (!data->scene_objects)
 		return (3);
 	data->obj_count = len;
@@ -57,16 +141,16 @@ int	initialize_data(t_data *data, char **tab)
 	{
 		if (tab[i][0] == 'A')
 			obj_a(data, tab[i]);
-
-		/*
 		if (tab[i][0] == 'C')
-			obj_c(data, tab[i]);
+			obj_c(data, tab[i], &pos);
 		if (tab[i][0] == 'L')
-		{
-			new_light(&(data->scene_objects[pos++]), (t_coords){-50, 0, 20}, 0.7);
-			//set_object_color();
-		}
-		*/
+			obj_l(data, tab[i], &pos);
+		if (!ft_strncmp(tab[i], "pl", 2))
+			obj_pl(data, tab[i], &pos);
+		if (!ft_strncmp(tab[i], "sp", 2))
+			obj_sp(data, tab[i], &pos);
+		if (!ft_strncmp(tab[i], "cy", 2))
+			obj_cy(data, tab[i], &pos);
 		i++;
 	}
 	data->mlx_ptr = mlx_init();
@@ -84,22 +168,22 @@ int	main(int argc, char **argv)
 	char		*line;
 	char		**tab;
 	//t_object	object;
-	t_data		prog_data;
+	t_data		data;
 
-	init_error_tab(prog_data.error_tab);
+	init_error_tab(data.error_tab);
 	if (argc != 2)
-		return (ft_perror(NULL, prog_data.error_tab, RTERR_ARGS_COUNT));
+		return (ft_perror(NULL, data.error_tab, RTERR_ARGS_COUNT));
 	check_file(argv[1]);
 	line = get_file(argv[1]);
 	tab = ft_split(line, '\n');
 	free(line);
 	check_scene(tab);
 
-	initialize_data(&prog_data, tab);
+	initialize_data(&data, tab);
 
 	free_str_tab(tab);
-	//redraw_main_window(&prog_data);
-	//mlx_loop(prog_data.mlx_ptr);
+	//redraw_main_window(&data);
+	//mlx_loop(data.mlx_ptr);
 
 	/*
 	new_sphere(&object, (t_coords){1, 0, 10}, 1.0);

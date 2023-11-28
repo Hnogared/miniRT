@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/28 11:42:55 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/28 13:33:31 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,6 @@ void	vector_rotation_test(t_data *data)
 	new_camera(&test, (t_coords){0, 0, 0}, 90);
 	printf("\n");
 	set_object_orientation(&test, (t_vector){0, 1, 0});
-	print_vector(test.loc_basis.x);
-	print_vector(test.loc_basis.y);
-	print_vector(test.loc_basis.z);
 	camera_rays(data, test);
 }
 

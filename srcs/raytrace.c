@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/28 13:30:31 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/28 13:40:36 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ t_ray	*horizontal_rays(int steps, int fov, t_orthonormal_basis basis,
 	if (!rays)
 		return (NULL);
 	horizontal_angle = fov / steps;
+	printf("angle = %f\n", horizontal_angle);
 	rays[steps / 2].vector = basis.x;
 	rays[steps / 2].coords = origin;
 	rays[steps / 2].origin_coords = origin;
@@ -159,7 +160,7 @@ t_ray	*horizontal_rays(int steps, int fov, t_orthonormal_basis basis,
 		rays[steps / 2 - i - 1].coords = origin;
 		rays[steps / 2 - i - 1].origin_coords = origin;
 		print_vector(rays[steps / 2 - i - 1].vector);
-		if (i == steps / 2 - 1 && steps % 2)
+		if (i == steps / 2 - 1 && steps % 2 == 0)
 			break ;
 		rays[steps / 2 + i + 1].vector
 			= axial_vector_rotation(rays[steps / 2 + i].vector,
@@ -187,18 +188,19 @@ int	camera_rays(t_data *data, t_object camera)
 	temp_basis = camera.loc_basis;
 	if ((data->main_window.height * data->pixel_ratio) % 2 == 0)
 	{
-		temp_basis.z = axial_vector_rotation(temp_basis.z, vertical_angle,
-			temp_basis.y);
 		temp_basis.x = axial_vector_rotation(temp_basis.x, vertical_angle,
+			temp_basis.y);
+		temp_basis.z = axial_vector_rotation(temp_basis.z, vertical_angle,
 			temp_basis.y);
 	}
 	if ((data->main_window.width * data->pixel_ratio) % 2 == 0)
 	{
 		temp_basis.x = axial_vector_rotation(temp_basis.x,
-			360 - horizontal_angle / 2.0f, temp_basis.z);
+			360.0f - horizontal_angle / 2.0f, temp_basis.z);
 		temp_basis.y = axial_vector_rotation(temp_basis.y,
-			360 - horizontal_angle / 2.0f, temp_basis.z);
+			360.0f - horizontal_angle / 2.0f, temp_basis.z);
 	}
+	print_vector(temp_basis.x);
 	rays_tab[data->main_window.height / data->pixel_ratio / 2]
 		= horizontal_rays(data->main_window.width / data->pixel_ratio,
 		camera.special_data.camera.fov, temp_basis, camera.coords);

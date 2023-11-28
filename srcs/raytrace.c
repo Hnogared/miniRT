@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/28 13:28:28 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/28 13:30:31 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,9 +195,9 @@ int	camera_rays(t_data *data, t_object camera)
 	if ((data->main_window.width * data->pixel_ratio) % 2 == 0)
 	{
 		temp_basis.x = axial_vector_rotation(temp_basis.x,
-			360 - horizontal_angle / 2, temp_basis.z);
+			360 - horizontal_angle / 2.0f, temp_basis.z);
 		temp_basis.y = axial_vector_rotation(temp_basis.y,
-			360 - horizontal_angle / 2, temp_basis.z);
+			360 - horizontal_angle / 2.0f, temp_basis.z);
 	}
 	rays_tab[data->main_window.height / data->pixel_ratio / 2]
 		= horizontal_rays(data->main_window.width / data->pixel_ratio,

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/28 13:40:36 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/28 13:48:44 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ t_ray	*horizontal_rays(int steps, int fov, t_orthonormal_basis basis,
 	rays = (t_ray *) ft_calloc(steps, sizeof(t_ray));
 	if (!rays)
 		return (NULL);
-	horizontal_angle = fov / steps;
+	horizontal_angle = fov / (steps - 1);
 	printf("angle = %f\n", horizontal_angle);
 	rays[steps / 2].vector = basis.x;
 	rays[steps / 2].coords = origin;

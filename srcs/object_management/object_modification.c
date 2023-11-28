@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:10:00 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/24 13:28:08 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/28 11:30:10 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static t_orthonormal_basis	*set_ortho_basis_from_x(t_orthonormal_basis *to_set,
 	to_set->y = normalise(prod_vec_vec(to_set->z, to_set->x));
 	return (to_set);
 }
+
 
 /*
  * TODO comment i'm tired

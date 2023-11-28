@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/24 11:51:22 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/28 11:43:34 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_vector		axial_vector_rotation(t_vector to_rotate, float angle,
 	t_vector axis);
 t_vector		matrix_vector_rotation(t_vector to_rotate,
 	float rot_matrix[3][3]);
+int				camera_rays(t_data *data, t_object camera);
 
 /* free_and_exit.c */
 noreturn int	free_and_exit(t_data *data);

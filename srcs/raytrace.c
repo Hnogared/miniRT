@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/24 12:26:33 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/28 13:28:28 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ t_vector	matrix_vector_rotation(t_vector to_rotate, float rot_matrix[3][3])
 		+ rot_matrix[1][2] * to_rotate.z;
 	res.z = rot_matrix[2][0] * to_rotate.x + rot_matrix[2][1] * to_rotate.y
 		+ rot_matrix[2][2] * to_rotate.z;
-	return (normalise(res));
+	return (res);
 }
 
 /*
@@ -131,14 +131,78 @@ void	get_rotation_matrix(float rot_matrix_to_set[3][3], t_vector vector1,
 	rot_matrix_to_set[2][2] = (axis.z * axis.z * coeff) + cos;
 }
 
+/*
+ * TODO alloc error management
+ */
+t_ray	*horizontal_rays(int steps, int fov, t_orthonormal_basis basis,
+	t_coords origin)
+{
+	int		i;
+	float	horizontal_angle;
+	t_ray	*rays;
+
+	if (!steps)
+		return (NULL);
+	rays = (t_ray *) ft_calloc(steps, sizeof(t_ray));
+	if (!rays)
+		return (NULL);
+	horizontal_angle = fov / steps;
+	rays[steps / 2].vector = basis.x;
+	rays[steps / 2].coords = origin;
+	rays[steps / 2].origin_coords = origin;
+	i = 0;
+	while (i < steps / 2)
+	{
+		rays[steps / 2 - i - 1].vector
+			= axial_vector_rotation(rays[steps / 2 - i].vector,
+			horizontal_angle, basis.z);
+		rays[steps / 2 - i - 1].coords = origin;
+		rays[steps / 2 - i - 1].origin_coords = origin;
+		print_vector(rays[steps / 2 - i - 1].vector);
+		if (i == steps / 2 - 1 && steps % 2)
+			break ;
+		rays[steps / 2 + i + 1].vector
+			= axial_vector_rotation(rays[steps / 2 + i].vector,
+			360 - horizontal_angle, basis.z);
+		rays[steps / 2 + i + 1].coords = origin;
+		rays[steps / 2 + i + 1].origin_coords = origin;
+		print_vector(rays[steps / 2 + i + 1].vector);
+		i++;
+	}
+	return (rays);
+}
+
 int	camera_rays(t_data *data, t_object camera)
 {
-	t_ray	*rays_tab;
+	float				vertical_angle;
+	float				horizontal_angle;
+	t_ray				**rays_tab;
+	t_orthonormal_basis	temp_basis;
 
-	rays_tab = (t_ray *) malloc((data->main_window.width
-				* data->main_window.height / data->pixel_ratio)
-			* sizeof(t_ray));
+	rays_tab = (t_ray **) malloc((data->main_window.height / data->pixel_ratio)
+			* sizeof(t_ray *));
+	vertical_angle = 90 / data->main_window.height * data->pixel_ratio;
+	horizontal_angle = camera.special_data.camera.fov
+		/ data->main_window.height * data->pixel_ratio;
+	temp_basis = camera.loc_basis;
+	if ((data->main_window.height * data->pixel_ratio) % 2 == 0)
+	{
+		temp_basis.z = axial_vector_rotation(temp_basis.z, vertical_angle,
+			temp_basis.y);
+		temp_basis.x = axial_vector_rotation(temp_basis.x, vertical_angle,
+			temp_basis.y);
+	}
+	if ((data->main_window.width * data->pixel_ratio) % 2 == 0)
+	{
+		temp_basis.x = axial_vector_rotation(temp_basis.x,
+			360 - horizontal_angle / 2, temp_basis.z);
+		temp_basis.y = axial_vector_rotation(temp_basis.y,
+			360 - horizontal_angle / 2, temp_basis.z);
+	}
+	rays_tab[data->main_window.height / data->pixel_ratio / 2]
+		= horizontal_rays(data->main_window.width / data->pixel_ratio,
+		camera.special_data.camera.fov, temp_basis, camera.coords);
+	free(rays_tab[data->main_window.height / data->pixel_ratio / 2]);
 	free(rays_tab);
-	(void) camera;
 	return (0);
 }

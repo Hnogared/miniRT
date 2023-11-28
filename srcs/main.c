@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/24 13:29:01 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/28 11:42:55 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,33 +65,22 @@ int	initialize_data(t_data *data, char **tab)
 	return (0);
 }
 
-void	vector_rotation_test(void)
+void	vector_rotation_test(t_data *data)
 {
-	float		rot_matrix[3][3];
-	t_vector	start_vec;
-	t_vector	axis;
-	t_vector	rotated;
 	t_object	test;
 
-	start_vec = (t_vector){1, 0, 0};
-	axis = (t_vector){0, 0, 1};
-	print_vector(start_vec);
-	printf("\n");
-	rotated = axial_vector_rotation(start_vec, 90, axis);
-	print_vector(rotated);
-	get_rotation_matrix(rot_matrix, axis, rotated);
-	print_vector(matrix_vector_rotation(axis, rot_matrix));
-	new_light(&test, (t_coords){0, 0, 0}, 10);
+	new_camera(&test, (t_coords){0, 0, 0}, 90);
 	printf("\n");
 	set_object_orientation(&test, (t_vector){0, 1, 0});
 	print_vector(test.loc_basis.x);
 	print_vector(test.loc_basis.y);
 	print_vector(test.loc_basis.z);
+	camera_rays(data, test);
 }
 
 int	main(int argc, char **argv)
 {
-	/*
+	
 	char		*line;
 	char		**tab;
 	//t_object	object;
@@ -107,6 +96,8 @@ int	main(int argc, char **argv)
 	check_scene(tab);
 	initialize_data(&prog_data, tab);
 	free_str_tab(tab);
+	vector_rotation_test(&prog_data);
+	/*
 	redraw_main_window(&prog_data);
 	mlx_loop(prog_data.mlx_ptr);
 	*/
@@ -117,8 +108,5 @@ int	main(int argc, char **argv)
 	//object.data_print_func(special_data);
 	printf("la couleur en hexa vaut : %s\n", conv(object.special_data.sphere.color));
 	*/
-	(void) argc;
-	(void) argv;
-	vector_rotation_test();
 	return (0);
 }

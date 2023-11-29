@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/29 17:12:44 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:32:47 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include "miniRT_macro.h"
 # include "miniRT_error.h"
 
+/* parsing */
 int				check_file(char *scene);
 char			*get_file(char *scene);
 void			check_scene(char **tab);
@@ -58,6 +59,15 @@ t_orthonormal_basis	axial_basis_rotation(t_orthonormal_basis to_rotate,
 /* raytrace.c */
 int				camera_rays(t_data *data, t_object camera);
 
+/* initialize data */
+int		initialize_data(t_data *data, char **tab);
+void	obj_a(t_data *data, char *s);
+void	obj_c(t_data *data, char *s, int *pos);
+void	obj_l(t_data *data, char *s, int *pos);
+void	obj_pl(t_data *data, char *s, int *pos);
+void	obj_sp(t_data *data, char *s, int *pos);
+void	obj_cy(t_data *data, char *s, int *pos);
+
 /* free_and_exit.c */
 noreturn int	free_and_exit(t_data *data);
 void			free_data(t_data *data);
@@ -85,11 +95,11 @@ void			print_vector(t_vector vector);
 void			print_rgb_color(t_rgb_color color);
 
 /* print_object_data_2.c */
-void			print_camera_data(t_special_data camera);
-void			print_sphere_data(t_special_data sphere);
-void			print_light_data(t_special_data light);
-void			print_plane_data(t_special_data plane);
-void			print_cylinder_data(t_special_data cylinder);
+void			print_camera_data(t_special_data special_data);
+void			print_sphere_data(t_special_data special_data);
+void			print_light_data(t_special_data special_data);
+void			print_plane_data(t_special_data special_data);
+void			print_cylinder_data(t_special_data special_data);
 
 /* Theouche*/
 char			*conv(t_rgb_color color);

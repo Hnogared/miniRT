@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/29 12:54:42 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/29 17:33:19 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRCS			:=	main.c					\
 					check_numbers.c			\
 					check_range_numbers.c	\
 					conv_hexa.c				\
+					initialize_data.c		\
 					object_creation.c		\
 					object_modification.c	\
 					print_object_data.c		\

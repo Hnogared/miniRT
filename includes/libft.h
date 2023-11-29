@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:48 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/09 17:56:24 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/29 15:32:22 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,8 @@ int		ft_putnbr_fdout(int n, int len, int fd);
 int		ft_putunsigned_fdout(unsigned int n, int len, int fd);
 int		ft_puthex_fdout(unsigned long n, int len, char cap, int fd);
 int		ft_putlhex_fdout(unsigned long n, int len, char cap, int fd);
+
+/* EXTRA */
+float	ft_atof(const char *nptr);
 
 #endif

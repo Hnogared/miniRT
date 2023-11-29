@@ -6,169 +6,52 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/29 12:38:05 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:27:30 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-/*
- * Bien recu !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! =D
- *
- * hippo - "Teamwork hell yeah ;)"
- */
-
-float	to_rad(float degree_angle)
+static t_ray	new_ray(t_vector vector, t_coords origin_coords)
 {
-	return ((degree_angle * PI) / 180);
-}
+	t_ray	new;
 
-/*
- * https://en.wikipedia.org/wiki/Rotation_matrix
- * Rotation matrix from axis and angle
- *
- * Vector to rotate (v):
- * ┌             ┐
- * | to_rotate.x |
- * | to_rotate.y |
- * | to_rotate.z |
- * └             ┘
- *
- *
- * Rotation matrix (R):
- * ┌             ┐
- * | r00 r01 r02 |
- * | r10 r11 r12 |
- * | r20 r21 r22 |
- * └             ┘
- * Ø = angle in radians
- * r00 ( rot_matrix[0][0] ) = cosØ + axis.u^2 * (1 - cosØ)
- * r01 ( rot_matrix[0][1] ) = axis.x * axis.y * (1 - cosØ) - axis.z * sinØ
- * r02 ( rot_matrix[0][2] ) = axis.x * axis.z * (1 - cosØ) + axis.y * sinØ
- *
- * r10 ( rot_matrix[1][0] ) = axis.y * axis.x * (1 - cosØ) + axis.z * sinØ
- * r11 ( rot_matrix[1][1] ) = cosØ + axis.y^2 * (1 - cosØ)
- * r12 ( rot_matrix[1][2] ) = axis.y * axis.z * (1 - cosØ) - axis.x * sinØ
- *
- * r20 ( rot_matrix[2][0] ) = axis.z * axis.x * (1 - cosØ) - axis.y * sinØ
- * r21 ( rot_matrix[2][1] ) = axis.z * axis.y * (1 - cosØ) + axis.x * sinØ
- * r22 ( rot_matrix[2][2] ) = cosØ + axis.z^2 * (1 - cosØ)
- *
- *
- * Vector rotation (v') = (R)(v) :
- * see matrix_vector_rotation()
- */
-t_vector	axial_vector_rotation(t_vector to_rotate, float degree_angle,
-	t_vector axis)
-{
-	float	rad;
-	float	ang_cos;
-	float	ang_sin;
-	float	rot_matrix[3][3];
-
-	rad = to_rad(degree_angle);
-	ang_cos = cos(rad);
-	ang_sin = sin(rad);
-	rot_matrix[0][0] = ang_cos + axis.x * axis.x * (1 - ang_cos);
-	rot_matrix[0][1] = axis.x * axis.y * (1 - ang_cos) - axis.z * ang_sin;
-	rot_matrix[0][2] = axis.x * axis.z * (1 - ang_cos) + axis.y * ang_sin;
-	rot_matrix[1][0] = axis.y * axis.x * (1 - ang_cos) + axis.z * ang_sin;
-	rot_matrix[1][1] = ang_cos + axis.y * axis.y * (1 - ang_cos);
-	rot_matrix[1][2] = axis.y * axis.z * (1 - ang_cos) - axis.x * ang_sin;
-	rot_matrix[2][0] = axis.z * axis.x * (1 - ang_cos) - axis.y * ang_sin;
-	rot_matrix[2][1] = axis.z * axis.y * (1 - ang_cos) + axis.x * ang_sin;
-	rot_matrix[2][2] = ang_cos + axis.z * axis.z * (1 - ang_cos);
-	return (matrix_vector_rotation(to_rotate, rot_matrix));
-}
-
-/*
- * Vector v rotation using the matrix R | (v') = (R)(v) :
- * ┌    ┐   ┌             ┐┌   ┐
- * | x' |   | r00 r01 r02 || x |
- * | y' | = | r10 r11 r12 || y |
- * | z' |   | r20 r21 r22 || z |
- * └    ┘   └             ┘└   ┘
- * x' ( res.x ) = r00 * x + r01 * y + r02 * z
- * y' ( res.y ) = r10 * x + r11 * y + r12 * z
- * z' ( res.z ) = r20 * x + r21 * y + r22 * z
- */
-t_vector	matrix_vector_rotation(t_vector to_rotate, float rot_matrix[3][3])
-{
-	t_vector	res;
-
-	res.x = rot_matrix[0][0] * to_rotate.x + rot_matrix[0][1] * to_rotate.y
-		+ rot_matrix[0][2] * to_rotate.z;
-	res.y = rot_matrix[1][0] * to_rotate.x + rot_matrix[1][1] * to_rotate.y
-		+ rot_matrix[1][2] * to_rotate.z;
-	res.z = rot_matrix[2][0] * to_rotate.x + rot_matrix[2][1] * to_rotate.y
-		+ rot_matrix[2][2] * to_rotate.z;
-	return (res);
-}
-
-/*
- * https://gist.github.com/kevinmoran/b45980723e53edeb8a5a43c49f134724
- * prod_scal_vec() = dot_product()
- * prod_vec_vec() = cross_product()
- */
-void	get_rotation_matrix(float rot_matrix_to_set[3][3], t_vector vector1,
-	t_vector vector2)
-{
-	float		cos;
-	float		coeff;
-	t_vector	axis;
-
-	axis = prod_vec_vec(vector1, vector2);
-	cos = prod_scal_vec(vector1, vector2);
-	coeff = 1.0f / (1.0f + cos);
-	rot_matrix_to_set[0][0] = (axis.x * axis.x * coeff) + cos;
-	rot_matrix_to_set[0][1] = (axis.y * axis.x * coeff) - axis.z;
-	rot_matrix_to_set[0][2] = (axis.z * axis.x * coeff) + axis.y;
-	rot_matrix_to_set[1][0] = (axis.x * axis.y * coeff) + axis.z;
-	rot_matrix_to_set[1][1] = (axis.y * axis.y * coeff) + cos;
-	rot_matrix_to_set[1][2] = (axis.z * axis.y * coeff) - axis.x;
-	rot_matrix_to_set[2][0] = (axis.x * axis.z * coeff) - axis.y;
-	rot_matrix_to_set[2][1] = (axis.y * axis.z * coeff) + axis.x;
-	rot_matrix_to_set[2][2] = (axis.z * axis.z * coeff) + cos;
+	ft_bzero(&new, sizeof(t_ray));
+	new.vector = vector;
+	new.origin_coords = origin_coords;
+	new.coords = origin_coords;
+	return (new);
 }
 
 /*
  * TODO alloc error management
  */
-t_ray	*horizontal_rays(int steps, int fov, t_orthonormal_basis basis,
-	t_coords origin)
+static t_ray	*get_horizontal_rays(int h_virtual_res, int fov,
+	t_orthonormal_basis basis, t_coords origin)
 {
-	int		i;
-	float	horizontal_angle;
-	t_ray	*rays;
+	int			i;
+	float		horizontal_angle;
+	t_vector	ray_vector;
+	t_ray		*rays;
 
-	if (!steps)
+	if (!h_virtual_res)
 		return (NULL);
-	rays = (t_ray *) ft_calloc(steps, sizeof(t_ray));
+	rays = (t_ray *) ft_calloc(h_virtual_res, sizeof(t_ray));
 	if (!rays)
 		return (NULL);
-	horizontal_angle = fov / (steps - 1);
-	printf("angle = %f\n", horizontal_angle);
-	rays[steps / 2].vector = basis.x;
-	rays[steps / 2].coords = origin;
-	rays[steps / 2].origin_coords = origin;
-	i = 0;
-	while (i < steps / 2)
+	horizontal_angle = fov / (h_virtual_res - 1);
+	rays[h_virtual_res / 2] = new_ray(basis.x, origin);
+	i = -1;
+	while (++i < h_virtual_res / 2)
 	{
-		rays[steps / 2 - i - 1].vector
-			= axial_vector_rotation(rays[steps / 2 - i].vector,
+		ray_vector = axial_vector_rotation(rays[h_virtual_res / 2 - i].vector,
 				horizontal_angle, basis.z);
-		rays[steps / 2 - i - 1].coords = origin;
-		rays[steps / 2 - i - 1].origin_coords = origin;
-		print_vector(rays[steps / 2 - i - 1].vector);
-		if (i == steps / 2 - 1 && steps % 2 == 0)
+		rays[h_virtual_res / 2 - i - 1] = new_ray(ray_vector, origin);
+		if (i == h_virtual_res / 2 - 1 && h_virtual_res % 2 == 0)
 			break ;
-		rays[steps / 2 + i + 1].vector
-			= axial_vector_rotation(rays[steps / 2 + i].vector,
+		ray_vector = axial_vector_rotation(rays[h_virtual_res / 2 + i].vector,
 				360 - horizontal_angle, basis.z);
-		rays[steps / 2 + i + 1].coords = origin;
-		rays[steps / 2 + i + 1].origin_coords = origin;
-		print_vector(rays[steps / 2 + i + 1].vector);
-		i++;
+		rays[h_virtual_res / 2 + i + 1] = new_ray(ray_vector, origin);
 	}
 	return (rays);
 }
@@ -176,28 +59,43 @@ t_ray	*horizontal_rays(int steps, int fov, t_orthonormal_basis basis,
 static t_orthonormal_basis	get_setup_basis(t_orthonormal_basis origin_basis,
 	int virtual_res[2], int fov)
 {
-	float				vertical_angle;
 	float				horizontal_angle;
-	t_orthonormal_basis	new_basis;
+	t_orthonormal_basis	new;
 
-	new_basis = origin_basis;
+	new = origin_basis;
 	horizontal_angle = fov / (virtual_res[0] - 1);
-	vertical_angle = 90 / (virtual_res[1] - 1);
-	if (virtual_res[1] % 2 == 0)
-	{
-		new_basis.x = axial_vector_rotation(new_basis.x, vertical_angle / 2.0f,
-				new_basis.y);
-		new_basis.z = axial_vector_rotation(new_basis.z, vertical_angle / 2.0f,
-				new_basis.y);
-	}
+	new = axial_basis_rotation(new, 315.0f, new.y);
 	if (virtual_res[0] % 2 == 0)
+		new = axial_basis_rotation(new, 360.0f - horizontal_angle / 2.0f, new.z);
+	return (new);
+}
+
+t_ray	**get_rays_tab(int virtual_res[2], t_orthonormal_basis basis,
+	t_object camera)
+{
+	int			i;
+	int			j;
+	float		vertical_angle;
+	t_ray		**rays_tab;
+
+	rays_tab = (t_ray **) ft_calloc(virtual_res[1], sizeof(t_ray *));
+	if (!rays_tab)
+		return (NULL);
+	vertical_angle = 90.0f / (virtual_res[1] - 1);
+	i = 0;
+	while (i < virtual_res[1])
 	{
-		new_basis.x = axial_vector_rotation(new_basis.x,
-				360.0f - horizontal_angle / 2.0f, new_basis.z);
-		new_basis.y = axial_vector_rotation(new_basis.y,
-				360.0f - horizontal_angle / 2.0f, new_basis.z);
+		rays_tab[i] = get_horizontal_rays(virtual_res[0],
+			camera.special_data.camera.fov, basis, camera.coords);
+		if (!rays_tab[i])
+			return (NULL);
+		basis = axial_basis_rotation(basis, vertical_angle, camera.loc_basis.y);
+		j = 0;
+		while (j < virtual_res[0])
+			print_vector(rays_tab[i][j++].vector);
+		i++;
 	}
-	return (new_basis);
+	return (rays_tab);
 }
 
 /*
@@ -211,15 +109,9 @@ int	camera_rays(t_data *data, t_object camera)
 
 	virtual_res[0] = data->main_window.width / data->pixel_ratio;
 	virtual_res[1] = data->main_window.height / data->pixel_ratio;
-	rays_tab = (t_ray **) malloc(virtual_res[1] * sizeof(t_ray *));
-	if (!rays_tab)
-		return (errno);
 	temp_basis = get_setup_basis(camera.loc_basis, virtual_res,
 			camera.special_data.camera.fov);
-	print_vector(temp_basis.x);
-	rays_tab[virtual_res[1] / 2] = horizontal_rays(virtual_res[0],
-			camera.special_data.camera.fov, temp_basis, camera.coords);
-	free(rays_tab[virtual_res[1] / 2]);
+	rays_tab = get_rays_tab(virtual_res, temp_basis, camera);
 	free(rays_tab);
 	return (0);
 }

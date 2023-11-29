@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/23 21:28:07 by hnogared         ###   ########.fr        #
+#    Updated: 2023/11/29 12:54:42 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRCS			:=	main.c					\
 					handle_errors.c			\
 					vect.c					\
 					vect_utils.c			\
+					vect_utils2.c			\
 					raytrace.c
 
 

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/29 17:36:44 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/29 19:17:58 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ static t_orthonormal_basis	get_setup_basis(t_orthonormal_basis origin_basis,
 	return (new);
 }
 
+
+// TODO free if alloc error
 t_ray	**get_rays_tab(int virtual_res[2], t_orthonormal_basis basis,
 	t_object camera)
 {
@@ -100,17 +102,14 @@ t_ray	**get_rays_tab(int virtual_res[2], t_orthonormal_basis basis,
 /*
  * or view_rays maybe better idk
  */
-int	camera_rays(t_data *data, t_object camera)
+t_ray	**get_view_rays(t_window window, t_object camera)
 {
 	int					virtual_res[2];
-	t_ray				**rays_tab;
 	t_orthonormal_basis	temp_basis;
 
-	virtual_res[0] = data->main_window.width / data->pixel_ratio;
-	virtual_res[1] = data->main_window.height / data->pixel_ratio;
+	virtual_res[0] = window.width / window.pixel_ratio;
+	virtual_res[1] = window.height / window.pixel_ratio;
 	temp_basis = get_setup_basis(camera.loc_basis, virtual_res,
 			camera.special_data.camera.fov);
-	rays_tab = get_rays_tab(virtual_res, temp_basis, camera);
-	free(rays_tab);
-	return (0);
+	return (get_rays_tab(virtual_res, temp_basis, camera));
 }

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/29 17:32:47 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:53:30 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_orthonormal_basis	axial_basis_rotation(t_orthonormal_basis to_rotate,
 	float angle, t_vector axis);
 
 /* raytrace.c */
-int				camera_rays(t_data *data, t_object camera);
+t_ray				**get_view_rays(t_window window, t_object camera);
 
 /* initialize data */
 int		initialize_data(t_data *data, char **tab);
@@ -136,7 +136,8 @@ int				open_main_window(t_data *data, char *title);
 void			redraw_main_window(t_data *data);
 
 /* window_management.c */
-t_window		my_new_window(void *mlx_ptr, int dimensions[2], char *title);
+t_window		my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
+	char *title);
 void			my_destroy_window(void *mlx_ptr, t_window *window);
 void			my_put_pixel_to_window(t_window *window, int x, int y,
 					size_t color);

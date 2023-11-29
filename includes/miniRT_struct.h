@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/24 12:20:48 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:41:28 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,6 +240,7 @@ typedef struct s_window
 {
 	int		width;
 	int		height;
+	int		pixel_ratio;
 	t_image	image;
 	void	*ptr;
 }				t_window;
@@ -255,7 +256,6 @@ typedef struct s_window
  */
 typedef struct s_data
 {
-	int				pixel_ratio;
 	int				test;
 	char			*error_tab[RTERR_COUNT];
 	t_window		main_window;

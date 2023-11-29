@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 17:40:46 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:48:00 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
  */
 int	open_main_window(t_data *data, char *title)
 {
+	int	pixel_ratio;
 	int	win_size[2];
 
 	mlx_get_screen_size(data->mlx_ptr, &win_size[0], &win_size[1]);
@@ -31,7 +32,9 @@ int	open_main_window(t_data *data, char *title)
 		win_size[0] = WIN_WIDTH;
 	if (WIN_HEIGHT > 0 && WIN_HEIGHT < win_size[1])
 		win_size[1] = WIN_HEIGHT;
-	data->main_window = my_new_window(data->mlx_ptr, win_size, title);
+	pixel_ratio = DEFAULT_PIXEL_RATIO + (DEFAULT_PIXEL_RATIO <= 0);
+	data->main_window = my_new_window(data->mlx_ptr, win_size, pixel_ratio,
+			title);
 	return (data->main_window.ptr == NULL);
 }
 
@@ -56,12 +59,13 @@ void	redraw_main_window(t_data *data)
 	{
 		color = ray_trace(data, x, y);
 		my_put_square_to_window(&data->main_window, (int [2]){x, y},
-			(int [2]){data->pixel_ratio, data->pixel_ratio}, color);
-		x += data->pixel_ratio;
+			(int [2]){data->main_window.pixel_ratio,
+			data->main_window.pixel_ratio}, color);
+		x += data->main_window.pixel_ratio;
 		if (x < data->main_window.width)
 			continue ;
 		x = 0;
-		y += data->pixel_ratio;
+		y += data->main_window.pixel_ratio;
 	}
 	redraw_window(data->mlx_ptr, &data->main_window);
 	mlx_string_put(data->mlx_ptr, data->main_window.ptr, 10, 20, 0xFFFFFF,

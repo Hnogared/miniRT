@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/29 15:44:58 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/29 17:42:16 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,6 @@ int	initialize_data(t_data *data, char **tab)
 	if (open_main_window(data, "miniRT"))
 		return (2);
 	data->test = 10;
-	data->pixel_ratio = DEFAULT_PIXEL_RATIO + (DEFAULT_PIXEL_RATIO <= 0);
 	free(data->scene_objects);
 	init_key_hooks(data);
 	return (0);

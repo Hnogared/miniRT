@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/28 13:48:44 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/29 12:38:05 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ t_ray	*horizontal_rays(int steps, int fov, t_orthonormal_basis basis,
 	{
 		rays[steps / 2 - i - 1].vector
 			= axial_vector_rotation(rays[steps / 2 - i].vector,
-			horizontal_angle, basis.z);
+				horizontal_angle, basis.z);
 		rays[steps / 2 - i - 1].coords = origin;
 		rays[steps / 2 - i - 1].origin_coords = origin;
 		print_vector(rays[steps / 2 - i - 1].vector);
@@ -164,7 +164,7 @@ t_ray	*horizontal_rays(int steps, int fov, t_orthonormal_basis basis,
 			break ;
 		rays[steps / 2 + i + 1].vector
 			= axial_vector_rotation(rays[steps / 2 + i].vector,
-			360 - horizontal_angle, basis.z);
+				360 - horizontal_angle, basis.z);
 		rays[steps / 2 + i + 1].coords = origin;
 		rays[steps / 2 + i + 1].origin_coords = origin;
 		print_vector(rays[steps / 2 + i + 1].vector);
@@ -173,38 +173,53 @@ t_ray	*horizontal_rays(int steps, int fov, t_orthonormal_basis basis,
 	return (rays);
 }
 
-int	camera_rays(t_data *data, t_object camera)
+static t_orthonormal_basis	get_setup_basis(t_orthonormal_basis origin_basis,
+	int virtual_res[2], int fov)
 {
 	float				vertical_angle;
 	float				horizontal_angle;
+	t_orthonormal_basis	new_basis;
+
+	new_basis = origin_basis;
+	horizontal_angle = fov / (virtual_res[0] - 1);
+	vertical_angle = 90 / (virtual_res[1] - 1);
+	if (virtual_res[1] % 2 == 0)
+	{
+		new_basis.x = axial_vector_rotation(new_basis.x, vertical_angle / 2.0f,
+				new_basis.y);
+		new_basis.z = axial_vector_rotation(new_basis.z, vertical_angle / 2.0f,
+				new_basis.y);
+	}
+	if (virtual_res[0] % 2 == 0)
+	{
+		new_basis.x = axial_vector_rotation(new_basis.x,
+				360.0f - horizontal_angle / 2.0f, new_basis.z);
+		new_basis.y = axial_vector_rotation(new_basis.y,
+				360.0f - horizontal_angle / 2.0f, new_basis.z);
+	}
+	return (new_basis);
+}
+
+/*
+ * or view_rays maybe better idk
+ */
+int	camera_rays(t_data *data, t_object camera)
+{
+	int					virtual_res[2];
 	t_ray				**rays_tab;
 	t_orthonormal_basis	temp_basis;
 
-	rays_tab = (t_ray **) malloc((data->main_window.height / data->pixel_ratio)
-			* sizeof(t_ray *));
-	vertical_angle = 90 / data->main_window.height * data->pixel_ratio;
-	horizontal_angle = camera.special_data.camera.fov
-		/ data->main_window.height * data->pixel_ratio;
-	temp_basis = camera.loc_basis;
-	if ((data->main_window.height * data->pixel_ratio) % 2 == 0)
-	{
-		temp_basis.x = axial_vector_rotation(temp_basis.x, vertical_angle,
-			temp_basis.y);
-		temp_basis.z = axial_vector_rotation(temp_basis.z, vertical_angle,
-			temp_basis.y);
-	}
-	if ((data->main_window.width * data->pixel_ratio) % 2 == 0)
-	{
-		temp_basis.x = axial_vector_rotation(temp_basis.x,
-			360.0f - horizontal_angle / 2.0f, temp_basis.z);
-		temp_basis.y = axial_vector_rotation(temp_basis.y,
-			360.0f - horizontal_angle / 2.0f, temp_basis.z);
-	}
+	virtual_res[0] = data->main_window.width / data->pixel_ratio;
+	virtual_res[1] = data->main_window.height / data->pixel_ratio;
+	rays_tab = (t_ray **) malloc(virtual_res[1] * sizeof(t_ray *));
+	if (!rays_tab)
+		return (errno);
+	temp_basis = get_setup_basis(camera.loc_basis, virtual_res,
+			camera.special_data.camera.fov);
 	print_vector(temp_basis.x);
-	rays_tab[data->main_window.height / data->pixel_ratio / 2]
-		= horizontal_rays(data->main_window.width / data->pixel_ratio,
-		camera.special_data.camera.fov, temp_basis, camera.coords);
-	free(rays_tab[data->main_window.height / data->pixel_ratio / 2]);
+	rays_tab[virtual_res[1] / 2] = horizontal_rays(virtual_res[0],
+			camera.special_data.camera.fov, temp_basis, camera.coords);
+	free(rays_tab[virtual_res[1] / 2]);
 	free(rays_tab);
 	return (0);
 }

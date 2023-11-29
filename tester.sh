@@ -22,7 +22,7 @@ done
 
 echo -e "\e[32m_ERROR_MAP\e[0m\n"
 make -s
-file_syntax=("err_double_A.rt" "err_duplicate_C.rt" "err_empty_line.rt" "err_empty_map.rt" "err_first_el.rt" "err_number.rt" "err_too_many_args_objects.rt")
+file_syntax=("err_double_A.rt" "err_duplicate_C.rt" "err_empty_line.rt" "err_empty_map.rt" "err_first_el.rt" "err_number.rt" "err_too_many_args_objects.rt" "err_color_range.rt")
 for file_name in "${file_syntax[@]}"; do
 	echo -n "$file_name : "
 	./miniRT "scenes/${file_name}"

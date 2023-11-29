@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_range_number1.c                              :+:      :+:    :+:   */
+/*   check_range_numbers1.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leudelin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:46:03 by leudelin          #+#    #+#             */
-/*   Updated: 2023/11/17 14:46:05 by leudelin         ###   ########.fr       */
+/*   Updated: 2023/11/29 15:57:59 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	check_range_vectors(char *str)
 			err(RANGE_VECTOR);
 		i++;
 	}
+	free_str_tab(split);
 	return (0);
 }
 
@@ -55,6 +56,7 @@ int	check_range_color(char *str)
 			err(COLOR_NOT_GOOD);
 		i++;
 	}
+	free_str_tab(split);
 	return (0);
 }
 
@@ -73,5 +75,6 @@ int	check_range_light(char *str)
 			err(RANGE_LIGHT);
 		i++;
 	}
+	free_str_tab(split);
 	return (0);
 }

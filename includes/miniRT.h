@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/27 16:00:17 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/29 15:35:29 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@
 # include "miniRT_macro.h"
 # include "miniRT_error.h"
 
+/* parsing */
 int				check_file(char *scene);
 char			*get_file(char *scene);
 void			check_scene(char **tab);
 void			check_char(char ***block);
 void			check_numbers(char ***block);
 int				check_range_numbers(char ***block);
-float			ft_atof(const char *nptr);
 void			err(char *str);
 void			check_num_args(char ***block);
 void			check_num_objects(char ***block);
@@ -44,6 +44,15 @@ int				check_range_fov(char *fov);
 int				check_range_vectors(char *str);
 int				check_range_color(char *str);
 int				check_range_light(char *str);
+
+/* initialize data */
+int		initialize_data(t_data *data, char **tab);
+void	obj_a(t_data *data, char *s);
+void	obj_c(t_data *data, char *s, int *pos);
+void	obj_l(t_data *data, char *s, int *pos);
+void	obj_pl(t_data *data, char *s, int *pos);
+void	obj_sp(t_data *data, char *s, int *pos);
+void	obj_cy(t_data *data, char *s, int *pos);
 
 /* free_and_exit.c */
 noreturn int	free_and_exit(t_data *data);

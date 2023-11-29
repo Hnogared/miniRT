@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:03:44 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/29 15:54:02 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/29 17:14:29 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	check_first_el(char ***block)
 	}
 }
 
-void	check_scene(char **tab)
+void	check_scene(t_data *data, char **tab)
 {
 	char	***block;
 	int		i;
@@ -60,7 +60,7 @@ void	check_scene(char **tab)
 	block[i] = NULL;
 	check_first_el(block);
 	check_num_objects(block);
-	check_numbers(block);
+	check_numbers(data, block);
 	check_range_numbers(block);
 	i = 0;
 	while (block[i])

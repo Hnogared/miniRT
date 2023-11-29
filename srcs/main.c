@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/29 15:51:51 by motoko           ###   ########.fr       */
+/*   Updated: 2023/11/29 17:14:36 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 	line = get_file(argv[1]);
 	tab = ft_split(line, '\n');
 	free(line);
-	check_scene(tab);
+	check_scene(&data, tab);
 
 	//initialize_data(&data, tab);
 

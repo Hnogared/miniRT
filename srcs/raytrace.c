@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/29 19:17:58 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/01 10:36:19 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static t_ray	*get_horizontal_rays(int h_virtual_res, int fov,
 	rays = (t_ray *) ft_calloc(h_virtual_res, sizeof(t_ray));
 	if (!rays)
 		return (NULL);
-	horizontal_angle = fov / (h_virtual_res - 1);
+	horizontal_angle = (float)fov / (float)(h_virtual_res - 1);
 	rays[h_virtual_res / 2] = new_ray(basis.x, origin);
 	i = -1;
 	while (++i < h_virtual_res / 2)
@@ -50,7 +50,7 @@ static t_ray	*get_horizontal_rays(int h_virtual_res, int fov,
 		if (i == h_virtual_res / 2 - 1 && h_virtual_res % 2 == 0)
 			break ;
 		ray_vector = axial_vector_rotation(rays[h_virtual_res / 2 + i].vector,
-				360 - horizontal_angle, basis.z);
+				360.0f - horizontal_angle, basis.z);
 		rays[h_virtual_res / 2 + i + 1] = new_ray(ray_vector, origin);
 	}
 	return (rays);
@@ -63,7 +63,7 @@ static t_orthonormal_basis	get_setup_basis(t_orthonormal_basis origin_basis,
 	t_orthonormal_basis	new;
 
 	new = origin_basis;
-	horizontal_angle = fov / (virtual_res[0] - 1);
+	horizontal_angle = (float)fov / (float)(virtual_res[0] - 1);
 	new = axial_basis_rotation(new, 315.0f, new.y);
 	if (virtual_res[0] % 2 == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/29 17:48:00 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:24:09 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	open_main_window(t_data *data, char *title)
 	return (data->main_window.ptr == NULL);
 }
 
-int	ray_trace(t_data *data, int x, int y)
+int	funky(t_data *data, int x, int y)
 {
 	int	color;
 
@@ -47,25 +47,39 @@ int	ray_trace(t_data *data, int x, int y)
 	return (color);
 }
 
+int	ray_trace(t_data *data, int x, int y)
+{
+	ray_advance(data, &data->view_rays[x][y]);
+	if (data->view_rays[x][y].nb_ref)
+	{
+//		printf("touch(%d:%d)\n", x, y);
+		return (0xFFFFFF);
+	}
+//	printf("loc(%d:%d)\n", x, y);
+	return (0);
+}
+
 void	redraw_main_window(t_data *data)
 {
 	int	x;
 	int	y;
 	int	color;
+	int	pixel_size[2];
 
+	pixel_size[0] = data->main_window.pixel_ratio;
+	pixel_size[1] = data->main_window.pixel_ratio;
 	x = 0;
-	y = 30;
-	while (y < data->main_window.height)
+	y = 0;
+	while (y < data->main_window.height / pixel_size[1])
 	{
 		color = ray_trace(data, x, y);
-		my_put_square_to_window(&data->main_window, (int [2]){x, y},
-			(int [2]){data->main_window.pixel_ratio,
-			data->main_window.pixel_ratio}, color);
-		x += data->main_window.pixel_ratio;
-		if (x < data->main_window.width)
+		my_put_square_to_window(&data->main_window,
+			(int [2]){x * pixel_size[0], y * pixel_size[1]}, pixel_size, color);
+		x++;
+		if (x < data->main_window.width / pixel_size[0])
 			continue ;
 		x = 0;
-		y += data->main_window.pixel_ratio;
+		y++;
 	}
 	redraw_window(data->mlx_ptr, &data->main_window);
 	mlx_string_put(data->mlx_ptr, data->main_window.ptr, 10, 20, 0xFFFFFF,

@@ -6,34 +6,34 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:48:18 by tlorne            #+#    #+#             */
-/*   Updated: 2023/11/14 10:48:20 by tlorne           ###   ########.fr       */
+/*   Updated: 2023/12/01 17:26:36 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_vector	cal_sphere(t_ray ray, t_object sphere)
+t_vector	cal_sphere(t_ray *ray, t_object sphere)
 {
 	t_vector	n;
 	t_vector	r;
 
-	n = sous_vec_coord(ray.coords, sphere.coords);
+	n = sous_vec_coord(ray->coords, sphere.coords);
 	n = normalise(n);
-	r = calc_ref_form(ray.vector, n);
+	r = calc_ref_form(ray->vector, n);
 	return (r);
 }
 
-t_vector	cal_plan(t_ray ray, t_object plan)
+t_vector	cal_plan(t_ray *ray, t_object plan)
 {
 	t_vector	n;
 	t_vector	r;
 
 	n = normalise(plan.orientation_vector);
-	r = calc_ref_form(ray.vector, n);
+	r = calc_ref_form(ray->vector, n);
 	return (r);
 }
 
-t_vector	cal_cylinder_ext(t_ray ray, t_object cylindre, int res)
+t_vector	cal_cylinder_ext(t_ray *ray, t_object cylindre, int res)
 {
 	t_vector	n;
 	t_vector	r;
@@ -42,11 +42,11 @@ t_vector	cal_cylinder_ext(t_ray ray, t_object cylindre, int res)
 		n = normalise(cylindre.orientation_vector);
 	else
 		n = normalise(prod_vec_int(cylindre.orientation_vector, -1));
-	r = calc_ref_form(ray.vector, n);
+	r = calc_ref_form(ray->vector, n);
 	return (r);
 }
 
-t_vector	cal_cylinder_side(t_ray ray, t_object cylindre)
+t_vector	cal_cylinder_side(t_ray *ray, t_object cylindre)
 {
 	t_vector	n;
 	t_vector	r;
@@ -57,18 +57,18 @@ t_vector	cal_cylinder_side(t_ray ray, t_object cylindre)
 	//donc CC' = CP^2 - r^2
 	// et C' = C + CC'*N;
 	
-	d = pow(dist(ray.coords, cylindre.coords), 2) - pow(cylindre.special_data.cylinder.diameter / 2, 2);
-	if (prod_scal_vec(cylindre.orientation_vector, sous_vec_coord(ray.coords, cylindre.coords)) >= 0)
+	d = pow(dist(ray->coords, cylindre.coords), 2) - pow(cylindre.special_data.cylinder.diameter / 2, 2);
+	if (prod_scal_vec(cylindre.orientation_vector, sous_vec_coord(ray->coords, cylindre.coords)) >= 0)
 		cp = advance_on_vec(cylindre.coords, cylindre.orientation_vector, d);
 	else
 		cp = advance_on_vec(cylindre.coords, prod_vec_int(cylindre.orientation_vector, -1), d);
 	// comm d'hab, trouver le N et appliquer la formule.
-	n = normalise(sous_vec_coord(ray.coords, cp));
-	r = calc_ref_form(ray.vector, n);
+	n = normalise(sous_vec_coord(ray->coords, cp));
+	r = calc_ref_form(ray->vector, n);
 	return (r);
 }
 
-t_vector	calcul_ref(t_ray ray, t_object obj, int res)
+t_vector	calcul_ref(t_ray *ray, t_object obj, int res)
 {
 	t_vector	vec_ref;
 
@@ -85,7 +85,7 @@ t_vector	calcul_ref(t_ray ray, t_object obj, int res)
 	return (vec_ref);
 }
 
-int	try_sphere(t_ray ray, t_object obj)
+int	try_sphere(t_ray *ray, t_object obj)
 {
 	/*equationa resoudre
     P=O+t⋅D
@@ -120,21 +120,21 @@ int	try_sphere(t_ray ray, t_object obj)
 	float	delta;
 	float	t;
 
-	a = pow(magnitude(ray.vector), 2);
-	b = 2 * prod_scal_vec(ray.vector, sous_vec_coord(ray.origin_coords, obj.coords));
-	c = pow(magnitude_coord(ray.origin_coords), 2) + pow(magnitude_coord(obj.coords), 2) - 2 * prod_scal_coord(obj.coords, ray.origin_coords) - pow((obj.special_data.sphere.diameter / 2), 2);
+	a = pow(magnitude(ray->vector), 2);
+	b = 2 * prod_scal_vec(ray->vector, sous_vec_coord(ray->origin_coords, obj.coords));
+	c = pow(magnitude_coord(ray->origin_coords), 2) + pow(magnitude_coord(obj.coords), 2) - 2 * prod_scal_coord(obj.coords, ray->origin_coords) - pow((obj.special_data.sphere.diameter / 2), 2);
 	delta = pow(b, 2) - 4 * a * c;
 	if (delta < 0)
 		return (0);
 	else
 	{
 		t = good_sol(delta, b, a);
-		ray.coords = find_pos_touch(ray, t);
+		ray->coords = find_pos_touch(*ray, t);
 		return (1);
 	}
 }
 
-int	try_plan(t_ray ray, t_object plan)
+int	try_plan(t_ray *ray, t_object plan)
 {
     //equation a resoudre (ax + by + cz + d =0) avec vecteur normal du plan (donne dans le sujet) N(a, b, c) et d a determiner avec le point du plan (aussi donne dans le sujet)
     // d = -(ax + by + cz) avec toujours N(a, b, c) et (x, y, z) les coordonnees du point
@@ -160,17 +160,17 @@ int	try_plan(t_ray ray, t_object plan)
 	//res = plan.orientation_vector.x * pos_test.x + plan.orientation_vector.y * pos_test.y + plan.orientation_vector.z * pos_test.z + d;
 	//if (res == 0)
 	//	return (1);
-	t = -((prod_scal_vec_coord(n, ray.origin_coords) + d)/ prod_scal_vec(n, ray.vector));
+	t = -((prod_scal_vec_coord(n, ray->origin_coords) + d)/ prod_scal_vec(n, ray->vector));
 	if (t > 0)
 	{
-		ray.coords = find_pos_touch(ray, t);
+		ray->coords = find_pos_touch(*ray, t);
 		return (1);
 	}
 	else
 		return (0);
 }
 
-int	try_plan_cyl(t_ray ray, t_coords cp, t_vector n, t_object obj)
+int	try_plan_cyl(t_ray *ray, t_coords cp, t_vector n, t_object obj)
 {
 	float		d;
 	float		t;
@@ -179,18 +179,18 @@ int	try_plan_cyl(t_ray ray, t_coords cp, t_vector n, t_object obj)
 
 	nn = normalise(n);
 	d = -(nn.x * cp.x + nn.y * cp.y + nn.z * cp.z);
-	t = -((prod_scal_vec_coord(nn, ray.origin_coords) + d)/ prod_scal_vec(nn, ray.vector));
+	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d)/ prod_scal_vec(nn, ray->vector));
 	if (t > 0)
 	{
-		ray.coords = find_pos_touch(ray, t);
-		verif = dist(ray.coords, cp);
+		ray->coords = find_pos_touch(*ray, t);
+		verif = dist(ray->coords, cp);
 		if (verif < obj.special_data.cylinder.diameter / 2)
 			return (1);
 	}
 	return (0);
 }
 
-int	try_cylinder_ext(t_ray ray, t_object obj)
+int	try_cylinder_ext(t_ray *ray, t_object obj)
 {
 	// faire comme avec un plan avec N le vecteur de l'axe du cylindre et le point sera la projection de C sur le plan.
 	// H/2, on peut retrouver C' pour les 2 cas C'sup et C'inf;
@@ -209,7 +209,7 @@ int	try_cylinder_ext(t_ray ray, t_object obj)
 		return (0);
 }
 
-int	try_cylinder_side(t_ray ray, t_object obj)
+int	try_cylinder_side(t_ray *ray, t_object obj)
 {
 	/*equationa resoudre
     P=O+t⋅D
@@ -257,8 +257,8 @@ int	try_cylinder_side(t_ray ray, t_object obj)
 	float	delta;
 	float	t;
 
-	k = prod_scal_vec(obj.orientation_vector, ray.vector);
-	h = prod_scal_vec(obj.orientation_vector, sous_vec_coord(ray.origin_coords, obj.coords));
+	k = prod_scal_vec(obj.orientation_vector, ray->vector);
+	h = prod_scal_vec(obj.orientation_vector, sous_vec_coord(ray->origin_coords, obj.coords));
 	a = pow(k, 2);	
 	b = 2 * k * h;
 	c = pow(h, 2) - pow(obj.special_data.cylinder.diameter / 2, 2);
@@ -272,15 +272,15 @@ int	try_cylinder_side(t_ray ray, t_object obj)
 		//On sait aussi que, au max, CL = H/2; et que LP vaut toujours r;
 		// PC^2 ne peut pas etre > (H/2)^2 + r^2 --> sinon, pas sur notre cylindre;
 		t = good_sol(delta, b, a);
-		ray.coords = find_pos_touch(ray, t);
-		if (pow(dist(ray.coords, obj.coords), 2) <= (pow(obj.special_data.cylinder.height / 2, 2) + pow(obj.special_data.cylinder.diameter / 2, 2)))
+		ray->coords = find_pos_touch(*ray, t);
+		if (pow(dist(ray->coords, obj.coords), 2) <= (pow(obj.special_data.cylinder.height / 2, 2) + pow(obj.special_data.cylinder.diameter / 2, 2)))
 			return (1);
 		else
 			return (try_cylinder_ext(ray, obj));
 	}	
 }
 
-int	do_touch(t_ray ray, t_object obj)
+int	do_touch(t_ray *ray, t_object obj)
 {
 	if (obj.type == SPHERE_OBJ)
 		return (try_sphere(ray, obj));
@@ -292,7 +292,7 @@ int	do_touch(t_ray ray, t_object obj)
 		return (0);
 }
 
-void	touch_object(t_data *data, t_ray ray)
+void	touch_object(t_data *data, t_ray *ray)
 {
 	unsigned short	i;
 	int	res;
@@ -302,28 +302,34 @@ void	touch_object(t_data *data, t_ray ray)
 	while (i < data->obj_count)
 	{
 		res = do_touch(ray, data->scene_objects[i]);
+		printf("res vaut %d\n", res);
 		if (res >= 1)
 		{
-			ray.vector = calcul_ref(ray, data->scene_objects[i], res);
-			ray.origin_coords = give_coord(ray.coords);
-			ray.touch = 1;
-			ray.nb_ref++;
-			ray.objects_touch[ray.s++] = data->scene_objects[i];
+			ray->vector = calcul_ref(ray, data->scene_objects[i], res);
+			ray->origin_coords = give_coord(ray->coords);
+			ray->touch = 1;
+			ray->nb_ref++;
+			ray->objects_touch[ray->s++] = data->scene_objects[i];
 			return ;
 		}
 		i++;
 	}
-	ray.touch = 0;
-	//ray.objects_touch[ray.s++] = NULL;
+	ray->touch = 0;
+	//ray->objects_touch[ray->s++] = NULL;
 	return ;
 }
 
-void	ray_advance(t_data *data, t_ray ray)
+void	ray_advance(t_data *data, t_ray *ray)
 {
-	ray.touch = 1;
-	ray.nb_ref = 0;
-	ray.s = 0;
-	ray.objects_touch = malloc(sizeof(t_object) * 4);
-	while (ray.touch != 0 && ray.nb_ref <= 2)
+	ray->touch = 1;
+	ray->nb_ref = 0;
+	ray->s = 0;
+	ray->objects_touch = malloc(sizeof(t_object) * 4);
+	while (ray->touch != 0 && ray->nb_ref <= 2)
 		touch_object(data, ray);
+	printf("** %d ** ", ray->nb_ref);
+	print_vector(ray->vector);
+	printf(" ");
+	print_coords(ray->origin_coords);
+	printf("\n");
 }

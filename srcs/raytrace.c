@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/01 15:15:02 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:40:29 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static t_ray	new_ray(t_vector vector, t_coords origin_coords)
 	new.coords = origin_coords;
 	return (new);
 }
+
 
 /*
  * TODO alloc error management
@@ -62,15 +63,17 @@ t_ray	**get_rays_tab(int virtual_res[2], t_orthonormal_basis basis,
 	rays_tab = (t_ray **) ft_calloc(virtual_res[0], sizeof(t_ray *));
 	if (!rays_tab)
 		return (NULL);
-	horizontal_angle = (float) camera.special_data.camera.fov / (virtual_res[0] - 1);
+	horizontal_angle = (float) camera.special_data.camera.fov
+		/ (virtual_res[0] - 1);
 	i = 0;
 	while (i < virtual_res[0])
 	{
 		rays_tab[i] = get_vertical_rays(virtual_res[1], RT_VERTICAL_FOV, basis,
-			camera.coords);
+				camera.coords);
 		if (!rays_tab[i])
 			return (NULL);
-		basis = axial_basis_rotation(basis, horizontal_angle, camera.loc_basis.z);
+		basis = axial_basis_rotation(basis, horizontal_angle,
+				camera.loc_basis.z);
 		i++;
 	}
 	return (rays_tab);

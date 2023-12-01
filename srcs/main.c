@@ -6,27 +6,29 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/01 15:22:53 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:03:42 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	vector_rotation_test(t_data *data)
+void	get_rays(t_data *data)
 {
-	int			i;
-	t_object	test;
-	t_ray		**rays_tab;
+	unsigned short	i;
 
-	new_camera(&test, (t_coords){0, 0, 0}, 90);
-	set_object_orientation(&test, (t_vector){0, 1, 0});
-	rays_tab = get_view_rays(data->main_window, test);
-
-	print_vector(rays_tab[0][0].vector);
 	i = 0;
-	while (i < data->main_window.width / data->main_window.pixel_ratio)
-		free(rays_tab[i++]);
-	free(rays_tab);
+	while (i < 3)
+	{
+		print_object_data(data->scene_objects[i]);
+		printf("\n\n");
+		i++;
+	}
+	i = 0;
+	while (i < data->obj_count && data->scene_objects[i].type != CAMERA_OBJ)
+		i++;
+	if (i == data->obj_count)
+		return ;
+	data->view_rays = get_view_rays(data->main_window, data->scene_objects[i]);
 }
 
 int	main(int argc, char **argv)
@@ -47,15 +49,15 @@ int	main(int argc, char **argv)
 	check_scene(&data, tab);
 
 	initialize_data(&data, tab);
-
 	free_str_tab(tab);
 
-//	vector_rotation_test(&data);
+	get_rays(&data);
+	print_vector(data.view_rays[0][0].vector);
 
-/*
-	redraw_main_window(&prog_data);
-	mlx_loop(prog_data.mlx_ptr);
-	*/
+
+	redraw_main_window(&data);
+	mlx_loop(data.mlx_ptr);
+	
 	//redraw_main_window(&data);
 	//mlx_loop(data.mlx_ptr);
 	return (0);

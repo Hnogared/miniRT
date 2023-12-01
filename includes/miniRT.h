@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/01 15:21:28 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:10:31 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,6 @@ int				check_range_color(char *str);
 int				check_range_light(char *str);
 void			free_parsing_and_exit(t_data *data, char ***block);
 void			err(char *str);
-
-/* vect_utils2.c */
-float				to_rad(float degree_angle);
-t_vector			axial_vector_rotation(t_vector to_rotate, float angle,
-	t_vector axis);
-t_vector			matrix_vector_rotation(t_vector to_rotate,
-	float rot_matrix[3][3]);
-void				get_rotation_matrix(float rot_matrix_to_set[3][3],
-	t_vector vector1, t_vector vector2);
-t_orthonormal_basis	axial_basis_rotation(t_orthonormal_basis to_rotate,
-	float angle, t_vector axis);
 
 /* raytrace.c */
 t_ray				**get_view_rays(t_window window, t_object camera);
@@ -124,6 +113,19 @@ float			good_sol(float delta, float b, float a);
 float			prod_scal_coord(t_coords a, t_coords b);
 float			prod_scal_vec_coord(t_vector a, t_coords b);
 float			magnitude_coord(t_coords n);
+void			ray_advance(t_data *data, t_ray *ray);
+
+/* vect_utils2.c */
+float				to_rad(float degree_angle);
+t_vector			axial_vector_rotation(t_vector to_rotate, float angle,
+	t_vector axis);
+t_vector			matrix_vector_rotation(t_vector to_rotate,
+	float rot_matrix[3][3]);
+void				get_rotation_matrix(float rot_matrix_to_set[3][3],
+	t_vector vector1, t_vector vector2);
+t_orthonormal_basis	axial_basis_rotation(t_orthonormal_basis to_rotate,
+	float angle, t_vector axis);
+
 
 /* SRCS/DISPLAY */
 /* image_management.c */

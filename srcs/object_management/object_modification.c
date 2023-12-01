@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:10:00 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/28 11:30:10 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:50:11 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,9 @@ t_object	*set_object_orientation(t_object *to_set, t_vector new_vector)
 {
 	if (!to_set)
 		return (NULL);
-	to_set->orientation_vector = new_vector;
+	if (!new_vector.x && !new_vector.y && !new_vector.z)
+		new_vector = (t_vector){1, 0, 0};
+	to_set->orientation_vector = normalise(new_vector);
 	if (to_set->type == CAMERA_OBJ)
 		set_ortho_basis_from_x(&to_set->loc_basis, new_vector);
 	else

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 12:50:45 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/29 17:12:27 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:17:42 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ t_orthonormal_basis	axial_basis_rotation(t_orthonormal_basis to_rotate,
 {
 	t_orthonormal_basis	rotated;
 
+	rotated = to_rotate;
 	if (prod_scal_vec(to_rotate.x, axis) != 1.0f)
 		rotated.x = axial_vector_rotation(to_rotate.x, angle, axis);
 	if (prod_scal_vec(to_rotate.y, axis) != 1.0f)

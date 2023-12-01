@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:18:25 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/23 22:41:34 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:04:14 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@
  */
 # ifndef DEFAULT_PIXEL_RATIO
 #  define DEFAULT_PIXEL_RATIO	3
+# endif
+
+
+/*
+ * TODO comment
+ */
+# ifndef RT_VERTICAL_FOV
+#  define RT_VERTICAL_FOV	100
 # endif
 
 # define BUFFER_SIZE 1000

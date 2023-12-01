@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/01 15:18:27 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:22:53 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,15 @@ int	main(int argc, char **argv)
 	line = get_file(argv[1]);
 	tab = ft_split(line, '\n');
 	free(line);
-	check_scene(tab);
+	check_scene(&data, tab);
 
 	initialize_data(&data, tab);
 
 	free_str_tab(tab);
-	vector_rotation_test(&data);
-	/*
+
+//	vector_rotation_test(&data);
+
+/*
 	redraw_main_window(&prog_data);
 	mlx_loop(prog_data.mlx_ptr);
 	*/

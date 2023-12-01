@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 16:09:40 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/29 17:32:19 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:21:14 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@
 # define INVALID_OBJECT "error: invalid object"
 # define IS_NOT_VALID "error: not a valid argument"
 # define IS_NOT_NUMBER "error: not a number"
-# define DUPLICATE_OBJ "error: duplicate object"
 # define TOO_MANY_COMMA "error: too many comma in number"
 # define TOO_MANY_DOT "error: too many dot in number"
 # define TOO_MANY_OBJS "error : too many objects"

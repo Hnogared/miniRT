@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:38:24 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/18 18:57:11 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:43:16 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,24 @@ void	ft_panic(t_data *data, char *prefix, int errnum)
 {
 	exit(ft_perror(prefix, data->error_tab, errnum));
 }
+
+/*
+void	free_parsing_and_exit(t_data *data, char ***block)
+{
+	int	i;
+
+	i = 0;
+	if (!block)
+		return ;
+	while (block[i])
+	{
+		free_str_tab(block[i]);
+		i++;
+	}
+	free(block);
+	exit(0);
+}
+*/
 
 void	err(char *str)
 {

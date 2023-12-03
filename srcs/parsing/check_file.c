@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:21:46 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/13 13:39:30 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/01 16:39:37 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	check_file(char *scene)
 
 	file_type = ft_strrchr(scene, '.');
 	if (!file_type)
-		err(FILE_NAME);
+		return (-1);
 	if (!(!ft_strncmp(file_type, ".rt", 4)))
-		err(FILE_NAME);
+		return (-1);
 	return (0);
 }

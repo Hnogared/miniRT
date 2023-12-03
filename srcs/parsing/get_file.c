@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:30:11 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/13 13:52:22 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/01 16:56:29 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,16 @@ char	*read_file(int fd)
 	return (str);
 }
 
-char	*get_file(char *scene)
+char	*get_file(t_data *data, char *scene)
 {
 	int		fd;
 	char	*str;
 
 	fd = open(scene, O_RDONLY);
 	if (fd == -1)
-		err(OPEN_FILE);
+		exit(ft_perror(NULL, data->error_tab, RTERR_OPEN_FILE));
 	str = read_file(fd);
 	if (!str)
-		err(READ_FILE);
+		exit(ft_perror(NULL, data->error_tab, RTERR_OPEN_FILE));
 	return (str);
 }

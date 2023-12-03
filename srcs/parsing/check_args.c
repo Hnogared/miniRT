@@ -6,13 +6,13 @@
 /*   By: leudelin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:00:54 by leudelin          #+#    #+#             */
-/*   Updated: 2023/11/13 15:00:58 by leudelin         ###   ########.fr       */
+/*   Updated: 2023/12/03 10:14:07 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	check_num_objects1(char	**block)
+static int	check_num_objects1(char	**block)
 {
 	int	i;
 
@@ -20,10 +20,11 @@ void	check_num_objects1(char	**block)
 	while (block[i])
 		i++;
 	if (i != 4)
-		err(TOO_MANY_OBJS);
+		return (RTERR_OBJS_COUNT);
+	return (0);
 }
 
-void	check_num_objects2(char **block)
+static int	check_num_objects2(char **block)
 {
 	int	i;
 
@@ -31,10 +32,11 @@ void	check_num_objects2(char **block)
 	while (block[i])
 		i++;
 	if (i != 6)
-		err(TOO_MANY_OBJS);
+		return (RTERR_OBJS_COUNT);
+	return (0);
 }
 
-void	check_num_objects3(char **block)
+static int	check_num_objects3(char **block)
 {
 	int	i;
 
@@ -42,10 +44,11 @@ void	check_num_objects3(char **block)
 	while (block[i])
 		i++;
 	if (i != 3)
-		err(TOO_MANY_OBJS);
+		return (RTERR_OBJS_COUNT);
+	return (0);
 }
 
-void	check_num_objects(char	***block)
+int	check_num_objects(char	***block)
 {
 	char	**tab;
 	char	**tab1;
@@ -61,15 +64,16 @@ void	check_num_objects(char	***block)
 		while (block[i][j])
 		{
 			if (!ft_strncmp(block[i][j], tab[1], 2) || (!ft_strncmp(block[i][j], tab[2], 2)))
-				check_num_objects1(block[i]);
+				return (check_num_objects1(block[i]));
 			if (!ft_strncmp(block[i][j], tab[0], 2))
-				check_num_objects3(block[i]);
+				return (check_num_objects3(block[i]));
 			if (!ft_strncmp(block[i][j], tab1[2], 3))
-				check_num_objects2(block[i]);
+				return (check_num_objects2(block[i]));
 			if (!ft_strncmp(block[i][j], tab1[0], 3) || (!ft_strncmp(block[i][j], tab1[1], 3)))
-				check_num_objects1(block[i]);
+				return (check_num_objects1(block[i]));
 			j++;
 		}
 		i++;
 	}
+	return (0);
 }

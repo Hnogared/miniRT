@@ -6,13 +6,13 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:03:44 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/29 17:14:29 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/03 10:09:44 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	check_first_el(char ***block)
+static int	check_first_el(char ***block)
 {
 	int		i;
 	int		j;
@@ -37,18 +37,41 @@ void	check_first_el(char ***block)
 			j++;
 		}
 		if (!is_found)
-			err(INVALID_OBJECT);
+			return (RTERR_OBJ);
 	}
+	return (0);
 }
 
-void	check_scene(t_data *data, char **tab)
+int	all_test(t_data *data, char ***block)
+{
+	int		status;
+
+	status = 0;
+	status = check_first_el(block);
+	if (status)
+		return (ft_perror(RTERR_MSG, data->error_tab, status));
+	status = check_num_objects(block);
+	if (status)
+		return (ft_perror(RTERR_MSG, data->error_tab, status));
+	status = check_numbers(block);
+	if (status)
+		return (ft_perror(RTERR_MSG, data->error_tab, status));
+	status = check_range_numbers(block);
+	if (status)
+		return (ft_perror(RTERR_MSG, data->error_tab, status));
+	return (0);
+}
+
+int	check_scene(t_data *data, char **tab)
 {
 	char	***block;
 	int		i;
 	int		len;
+	int		status;
 
 	i = 0;
 	len = 0;
+	status = 0;
 	while (tab[len])
 		len++;
 	block = malloc((len + 1) * sizeof(*block));
@@ -58,10 +81,7 @@ void	check_scene(t_data *data, char **tab)
 		i++;
 	}
 	block[i] = NULL;
-	check_first_el(block);
-	check_num_objects(block);
-	check_numbers(data, block);
-	check_range_numbers(block);
+	status = all_test(data, block);
 	i = 0;
 	while (block[i])
 	{
@@ -69,4 +89,5 @@ void	check_scene(t_data *data, char **tab)
 		i++;
 	}
 	free(block);
+	return (status);
 }

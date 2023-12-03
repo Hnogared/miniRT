@@ -6,13 +6,13 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:07:54 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/29 17:42:11 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/01 17:44:39 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	count_dot_and_comma(char *s, int *dot, int *comma)
+static void	count_dot_and_comma(char *s, int *dot, int *comma)
 {
 	int		i;
 	int		j;
@@ -39,7 +39,7 @@ void	count_dot_and_comma(char *s, int *dot, int *comma)
 	}
 }
 
-void	check_dot_and_comma(t_data *data, char *s)
+static int	check_dot_and_comma(char *s)
 {
 	int	dot;
 	int	comma;
@@ -48,75 +48,70 @@ void	check_dot_and_comma(t_data *data, char *s)
 	comma = 0;
 	count_dot_and_comma(s, &dot, &comma);
 	if (dot > 1)
-	{
-		ft_perror(RTERR_MSG, data->error_tab, RTERR_NUM_DOT);
-//		free_parsing_and_exit(data, block);
-	}
+		return (RTERR_NUM_DOT);
 	if (comma > 2)
-	{
-		ft_perror(RTERR_MSG, data->error_tab, RTERR_NUM_COMMA);
-//		free_parsing_and_exit(data, block);
-	}
+		return (RTERR_NUM_COMMA);
+	return (0);
 }
 
-void	check_begin_and_end(t_data *data, char *s)
+static int	check_begin_and_end(char *s)
 {
 	int	len;
 
 	len = ft_strlen(s);
 	if (s[len - 1] == ',' || s[len - 1] == '.')
-	{
-		ft_perror(RTERR_MSG, data->error_tab, RTERR_NUM);
-//		free_parsing_and_exit(data, block);
-	}
+		return (RTERR_NUM);
 	if (s[0] == ',' || s[0] == '.')
-	{
-		ft_perror(RTERR_MSG, data->error_tab, RTERR_NUM);
-//		free_parsing_and_exit(data, block);
-	}
+		return (RTERR_NUM);
+	return (0);
 }
 
-void	check_is_digit(t_data *data, char *s)
+static int	check_is_digit(char *s)
 {
 	int	i;
+	int	status;
 
 	i = -1;
-	check_begin_and_end(data, s);
-	check_dot_and_comma(data, s);
+	status = 0;
+	status = check_begin_and_end(s);
+	if (status)
+		return (status);
+	status = check_dot_and_comma(s);
+	if (status)
+		return (status);
 	while (s[++i])
 	{
 		if (i != 0 && ((s[i] == ',' || s[i] == '.'))
 			&& ((s[i - 1] != ',' && s[i - 1] != '.')))
 			continue ;
 		if (i == 0 && !(ft_isdigit(s[i]) || s[i] == '-'))
-		{
-			ft_perror(RTERR_MSG, data->error_tab, RTERR_NUM);
-//			free_parsing_and_exit(data, block);
-		}
+			return (RTERR_NUM);
 		if (i > 0 && (s[i - 1] && ((s[i - 1] == ',') && s[i] == '-')))
 			continue ;
 		if (i != 0 && !ft_isdigit(s[i]))
-		{
-			ft_perror(RTERR_MSG, data->error_tab, RTERR_NUM);
-//			free_parsing_and_exit(data, block);
-		}
+			return (RTERR_NUM);
 	}
+	return (0);
 }
 
-void	check_numbers(t_data *data, char ***block)
+int	check_numbers(char ***block)
 {
 	int	i;
 	int	j;
 	int	is_present[3];
+	int	status;
 
 	i = 0;
+	status = 0;
 	ft_bzero(is_present, 3 * sizeof(int));
 	while (block[i])
 	{
 		j = 1;
 		while (block[i][j])
 		{
-			check_is_digit(data, block[i][j]);
+			status = check_is_digit(block[i][j]);
+			if (status)
+				return (status);
 			j++;
 		}
 		if (!ft_strncmp(block[i][0], "A", 2))
@@ -128,8 +123,6 @@ void	check_numbers(t_data *data, char ***block)
 		i++;
 	}
 	if (is_present[0] != 1 || is_present[1] != 1 || is_present[2] != 1)
-	{
-		ft_perror(RTERR_MSG, data->error_tab, RTERR_DUPLIC_OBJ);
-//		free_parsing_and_exit(data, block);
-	}
+		return (RTERR_DUPLIC_OBJ);
+	return (0);
 }

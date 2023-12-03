@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:03:44 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/03 10:09:44 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/03 13:01:40 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static int	check_first_el(char ***block)
 
 	i = -1;
 	j = 0;
-	is_found = 0;
 	tab_char = (char *[]){"A", "C", "L", NULL};
 	tab_string = (char *[]){"pl", "sp", "cy", NULL};
 	while (block[++i])
@@ -82,12 +81,6 @@ int	check_scene(t_data *data, char **tab)
 	}
 	block[i] = NULL;
 	status = all_test(data, block);
-	i = 0;
-	while (block[i])
-	{
-		free_str_tab(block[i]);
-		i++;
-	}
-	free(block);
+	free_block(block);
 	return (status);
 }

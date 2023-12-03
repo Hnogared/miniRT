@@ -6,7 +6,7 @@
 /*   By: leudelin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:46:03 by leudelin          #+#    #+#             */
-/*   Updated: 2023/12/03 10:40:29 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/03 13:03:33 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_range_fov(char *fov)
 {
 	int	temp;
-	int		status;
+	int	status;
 
 	status = 0;
 	temp = ft_atoi(fov);

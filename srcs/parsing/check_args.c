@@ -6,7 +6,7 @@
 /*   By: leudelin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:00:54 by leudelin          #+#    #+#             */
-/*   Updated: 2023/12/03 10:14:07 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/03 12:18:35 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,32 +48,43 @@ static int	check_num_objects3(char **block)
 	return (0);
 }
 
+static int	all_test(char ***block, char **tab, char **tab1, int i)
+{
+	int	j;
+
+	j = 0;
+	while (block[i][j])
+	{
+		if (!ft_strncmp(block[i][j], tab[1], 2) ||
+				(!ft_strncmp(block[i][j], tab[2], 2)))
+			return (check_num_objects1(block[i]));
+		if (!ft_strncmp(block[i][j], tab[0], 2))
+			return (check_num_objects3(block[i]));
+		if (!ft_strncmp(block[i][j], tab1[2], 3))
+			return (check_num_objects2(block[i]));
+		if (!ft_strncmp(block[i][j], tab1[0], 3) ||
+				(!ft_strncmp(block[i][j], tab1[1], 3)))
+			return (check_num_objects1(block[i]));
+		j++;
+	}
+	return (0);
+}
+
 int	check_num_objects(char	***block)
 {
 	char	**tab;
 	char	**tab1;
 	int		i;
-	int		j;
+	int		status;
 
 	i = 0;
+	status = 0;
 	tab = (char *[]){"A", "C", "L", NULL};
 	tab1 = (char *[]){"pl", "sp", "cy", NULL};
 	while (block[i])
 	{
-		j = 0;
-		while (block[i][j])
-		{
-			if (!ft_strncmp(block[i][j], tab[1], 2) || (!ft_strncmp(block[i][j], tab[2], 2)))
-				return (check_num_objects1(block[i]));
-			if (!ft_strncmp(block[i][j], tab[0], 2))
-				return (check_num_objects3(block[i]));
-			if (!ft_strncmp(block[i][j], tab1[2], 3))
-				return (check_num_objects2(block[i]));
-			if (!ft_strncmp(block[i][j], tab1[0], 3) || (!ft_strncmp(block[i][j], tab1[1], 3)))
-				return (check_num_objects1(block[i]));
-			j++;
-		}
+		status = all_test(block, tab, tab1, i);
 		i++;
 	}
-	return (0);
+	return (status);
 }

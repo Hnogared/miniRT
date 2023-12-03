@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:25:22 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 18:40:18 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/03 13:02:11 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@ void	free_data(t_data *data)
 	my_destroy_window(data->mlx_ptr, &data->main_window);
 	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
+}
+
+void	free_block(char ***block)
+{
+	char	***tmp;
+
+	tmp = block;
+	while (*tmp)
+		free_str_tab(*(tmp++));
+	free(block);
 }
 
 void	free_str_tab(char **str_tab)

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:07:54 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/01 17:44:39 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/03 13:04:20 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,24 @@ static void	count_dot_and_comma(char *s, int *dot, int *comma)
 	}
 }
 
-static int	check_dot_and_comma(char *s)
+static int	check_all(char *s)
 {
 	int	dot;
 	int	comma;
+	int	len;
 
 	dot = 0;
 	comma = 0;
-	count_dot_and_comma(s, &dot, &comma);
-	if (dot > 1)
-		return (RTERR_NUM_DOT);
-	if (comma > 2)
-		return (RTERR_NUM_COMMA);
-	return (0);
-}
-
-static int	check_begin_and_end(char *s)
-{
-	int	len;
-
 	len = ft_strlen(s);
 	if (s[len - 1] == ',' || s[len - 1] == '.')
 		return (RTERR_NUM);
 	if (s[0] == ',' || s[0] == '.')
 		return (RTERR_NUM);
+	count_dot_and_comma(s, &dot, &comma);
+	if (dot > 1)
+		return (RTERR_NUM_DOT);
+	if (comma > 2)
+		return (RTERR_NUM_COMMA);
 	return (0);
 }
 
@@ -73,10 +67,7 @@ static int	check_is_digit(char *s)
 
 	i = -1;
 	status = 0;
-	status = check_begin_and_end(s);
-	if (status)
-		return (status);
-	status = check_dot_and_comma(s);
+	status = check_all(s);
 	if (status)
 		return (status);
 	while (s[++i])
@@ -94,16 +85,29 @@ static int	check_is_digit(char *s)
 	return (0);
 }
 
+static int	check_is_present(char ***block, int i)
+{
+	static int	is_present[3] = {0, 0, 0};
+
+	if (!ft_strncmp(block[i][0], "A", 2))
+		is_present[0] += 1;
+	if (!ft_strncmp(block[i][0], "C", 2))
+		is_present[1] += 1;
+	if (!ft_strncmp(block[i][0], "L", 2))
+		is_present[2] += 1;
+	if (is_present[0] != 1 || is_present[1] != 1 || is_present[2] != 1)
+		return (RTERR_DUPLIC_OBJ);
+	return (0);
+}
+
 int	check_numbers(char ***block)
 {
 	int	i;
 	int	j;
-	int	is_present[3];
 	int	status;
 
 	i = 0;
 	status = 0;
-	ft_bzero(is_present, 3 * sizeof(int));
 	while (block[i])
 	{
 		j = 1;
@@ -114,15 +118,8 @@ int	check_numbers(char ***block)
 				return (status);
 			j++;
 		}
-		if (!ft_strncmp(block[i][0], "A", 2))
-			is_present[0] += 1;
-		if (!ft_strncmp(block[i][0], "C", 2))
-			is_present[1] += 1;
-		if (!ft_strncmp(block[i][0], "L", 2))
-			is_present[2] += 1;
+		status = check_is_present(block, i);
 		i++;
 	}
-	if (is_present[0] != 1 || is_present[1] != 1 || is_present[2] != 1)
-		return (RTERR_DUPLIC_OBJ);
-	return (0);
+	return (status);
 }

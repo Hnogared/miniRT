@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/03 10:41:20 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/03 16:07:28 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	main(int argc, char **argv)
 		free_str_tab(tab);
 		return (status);
 	}
-
-	//initialize_data(&data, tab);
+	initialize_object(&data, tab);
+	initialize_mlx(&data);
 
 	//redraw_main_window(&data);
 	//mlx_loop(data.mlx_ptr);

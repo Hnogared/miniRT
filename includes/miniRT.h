@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/03 10:11:01 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/03 16:06:28 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ int				check_range_light(char *str);
 void			check_char(char ***block);
 void			check_num_args(char ***block);
 void			free_parsing_and_exit(t_data *data, char ***block);
-void			err(char *str);
+void			free_block(char ***block);
 
 /* initialize data */
-int		initialize_data(t_data *data, char **tab);
+int		initialize_object(t_data *data, char **tab);
+int		initialize_mlx(t_data *data);
 void	obj_a(t_data *data, char *s);
 void	obj_c(t_data *data, char *s, int *pos);
 void	obj_l(t_data *data, char *s, int *pos);

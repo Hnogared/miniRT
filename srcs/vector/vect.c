@@ -57,6 +57,7 @@ void	ray_advance(t_data *data, t_ray *ray)
 	ray->objects_touch = malloc(sizeof(t_object) * 4);
 	while (ray->touch != 0 && ray->nb_ref <= 2)
 		touch_object(data, ray);
+	printf("ok\n");
 	printf("** %d ** ", ray->nb_ref);
 	print_vector(ray->vector);
 	printf(" ");

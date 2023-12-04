@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 16:09:40 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/18 19:02:32 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:21:14 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,12 @@
 # define RTERR_NUM_COMMA_MSG	"invalid number: too many commas"
 # define RTERR_NUM_DOT_MSG		"invalid number: too many dots"
 
-
-
 # define FILE_NAME "error: must end with .rt" 
 # define OPEN_FILE "error: open file"
 # define READ_FILE "error: read file"
 # define INVALID_OBJECT "error: invalid object"
 # define IS_NOT_VALID "error: not a valid argument"
 # define IS_NOT_NUMBER "error: not a number"
-# define DUPLICATE_OBJ "error: duplicate object"
 # define TOO_MANY_COMMA "error: too many comma in number"
 # define TOO_MANY_DOT "error: too many dot in number"
 # define TOO_MANY_OBJS "error : too many objects"

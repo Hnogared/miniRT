@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:28:41 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 12:14:28 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/28 12:20:13 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ void	print_object_data(t_object object)
  */
 void	print_coords(t_coords coords)
 {
-	printf("x = %f\n", coords.x);
-	printf("y = %f\n", coords.y);
-	printf("z = %f\n", coords.z);
+	printf("coords(%f,%f,%f)\n", coords.x, coords.y, coords.z);
 }
 
 /*
@@ -47,9 +45,7 @@ void	print_coords(t_coords coords)
  */
 void	print_vector(t_vector vector)
 {
-	printf("x = %f\n", vector.x);
-	printf("y = %f\n", vector.y);
-	printf("z = %f\n", vector.z);
+	printf("vector(%f,%f,%f)\n", vector.x, vector.y, vector.z);
 }
 
 /*

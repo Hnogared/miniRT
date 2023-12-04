@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:47:12 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 18:09:47 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:48:41 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
  *
  * @param void *mlx_ptr			-> pointer to the window's mlx instance
  * @param int dimensions[2]		-> width and height array of the new window
+ * @param int pixel_ratio		-> virtual pixel size (h & w) for each ray traced
  * @param char *title			-> title of the new window senn on the window bar
  * @return t_window				-> the newly created window structure
  */
-t_window	my_new_window(void *mlx_ptr, int dimensions[2], char *title)
+t_window	my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
+	char *title)
 {
 	t_window	window;
 
@@ -39,6 +41,7 @@ t_window	my_new_window(void *mlx_ptr, int dimensions[2], char *title)
 	}
 	window.width = dimensions[0];
 	window.height = dimensions[1];
+	window.pixel_ratio = pixel_ratio;
 	return (window);
 }
 

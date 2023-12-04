@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-int	do_touch(t_ray ray, t_object obj)
+int	do_touch(t_ray *ray, t_object obj)
 {
 	if (obj.type == SPHERE_OBJ)
 		return (try_sphere(ray, obj));
@@ -20,12 +20,11 @@ int	do_touch(t_ray ray, t_object obj)
 		return (try_plan(ray, obj));
 	else if (obj.type == CYLINDER_OBJ)
 		return (try_cylinder_side(ray, obj));
-	else
-		return (0);
+	return (0);
 }
 
 //ray.objects_touch[ray.s++] = NULL;
-void	touch_object(t_data *data, t_ray ray)
+void	touch_object(t_data *data, t_ray *ray)
 {
 	unsigned short	i;
 	int				res;
@@ -46,7 +45,7 @@ void	touch_object(t_data *data, t_ray ray)
 		}
 		i++;
 	}
-	ray.touch = 0;
+	ray->touch = 0;
 	return ;
 }
 

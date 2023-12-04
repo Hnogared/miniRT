@@ -74,7 +74,8 @@ SRCS			:=	main.c					\
 					vect_calc.c				\
 					vect_try.c				\
 					vect_try_2.c			\
-					raytrace.c
+					raytrace.c				\
+					vect_utils2.c
 
 
 ## Libraries files ##

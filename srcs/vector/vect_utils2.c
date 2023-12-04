@@ -23,6 +23,16 @@ float	to_rad(float degree_angle)
 	return ((degree_angle * PI) / 180);
 }
 
+t_vector	prod_vec_float(t_vector a, float k)
+{
+	t_vector	c;
+
+	c.x = a.x * k;
+	c.y = a.y * k;
+	c.z = a.z * k;
+	return (c);
+}
+
 /*
  * https://en.wikipedia.org/wiki/Rotation_matrix
  * Rotation matrix from axis and angle

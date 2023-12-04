@@ -65,7 +65,7 @@
     // teste comme avec un plan mais on doit trouver une solutin et que la distance pos_test - C'sup ou pos_test - C'inf soit inferieur a r;
 */
 
-int	try_plan_cyl(t_ray ray, t_coords cp, t_vector n, t_object obj)
+int	try_plan_cyl(t_ray *ray, t_coords cp, t_vector n, t_object obj)
 {
 	float		d;
 	float		t;
@@ -74,18 +74,18 @@ int	try_plan_cyl(t_ray ray, t_coords cp, t_vector n, t_object obj)
 
 	nn = normalise(n);
 	d = -(nn.x * cp.x + nn.y * cp.y + nn.z * cp.z);
-	t = -((prod_scal_vec_coord(nn, ray.origin_coords) + d) / prod_scal_vec(nn, ray.vector));
+	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d) / prod_scal_vec(nn, ray->vector));
 	if (t > 0)
 	{
-		ray.coords = find_pos_touch(ray, t);
-		verif = dist(ray.coords, cp);
+		ray->coords = find_pos_touch(ray, t);
+		verif = dist(ray->coords, cp);
 		if (verif < obj.special_data.cylinder.diameter / 2)
 			return (1);
 	}
 	return (0);
 }
 
-int	try_cylinder_ext(t_ray ray, t_object obj)
+int	try_cylinder_ext(t_ray *ray, t_object obj)
 {
 	t_coords	cps;
 	t_coords	cpi;
@@ -100,7 +100,7 @@ int	try_cylinder_ext(t_ray ray, t_object obj)
 		return (0);
 }
 
-int	try_cylinder_side(t_ray ray, t_object obj)
+int	try_cylinder_side(t_ray *ray, t_object obj)
 {
 	float	a;
 	float	b;
@@ -110,8 +110,8 @@ int	try_cylinder_side(t_ray ray, t_object obj)
 	float	delta;
 	float	t;
 
-	k = prod_scal_vec(obj.orientation_vector, ray.vector);
-	h = prod_scal_vec(obj.orientation_vector, sous_vec_coord(ray.origin_coords, obj.coords));
+	k = prod_scal_vec(obj.orientation_vector, ray->vector);
+	h = prod_scal_vec(obj.orientation_vector, sous_vec_coord(ray->origin_coords, obj.coords));
 	a = pow(k, 2);
 	b = 2 * k * h;
 	c = pow(h, 2) - pow(obj.special_data.cylinder.diameter / 2, 2);
@@ -121,8 +121,8 @@ int	try_cylinder_side(t_ray ray, t_object obj)
 	else
 	{
 		t = good_sol(delta, b, a);
-		ray.coords = find_pos_touch(ray, t);
-		if (pow(dist(ray.coords, obj.coords), 2) <= (pow(obj.special_data.cylinder.height / 2, 2) + pow(obj.special_data.cylinder.diameter / 2, 2)))
+		ray->coords = find_pos_touch(ray, t);
+		if (pow(dist(ray->coords, obj.coords), 2) <= (pow(obj.special_data.cylinder.height / 2, 2) + pow(obj.special_data.cylinder.diameter / 2, 2)))
 			return (1);
 		else
 			return (try_cylinder_ext(ray, obj));

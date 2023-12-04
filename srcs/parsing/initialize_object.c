@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/04 14:09:07 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/04 15:34:12 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,10 @@ int	initialize_object(t_data *data, char **tab)
 	ft_bzero(data, sizeof(t_data));
 	while (tab[len])
 		len++;
-	data->scene_objects = (t_object *)ft_calloc(sizeof(t_object), len);
+	data->scene_objects = (t_object *)ft_calloc(sizeof(t_object), len - 1);
 	if (!data->scene_objects)
 		return (3);
-	data->obj_count = len;
+	data->obj_count = len - 1;
 	while (tab[i])
 	{
 		if (tab[i][0] == 'A')

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:37:20 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 12:22:02 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/04 15:40:30 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
  */
 void	print_camera_data(t_special_data special_data)
 {
-	printf("[Camera data]\n");
-	printf("Fov : %d\n", special_data.camera.fov);
+	ft_printf("[Camera data]\n");
+	ft_printf("Fov : %d\n", special_data.camera.fov);
 }
 
 /*
@@ -34,8 +34,8 @@ void	print_camera_data(t_special_data special_data)
  */
 void	print_light_data(t_special_data special_data)
 {
-	printf("[Light data]\n");
-	printf("Brightness : %f\n", special_data.light.brightness);
+	ft_printf("[Light data]\n");
+	ft_printf("Brightness : %f\n", special_data.light.brightness);
 }
 
 /*
@@ -47,12 +47,11 @@ void	print_light_data(t_special_data special_data)
  */
 void	print_sphere_data(t_special_data special_data)
 {
-	printf("[Sphere data]\n");
-	printf("Diameter : %f\n", special_data.sphere.diameter);
-	printf("Radius : %f\n", special_data.sphere.radius);
-	printf("Color : ");
+	ft_printf("[Sphere data]\n");
+	ft_printf("Diameter : %f\n", special_data.sphere.diameter);
+	ft_printf("Radius : %f\n", special_data.sphere.radius);
+	ft_printf("Color : ");
 	print_rgb_color(special_data.sphere.color);
-	printf("\n");
 }
 
 /*
@@ -64,8 +63,8 @@ void	print_sphere_data(t_special_data special_data)
  */
 void	print_plane_data(t_special_data special_data)
 {
-	printf("[Plane data]\n");
-	printf("Color : ");
+	ft_printf("[Plane data]\n");
+	ft_printf("Color : ");
 	print_rgb_color(special_data.plane.color);
 }
 
@@ -78,9 +77,9 @@ void	print_plane_data(t_special_data special_data)
  */
 void	print_cylinder_data(t_special_data special_data)
 {
-	printf("[Cylinder data]\n");
-	printf("Diameter : %f\n", special_data.cylinder.diameter);
-	printf("Height : %f\n", special_data.cylinder.height);
-	printf("Color : ");
+	ft_printf("[Cylinder data]\n");
+	ft_printf("Diameter : %f\n", special_data.cylinder.diameter);
+	ft_printf("Height : %f\n", special_data.cylinder.height);
+	ft_printf("Color : ");
 	print_rgb_color(special_data.cylinder.color);
 }

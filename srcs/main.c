@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/04 14:09:55 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/04 15:20:37 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	get_rays(t_data *data)
 	unsigned short	i;
 
 	i = 0;
-	while (i < 3)
+	while (i < data->obj_count)
 	{
 		print_object_data(data->scene_objects[i]);
-		printf("\n\n");
+		printf("\n");
 		i++;
 	}
 	i = 0;
@@ -57,7 +57,7 @@ int	main(int argc, char **argv)
 	initialize_mlx(&data);
 	free_str_tab(tab);
 	get_rays(&data);
-	print_vector(data.view_rays[0][0].vector);
+	//print_vector(data.view_rays[0][0].vector);
 	redraw_main_window(&data);
 	//free(data->scene_objects);
 	mlx_loop(data.mlx_ptr);

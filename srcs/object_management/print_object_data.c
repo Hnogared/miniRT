@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:28:41 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/28 12:20:13 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/04 15:40:48 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@
  */
 void	print_object_data(t_object object)
 {
-	ft_printf("[Object data]\nCoords :\n");
+	object.data_print_func(object.special_data);
+	ft_printf("[Object data]\n");
 	print_coords(object.coords);
-	printf("Orientation vector :\n");
 	print_vector(object.orientation_vector);
 	ft_printf("\n");
-	object.data_print_func(object.special_data);
 }
 
 /*
@@ -35,7 +34,7 @@ void	print_object_data(t_object object)
  */
 void	print_coords(t_coords coords)
 {
-	printf("coords(%f,%f,%f)\n", coords.x, coords.y, coords.z);
+	printf("Coords : (%f,%f,%f)\n", coords.x, coords.y, coords.z);
 }
 
 /*
@@ -45,7 +44,7 @@ void	print_coords(t_coords coords)
  */
 void	print_vector(t_vector vector)
 {
-	printf("vector(%f,%f,%f)\n", vector.x, vector.y, vector.z);
+	ft_printf("Vector : (%f,%f,%f)\n", vector.x, vector.y, vector.z);
 }
 
 /*
@@ -55,5 +54,5 @@ void	print_vector(t_vector vector)
  */
 void	print_rgb_color(t_rgb_color color)
 {
-	printf("(%d:%d:%d)", color.red, color.green, color.blue);
+	ft_printf("(%d:%d:%d)\n", color.red, color.green, color.blue);
 }

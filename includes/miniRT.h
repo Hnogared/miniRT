@@ -107,6 +107,16 @@ float			good_sol(float delta, float b, float a);
 float			prod_scal_coord(t_coords a, t_coords b);
 float			prod_scal_vec_coord(t_vector a, t_coords b);
 float			magnitude_coord(t_coords n);
+int				try_sphere(t_ray ray, t_object obj);
+int				try_plan(t_ray ray, t_object plan);
+int				try_plan_cyl(t_ray ray, t_coords cp, t_vector n, t_object obj);
+int				try_cylinder_ext(t_ray ray, t_object obj);
+int				try_cylinder_side(t_ray ray, t_object obj);
+t_vector		cal_sphere(t_ray ray, t_object sphere);
+t_vector		cal_plan(t_ray ray, t_object plan);
+t_vector		cal_cylinder_ext(t_ray ray, t_object cylindre, int res);
+t_vector		cal_cylinder_side(t_ray ray, t_object cylindre);
+t_vector		calcul_ref(t_ray ray, t_object obj, int res);
 
 /* SRCS/DISPLAY */
 /* image_management.c */

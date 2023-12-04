@@ -67,6 +67,12 @@ SRCS			:=	main.c					\
 					handle_errors.c			\
 					vect.c					\
 					vect_utils.c			\
+					vect_utils_2.c			\
+					vect_utils_3.c			\
+					vect_utils_4.c			\
+					vect_calc.c				\
+					vect_try.c				\
+					vect_try_2.c			\
 					raytrace.c
 
 

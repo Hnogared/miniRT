@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/03 15:43:53 by motoko           ###   ########.fr        #
+#    Updated: 2023/12/04 13:52:52 by motoko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,16 @@ SRCS			:=	main.c					\
 					keyboard.c				\
 					free_and_exit.c			\
 					check_range_numbers1.c	\
-					handle_errors.c
+					handle_errors.c			\
+					vect.c					\
+					vect_utils.c			\
+					vect_utils_2.c			\
+					vect_utils_3.c			\
+					vect_utils_4.c			\
+					vect_calc.c				\
+					vect_try.c				\
+					vect_try_2.c			\
+					raytrace.c
 
 
 ## Libraries files ##

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:10:00 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 11:12:30 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/23 23:03:18 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,25 @@ t_object	*set_object_coords(t_object *to_set, t_coords new_coords)
 	return (to_set);
 }
 
+
+/*
+ * TODO comment i'm tred
+ * TODO add normalise to z
+ */
+static t_local_axes	*set_local_axes(t_local_axes *to_set, t_vector orientation)
+{
+	if (!to_set)
+		return (NULL);
+	get_rotation_matrix(to_set->rotation_matrix, orientation,
+		(t_vector){0, 0, 1});
+	to_set->x = matrix_vector_rotation((t_vector){1, 0, 0},
+		to_set->rotation_matrix);
+	to_set->y = matrix_vector_rotation((t_vector){0, 1, 0},
+		to_set->rotation_matrix);
+	to_set->z = orientation;
+	return (to_set);
+}
+
 /*
  * Function to change the orientation vector of an object to a given one.
  *
@@ -39,6 +58,7 @@ t_object	*set_object_orientation(t_object *to_set, t_vector new_vector)
 	if (!to_set)
 		return (NULL);
 	to_set->orientation_vector = new_vector;
+	set_local_axes(&to_set->local_axes, new_vector);
 	return (to_set);
 }
 

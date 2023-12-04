@@ -6,17 +6,41 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/03 16:07:28 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/04 14:00:52 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+void	vector_rotation_test(void)
+{
+	float		rot_matrix[3][3];
+	t_vector	start_vec;
+	t_vector	axis;
+	t_vector	rotated;
+	t_object	test;
+
+	start_vec = (t_vector){1, 0, 0};
+	axis = (t_vector){0, 0, 1};
+	print_vector(start_vec);
+	printf("\n");
+	rotated = axial_vector_rotation(start_vec, 90, axis);
+	print_vector(rotated);
+	get_rotation_matrix(rot_matrix, axis, rotated);
+	print_vector(matrix_vector_rotation(axis, rot_matrix));
+	new_camera(&test, (t_coords){0, 0, 0}, 10);
+	printf("\n");
+	set_object_orientation(&test, (t_vector){0, 0, 1});
+	print_vector(test.local_axes.x);
+	print_vector(test.local_axes.y);
+	print_vector(test.local_axes.z);
+}
+
 int	main(int argc, char **argv)
 {
 	char		*line;
 	char		**tab;
-	//t_object	object;
+	t_object	object;
 	t_data		data;
 	int			status;
 
@@ -41,11 +65,6 @@ int	main(int argc, char **argv)
 	//redraw_main_window(&data);
 	//mlx_loop(data.mlx_ptr);
 
-	/*
-	new_sphere(&object, (t_coords){1, 0, 10}, 1.0);
-	set_object_color(&object, (t_rgb_color){120, 40, 5});
-	print_object_data(object);
-	//object.data_print_func(special_data);
-	printf("la couleur en hexa vaut : %s\n", conv(object.special_data.sphere.color)); */
+	free_str_tab(tab);
 	return (0);
 }

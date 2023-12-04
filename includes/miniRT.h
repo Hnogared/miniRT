@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/03 16:06:28 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/04 13:54:16 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int				check_range_fov(char *fov);
 int				check_range_vectors(char *str);
 int				check_range_color(char *str);
 int				check_range_light(char *str);
-
 void			check_char(char ***block);
 void			check_num_args(char ***block);
 void			free_parsing_and_exit(t_data *data, char ***block);
@@ -57,6 +56,15 @@ void	obj_l(t_data *data, char *s, int *pos);
 void	obj_pl(t_data *data, char *s, int *pos);
 void	obj_sp(t_data *data, char *s, int *pos);
 void	obj_cy(t_data *data, char *s, int *pos);
+
+/* raytrace.c */
+float			to_rad(float degree_angle);
+void			get_rotation_matrix(float rot_matrix_to_set[3][3],
+	t_vector vector1, t_vector vector2);
+t_vector		axial_vector_rotation(t_vector to_rotate, float angle,
+	t_vector axis);
+t_vector		matrix_vector_rotation(t_vector to_rotate,
+	float rot_matrix[3][3]);
 
 /* free_and_exit.c */
 noreturn int	free_and_exit(t_data *data);
@@ -93,6 +101,35 @@ void			print_cylinder_data(t_special_data special_data);
 
 /* Theouche*/
 char			*conv(t_rgb_color color);
+t_vector		sous_vec_coord(t_coords a, t_coords b);
+t_vector		add_vec_coord(t_coords a, t_coords b);
+t_vector		sous_vec_vec(t_vector a, t_vector b);
+t_vector		add_vec_vec(t_vector a, t_vector b);
+t_coords		add_vec_coord_vec(t_coords a, t_vector b);
+t_vector		prod_vec_int(t_vector a, int k);
+float			prod_scal_vec(t_vector a, t_vector b);
+t_vector		prod_vec_vec(t_vector a, t_vector b);
+t_vector		calc_ref_form(t_vector i, t_vector n);
+float			magnitude(t_vector n);
+t_vector		normalise(t_vector n);
+float			dist(t_coords a, t_coords b);
+t_coords		advance_on_vec(t_coords dep, t_vector dir, int k);
+t_coords		find_pos_touch(t_ray ray, float t);
+t_coords		give_coord(t_coords coord);
+float			good_sol(float delta, float b, float a);
+float			prod_scal_coord(t_coords a, t_coords b);
+float			prod_scal_vec_coord(t_vector a, t_coords b);
+float			magnitude_coord(t_coords n);
+int				try_sphere(t_ray ray, t_object obj);
+int				try_plan(t_ray ray, t_object plan);
+int				try_plan_cyl(t_ray ray, t_coords cp, t_vector n, t_object obj);
+int				try_cylinder_ext(t_ray ray, t_object obj);
+int				try_cylinder_side(t_ray ray, t_object obj);
+t_vector		cal_sphere(t_ray ray, t_object sphere);
+t_vector		cal_plan(t_ray ray, t_object plan);
+t_vector		cal_cylinder_ext(t_ray ray, t_object cylindre, int res);
+t_vector		cal_cylinder_side(t_ray ray, t_object cylindre);
+t_vector		calcul_ref(t_ray ray, t_object obj, int res);
 
 /* SRCS/DISPLAY */
 /* image_management.c */

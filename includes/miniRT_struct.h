@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/21 11:56:05 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/11/23 22:27:25 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
  * float y	-> amplitude in the y axis
  * float z	-> amplitude in the z axis
  */
+
 typedef struct s_vector
 {
 	float	x;
@@ -43,19 +44,6 @@ typedef struct s_coords
 	float	z;
 }				t_coords;
 
-/*
- * Ray data structure used for the ray tracing.
- *
- * t_vector vector			-> direction towards which the ray is going in vector form
- * t_coords coords			-> current coordinates of the ray point
- * t_coords origin_coords	-> the coordinates from which the ray originated
- */
-typedef struct s_ray
-{
-	t_vector	vector;
-	t_coords	coords;
-	t_coords	origin_coords;
-}				t_ray;
 
 /*
  * Color structure holding its red, green and blue values.
@@ -82,6 +70,14 @@ typedef struct s_ambient_light
 	float		ratio;
 	t_rgb_color	color;
 }				t_ambient_light;
+
+typedef struct s_local_axes
+{
+	float		rotation_matrix[3][3];
+	t_vector	x;
+	t_vector	y;
+	t_vector	z;
+}				t_local_axes;
 
 /*
  * Camera special data structure used to complement the t_object structure.
@@ -168,6 +164,7 @@ typedef union u_special_data
  * bool has_color				-> boolean true if the object has a color property
  * t_coords coords				-> coordinates structure of the object
  * t_vector orientation_vector	-> normal vector structure to rotate the object
+ * t_local_axes					-> object x,y,z axes depending on the orient. vector
  * t_special_data special_data	-> additional special data (camera/light/... data)
  * void (*data_print_func)		-> pointer to the special data display function
  */
@@ -177,9 +174,30 @@ typedef struct s_object
 	bool			has_color;
 	t_coords		coords;
 	t_vector		orientation_vector;
+	t_local_axes	local_axes;
 	t_special_data	special_data;
 	void			(*data_print_func)(t_special_data special_data);
 }				t_object;
+
+/*
+ * Ray data structure used for the ray tracing.
+ *
+ * t_vector vector			-> direction towards which the ray is going in vector form
+ * t_coords coords			-> current coordinates of the ray point
+ * t_coords origin_coords	-> the coordinates from which the ray originated
+ */
+typedef struct s_ray
+{
+	t_vector		vector;
+	t_coords		coords;
+	t_coords		origin_coords;
+	t_object		*objects_touch;
+	int				s;
+	int				touch;
+	int				nb_ref;
+}				t_ray;
+
+//give_coord((t_coords){0, 5, 0})
 
 /* Image data structure.
  *

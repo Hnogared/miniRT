@@ -39,7 +39,7 @@ delta = B^2 - 4AC; si pas de solution dans le reel (= delta < 0) alors pas d'int
 pour plus de precision, voir cahier.
 ici origine du rayon est la position test = FAUX A AMELIORER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.
 */
-int	try_sphere(t_ray ray, t_object obj)
+int	try_sphere(t_ray *ray, t_object obj)
 {
 	float	a;
 	float	b;
@@ -47,16 +47,16 @@ int	try_sphere(t_ray ray, t_object obj)
 	float	delta;
 	float	t;
 
-	a = pow(magnitude(ray.vector), 2);
-	b = 2 * prod_scal_vec(ray.vector, sous_vec_coord(ray.origin_coords, obj.coords));
-	c = pow(magnitude_coord(ray.origin_coords), 2) + pow(magnitude_coord(obj.coords), 2) - 2 * prod_scal_coord(obj.coords, ray.origin_coords) - pow((obj.special_data.sphere.diameter / 2), 2);
+	a = pow(magnitude(ray->vector), 2);
+	b = 2 * prod_scal_vec(ray->vector, sous_vec_coord(ray->origin_coords, obj.coords));
+	c = pow(magnitude_coord(ray->origin_coords), 2) + pow(magnitude_coord(obj.coords), 2) - 2 * prod_scal_coord(obj.coords, ray->origin_coords) - pow((obj.special_data.sphere.diameter / 2), 2);
 	delta = pow(b, 2) - 4 * a * c;
 	if (delta < 0)
 		return (0);
 	else
 	{
 		t = good_sol(delta, b, a);
-		ray.coords = find_pos_touch(ray, t);
+		ray->coords = find_pos_touch(ray, t);
 		return (1);
 	}
 }
@@ -75,7 +75,7 @@ t est le paramètre a déterminer.*/
 alors ok.
 revient a verifier si t = - (N.O)/(N.D) > 0;
 */
-int	try_plan(t_ray ray, t_object plan)
+int	try_plan(t_ray *ray, t_object plan)
 {
 	float		d;
 	float		t;
@@ -83,10 +83,10 @@ int	try_plan(t_ray ray, t_object plan)
 
 	n = normalise(plan.orientation_vector);
 	d = -(n.x * plan.coords.x + n.y * plan.coords.y + n.z * plan.coords.z);
-	t = -((prod_scal_vec_coord(n, ray.origin_coords) + d) / prod_scal_vec(n, ray.vector));
+	t = -((prod_scal_vec_coord(n, ray->origin_coords) + d) / prod_scal_vec(n, ray->vector));
 	if (t > 0)
 	{
-		ray.coords = find_pos_touch(ray, t);
+		ray->coords = find_pos_touch(ray, t);
 		return (1);
 	}
 	else

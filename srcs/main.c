@@ -6,41 +6,35 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/04 14:00:52 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/04 14:09:55 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	vector_rotation_test(void)
+void	get_rays(t_data *data)
 {
-	float		rot_matrix[3][3];
-	t_vector	start_vec;
-	t_vector	axis;
-	t_vector	rotated;
-	t_object	test;
+	unsigned short	i;
 
-	start_vec = (t_vector){1, 0, 0};
-	axis = (t_vector){0, 0, 1};
-	print_vector(start_vec);
-	printf("\n");
-	rotated = axial_vector_rotation(start_vec, 90, axis);
-	print_vector(rotated);
-	get_rotation_matrix(rot_matrix, axis, rotated);
-	print_vector(matrix_vector_rotation(axis, rot_matrix));
-	new_camera(&test, (t_coords){0, 0, 0}, 10);
-	printf("\n");
-	set_object_orientation(&test, (t_vector){0, 0, 1});
-	print_vector(test.local_axes.x);
-	print_vector(test.local_axes.y);
-	print_vector(test.local_axes.z);
+	i = 0;
+	while (i < 3)
+	{
+		print_object_data(data->scene_objects[i]);
+		printf("\n\n");
+		i++;
+	}
+	i = 0;
+	while (i < data->obj_count && data->scene_objects[i].type != CAMERA_OBJ)
+		i++;
+	if (i == data->obj_count)
+		return ;
+	data->view_rays = get_view_rays(data->main_window, data->scene_objects[i]);
 }
 
 int	main(int argc, char **argv)
 {
 	char		*line;
 	char		**tab;
-	t_object	object;
 	t_data		data;
 	int			status;
 
@@ -61,10 +55,11 @@ int	main(int argc, char **argv)
 	}
 	initialize_object(&data, tab);
 	initialize_mlx(&data);
-
-	//redraw_main_window(&data);
-	//mlx_loop(data.mlx_ptr);
-
 	free_str_tab(tab);
+	get_rays(&data);
+	print_vector(data.view_rays[0][0].vector);
+	redraw_main_window(&data);
+	//free(data->scene_objects);
+	mlx_loop(data.mlx_ptr);
 	return (0);
 }

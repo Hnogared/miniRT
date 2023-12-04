@@ -22,13 +22,13 @@ t_coords	advance_on_vec(t_coords dep, t_vector dir, int k)
 	return (new);
 }
 
-t_coords	find_pos_touch(t_ray ray, float t)
+t_coords	find_pos_touch(t_ray *ray, float t)
 {
 	t_coords	new_o;
 
-	new_o.x = ray.origin_coords.x + t * ray.vector.x;
-	new_o.y = ray.origin_coords.y + t * ray.vector.y;
-	new_o.z = ray.origin_coords.z + t * ray.vector.z;
+	new_o.x = ray->origin_coords.x + t * ray->vector.x;
+	new_o.y = ray->origin_coords.y + t * ray->vector.y;
+	new_o.z = ray->origin_coords.z + t * ray->vector.z;
 	return (new_o);
 }
 

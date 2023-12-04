@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/04 13:54:16 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/04 14:18:09 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 # include "miniRT_error.h"
 
 /* parsing */
-
 int				check_file(char *scene);
 char			*get_file(t_data *data, char *scene);
 int				check_scene(t_data *data, char **tab);
@@ -48,23 +47,17 @@ void			free_parsing_and_exit(t_data *data, char ***block);
 void			free_block(char ***block);
 
 /* initialize data */
-int		initialize_object(t_data *data, char **tab);
-int		initialize_mlx(t_data *data);
-void	obj_a(t_data *data, char *s);
-void	obj_c(t_data *data, char *s, int *pos);
-void	obj_l(t_data *data, char *s, int *pos);
-void	obj_pl(t_data *data, char *s, int *pos);
-void	obj_sp(t_data *data, char *s, int *pos);
-void	obj_cy(t_data *data, char *s, int *pos);
+int				initialize_object(t_data *data, char **tab);
+int				initialize_mlx(t_data *data);
+void			obj_a(t_data *data, char *s);
+void			obj_c(t_data *data, char *s, int *pos);
+void			obj_l(t_data *data, char *s, int *pos);
+void			obj_pl(t_data *data, char *s, int *pos);
+void			obj_sp(t_data *data, char *s, int *pos);
+void			obj_cy(t_data *data, char *s, int *pos);
 
 /* raytrace.c */
-float			to_rad(float degree_angle);
-void			get_rotation_matrix(float rot_matrix_to_set[3][3],
-	t_vector vector1, t_vector vector2);
-t_vector		axial_vector_rotation(t_vector to_rotate, float angle,
-	t_vector axis);
-t_vector		matrix_vector_rotation(t_vector to_rotate,
-	float rot_matrix[3][3]);
+t_ray			**get_view_rays(t_window window, t_object camera);
 
 /* free_and_exit.c */
 noreturn int	free_and_exit(t_data *data);
@@ -107,6 +100,7 @@ t_vector		sous_vec_vec(t_vector a, t_vector b);
 t_vector		add_vec_vec(t_vector a, t_vector b);
 t_coords		add_vec_coord_vec(t_coords a, t_vector b);
 t_vector		prod_vec_int(t_vector a, int k);
+t_vector		prod_vec_float(t_vector a, float k);
 float			prod_scal_vec(t_vector a, t_vector b);
 t_vector		prod_vec_vec(t_vector a, t_vector b);
 t_vector		calc_ref_form(t_vector i, t_vector n);
@@ -114,22 +108,35 @@ float			magnitude(t_vector n);
 t_vector		normalise(t_vector n);
 float			dist(t_coords a, t_coords b);
 t_coords		advance_on_vec(t_coords dep, t_vector dir, int k);
-t_coords		find_pos_touch(t_ray ray, float t);
+t_coords		find_pos_touch(t_ray *ray, float t);
 t_coords		give_coord(t_coords coord);
 float			good_sol(float delta, float b, float a);
 float			prod_scal_coord(t_coords a, t_coords b);
 float			prod_scal_vec_coord(t_vector a, t_coords b);
 float			magnitude_coord(t_coords n);
-int				try_sphere(t_ray ray, t_object obj);
-int				try_plan(t_ray ray, t_object plan);
-int				try_plan_cyl(t_ray ray, t_coords cp, t_vector n, t_object obj);
-int				try_cylinder_ext(t_ray ray, t_object obj);
-int				try_cylinder_side(t_ray ray, t_object obj);
-t_vector		cal_sphere(t_ray ray, t_object sphere);
-t_vector		cal_plan(t_ray ray, t_object plan);
-t_vector		cal_cylinder_ext(t_ray ray, t_object cylindre, int res);
-t_vector		cal_cylinder_side(t_ray ray, t_object cylindre);
-t_vector		calcul_ref(t_ray ray, t_object obj, int res);
+int				try_sphere(t_ray *ray, t_object obj);
+int				try_plan(t_ray *ray, t_object plan);
+int				try_plan_cyl(t_ray *ray, t_coords cp, t_vector n, t_object obj);
+int				try_cylinder_ext(t_ray *ray, t_object obj);
+int				try_cylinder_side(t_ray *ray, t_object obj);
+t_vector		cal_sphere(t_ray *ray, t_object sphere);
+t_vector		cal_plan(t_ray *ray, t_object plan);
+t_vector		cal_cylinder_ext(t_ray *ray, t_object cylindre, int res);
+t_vector		cal_cylinder_side(t_ray *ray, t_object cylindre);
+t_vector		calcul_ref(t_ray *ray, t_object obj, int res);
+void			ray_advance(t_data *data, t_ray *ray);
+
+/* vect_utils2.c */
+float				to_rad(float degree_angle);
+t_vector			axial_vector_rotation(t_vector to_rotate, float angle,
+	t_vector axis);
+t_vector			matrix_vector_rotation(t_vector to_rotate,
+	float rot_matrix[3][3]);
+void				get_rotation_matrix(float rot_matrix_to_set[3][3],
+	t_vector vector1, t_vector vector2);
+t_orthonormal_basis	axial_basis_rotation(t_orthonormal_basis to_rotate,
+	float angle, t_vector axis);
+
 
 /* SRCS/DISPLAY */
 /* image_management.c */
@@ -143,7 +150,8 @@ int				open_main_window(t_data *data, char *title);
 void			redraw_main_window(t_data *data);
 
 /* window_management.c */
-t_window		my_new_window(void *mlx_ptr, int dimensions[2], char *title);
+t_window		my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
+	char *title);
 void			my_destroy_window(void *mlx_ptr, t_window *window);
 void			my_put_pixel_to_window(t_window *window, int x, int y,
 					size_t color);

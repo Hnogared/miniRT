@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:28:41 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/04 15:40:48 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/05 10:05:38 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 void	print_object_data(t_object object)
 {
 	object.data_print_func(object.special_data);
-	ft_printf("[Object data]\n");
+	printf("[Object data]\n");
 	print_coords(object.coords);
 	print_vector(object.orientation_vector);
-	ft_printf("\n");
+	printf("\n");
 }
 
 /*
@@ -44,7 +44,7 @@ void	print_coords(t_coords coords)
  */
 void	print_vector(t_vector vector)
 {
-	ft_printf("Vector : (%f,%f,%f)\n", vector.x, vector.y, vector.z);
+	printf("Vector : (%f,%f,%f)\n", vector.x, vector.y, vector.z);
 }
 
 /*
@@ -54,5 +54,5 @@ void	print_vector(t_vector vector)
  */
 void	print_rgb_color(t_rgb_color color)
 {
-	ft_printf("(%d:%d:%d)\n", color.red, color.green, color.blue);
+	printf("(%d:%d:%d)\n", color.red, color.green, color.blue);
 }

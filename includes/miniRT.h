@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/04 15:34:28 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/05 11:15:19 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,10 @@ t_object		*set_object_color(t_object *to_set, t_rgb_color color);
 
 /* print_object_data.c */
 void			print_object_data(t_object object);
-void			print_coords(t_coords coords);
-void			print_vector(t_vector vector);
-void			print_rgb_color(t_rgb_color color);
+void			print_coords(t_coords coords, char *name);
+void			print_vector(t_vector vector, char *name);
+void			print_rgb_color(t_rgb_color color, char *name);
+void			print_basis(t_basis basis, char *name);
 
 /* print_object_data_2.c */
 void			print_camera_data(t_special_data special_data);
@@ -127,15 +128,15 @@ t_vector		calcul_ref(t_ray *ray, t_object obj, int res);
 void			ray_advance(t_data *data, t_ray *ray);
 
 /* vect_utils2.c */
-float				to_rad(float degree_angle);
-t_vector			axial_vector_rotation(t_vector to_rotate, float angle,
-	t_vector axis);
-t_vector			matrix_vector_rotation(t_vector to_rotate,
-	float rot_matrix[3][3]);
-void				get_rotation_matrix(float rot_matrix_to_set[3][3],
-	t_vector vector1, t_vector vector2);
-t_orthonormal_basis	axial_basis_rotation(t_orthonormal_basis to_rotate,
-	float angle, t_vector axis);
+float			to_rad(float degree_angle);
+t_vector		axial_vector_rotation(t_vector to_rotate, float angle,
+					t_vector axis);
+t_vector		matrix_vector_rotation(t_vector to_rotate,
+					float rot_matrix[3][3]);
+void			get_rotation_matrix(float rot_matrix_to_set[3][3],
+					t_vector vector1, t_vector vector2);
+t_basis			axial_basis_rotation(t_basis to_rotate, float angle,
+					t_vector axis);
 
 
 /* SRCS/DISPLAY */

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:10:00 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/01 15:50:11 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/05 10:58:30 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ t_object	*set_object_coords(t_object *to_set, t_coords new_coords)
  * https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d 
  * https://en.wikipedia.org/wiki/Vector_projection#Vector_rejection
  */
-static t_orthonormal_basis	*set_ortho_basis_from_x(t_orthonormal_basis *to_set,
-	t_vector xxx_orientation)
+static t_basis	*set_ortho_basis_from_x(t_basis *to_set, t_vector xxx_orientation)
 {
 	t_vector	z_axis;
 
@@ -62,8 +61,7 @@ static t_orthonormal_basis	*set_ortho_basis_from_x(t_orthonormal_basis *to_set,
  * https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d 
  * https://en.wikipedia.org/wiki/Vector_projection#Vector_rejection
  */
-static t_orthonormal_basis	*set_ortho_basis_from_z(t_orthonormal_basis *to_set,
-	t_vector z_orientation)
+static t_basis	*set_ortho_basis_from_z(t_basis *to_set, t_vector z_orientation)
 {
 	t_vector	y_axis;
 
@@ -101,9 +99,9 @@ t_object	*set_object_orientation(t_object *to_set, t_vector new_vector)
 		new_vector = (t_vector){1, 0, 0};
 	to_set->orientation_vector = normalise(new_vector);
 	if (to_set->type == CAMERA_OBJ)
-		set_ortho_basis_from_x(&to_set->loc_basis, new_vector);
+		set_ortho_basis_from_x(&to_set->local_basis, new_vector);
 	else
-		set_ortho_basis_from_z(&to_set->loc_basis, new_vector);
+		set_ortho_basis_from_z(&to_set->local_basis, new_vector);
 	return (to_set);
 }
 

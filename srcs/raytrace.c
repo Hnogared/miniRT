@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/01 16:40:29 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/05 11:34:12 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,8 @@ static t_ray	new_ray(t_vector vector, t_coords origin_coords)
 	return (new);
 }
 
-
-/*
- * TODO alloc error management
- */
-static t_ray	*get_vertical_rays(int v_virtual_res, int fov,
-	t_orthonormal_basis basis, t_coords origin)
+static t_ray	*get_vertical_rays(int v_virtual_res, int fov, t_basis basis,
+	t_coords origin)
 {
 	int			i;
 	float		vertical_angle;
@@ -51,14 +47,12 @@ static t_ray	*get_vertical_rays(int v_virtual_res, int fov,
 	return (rays);
 }
 
-
-// TODO free if alloc error
-t_ray	**get_rays_tab(int virtual_res[2], t_orthonormal_basis basis,
+static t_ray	**get_rays_tab(int virtual_res[2], t_basis basis,
 	t_object camera)
 {
-	int			i;
-	float		horizontal_angle;
-	t_ray		**rays_tab;
+	int		i;
+	float	horizontal_angle;
+	t_ray	**rays_tab;
 
 	rays_tab = (t_ray **) ft_calloc(virtual_res[0], sizeof(t_ray *));
 	if (!rays_tab)
@@ -68,38 +62,38 @@ t_ray	**get_rays_tab(int virtual_res[2], t_orthonormal_basis basis,
 	i = 0;
 	while (i < virtual_res[0])
 	{
-		rays_tab[i] = get_vertical_rays(virtual_res[1], RT_VERTICAL_FOV, basis,
-				camera.coords);
-		if (!rays_tab[i])
+		rays_tab[i++] = get_vertical_rays(virtual_res[1], RT_VERTICAL_FOV,
+				basis, camera.coords);
+		if (!rays_tab[i - 1])
+		{
+			while (--i)
+				free(rays_tab[i - 1]);
+			free(rays_tab);
 			return (NULL);
+		}
 		basis = axial_basis_rotation(basis, horizontal_angle,
-				camera.loc_basis.z);
-		i++;
+				camera.local_basis.z);
 	}
 	return (rays_tab);
 }
 
-static t_orthonormal_basis	get_setup_basis(t_orthonormal_basis origin_basis,
-	int fov)
+static t_basis	get_setup_basis(t_basis origin_basis, int fov)
 {
-	t_orthonormal_basis	new;
+	t_basis	new;
 
 	new = axial_basis_rotation(origin_basis, fov / 2, origin_basis.z);
 	new = axial_basis_rotation(new, 360 - RT_VERTICAL_FOV / 2, new.y);
 	return (new);
 }
 
-/*
- * or view_rays maybe better idk
- */
 t_ray	**get_view_rays(t_window window, t_object camera)
 {
-	int					virtual_res[2];
-	t_orthonormal_basis	temp_basis;
+	int		virtual_res[2];
+	t_basis	temp_basis;
 
 	virtual_res[0] = window.width / window.pixel_ratio;
 	virtual_res[1] = window.height / window.pixel_ratio;
-	temp_basis = get_setup_basis(camera.loc_basis,
+	temp_basis = get_setup_basis(camera.local_basis,
 			camera.special_data.camera.fov);
 	return (get_rays_tab(virtual_res, temp_basis, camera));
 }

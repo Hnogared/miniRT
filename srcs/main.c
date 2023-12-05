@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/04 15:20:37 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/05 12:40:52 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ void	get_rays(t_data *data)
 	i = 0;
 	while (i < data->obj_count)
 	{
-		print_object_data(data->scene_objects[i]);
+		print_object_data(data->scene_objects[i++]);
 		printf("\n");
-		i++;
 	}
 	i = 0;
 	while (i < data->obj_count && data->scene_objects[i].type != CAMERA_OBJ)

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/01 15:25:07 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/05 10:58:07 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
  * float y	-> amplitude in the y axis
  * float z	-> amplitude in the z axis
  */
-
 typedef struct s_vector
 {
 	float	x;
@@ -43,7 +42,6 @@ typedef struct s_coords
 	float	y;
 	float	z;
 }				t_coords;
-
 
 /*
  * Color structure holding its red, green and blue values.
@@ -72,20 +70,21 @@ typedef struct s_ambient_light
 }				t_ambient_light;
 
 /*
- * Coordinates basis structure comprised of 3 orthonormal normal vectors.
- * This allows handling coordinates in a rotated coordinates system relative to
- * the global coordinates system.
+ * Coordinates basis structure comprised of 3 vectors.
+ * This allows handling coordinates in a rotated/warped coordinates system
+ * relative to the global coordinates system.
+ * Normal vectors orthogonal to each other are needed for an orthonormal basis.
  *
- * t_vector x	-> x axis normal vector
- * t_vector y	-> y axis normal vector
- * t_vector z	-> z axis normal vector
+ * t_vector x	-> x axis vector
+ * t_vector y	-> y axis vector
+ * t_vector z	-> z axis vector
  */
-typedef struct s_orthonormal_basis
+typedef struct s_basis
 {
 	t_vector	x;
 	t_vector	y;
 	t_vector	z;
-}				t_orthonormal_basis;
+}				t_basis;
 
 /*
  * Camera special data structure used to complement the t_object structure.
@@ -168,22 +167,22 @@ typedef union u_special_data
  * Structure holding an object's data, as well as its function to display its
  * special data (camera / light / sphere / plane / cylinder).
  *
- * unsigned short type			-> object type [ex: SPHERE_OBJ] (see miniRT_macro.h)
- * bool has_color				-> boolean true if the object has a color property
+ * unsigned short type			-> obj. type [ex:SPHERE_OBJ](see miniRT_macro.h)
+ * bool has_color				-> boolean true if the object has a color
  * t_coords coords				-> coordinates structure of the object
  * t_vector orientation_vector	-> normal vector structure to rotate the object
- * t_orthonormal_basis loc_basis-> object x,y,z axes relative to the orient. vector
- * t_special_data special_data	-> additional special data (camera/light/... data)
+ * t_basis local_basis			-> obj. x,y,z axes relative to the orient. vector
+ * t_special_data special_data	-> additional special data (camera/light/...)
  * void (*data_print_func)		-> pointer to the special data display function
  */
 typedef struct s_object
 {
-	unsigned short		type;
-	bool				has_color;
-	t_coords			coords;
-	t_vector			orientation_vector;
-	t_orthonormal_basis	loc_basis;
-	t_special_data		special_data;
+	unsigned short	type;
+	bool			has_color;
+	t_coords		coords;
+	t_vector		orientation_vector;
+	t_basis			local_basis;
+	t_special_data	special_data;
 	void			(*data_print_func)(t_special_data special_data);
 }				t_object;
 

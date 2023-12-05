@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/04 15:20:37 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/05 11:16:06 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,16 @@ void	get_rays(t_data *data)
 	if (i == data->obj_count)
 		return ;
 	data->view_rays = get_view_rays(data->main_window, data->scene_objects[i]);
+}
+
+int	initialize_mlx(t_data *data)
+{
+	data->mlx_ptr = mlx_init();
+	if (open_main_window(data, "miniRT"))
+		return (2);
+	data->test = 10;
+	init_key_hooks(data);
+	return (0);
 }
 
 int	main(int argc, char **argv)

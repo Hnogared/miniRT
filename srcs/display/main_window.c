@@ -49,6 +49,8 @@ int	funky(t_data *data, int x, int y)
 
 int	ray_trace(t_data *data, int x, int y)
 {
+	//printf("Dans Ray trace !!!!!!!!!!!!!!\n");
+	//print_vec(data->view_rays[x][y].vector);
 	ray_advance(data, &data->view_rays[x][y]);
 	if (data->view_rays[x][y].nb_ref)
 	{
@@ -68,6 +70,8 @@ void	redraw_main_window(t_data *data)
 
 	pixel_size[0] = data->main_window.pixel_ratio;
 	pixel_size[1] = data->main_window.pixel_ratio;
+	print_vector(data->view_rays[0][0].vector);
+	print_vector(data->view_rays[data->main_window.width / pixel_size[0] - 1][data->main_window.height / pixel_size[1] - 1].vector);
 	x = 0;
 	y = 0;
 	while (y < data->main_window.height / pixel_size[1])

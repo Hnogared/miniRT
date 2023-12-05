@@ -55,3 +55,17 @@ float	good_sol(float delta, float b, float a)
 		return (t);
 	}
 }
+
+void	print_vec(t_vector vec)
+{
+	printf("x vaut : %f\n", vec.x);
+	printf("y vaut : %f\n", vec.y);
+	printf("z vaut : %f\n", vec.z);
+}
+
+void	print_coord(t_coords cor)
+{
+	printf("x vaut : %f\n", cor.x);
+	printf("y vaut : %f\n", cor.y);
+	printf("z vaut : %f\n", cor.z);
+}

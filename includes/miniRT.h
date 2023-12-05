@@ -126,6 +126,8 @@ t_vector		cal_cylinder_ext(t_ray *ray, t_object cylindre, int res);
 t_vector		cal_cylinder_side(t_ray *ray, t_object cylindre);
 t_vector		calcul_ref(t_ray *ray, t_object obj, int res);
 void			ray_advance(t_data *data, t_ray *ray);
+void			print_vec(t_vector vec);
+void			print_coord(t_coords cor);
 
 /* vect_utils2.c */
 float			to_rad(float degree_angle);

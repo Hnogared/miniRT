@@ -1,13 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "1" ]; then
-    run_valgrind() {
-        valgrind --leak-check=full --show-leak-kinds=all ./miniRT "$1"
-    }
-else
-    run_valgrind() {
-        ./miniRT "$1"
-    }
+	VALGRIND="valgrind --leak-check=full --show-leak-kinds=all"
 fi
 
 echo -e "\e[31m_PARSING_TESTER_\e[0m\n"
@@ -26,7 +20,7 @@ make -s
 file_syntax=("err_comma_everywhere_1.rt" "err_comma_everywhere_2.rt" "err_comma_everywhere_3.rt" "err_comma_everywhere_4.rt")
 for file_name in "${file_syntax[@]}"; do
 	echo -n "$file_name : "
-	run_valgrind "scenes/${file_name}"
+	$VALGRIND ./miniRT scenes/"${file_name}"
 	echo
 done
 
@@ -35,6 +29,6 @@ make -s
 file_syntax=("err_double_A.rt" "err_duplicate_C.rt" "err_empty_map.rt" "err_first_el.rt" "err_number.rt" "err_too_many_args_objects.rt" "err_color_range.rt")
 for file_name in "${file_syntax[@]}"; do
 	echo -n "$file_name : "
-	run_valgrind "scenes/${file_name}"
+	$VALGRIND ./miniRT scenes/"${file_name}"
 	echo
 done

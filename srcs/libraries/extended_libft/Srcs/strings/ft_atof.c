@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 13:49:59 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/27 15:14:33 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/05 11:42:46 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ float	ft_atof(const char *nptr)
 			sign *= -1;
 		i++;
 	}
-	while (nptr[i] >= '0' && nptr[i] <= '9')
+	while (nptr[i] && nptr[i] >= '0' && nptr[i] <= '9')
 	{
 		nbr *= 10;
 		nbr += (float)(nptr[i] - '0');
 		i++;
 	}
+	if (!nptr[i])
+		return (nbr * sign);
 	i++;
 	while (nptr[i] && (nptr[i] >= '0' && nptr[i] <= '9'))
 	{

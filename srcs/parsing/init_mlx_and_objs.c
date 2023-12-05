@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_objs_1.c                                      :+:      :+:    :+:   */
+/*   init_mlx_and_objs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/05 11:31:50 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/05 11:21:25 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,29 @@ void	obj_cy(t_data *data, char *s, int *pos)
 	set_object_color(&(data->scene_objects[*pos]),
 		(t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2])});
 	(*pos)++;
-	free_str_tab(color);
-	free_str_tab(vector);
-	free_str_tab(coords);
 	free_str_tab(args);
+	free_str_tab(coords);
+	free_str_tab(vector);
+	free_str_tab(color);
 }
 
-void	exec_objs(t_data *data, char **tab)
+
+int	initialize_object(t_data *data, char **tab)
 {
 	int	i;
+	int	len;
 	int	pos;
 
 	i = 0;
+	len = 0;
 	pos = 0;
+	ft_bzero(data, sizeof(t_data));
+	while (tab[len])
+		len++;
+	data->scene_objects = (t_object *)ft_calloc(sizeof(t_object), len - 1);
+	if (!data->scene_objects)
+		return (3);
+	data->obj_count = len - 1;
 	while (tab[i])
 	{
 		if (tab[i][0] == 'A')
@@ -104,20 +114,5 @@ void	exec_objs(t_data *data, char **tab)
 			obj_cy(data, tab[i], &pos);
 		i++;
 	}
-}
-
-int	initialize_object(t_data *data, char **tab)
-{
-	int	len;
-
-	len = 0;
-	ft_bzero(data, sizeof(t_data));
-	while (tab[len])
-		len++;
-	data->scene_objects = (t_object *)ft_calloc(sizeof(t_object), len - 1);
-	if (!data->scene_objects)
-		return (3);
-	data->obj_count = len - 1;
-	exec_objs(data, tab);
 	return (0);
 }

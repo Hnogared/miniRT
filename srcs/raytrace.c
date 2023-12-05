@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/05 11:34:12 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:43:22 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static t_ray	**get_rays_tab(int virtual_res[2], t_basis basis,
 			free(rays_tab);
 			return (NULL);
 		}
-		basis = axial_basis_rotation(basis, horizontal_angle,
+		basis = axial_basis_rotation(basis, 360.0f - horizontal_angle,
 				camera.local_basis.z);
 	}
 	return (rays_tab);

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/01 17:24:09 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:43:56 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	redraw_main_window(t_data *data)
 
 	pixel_size[0] = data->main_window.pixel_ratio;
 	pixel_size[1] = data->main_window.pixel_ratio;
-	print_vector(data->view_rays[0][0].vector);
-	print_vector(data->view_rays[data->main_window.width / pixel_size[0] - 1][data->main_window.height / pixel_size[1] - 1].vector);
+	print_vector(data->view_rays[0][0].vector, NULL);
+	print_vector(data->view_rays[data->main_window.width / pixel_size[0] - 1][data->main_window.height / pixel_size[1] - 1].vector, NULL);
 	x = 0;
 	y = 0;
 	while (y < data->main_window.height / pixel_size[1])

@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:48:18 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/01 17:26:36 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/05 10:00:18 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	touch_object(t_data *data, t_ray *ray)
 	while (i < data->obj_count)
 	{
 		res = do_touch(ray, data->scene_objects[i]);
-		printf("res vaut %d\n", res);
+//		printf("res vaut %d\n", res);
 		if (res >= 1)
 		{
 			ray->vector = calcul_ref(ray, data->scene_objects[i], res);
@@ -57,10 +57,10 @@ void	ray_advance(t_data *data, t_ray *ray)
 	ray->objects_touch = malloc(sizeof(t_object) * 4);
 	while (ray->touch != 0 && ray->nb_ref <= 2)
 		touch_object(data, ray);
-	printf("ok\n");
-	printf("** %d ** ", ray->nb_ref);
-	print_vector(ray->vector);
-	printf(" ");
-	print_coords(ray->origin_coords);
-	printf("\n");
+//	printf("ok\n");
+//	printf("** %d ** ", ray->nb_ref);
+//	print_vector(ray->vector);
+//	printf(" ");
+//	print_coords(ray->origin_coords);
+//	printf("\n");
 }

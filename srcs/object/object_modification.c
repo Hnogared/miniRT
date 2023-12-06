@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:10:00 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/06 14:26:33 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/06 14:39:26 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ t_object	*set_object_coords(t_object *to_set, t_coords new_coords)
 }
 
 /*
- * TODO comment i'm tired
- * https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d 
- * https://en.wikipedia.org/wiki/Vector_projection#Vector_rejection
+ * Function to calculate a 3D right-handed basis' orthogonal normal/unit vectors
+ * with the @param vector as the x axis.
+ *
+ * @param t_vector xxx_orientation	-> the new basis' x axis orientation
+ * @return t_basis					-> the newly calculated orthogonal basis
  */
 static t_basis	get_ortho_basis_from_x(t_vector xxx_orientation)
 {
@@ -54,11 +56,12 @@ static t_basis	get_ortho_basis_from_x(t_vector xxx_orientation)
 	return (new);
 }
 
-
 /*
- * Function to calculate 
- * https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d 
- * https://en.wikipedia.org/wiki/Vector_projection#Vector_rejection
+ * Function to calculate a 3D right-handed basis' orthogonal normal/unit vectors
+ * with the @param vector as the z axis.
+ *
+ * @param t_vector z_orientation	-> the new basis' z axis orientation
+ * @return t_basis					-> the newly calculated orthogonal basis
  */
 static t_basis	get_ortho_basis_from_z(t_vector z_orientation)
 {

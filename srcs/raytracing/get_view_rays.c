@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/06 10:41:33 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:29:04 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,77 +23,82 @@ static t_ray	new_ray(t_vector vector, t_coords origin_coords)
 	return (new);
 }
 
-static t_ray	*get_vertical_rays(int v_virtual_res, int fov, t_basis basis,
-	t_coords origin)
+static t_ray	*set_vertical_rays(t_ray *rays_row, int v_virtual_res,
+	t_basis basis, t_object camera)
 {
 	int			i;
 	float		vertical_angle;
-	t_ray		*rays;
 
 	if (!v_virtual_res)
 		return (NULL);
-	rays = (t_ray *) ft_calloc(v_virtual_res, sizeof(t_ray));
-	if (!rays)
-		return (NULL);
-	vertical_angle = (float) fov / (v_virtual_res - 1);
-	rays[0] = new_ray(basis.x, origin);
+	vertical_angle = (float) camera.special_data.camera.v_fov
+		/ (v_virtual_res - 1);
+	rays_row[0] = new_ray(basis.x, camera.coords);
 	i = 1;
 	while (i < v_virtual_res)
 	{
 		basis = axial_basis_rotation(basis, vertical_angle, basis.y);
-		rays[i] = new_ray(basis.x, origin);
+		rays_row[i] = new_ray(basis.x, camera.coords);
 		i++;
 	}
-	return (rays);
+	return (rays_row);
 }
 
-static t_ray	**get_rays_tab(int virtual_res[2], t_basis basis,
-	t_object camera)
+static t_ray	**set_rays_tab(t_ray ***rays_tab, int virtual_res[2],
+	t_basis basis, t_object camera)
 {
 	int		i;
 	float	horizontal_angle;
-	t_ray	**rays_tab;
 
-	rays_tab = (t_ray **) ft_calloc(virtual_res[0], sizeof(t_ray *));
-	if (!rays_tab)
-		return (NULL);
-	horizontal_angle = (float) camera.special_data.camera.fov
+	horizontal_angle = (float) camera.special_data.camera.h_fov
 		/ (virtual_res[0] - 1);
 	i = 0;
 	while (i < virtual_res[0])
 	{
-		rays_tab[i++] = get_vertical_rays(virtual_res[1], RT_VERTICAL_FOV,
-				basis, camera.coords);
-		if (!rays_tab[i - 1])
-		{
-			while (--i)
-				free(rays_tab[i - 1]);
-			free(rays_tab);
-			return (NULL);
-		}
+		set_vertical_rays((*rays_tab)[i++], virtual_res[1], basis, camera);
 		basis = axial_basis_rotation(basis, 360.0f - horizontal_angle,
 				camera.local_basis.z);
 	}
-	return (rays_tab);
+	return (*rays_tab);
 }
 
-static t_basis	get_setup_basis(t_basis origin_basis, int fov)
+static t_ray	**alloc_rays_tab(t_ray ***rays_tab, int virtual_res[2])
 {
-	t_basis	new;
+	int	i;
 
-	new = axial_basis_rotation(origin_basis, fov / 2, origin_basis.z);
-	new = axial_basis_rotation(new, 360 - RT_VERTICAL_FOV / 2, new.y);
-	return (new);
+	(*rays_tab) = (t_ray **) ft_calloc(virtual_res[0] + 1, sizeof(t_ray *));
+	if (!(*rays_tab))
+		return (NULL);
+	i = -1;
+	while (++i < virtual_res[0])
+	{
+		(*rays_tab)[i] = (t_ray *) ft_calloc(virtual_res[1], sizeof(t_ray));
+		if ((*rays_tab)[i])
+			continue ;
+		while (i)
+			free((*rays_tab)[--i]);
+		free(*rays_tab);
+		*rays_tab = NULL;
+		break ;
+	}
+	return (*rays_tab);
 }
 
-t_ray	**get_view_rays(t_window window, t_object camera)
+t_ray	**set_view_rays(t_ray ***rays_tab, t_window window, t_object camera,
+	bool needs_alloc)
 {
 	int		virtual_res[2];
-	t_basis	temp_basis;
+	t_basis	start_basis;
 
+	if (!rays_tab)
+		return (NULL);
 	virtual_res[0] = window.width / window.pixel_ratio;
 	virtual_res[1] = window.height / window.pixel_ratio;
-	temp_basis = get_setup_basis(camera.local_basis,
-			camera.special_data.camera.fov);
-	return (get_rays_tab(virtual_res, temp_basis, camera));
+	if (needs_alloc == true || !(*rays_tab))
+		alloc_rays_tab(rays_tab, virtual_res);
+	start_basis = axial_basis_rotation(camera.local_basis,
+			camera.special_data.camera.h_fov / 2, camera.local_basis.z);
+	start_basis = axial_basis_rotation(start_basis,
+			360 - camera.special_data.camera.v_fov / 2, start_basis.y);
+	return (set_rays_tab(rays_tab, virtual_res, start_basis, camera));
 }

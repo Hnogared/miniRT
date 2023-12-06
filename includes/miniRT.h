@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/06 13:11:25 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:16:50 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,8 @@ void			redraw_window(void *mlx_ptr, t_window *window);
 
 /* SRCS/RAYTRACING */
 /* get_view_rays.c */
-t_ray			**get_view_rays(t_window window, t_object camera);
+t_ray			**set_view_rays(t_ray ***rays_tab, t_window window,
+					t_object camera, bool malloc);
 
 /* raytrace.c */
 size_t			rgb_to_uint(t_rgb_color color);

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/06 11:31:37 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:23:32 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,13 @@ typedef struct s_basis
 /*
  * Camera special data structure used to complement the t_object structure.
  *
- * int fov	-> FOV of the camera (0-180)
+ * int h_fov	-> horizontal FOV of the camera in degrees (0-180)
+ * int v_fov	-> vertical FOV of the camera in degrees (0-180)
  */
 typedef struct s_camera
 {
-	int	fov;
+	int	h_fov;
+	int	v_fov;
 }				t_camera;
 
 /*

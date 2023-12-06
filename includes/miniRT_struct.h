@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/05 10:58:07 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/06 11:31:37 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,8 @@ typedef union u_special_data
  * t_vector orientation_vector	-> normal vector structure to rotate the object
  * t_basis local_basis			-> obj. x,y,z axes relative to the orient. vector
  * t_special_data special_data	-> additional special data (camera/light/...)
- * void (*data_print_func)		-> pointer to the special data display function
+ * t_rgb_color (*ft_get_color)	-> pointer to the object color getter function
+ * void (*ft_print_data)		-> pointer to the special data display function
  */
 typedef struct s_object
 {
@@ -183,7 +184,8 @@ typedef struct s_object
 	t_vector		orientation_vector;
 	t_basis			local_basis;
 	t_special_data	special_data;
-	void			(*data_print_func)(t_special_data special_data);
+	t_rgb_color		(*ft_get_color)(t_special_data special_data);
+	void			(*ft_print_data)(t_special_data special_data);
 }				t_object;
 
 /*

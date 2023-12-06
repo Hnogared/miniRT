@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/05 10:33:00 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/06 11:29:50 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ VPATH			:=	$(SRCS_DIR):					\
 					$(SRCS_DIR)/parsing:			\
 					$(SRCS_DIR)/user_interface:		\
 					$(SRCS_DIR)/vector:				\
+					$(SRCS_DIR)/raytracing:			\
 					$(SRCS_DIR)/utils
 
 # Source files names #
@@ -55,14 +56,15 @@ SRCS			:=	main.c					\
 					conv_hexa.c				\
 					initialize_object.c		\
 					initialize_mlx.c		\
+					get_object_color.c		\
 					object_creation.c		\
 					object_modification.c	\
 					print_object_data.c		\
 					print_object_data_2.c	\
 					check_args.c			\
 					image_management.c		\
-					main_window.c			\
 					window_management.c		\
+					main_window.c			\
 					keyboard.c				\
 					free_and_exit.c			\
 					check_range_numbers1.c	\
@@ -76,6 +78,7 @@ SRCS			:=	main.c					\
 					vect_calc.c				\
 					vect_try.c				\
 					vect_try_2.c			\
+					get_view_rays.c			\
 					raytrace.c
 
 

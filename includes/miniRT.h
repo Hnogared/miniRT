@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/05 11:15:19 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:11:25 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,18 @@ void			obj_pl(t_data *data, char *s, int *pos);
 void			obj_sp(t_data *data, char *s, int *pos);
 void			obj_cy(t_data *data, char *s, int *pos);
 
-/* raytrace.c */
-t_ray			**get_view_rays(t_window window, t_object camera);
-
 /* free_and_exit.c */
 noreturn int	free_and_exit(t_data *data);
 void			free_data(t_data *data);
 void			free_str_tab(char **str_tab);
 
 /* SRCS/OBJECT_MANAGEMENT */
+/* get_object_color.c */
+t_rgb_color		get_uncolored_color(t_special_data special_data);
+t_rgb_color		get_sphere_color(t_special_data special_data);
+t_rgb_color		get_plane_color(t_special_data special_data);
+t_rgb_color		get_cylinder_color(t_special_data special_data);
+
 /* object_creation.c */
 t_object		*new_camera(t_object *to_set, t_coords coords, int fov);
 t_object		*new_light(t_object *to_set, t_coords coords, float brightness);
@@ -140,7 +143,6 @@ void			get_rotation_matrix(float rot_matrix_to_set[3][3],
 t_basis			axial_basis_rotation(t_basis to_rotate, float angle,
 					t_vector axis);
 
-
 /* SRCS/DISPLAY */
 /* image_management.c */
 t_image			my_new_image(void *mlx_ptr, int width, int height);
@@ -161,6 +163,16 @@ void			my_put_pixel_to_window(t_window *window, int x, int y,
 void			my_put_square_to_window(t_window *window, int start_coords[2],
 					int size[2], size_t color);
 void			redraw_window(void *mlx_ptr, t_window *window);
+
+/* SRCS/RAYTRACING */
+/* get_view_rays.c */
+t_ray			**get_view_rays(t_window window, t_object camera);
+
+/* raytrace.c */
+size_t			rgb_to_uint(t_rgb_color color);
+size_t			test_grid(t_data *data, int x, int y);
+size_t			raytrace(t_data *data, int x, int y);
+t_rgb_color		rgb_color_mix(t_rgb_color color1, t_rgb_color color2, float ratio);
 
 /* SRCS_USER_INTERFACE */
 /* keyboard.c */

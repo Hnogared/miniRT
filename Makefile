@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/06 11:29:50 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/06 13:52:22 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,13 +37,13 @@ ARCHIVES_DIR	:=	archives
 INCLUDES_DIR	:=	includes
 
 # Complementary paths to all source code files #
-VPATH			:=	$(SRCS_DIR):					\
-					$(SRCS_DIR)/object_management:	\
-					$(SRCS_DIR)/display:			\
-					$(SRCS_DIR)/parsing:			\
-					$(SRCS_DIR)/user_interface:		\
-					$(SRCS_DIR)/vector:				\
-					$(SRCS_DIR)/raytracing:			\
+VPATH			:=	$(SRCS_DIR):				\
+					$(SRCS_DIR)/object:			\
+					$(SRCS_DIR)/display:		\
+					$(SRCS_DIR)/parsing:		\
+					$(SRCS_DIR)/user_interface:	\
+					$(SRCS_DIR)/vector:			\
+					$(SRCS_DIR)/raytracing:		\
 					$(SRCS_DIR)/utils
 
 # Source files names #

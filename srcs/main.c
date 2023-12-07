@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 12:10:25 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/07 13:22:28 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,13 @@ void	get_main_view_rays(t_data *data, bool needs_alloc)
 	if (i == data->obj_count)
 		return ;
 	status = set_view_rays(&data->view_rays, data->main_window,
-		data->scene_objects[i], needs_alloc) != 0)
-
+			data->scene_objects[i], needs_alloc);
+	if (status != 0)
+	{
+		ft_perror(NULL, data->error_tab, status);
+		free_data(data);
+		exit(status);
+	}
 }
 
 int	main(int argc, char **argv)

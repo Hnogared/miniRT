@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:28:41 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/05 11:20:10 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/06 11:39:25 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  */
 void	print_object_data(t_object object)
 {
-	object.data_print_func(object.special_data);
+	object.ft_print_data(object.special_data);
 	printf("[Object data]\n");
 	print_coords(object.coords, NULL);
 	print_vector(object.orientation_vector, NULL);

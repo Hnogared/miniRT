@@ -6,28 +6,41 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/05 12:40:52 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:04:58 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	get_rays(t_data *data)
+void	get_main_view_rays(t_data *data, bool needs_alloc)
 {
-	unsigned short	i;
+	int			status;
+	t_object	*camera;
 
-	i = 0;
-	while (i < data->obj_count)
+	camera = get_object_ptr(CAMERA_OBJ, data->scene_objects, data->obj_count);
+	if (!camera)
 	{
-		print_object_data(data->scene_objects[i++]);
-		printf("\n");
+		status = ft_perror(NULL, data->error_tab, RTERR);
+		free_data(data);
+		exit(status);
 	}
-	i = 0;
-	while (i < data->obj_count && data->scene_objects[i].type != CAMERA_OBJ)
-		i++;
-	if (i == data->obj_count)
-		return ;
-	data->view_rays = get_view_rays(data->main_window, data->scene_objects[i]);
+	status = set_view_rays(&data->view_rays, data->main_window, *camera,
+			needs_alloc);
+	if (status != 0)
+	{
+		status = ft_perror(NULL, data->error_tab, status);
+		free_data(data);
+		exit(status);
+	}
+}
+
+int	initialize_mlx(t_data *data)
+{
+	data->mlx_ptr = mlx_init();
+	if (open_main_window(data, "miniRT"))
+		return (2);
+	init_key_hooks(data);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -55,10 +68,8 @@ int	main(int argc, char **argv)
 	initialize_object(&data, tab);
 	initialize_mlx(&data);
 	free_str_tab(tab);
-	get_rays(&data);
-	//print_vector(data.view_rays[0][0].vector);
+	get_main_view_rays(&data, true);
 	redraw_main_window(&data);
-	//free(data->scene_objects);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

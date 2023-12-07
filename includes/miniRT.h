@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 12:09:41 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:38:41 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ t_object		*new_sphere(t_object *to_set, t_coords coords, float diameter);
 t_object		*new_plane(t_object *to_set, t_coords coords);
 t_object		*new_cylinder(t_object *to_set, t_coords coords, float diameter,
 					float height);
+
+/* object_interaction.c */
+t_object		*get_object_ptr(unsigned short type, t_object *objects_list,
+					int list_size);
 
 /* object_modification.c */
 t_object		*set_object_coords(t_object *to_set, t_coords coords);

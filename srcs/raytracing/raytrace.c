@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 10:35:37 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:16:22 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ size_t	test_grid(t_data *data, int x, int y)
 {
 	int	color;
 
-	color = *(int *)(unsigned char [4]){0, x * data->test,
-		(y * data->test) | (x * data->test), 0};
+	color = *(int *)(unsigned char [4]){0, x, y | x, 0};
+	data = data;
 	return (color);
 }
 

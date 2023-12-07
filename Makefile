@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/07 14:10:45 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/07 14:54:36 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ SRCS			:=	main.c					\
 					initialize_mlx.c		\
 					get_object_color.c		\
 					object_creation.c		\
+					object_interaction.c	\
 					object_modification.c	\
 					print_object_data.c		\
 					print_object_data_2.c	\

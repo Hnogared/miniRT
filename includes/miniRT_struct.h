@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/07 10:50:32 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:14:58 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,6 @@ typedef struct s_window
  */
 typedef struct s_data
 {
-	int				test;
 	char			*error_tab[RTERR_COUNT];
 	t_window		main_window;
 	t_ambient_light	ambient_l;

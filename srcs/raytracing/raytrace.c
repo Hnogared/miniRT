@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 14:16:22 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:14:10 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ size_t	test_grid(t_data *data, int x, int y)
 
 static size_t	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
 {
-//	int				i;
 	t_rgb_color		color;
 	t_object		*objects;
+//	int				i;
 
 	if (ray.objects_touch[0].type == LIGHT_OBJ)
 		return (0xFFFFFF);

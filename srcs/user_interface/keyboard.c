@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:13:45 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 16:05:52 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:16:22 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	key_handler(int keycode, t_data *data)
 	if (keycode == XK_Up || keycode == XK_Down || keycode == XK_Right
 		|| keycode == XK_Left)
 	{
-		camera = get_object_ptr(CAMERA_OBJ, data->scene_objects, data->obj_count);
+		camera = get_object_ptr(CAMERA_OBJ, data->scene_objects,
+				data->obj_count);
 		if (!camera)
 			return (1);
 		move_object(keycode, camera, camera->local_basis);
@@ -66,9 +67,9 @@ int	key_handler(int keycode, t_data *data)
  *
  * @param t_data *data	-> pointer to the data to act on with the key presses
  */
+//	mlx_loop_hook(data->ptr, &disp_main_image, data);
 void	init_key_hooks(t_data *data)
 {
-//	mlx_loop_hook(data->ptr, &disp_main_image, data);
 	mlx_hook(data->main_window.ptr, KeyPress, KeyPressMask, &key_handler, data);
 	mlx_hook(data->main_window.ptr, DestroyNotify, NoEventMask, &free_and_exit,
 		data);

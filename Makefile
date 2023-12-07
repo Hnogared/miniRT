@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/07 14:54:36 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/07 16:06:31 by motoko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,8 +54,8 @@ SRCS			:=	main.c					\
 					check_numbers.c			\
 					check_range_numbers.c	\
 					conv_hexa.c				\
-					initialize_object.c		\
-					initialize_mlx.c		\
+					init_objs_1.c			\
+					init_objs_2.c			\
 					get_object_color.c		\
 					object_creation.c		\
 					object_interaction.c	\

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:13:45 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 15:59:13 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:05:52 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	key_handler(int keycode, t_data *data)
 		camera = get_object_ptr(CAMERA_OBJ, data->scene_objects, data->obj_count);
 		if (!camera)
 			return (1);
-		move_object(keycode, camera, camera.local_basis);
+		move_object(keycode, camera, camera->local_basis);
 		set_view_rays(&data->view_rays, data->main_window, *camera, false);
 	}
 	redraw_main_window(data);

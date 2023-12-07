@@ -52,7 +52,7 @@ int	ray_trace(t_data *data, int x, int y)
 	//printf("Dans Ray trace !!!!!!!!!!!!!!\n");
 	//print_vec(data->view_rays[x][y].vector);
 	ray_advance(data, &data->view_rays[x][y]);
-	if (data->view_rays[x][y].nb_ref)
+	if (data->view_rays[x][y].go != -1)
 	{
 //		printf("touch(%d:%d)\n", x, y);
 		return (0xFFFFFF);

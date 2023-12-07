@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/06 13:43:32 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/07 10:35:37 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ static size_t	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
 
 size_t	raytrace(t_data *data, int x, int y)
 {
-	ray_advance(data, &data->view_rays[x][y]);
-	if (data->view_rays[x][y].nb_ref)
+	ray_advance(data, &data->view_rays[y][x]);
+	if (data->view_rays[y][x].nb_ref)
 	{
-		return (get_reflections_color(data->ambient_l, data->view_rays[x][y]));
+		return (get_reflections_color(data->ambient_l, data->view_rays[y][x]));
 	}
 	return (rgb_to_uint(rgb_color_mix((t_rgb_color){0, 0, 0},
 			data->ambient_l.color, data->ambient_l.ratio)));

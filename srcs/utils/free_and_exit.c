@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:25:22 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/04 14:09:33 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/07 10:40:14 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_data(t_data *data)
 	if (!data->view_rays)
 		return ;
 	i = 0;
-	while (i < data->main_window.width / data->main_window.pixel_ratio)
+	while (data->view_rays[i])
 		free(data->view_rays[i++]);
 	free(data->view_rays);
 }

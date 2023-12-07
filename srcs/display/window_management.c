@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:47:12 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/29 17:48:41 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/07 10:52:41 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ t_window	my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
 	window.width = dimensions[0];
 	window.height = dimensions[1];
 	window.pixel_ratio = pixel_ratio;
+	window.virtual_width = window.width / pixel_ratio;
+	window.virtual_height = window.height / pixel_ratio;
 	return (window);
 }
 
@@ -80,7 +82,7 @@ void	my_put_pixel_to_window(t_window *window, int x, int y, size_t color)
  * /!\ This change will only be seen after calling redraw_window afterwards.
  *
  * @param t_window *window		-> pointer to the window structure to modify
- * @param int start_coords[2]	-> x-y coordimates of the square's top left corner
+ * @param int start_coords[2]	-> x-y coords of the square's top left corner
  * @param int size[2]			-> width and height of the square
  * @param size_t color			-> colorof the square
  */

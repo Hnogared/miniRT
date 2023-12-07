@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/06 11:07:24 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:59:04 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,17 @@ void	redraw_main_window(t_data *data)
 	pixel_size[0] = data->main_window.pixel_ratio;
 	pixel_size[1] = data->main_window.pixel_ratio;
 	print_vector(data->view_rays[0][0].vector, NULL);
-	print_vector(data->view_rays[data->main_window.width / pixel_size[0] - 1][data->main_window.height / pixel_size[1] - 1].vector, NULL);
+	print_vector(data->view_rays[data->main_window.virtual_height - 1]
+		[data->main_window.virtual_width - 1].vector, NULL);
 	x = 0;
 	y = 0;
-	while (y < data->main_window.height / pixel_size[1])
+	while (y < data->main_window.virtual_height)
 	{
 		color = raytrace(data, x, y);
 		my_put_square_to_window(&data->main_window,
 			(int [2]){x * pixel_size[0], y * pixel_size[1]}, pixel_size, color);
 		x++;
-		if (x < data->main_window.width / pixel_size[0])
+		if (x < data->main_window.virtual_width)
 			continue ;
 		x = 0;
 		y++;

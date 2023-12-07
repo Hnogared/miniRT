@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:10:00 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/01 15:50:11 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/06 14:39:26 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,62 +28,61 @@ t_object	*set_object_coords(t_object *to_set, t_coords new_coords)
 }
 
 /*
- * TODO comment i'm tired
- * https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d 
- * https://en.wikipedia.org/wiki/Vector_projection#Vector_rejection
+ * Function to calculate a 3D right-handed basis' orthogonal normal/unit vectors
+ * with the @param vector as the x axis.
+ *
+ * @param t_vector xxx_orientation	-> the new basis' x axis orientation
+ * @return t_basis					-> the newly calculated orthogonal basis
  */
-static t_orthonormal_basis	*set_ortho_basis_from_x(t_orthonormal_basis *to_set,
-	t_vector xxx_orientation)
+static t_basis	get_ortho_basis_from_x(t_vector xxx_orientation)
 {
 	t_vector	z_axis;
+	t_basis		new;
 
-	if (!to_set)
-		return (NULL);
-	to_set->x = normalise(xxx_orientation);
+	new.x = normalise(xxx_orientation);
 	z_axis = (t_vector){0, 0, 1};
 	if (xxx_orientation.x == 0.0f && xxx_orientation.y == 0.0f
 		&& xxx_orientation.z == 1.0f)
-		to_set->z = (t_vector){0, -1, 0};
+		new.z = (t_vector){0, -1, 0};
 	else if (xxx_orientation.x == 0.0f && xxx_orientation.y == 0.0f
 		&& xxx_orientation.z == -1.0f)
-		to_set->z = (t_vector){0, 1, 0};
+		new.z = (t_vector){0, 1, 0};
 	else
 	{
-		to_set->z = prod_vec_float(to_set->x, prod_scal_vec(to_set->x, z_axis));
-		to_set->z = normalise(sous_vec_vec(z_axis, to_set->z));
+		new.z = prod_vec_float(new.x, prod_scal_vec(new.x, z_axis));
+		new.z = normalise(sous_vec_vec(z_axis, new.z));
 	}
-	to_set->y = normalise(prod_vec_vec(to_set->z, to_set->x));
-	return (to_set);
+	new.y = normalise(prod_vec_vec(new.z, new.x));
+	return (new);
 }
 
-
 /*
- * TODO comment i'm tired
- * https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d 
- * https://en.wikipedia.org/wiki/Vector_projection#Vector_rejection
+ * Function to calculate a 3D right-handed basis' orthogonal normal/unit vectors
+ * with the @param vector as the z axis.
+ *
+ * @param t_vector z_orientation	-> the new basis' z axis orientation
+ * @return t_basis					-> the newly calculated orthogonal basis
  */
-static t_orthonormal_basis	*set_ortho_basis_from_z(t_orthonormal_basis *to_set,
-	t_vector z_orientation)
+static t_basis	get_ortho_basis_from_z(t_vector z_orientation)
 {
 	t_vector	y_axis;
+	t_basis		new;
 
-	if (!to_set)
-		return (NULL);
-	to_set->z = normalise(z_orientation);
+	new.z = normalise(z_orientation);
 	y_axis = (t_vector){0, 1, 0};
 	if (z_orientation.x == 0.0f && z_orientation.y == 1.0f
 		&& z_orientation.z == 0.0f)
-		to_set->y = (t_vector){0, 0, -1};
+		new.y = (t_vector){0, 0, -1};
 	else if (z_orientation.x == 0.0f && z_orientation.y == -1.0f
 		&& z_orientation.z == 0.0f)
-		to_set->y = (t_vector){0, 0, 1};
+		new.y = (t_vector){0, 0, 1};
 	else
 	{
-		to_set->y = prod_vec_float(to_set->z, prod_scal_vec(to_set->z, y_axis));
-		to_set->y = normalise(sous_vec_vec(y_axis, to_set->y));
+		new.y = prod_vec_float(new.z, prod_scal_vec(new.z, y_axis));
+		new.y = normalise(sous_vec_vec(y_axis, new.y));
 	}
-	to_set->x = normalise(prod_vec_vec(to_set->y, to_set->z));
-	return (to_set);
+	new.x = normalise(prod_vec_vec(new.y, new.z));
+	return (new);
 }
 
 /*
@@ -101,9 +100,9 @@ t_object	*set_object_orientation(t_object *to_set, t_vector new_vector)
 		new_vector = (t_vector){1, 0, 0};
 	to_set->orientation_vector = normalise(new_vector);
 	if (to_set->type == CAMERA_OBJ)
-		set_ortho_basis_from_x(&to_set->loc_basis, new_vector);
+		to_set->local_basis = get_ortho_basis_from_x(new_vector);
 	else
-		set_ortho_basis_from_z(&to_set->loc_basis, new_vector);
+		to_set->local_basis = get_ortho_basis_from_z(new_vector);
 	return (to_set);
 }
 

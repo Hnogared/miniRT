@@ -73,7 +73,7 @@ t est le paramètre a déterminer.*/
 
 /*si il existe un t > 0 qui resout (a[Ox + t * Dx] + b[Oy + t * Dy] + c[Oz + t * Dz] + d =0)
 alors ok.
-revient a verifier si t = - (N.O)/(N.D) > 0;
+revient a verifier si t = - [(N.O) + d]/(N.D) > 0;
 */
 int	try_plan(t_ray *ray, t_object plan)
 {
@@ -81,10 +81,19 @@ int	try_plan(t_ray *ray, t_object plan)
 	float		t;
 	t_vector	n;
 
+	//printf("test plan\n");
 	n = normalise(plan.orientation_vector);
+	//printf("n du plan vaut \n");
+	//print_vec(n);
+	//printf("vecteur du ray vaut \n");
+	//print_vec(ray->vector);
 	d = -(n.x * plan.coords.x + n.y * plan.coords.y + n.z * plan.coords.z);
+	//printf("d vaut : %f\n", d);
 	t = -((prod_scal_vec_coord(n, ray->origin_coords) + d) / prod_scal_vec(n, ray->vector));
-	if (t > 0)
+	//printf("scal de N et 0 vaut %f\n", prod_scal_vec_coord(n, ray->origin_coords));
+	//printf("scal de N et D vaut %f\n", prod_scal_vec(n, ray->vector));
+	//printf("t vaut %f\n",t);
+	if (t >= 0)
 	{
 		ray->coords = find_pos_touch(ray, t);
 		return (1);

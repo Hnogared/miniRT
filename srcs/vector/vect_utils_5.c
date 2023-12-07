@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vect_utils2.c                                      :+:      :+:    :+:   */
+/*   vect_utils_5.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 12:50:45 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/01 15:17:42 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/05 10:57:13 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,10 +141,9 @@ void	get_rotation_matrix(float rot_matrix_to_set[3][3], t_vector vector1,
 	rot_matrix_to_set[2][2] = (axis.z * axis.z * coeff) + cos;
 }
 
-t_orthonormal_basis	axial_basis_rotation(t_orthonormal_basis to_rotate,
-	float angle, t_vector axis)
+t_basis	axial_basis_rotation(t_basis to_rotate, float angle, t_vector axis)
 {
-	t_orthonormal_basis	rotated;
+	t_basis	rotated;
 
 	rotated = to_rotate;
 	if (prod_scal_vec(to_rotate.x, axis) != 1.0f)

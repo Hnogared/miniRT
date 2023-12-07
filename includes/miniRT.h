@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/05 11:56:20 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/07 16:04:00 by motoko           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,18 @@ void			obj_pl(t_data *data, char *s, int *pos);
 void			obj_sp(t_data *data, char *s, int *pos);
 void			obj_cy(t_data *data, char *s, int *pos);
 
-/* raytrace.c */
-t_ray			**get_view_rays(t_window window, t_object camera);
-
 /* free_and_exit.c */
 noreturn int	free_and_exit(t_data *data);
 void			free_data(t_data *data);
 void			free_str_tab(char **str_tab);
 
 /* SRCS/OBJECT_MANAGEMENT */
+/* get_object_color.c */
+t_rgb_color		get_uncolored_color(t_special_data special_data);
+t_rgb_color		get_sphere_color(t_special_data special_data);
+t_rgb_color		get_plane_color(t_special_data special_data);
+t_rgb_color		get_cylinder_color(t_special_data special_data);
+
 /* object_creation.c */
 t_object		*new_camera(t_object *to_set, t_coords coords, int fov);
 t_object		*new_light(t_object *to_set, t_coords coords, float brightness);
@@ -72,6 +75,10 @@ t_object		*new_sphere(t_object *to_set, t_coords coords, float diameter);
 t_object		*new_plane(t_object *to_set, t_coords coords);
 t_object		*new_cylinder(t_object *to_set, t_coords coords, float diameter,
 					float height);
+
+/* object_interaction.c */
+t_object		*get_object_ptr(unsigned short type, t_object *objects_list,
+					int list_size);
 
 /* object_modification.c */
 t_object		*set_object_coords(t_object *to_set, t_coords coords);
@@ -81,9 +88,10 @@ t_object		*set_object_color(t_object *to_set, t_rgb_color color);
 
 /* print_object_data.c */
 void			print_object_data(t_object object);
-void			print_coords(t_coords coords);
-void			print_vector(t_vector vector);
-void			print_rgb_color(t_rgb_color color);
+void			print_coords(t_coords coords, char *name);
+void			print_vector(t_vector vector, char *name);
+void			print_rgb_color(t_rgb_color color, char *name);
+void			print_basis(t_basis basis, char *name);
 
 /* print_object_data_2.c */
 void			print_camera_data(t_special_data special_data);
@@ -125,18 +133,19 @@ t_vector		cal_cylinder_ext(t_ray *ray, t_object cylindre, int res);
 t_vector		cal_cylinder_side(t_ray *ray, t_object cylindre);
 t_vector		calcul_ref(t_ray *ray, t_object obj, int res);
 void			ray_advance(t_data *data, t_ray *ray);
+void			print_vec(t_vector vec);
+void			print_coord(t_coords cor);
 
 /* vect_utils2.c */
-float				to_rad(float degree_angle);
-t_vector			axial_vector_rotation(t_vector to_rotate, float angle,
-	t_vector axis);
-t_vector			matrix_vector_rotation(t_vector to_rotate,
-	float rot_matrix[3][3]);
-void				get_rotation_matrix(float rot_matrix_to_set[3][3],
-	t_vector vector1, t_vector vector2);
-t_orthonormal_basis	axial_basis_rotation(t_orthonormal_basis to_rotate,
-	float angle, t_vector axis);
-
+float			to_rad(float degree_angle);
+t_vector		axial_vector_rotation(t_vector to_rotate, float angle,
+					t_vector axis);
+t_vector		matrix_vector_rotation(t_vector to_rotate,
+					float rot_matrix[3][3]);
+void			get_rotation_matrix(float rot_matrix_to_set[3][3],
+					t_vector vector1, t_vector vector2);
+t_basis			axial_basis_rotation(t_basis to_rotate, float angle,
+					t_vector axis);
 
 /* SRCS/DISPLAY */
 /* image_management.c */
@@ -158,6 +167,17 @@ void			my_put_pixel_to_window(t_window *window, int x, int y,
 void			my_put_square_to_window(t_window *window, int start_coords[2],
 					int size[2], size_t color);
 void			redraw_window(void *mlx_ptr, t_window *window);
+
+/* SRCS/RAYTRACING */
+/* get_view_rays.c */
+int				set_view_rays(t_ray ***rays_tab, t_window window,
+					t_object camera, bool needs_alloc);
+
+/* raytrace.c */
+size_t			rgb_to_uint(t_rgb_color color);
+size_t			test_grid(t_data *data, int x, int y);
+size_t			raytrace(t_data *data, int x, int y);
+t_rgb_color		rgb_color_mix(t_rgb_color color1, t_rgb_color color2, float ratio);
 
 /* SRCS_USER_INTERFACE */
 /* keyboard.c */

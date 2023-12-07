@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/01 15:25:07 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:14:58 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
  * float y	-> amplitude in the y axis
  * float z	-> amplitude in the z axis
  */
-
 typedef struct s_vector
 {
 	float	x;
@@ -44,7 +43,6 @@ typedef struct s_coords
 	float	z;
 }				t_coords;
 
-
 /*
  * Color structure holding its red, green and blue values.
  *
@@ -63,7 +61,7 @@ typedef struct s_rgb_color
  * Ambient lighting data structure.
  *
  * float ratio			-> ratio/strength of the ambient lighting (0.0-1.0)
- * t_rbg_color color	-> color of the ambient lighting in rgb (0-255:0-255:0-255)
+ * t_rbg_color color	-> rgb color of the ambient lighting (0-255:0-255:0-255)
  */
 typedef struct s_ambient_light
 {
@@ -72,29 +70,32 @@ typedef struct s_ambient_light
 }				t_ambient_light;
 
 /*
- * Coordinates basis structure comprised of 3 orthonormal normal vectors.
- * This allows handling coordinates in a rotated coordinates system relative to
- * the global coordinates system.
+ * Coordinates basis structure comprised of 3 vectors.
+ * This allows handling coordinates in a rotated/warped coordinates system
+ * relative to the global coordinates system.
+ * Normal vectors orthogonal to each other are needed for an orthonormal basis.
  *
- * t_vector x	-> x axis normal vector
- * t_vector y	-> y axis normal vector
- * t_vector z	-> z axis normal vector
+ * t_vector x	-> x axis vector
+ * t_vector y	-> y axis vector
+ * t_vector z	-> z axis vector
  */
-typedef struct s_orthonormal_basis
+typedef struct s_basis
 {
 	t_vector	x;
 	t_vector	y;
 	t_vector	z;
-}				t_orthonormal_basis;
+}				t_basis;
 
 /*
  * Camera special data structure used to complement the t_object structure.
  *
- * int fov	-> FOV of the camera (0-180)
+ * int h_fov	-> horizontal FOV of the camera in degrees (0-180)
+ * int v_fov	-> vertical FOV of the camera in degrees (0-180)
  */
 typedef struct s_camera
 {
-	int	fov;
+	int	h_fov;
+	int	v_fov;
 }				t_camera;
 
 /*
@@ -168,29 +169,31 @@ typedef union u_special_data
  * Structure holding an object's data, as well as its function to display its
  * special data (camera / light / sphere / plane / cylinder).
  *
- * unsigned short type			-> object type [ex: SPHERE_OBJ] (see miniRT_macro.h)
- * bool has_color				-> boolean true if the object has a color property
+ * unsigned short type			-> obj. type [ex:SPHERE_OBJ](see miniRT_macro.h)
+ * bool has_color				-> boolean true if the object has a color
  * t_coords coords				-> coordinates structure of the object
  * t_vector orientation_vector	-> normal vector structure to rotate the object
- * t_orthonormal_basis loc_basis-> object x,y,z axes relative to the orient. vector
- * t_special_data special_data	-> additional special data (camera/light/... data)
- * void (*data_print_func)		-> pointer to the special data display function
+ * t_basis local_basis			-> obj. x,y,z axes relative to the orient. vector
+ * t_special_data special_data	-> additional special data (camera/light/...)
+ * t_rgb_color (*ft_get_color)	-> pointer to the object color getter function
+ * void (*ft_print_data)		-> pointer to the special data display function
  */
 typedef struct s_object
 {
-	unsigned short		type;
-	bool				has_color;
-	t_coords			coords;
-	t_vector			orientation_vector;
-	t_orthonormal_basis	loc_basis;
-	t_special_data		special_data;
-	void			(*data_print_func)(t_special_data special_data);
+	unsigned short	type;
+	bool			has_color;
+	t_coords		coords;
+	t_vector		orientation_vector;
+	t_basis			local_basis;
+	t_special_data	special_data;
+	t_rgb_color		(*ft_get_color)(t_special_data special_data);
+	void			(*ft_print_data)(t_special_data special_data);
 }				t_object;
 
 /*
  * Ray data structure used for the ray tracing.
  *
- * t_vector vector			-> direction towards which the ray is going in vector form
+ * t_vector vector			-> vector direction towards which the ray is going
  * t_coords coords			-> current coordinates of the ray point
  * t_coords origin_coords	-> the coordinates from which the ray originated
  */
@@ -231,16 +234,21 @@ typedef struct s_image
 /*
  * Structure holding a window and its image's data.
  *
- * int width		-> the window's width
- * int height		-> the window's height
- * t_image image	-> the window's own image structure
- * void *ptr		-> pointer to the window memory block
+ * int width			-> the window width
+ * int height			-> the window height
+ * int pixel_ratio		-> the size of one virtual pixel of the window (ex:2x2px)
+ * int virtual_width	-> the amount of virtual pixels at the window's width
+ * int virtual_height	-> the amount of virtual pixels at the window's height
+ * t_image image		-> the window's corresponding image structure for display
+ * void *ptr			-> pointer to the window memory block
  */
 typedef struct s_window
 {
 	int		width;
 	int		height;
 	int		pixel_ratio;
+	int		virtual_width;
+	int		virtual_height;
 	t_image	image;
 	void	*ptr;
 }				t_window;
@@ -251,12 +259,11 @@ typedef struct s_window
  * int pixel_ratio			-> number of pixels used to display one pixel
  * t_window main_window		-> the main window structure to display on the screen
  * t_ambient_light ambient_l-> the scene's ambient lighting data structure
- * t_object *scene_objects	-> pointer to all the scene's objects {plane,light...}
+ * t_object *scene_objects	-> pointer to all the scene objects {plane,light...}
  * void *mlx_ptr			-> pointer to the mlx instance memory block
  */
 typedef struct s_data
 {
-	int				test;
 	char			*error_tab[RTERR_COUNT];
 	t_window		main_window;
 	t_ambient_light	ambient_l;

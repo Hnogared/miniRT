@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/05 11:17:20 by motoko           ###   ########.fr        #
+#    Updated: 2023/12/07 16:06:31 by motoko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,12 +37,13 @@ ARCHIVES_DIR	:=	archives
 INCLUDES_DIR	:=	includes
 
 # Complementary paths to all source code files #
-VPATH			:=	$(SRCS_DIR):					\
-					$(SRCS_DIR)/object_management:	\
-					$(SRCS_DIR)/display:			\
-					$(SRCS_DIR)/parsing:			\
-					$(SRCS_DIR)/user_interface:		\
-					$(SRCS_DIR)/vector:				\
+VPATH			:=	$(SRCS_DIR):				\
+					$(SRCS_DIR)/object:			\
+					$(SRCS_DIR)/display:		\
+					$(SRCS_DIR)/parsing:		\
+					$(SRCS_DIR)/user_interface:	\
+					$(SRCS_DIR)/vector:			\
+					$(SRCS_DIR)/raytracing:		\
 					$(SRCS_DIR)/utils
 
 # Source files names #
@@ -55,14 +56,16 @@ SRCS			:=	main.c					\
 					conv_hexa.c				\
 					init_objs_1.c			\
 					init_objs_2.c			\
+					get_object_color.c		\
 					object_creation.c		\
+					object_interaction.c	\
 					object_modification.c	\
 					print_object_data.c		\
 					print_object_data_2.c	\
 					check_args.c			\
 					image_management.c		\
-					main_window.c			\
 					window_management.c		\
+					main_window.c			\
 					keyboard.c				\
 					free_and_exit.c			\
 					check_range_numbers1.c	\
@@ -72,11 +75,12 @@ SRCS			:=	main.c					\
 					vect_utils_2.c			\
 					vect_utils_3.c			\
 					vect_utils_4.c			\
+					vect_utils_5.c			\
 					vect_calc.c				\
 					vect_try.c				\
 					vect_try_2.c			\
-					raytrace.c				\
-					vect_utils2.c
+					set_view_rays.c			\
+					raytrace.c
 
 
 ## Libraries files ##

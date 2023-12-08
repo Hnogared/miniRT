@@ -6,11 +6,43 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 10:55:33 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/08 11:07:56 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:52:25 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+/*
+ * Function to get the color of a window image's pixel at x-y coordinates.
+ *
+ * @param t_window window	-> window structure to get the pixel from
+ * @param int x				-> x coordinate of the pixel to retrieve
+ * @param int y				-> y coordinate of the pixel to retrieve
+ * @return size_t			-> the retrieved pixel color
+ */
+size_t	get_window_pixel(t_window window, int x, int y)
+{
+	return (get_image_pixel(window.image, x, y));
+}
+
+/*
+ * Function to get the color of a window's virtual pixel at the x-y
+ * coordinates of the virtual pixels grid.
+ *
+ * @param t_window window	-> window structure to get the pixel from
+ * @param int x				-> x coordinate of the virtual pixel to retrieve
+ * @param int y				-> y coordinate of the virtual pixel to retrieve
+ * @return size_t			-> the retrieved pixel color
+ */
+size_t	get_window_virtual_pixel(t_window window, int x, int y)
+{
+	int	virtual_x;
+	int	virtual_y;
+
+	virtual_x = x * window.pixel_ratio;
+	virtual_y = y * window.pixel_ratio;
+	return (get_window_pixel(window, virtual_x, virtual_y));
+}
 
 /*
  * Function to change the color of a window image's pixel at x-y coordinates.

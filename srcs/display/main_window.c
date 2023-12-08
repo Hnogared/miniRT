@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/08 11:09:33 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:54:37 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	open_main_window(t_data *data, char *title)
 	return (data->main_window.ptr == NULL);
 }
 
-void	redraw_main_window(t_data *data)
+int	redraw_main_window(t_data *data)
 {
 	int		x;
 	int		y;
@@ -62,4 +62,5 @@ void	redraw_main_window(t_data *data)
 	redraw_window(data->mlx_ptr, &data->main_window);
 	mlx_string_put(data->mlx_ptr, data->main_window.ptr, 10, 20, 0xFFFFFF,
 		"THIS IS A TEST TKT");
+	return (0);
 }

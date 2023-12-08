@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/07 14:14:58 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:43:40 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,7 @@ typedef struct s_image
  * int pixel_ratio		-> the size of one virtual pixel of the window (ex:2x2px)
  * int virtual_width	-> the amount of virtual pixels at the window's width
  * int virtual_height	-> the amount of virtual pixels at the window's height
+ * bool reset			-> true if the window needs to be reset
  * t_image image		-> the window's corresponding image structure for display
  * void *ptr			-> pointer to the window memory block
  */
@@ -252,6 +253,7 @@ typedef struct s_window
 	int		pixel_ratio;
 	int		virtual_width;
 	int		virtual_height;
+	bool	reset;
 	t_image	image;
 	void	*ptr;
 }				t_window;

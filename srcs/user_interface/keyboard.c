@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:13:45 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/08 16:25:30 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:53:17 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	key_handler(int keycode, t_data *data)
 			return (1);
 		move_object(keycode, camera, camera->local_basis);
 		set_view_rays(&data->view_rays, data->main_window, *camera, false);
+		data->main_window.reset = true;
 	}
 	redraw_main_window(data);
 	return (0);
@@ -71,9 +72,9 @@ int	key_handler(int keycode, t_data *data)
  *
  * @param t_data *data	-> pointer to the data to act on with the key presses
  */
-//	mlx_loop_hook(data->ptr, &disp_main_image, data);
 void	init_key_hooks(t_data *data)
 {
+//	mlx_loop_hook(data->ptr, &redraw_main_window, data);
 	mlx_hook(data->main_window.ptr, KeyPress, KeyPressMask, &key_handler, data);
 	mlx_hook(data->main_window.ptr, DestroyNotify, NoEventMask, &free_and_exit,
 		data);

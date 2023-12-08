@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/08 17:06:58 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/08 17:33:32 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,32 @@ static size_t	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
 	return (rgb_to_uint(color));
 }
 
-size_t	raytrace(t_data *data, int x, int y)
+size_t	raytrace(t_data *data, int x, int y, bool random)
 {
-	ray_advance(data, &data->view_rays[y][x]);
-	if (data->view_rays[y][x].nb_ref)
+	t_ray	ray;
+
+	if (random)
+		random = false;
+	ray = data->view_rays[y][x];
+	ray_advance(data, &ray);
+	if (ray.nb_ref)
 	{
-		return (get_reflections_color(data->ambient_l, data->view_rays[y][x]));
+		return (get_reflections_color(data->ambient_l, ray));
 	}
 	return (rgb_to_uint(rgb_color_mix((t_rgb_color){0, 0, 0},
 			data->ambient_l.color, data->ambient_l.ratio)));
+}
+
+size_t	uint_color_mix(size_t color1, size_t color2, float ratio)
+{
+	unsigned char	red;
+	unsigned char	green;
+	unsigned char	blue;
+
+	red = ((color1 >> 16) + (color2 >> 16) * ratio) / 2;
+	green = ((0x0000FF & (color1 >> 8)) + (0x0000FF & (color2 >> 8)) * ratio) / 2;
+	blue = ((0x0000FF & color1) + (0x0000FF & color2) * ratio) / 2;
+	return (red << 16 | green << 8 | blue);
 }
 
 t_rgb_color	rgb_color_mix(t_rgb_color color1, t_rgb_color color2, float ratio)

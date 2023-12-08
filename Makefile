@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/08 10:57:12 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/08 15:19:48 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -152,6 +152,11 @@ AUTO_IFLAGS		:=	$(IFLAGS) -I $(INCLUDES_DIR)
 # The total load of a make task #
 LOAD		:=	0
 
+ifndef CALL_MAKE
+COMPIL_LOAD := $(shell $(MAKE) $(MAKECMDGOALS) -n SERIOUS=TRUE CALL_MAKE=0 | grep '^gcc'\
+	| grep -v 'miniRT' | wc -l)
+endif
+
 # Track the progress of a make task #
 PROGRESS	:=	0
 
@@ -184,20 +189,27 @@ all:	$(NAME)
 ## Compilation rules ##
 # Compile the executable depending on the libraries archives and header files, #
 #  as well as all the object files #
-$(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS)
+$(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS) | print_flags
 	$(call custom_loading_command,										\
 		$(CC) $(CFLAGS) -o $@ $(OBJS) $(AUTO_IFLAGS) $(AUTO_LFLAGS),	\
 		"$(THEME_COLOR)Creating executable \ \ : $(NAME)$(ANSI_NC)")
 
 get_obj_load:
 ifndef CALL_MAKE
-	$(eval LOAD := $(shell make -n SERIOUS=TRUE CALL_MAKE=0 | grep '^gcc'\
+	$(eval LOAD := $(shell $(MAKE) -n SERIOUS=TRUE CALL_MAKE=0 | grep '^gcc'\
 		 | grep -v 'miniRT' | wc -l))
 	$(eval PROGRESS := 0)
 endif
 
+print_flags:
+ifneq ($(COMPIL_LOAD),0)
+	$(call custom_command, true, "compilation flags: $(CFLAGS)")
+else ifeq ("$(MAKECMDGOALS)","re")
+	$(call custom_command, true, "compilation flags: $(CFLAGS)")
+endif
+
 # Compile an object file depending on its source file and the object directory #
-$(OBJS_DIR)/%.o:	%.c | get_obj_load $(OBJS_DIR)
+$(OBJS_DIR)/%.o:	%.c | get_obj_load $(OBJS_DIR) print_flags
 	$(call custom_loading_command,									\
 		$(CC) $(CFLAGS) -c $< -o $@ $(AUTO_IFLAGS) $(AUTO_LFLAGS),	\
 		"$(THEME_COLOR)Compiling object file : $@$(ANSI_NC)")

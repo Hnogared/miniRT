@@ -203,6 +203,7 @@ typedef struct s_ray
 	t_coords		coords;
 	t_coords		origin_coords;
 	t_object		*objects_touch;
+	int				tl;
 	int				s;
 	int				go;
 	int				touch;

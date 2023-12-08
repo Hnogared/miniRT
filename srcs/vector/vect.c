@@ -23,6 +23,8 @@ int	do_touch(t_ray *ray, t_object obj, int i)
 		try_plan(ray, obj, i);
 	else if (obj.type == CYLINDER_OBJ)
 		try_cylinder_side(ray, obj, i);
+	else if (obj.type == LIGHT_OBJ)
+		try_light(ray, obj, i);
 	return (0);
 }
 
@@ -86,11 +88,12 @@ void	ray_advance(t_data *data, t_ray *ray)
 {
 	ray->touch = 1;
 	ray->nb_ref = 0;
+	ray->tl = 0;
 	ray->s = 0;
 	ray->objects_touch = malloc(sizeof(t_object) * 4);
 	//printf("avant tentative de touch, veteur ray vaut :\n");
 	//print_vec(ray->vector);
-	while (ray->touch != 0 && ray->nb_ref <= 2)
+	while (ray->touch != 0 && ray->nb_ref <= 2 && ray->tl == 0)
 		touch_object(data, ray);
 	//printf("ok\n");
 	/*printf("** %d ** ", ray->nb_ref);

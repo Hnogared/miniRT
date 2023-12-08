@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/07 16:06:31 by motoko           ###   ########.fr        #
+#    Updated: 2023/12/08 10:57:12 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,8 +63,9 @@ SRCS			:=	main.c					\
 					print_object_data.c		\
 					print_object_data_2.c	\
 					check_args.c			\
-					image_management.c		\
-					window_management.c		\
+					image_handling.c		\
+					window_handling.c		\
+					window_modification.c	\
 					main_window.c			\
 					keyboard.c				\
 					free_and_exit.c			\

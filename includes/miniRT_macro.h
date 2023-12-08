@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:18:25 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/01 15:04:14 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/08 17:05:17 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@
 # define SPHERE_OBJ		3
 # define PLANE_OBJ		4
 # define CYLINDER_OBJ	5
+
+# define RT_DEFAULT_LIGHT_DIAM	20.0f
 
 # ifndef PI
 #  define PI	3.141592654

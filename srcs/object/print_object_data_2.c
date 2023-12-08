@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:37:20 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/06 18:24:06 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/08 17:06:18 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	print_light_data(t_special_data special_data)
 {
 	printf("[Light data]\n");
 	printf("Brightness : %f\n", special_data.light.brightness);
+	printf("Diameter : %f\n", special_data.light.diameter);
+	printf("Radius : %f\n", special_data.light.radius);
 }
 
 /*

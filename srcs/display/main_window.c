@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 14:17:06 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/08 11:09:33 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,17 @@ void	redraw_main_window(t_data *data)
 {
 	int		x;
 	int		y;
-	int		pixel_size[2];
 	size_t	color;
 
-	pixel_size[0] = data->main_window.pixel_ratio;
-	pixel_size[1] = data->main_window.pixel_ratio;
-	print_vector(data->view_rays[0][0].vector, NULL);
-	print_vector(data->view_rays[data->main_window.virtual_height - 1]
-		[data->main_window.virtual_width - 1].vector, NULL);
+//	print_vector(data->view_rays[0][0].vector, NULL);
+//	print_vector(data->view_rays[data->main_window.virtual_height - 1]
+//		[data->main_window.virtual_width - 1].vector, NULL);
 	x = 0;
 	y = 0;
 	while (y < data->main_window.virtual_height)
 	{
 		color = raytrace(data, x, y);
-		my_put_square_to_window(&data->main_window,
-			(int [2]){x * pixel_size[0], y * pixel_size[1]}, pixel_size, color);
+		set_window_virtual_pixel(&data->main_window, x, y, color);
 		x++;
 		if (x < data->main_window.virtual_width)
 			continue ;

@@ -75,7 +75,7 @@ void	touch_object(t_data *data, t_ray *ray)
 				printf("res vaut %d\n", res);
 				printf("nb_ref vaut %d\n", ray->nb_ref);
 			}*/
-			ray->objects_touch[ray->s++] = data->scene_objects[i];
+			ray->objects_touch[ray->s++] = data->scene_objects[ray->go];
 			return ;
 		}
 	ray->touch = 0;
@@ -90,7 +90,7 @@ void	ray_advance(t_data *data, t_ray *ray)
 	ray->objects_touch = malloc(sizeof(t_object) * 4);
 	//printf("avant tentative de touch, veteur ray vaut :\n");
 	//print_vec(ray->vector);
-	//while (ray->touch != 0 && ray->nb_ref <= 2)
+	while (ray->touch != 0 && ray->nb_ref <= 2)
 		touch_object(data, ray);
 	//printf("ok\n");
 	/*printf("** %d ** ", ray->nb_ref);

@@ -54,10 +54,20 @@ void	try_sphere(t_ray *ray, t_object obj, int i)
 	if (delta >= 0)
 	{
 		t = good_sol(delta, b, a);
-		ray->coords = find_pos_touch(ray, t);
-		ray->sol = t;
-		ray->res = 2;
-		ray->go = i;
+		if (ray->res == 0)
+		{
+			ray->coords = find_pos_touch(ray, t);
+			ray->sol = t;
+			ray->res = 2;
+			ray->go = i;
+		}
+		else if (t <= ray->sol)
+		{
+			ray->coords = find_pos_touch(ray, t);
+			ray->sol = t;
+			ray->res = 2;
+			ray->go = i;
+		}
 		//return (0);
 	}
 	/*else
@@ -100,10 +110,20 @@ void	try_plan(t_ray *ray, t_object plan, int i)
 	//printf("t vaut %f\n",t);
 	if (t >= 0)
 	{
-		ray->coords = find_pos_touch(ray, t);
-		ray->sol = t;
-		ray->res = 1;
-		ray->go = i;
+		if (ray->res == 0)
+		{
+			ray->coords = find_pos_touch(ray, t);
+			ray->sol = t;
+			ray->res = 1;
+			ray->go = i;
+		}
+		else if (t <= ray->sol)
+		{
+			ray->coords = find_pos_touch(ray, t);
+			ray->sol = t;
+			ray->res = 1;
+			ray->go = i;
+		}
 		//return (1);
 	}
 	//else

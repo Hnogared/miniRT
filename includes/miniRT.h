@@ -127,6 +127,7 @@ void			try_plan(t_ray *ray, t_object plan, int i);
 void			try_plan_cyl(t_ray *ray, t_coords cp, t_vector n, t_object obj, int i);
 void			try_cylinder_ext(t_ray *ray, t_object obj, int i);
 void			try_cylinder_side(t_ray *ray, t_object obj, int i);
+void			try_light(t_ray *ray, t_object l, int i);
 t_vector		cal_sphere(t_ray *ray, t_object sphere);
 t_vector		cal_plan(t_ray *ray, t_object plan);
 t_vector		cal_cylinder_ext(t_ray *ray, t_object cylindre, int res);
@@ -135,6 +136,7 @@ t_vector		calcul_ref(t_ray *ray, t_object obj, int res);
 void			ray_advance(t_data *data, t_ray *ray);
 void			print_vec(t_vector vec);
 void			print_coord(t_coords cor);
+
 
 /* vect_utils2.c */
 float			to_rad(float degree_angle);

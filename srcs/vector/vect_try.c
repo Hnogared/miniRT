@@ -39,7 +39,7 @@ delta = B^2 - 4AC; si pas de solution dans le reel (= delta < 0) alors pas d'int
 pour plus de precision, voir cahier.
 ici origine du rayon est la position test = FAUX A AMELIORER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.
 */
-int	try_sphere(t_ray *ray, t_object obj)
+void	try_sphere(t_ray *ray, t_object obj, int i)
 {
 	float	a;
 	float	b;
@@ -51,14 +51,29 @@ int	try_sphere(t_ray *ray, t_object obj)
 	b = 2 * prod_scal_vec(ray->vector, sous_vec_coord(ray->origin_coords, obj.coords));
 	c = pow(magnitude_coord(ray->origin_coords), 2) + pow(magnitude_coord(obj.coords), 2) - 2 * prod_scal_coord(obj.coords, ray->origin_coords) - pow((obj.special_data.sphere.diameter / 2), 2);
 	delta = pow(b, 2) - 4 * a * c;
-	if (delta < 0)
-		return (0);
-	else
+	if (delta >= 0)
 	{
 		t = good_sol(delta, b, a);
-		ray->coords = find_pos_touch(ray, t);
-		return (1);
+		if (ray->res == 0)
+		{
+			ray->coords = find_pos_touch(ray, t);
+			ray->sol = t;
+			ray->res = 2;
+			ray->go = i;
+		}
+		else if (t <= ray->sol)
+		{
+			ray->coords = find_pos_touch(ray, t);
+			ray->sol = t;
+			ray->res = 2;
+			ray->go = i;
+		}
+		//return (0);
 	}
+	/*else
+	{
+		return (1);
+	}*/
 }
 
 //equation a resoudre (ax + by + cz + d =0) avec vecteur normal du plan (donne dans le sujet) N(a, b, c) et d a determiner avec le point du plan (aussi donne dans le sujet)
@@ -75,7 +90,7 @@ t est le paramètre a déterminer.*/
 alors ok.
 revient a verifier si t = - [(N.O) + d]/(N.D) > 0;
 */
-int	try_plan(t_ray *ray, t_object plan)
+void	try_plan(t_ray *ray, t_object plan, int i)
 {
 	float		d;
 	float		t;
@@ -95,9 +110,22 @@ int	try_plan(t_ray *ray, t_object plan)
 	//printf("t vaut %f\n",t);
 	if (t >= 0)
 	{
-		ray->coords = find_pos_touch(ray, t);
-		return (1);
+		if (ray->res == 0)
+		{
+			ray->coords = find_pos_touch(ray, t);
+			ray->sol = t;
+			ray->res = 1;
+			ray->go = i;
+		}
+		else if (t <= ray->sol)
+		{
+			ray->coords = find_pos_touch(ray, t);
+			ray->sol = t;
+			ray->res = 1;
+			ray->go = i;
+		}
+		//return (1);
 	}
-	else
-		return (0);
+	//else
+	//	return (0);
 }

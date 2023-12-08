@@ -204,8 +204,11 @@ typedef struct s_ray
 	t_coords		origin_coords;
 	t_object		*objects_touch;
 	int				s;
+	int				go;
 	int				touch;
 	int				nb_ref;
+	int				res;
+	float			sol;
 }				t_ray;
 
 //give_coord((t_coords){0, 5, 0})

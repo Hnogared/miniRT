@@ -44,16 +44,26 @@ t_coords	give_coord(t_coords coord)
 
 float	good_sol(float delta, float b, float a)
 {
-	float	t;
+	float	t1;
+	float	t2;
 
-	t = (-b + sqrt(delta)) / (2 * a);
-	if (t > 0)
-		return (t);
-	else
+	t1 = (-b + sqrt(delta)) / (2 * a);
+	t2 = (-b - sqrt(delta)) / (2 * a);
+	//printf("%f\n", t1);
+	//printf("%f\n", t2);
+	if (t1 > 0 && t2 < 0)
+		return (t1);
+	else if (t1 < 0 && t2 > 0)
+		return (t2);
+	else if (t1 > 0 && t2 > 0)
 	{
-		t = (-b - sqrt(delta)) / (2 * a);
-		return (t);
+		if (t1 < t2)
+			return (t1);
+		else
+			return (t2);
 	}
+	else
+		return (0);
 }
 
 void	print_vec(t_vector vec)

@@ -21,10 +21,43 @@ zl   Oz       Dz
 3 expressions de t, si toutes identiques, ca touche.
 si t = (xl - Ox) / Dx == (yl - Oy)/ Dy == (zl - Oz) / dz;
 alors ca touche !
+
+finalement, imagine la light comme une sphere.
 */
 void	try_light(t_ray *ray, t_object l, int i)
 {
-	float	t1;
+	float	a;
+	float	b;
+	float	c;
+	float	delta;
+	float	t;
+
+	a = pow(magnitude(ray->vector), 2);
+	b = 2 * prod_scal_vec(ray->vector, sous_vec_coord(ray->origin_coords, l.coords));
+	c = pow(magnitude_coord(ray->origin_coords), 2) + pow(magnitude_coord(l.coords), 2) - 2 * prod_scal_coord(l.coords, ray->origin_coords) - pow((l.special_data.sphere.diameter / 2), 2);
+	delta = pow(b, 2) - 4 * a * c;
+	if (delta >= 0)
+	{
+		t = good_sol(delta, b, a);
+		if (ray->res == 0)
+		{
+			//ray->coords = find_pos_touch(ray, t);
+			ray->sol = t;
+			ray->res = 7;
+			ray->go = i;
+			ray->tl = 1;
+		}
+		else if (t <= ray->sol)
+		{
+			ray->coords = find_pos_touch(ray, t);
+			ray->sol = t;
+			ray->res = 7;
+			ray->go = i;
+			ray->tl = 1;
+		}
+		//return (0);
+	}
+	/*float	t1;
 	float	t2;
 	float	t3;
 
@@ -49,7 +82,7 @@ void	try_light(t_ray *ray, t_object l, int i)
 			ray->go = i;
 			ray->tl = 1;
 		}
-	}
+	}*/
 }
 
 /*equationa resoudre

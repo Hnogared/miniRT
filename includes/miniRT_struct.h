@@ -106,6 +106,8 @@ typedef struct s_camera
 typedef struct s_light
 {
 	float		brightness;
+	float		diameter;
+	float		radius;
 }				t_light;
 
 /*

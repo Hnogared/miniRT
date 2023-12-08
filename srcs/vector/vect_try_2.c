@@ -196,7 +196,7 @@ void	try_cylinder_side(t_ray *ray, t_object obj, int i)
 		//printf("H/2 vaut :%f\n", pow(obj.special_data.cylinder.height / 2, 2));
 		//printf("rayon vaut :%f\n", pow(obj.special_data.cylinder.diameter / 2, 2));
 		//printf("somme de H/2 et r vaut :%f\n\n\n", pow(obj.special_data.cylinder.height / 2, 2) + pow(obj.special_data.cylinder.diameter / 2, 2));
-		if (t != 0 && t!= 7.5 && pow(dist(ray->coords, obj.coords), 2) <= (pow(obj.special_data.cylinder.height / 2, 2) + pow(obj.special_data.cylinder.diameter / 2, 2)))
+		if (pow(dist(ray->coords, obj.coords), 2) <= (pow(obj.special_data.cylinder.height / 2, 2) + pow(obj.special_data.cylinder.diameter / 2, 2)))
 		{
 			//return (1);
 			ray->sol = t;

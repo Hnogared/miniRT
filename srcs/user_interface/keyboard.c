@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:13:45 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 16:16:22 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:25:30 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ static void	move_object(int keycode, t_object *to_move, t_basis basis)
 		coords = axial_coords_move(to_move->coords, basis.y, -10);
 	if (keycode == XK_Left)
 		coords = axial_coords_move(to_move->coords, basis.y, 10);
+	if (keycode == XK_space)
+		coords = axial_coords_move(to_move->coords, basis.z, 10);
+	if (keycode == XK_Shift_L)
+		coords = axial_coords_move(to_move->coords, basis.z, -10);
 	set_object_coords(to_move, coords);
 }
 
@@ -47,7 +51,7 @@ int	key_handler(int keycode, t_data *data)
 	if (keycode == XK_Escape)
 		free_and_exit(data);
 	if (keycode == XK_Up || keycode == XK_Down || keycode == XK_Right
-		|| keycode == XK_Left)
+		|| keycode == XK_Left || keycode == XK_space || keycode == XK_Shift_L)
 	{
 		camera = get_object_ptr(CAMERA_OBJ, data->scene_objects,
 				data->obj_count);

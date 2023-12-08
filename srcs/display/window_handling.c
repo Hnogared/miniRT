@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window_management.c                                :+:      :+:    :+:   */
+/*   window_handling.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:47:12 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 16:04:13 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/08 10:56:44 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,52 +60,6 @@ void	my_destroy_window(void *mlx_ptr, t_window *window)
 	mlx_destroy_window(mlx_ptr, window->ptr);
 	window->ptr = NULL;
 	mlx_destroy_image(mlx_ptr, window->image.ptr);
-}
-
-/*
- * Function to change the color of a window image's pixel at x-y coordinates.
- * /!\ This change will only be seen after calling redraw_window afterwards.
- *
- * @param t_window *window	-> pointer to the window structure to modify
- * @param int x				-> x coordinate of the pixel to change
- * @param int y				-> y coordinate of the pixel to change
- * @param size_t color		-> the changed pixel's new color
- */
-void	my_put_pixel_to_window(t_window *window, int x, int y, size_t color)
-{
-	if (window && window->image.ptr)
-		my_put_pixel_to_image(&window->image, x, y, color);
-}
-
-/*
- * Function to draw a colored square on a window image at x-y coordinates. 
- * /!\ This change will only be seen after calling redraw_window afterwards.
- *
- * @param t_window *window		-> pointer to the window structure to modify
- * @param int start_coords[2]	-> x-y coords of the square's top left corner
- * @param int size[2]			-> width and height of the square
- * @param size_t color			-> colorof the square
- */
-void	my_put_square_to_window(t_window *window, int start_coords[2],
-	int size[2], size_t color)
-{
-	int	x;
-	int	y;
-
-	if (!window || !window->image.ptr)
-		return ;
-	x = 0;
-	y = 0;
-	while (y < size[1] && start_coords[1] + y <= window->height)
-	{
-		my_put_pixel_to_window(window, start_coords[0] + x, start_coords[1] + y,
-			color);
-		x++;
-		if (x < size[0] && start_coords[0] + x <= window->width)
-			continue ;
-		x = 0;
-		y++;
-	}
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/08 11:06:19 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:54:50 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void			set_image_pixel(t_image *image, int x, int y, size_t color);
 
 /* main_window.c */
 int				open_main_window(t_data *data, char *title);
-void			redraw_main_window(t_data *data);
+int				redraw_main_window(t_data *data);
 
 /* window_handling.c */
 t_window		my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
@@ -166,6 +166,8 @@ void			my_destroy_window(void *mlx_ptr, t_window *window);
 void			redraw_window(void *mlx_ptr, t_window *window);
 
 /* window_modification.c */
+size_t			get_window_pixel(t_window window, int x, int y);
+size_t			get_window_virtual_pixel(t_window window, int x, int y);
 void			set_window_pixel(t_window *window, int x, int y, size_t color);
 void			set_window_virtual_pixel(t_window *window, int x, int y,
 					size_t color);

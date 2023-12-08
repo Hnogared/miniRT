@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/07 16:06:31 by motoko           ###   ########.fr        #
+#    Updated: 2023/12/08 15:38:13 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,8 +63,9 @@ SRCS			:=	main.c					\
 					print_object_data.c		\
 					print_object_data_2.c	\
 					check_args.c			\
-					image_management.c		\
-					window_management.c		\
+					image_handling.c		\
+					window_handling.c		\
+					window_modification.c	\
 					main_window.c			\
 					keyboard.c				\
 					free_and_exit.c			\
@@ -151,6 +152,11 @@ AUTO_IFLAGS		:=	$(IFLAGS) -I $(INCLUDES_DIR)
 # The total load of a make task #
 LOAD		:=	0
 
+ifndef CALL_MAKE
+COMPIL_LOAD := $(shell $(MAKE) $(MAKECMDGOALS) -n SERIOUS=TRUE CALL_MAKE=0\
+	| grep '^gcc' | wc -l)
+endif
+
 # Track the progress of a make task #
 PROGRESS	:=	0
 
@@ -183,25 +189,34 @@ all:	$(NAME)
 ## Compilation rules ##
 # Compile the executable depending on the libraries archives and header files, #
 #  as well as all the object files #
-$(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS)
+$(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS) | print_flags
 	$(call custom_loading_command,										\
 		$(CC) $(CFLAGS) -o $@ $(OBJS) $(AUTO_IFLAGS) $(AUTO_LFLAGS),	\
 		"$(THEME_COLOR)Creating executable \ \ : $(NAME)$(ANSI_NC)")
 
-get_obj_load:
-ifndef CALL_MAKE
-	$(eval LOAD := $(shell make -n SERIOUS=TRUE CALL_MAKE=0 | grep '^gcc'\
-		 | grep -v 'miniRT' | wc -l))
-	$(eval PROGRESS := 0)
-endif
-
 # Compile an object file depending on its source file and the object directory #
-$(OBJS_DIR)/%.o:	%.c | get_obj_load $(OBJS_DIR)
+$(OBJS_DIR)/%.o:	%.c | get_obj_load $(OBJS_DIR) print_flags
 	$(call custom_loading_command,									\
 		$(CC) $(CFLAGS) -c $< -o $@ $(AUTO_IFLAGS) $(AUTO_LFLAGS),	\
 		"$(THEME_COLOR)Compiling object file : $@$(ANSI_NC)")
 	$(eval PROGRESS := $(shell echo $$(( $(PROGRESS) + 1 ))))
 	$(call put_loading, $(PROGRESS), $(LOAD), $(MAX_PROG_LENGTH))
+
+# Calculate the amount of object files to compile for the loading bar #
+get_obj_load:
+ifndef CALL_MAKE
+	$(eval LOAD := $(shell $(MAKE) -n SERIOUS=TRUE CALL_MAKE=0 | grep '^gcc'\
+		 | grep -v 'miniRT' | wc -l))
+	$(eval PROGRESS := 0)
+endif
+
+# Display the flags currently used for compilation #
+print_flags:
+ifneq ($(COMPIL_LOAD),0)
+	$(call custom_command, true, "compilation flags: $(CFLAGS)")
+else ifeq ("$(MAKECMDGOALS)","re")
+	$(call custom_command, true, "compilation flags: $(CFLAGS)")
+endif
 
 
 ## Directories rules ##
@@ -298,7 +313,7 @@ $(LFT_ARCHS_DEPEND):	$(LFT_ARCHS_SRCS) | $(ARCHIVES_DIR)
 help:
 	@echo "\nMiniRT Makefile help - Available targets\n";				\
 	echo "$(ANSI_BOLD)BASIC TARGETS$(ANSI_NC)";							\
-	echo "\tall  re  help\n";											\
+	echo "\tall  re  help  test\n";											\
 	echo "$(ANSI_BOLD)FILES TARGETS$(ANSI_NC)";							\
 	echo -n "\t$(NAME)";												\
 	echo -n "$(OBJS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).o  ";		\
@@ -315,6 +330,9 @@ help:
 	echo "\tlibft  libft-$(ANSI_FG_RED)<target>$(ANSI_NC)\n";			\
 	echo "$(ANSI_BOLD)LIBFT FILES TARGETS$(ANSI_NC)";					\
 	echo "\t$(LFT_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n"
+
+test:
+	@bash tester.sh
 
 # **************************************************************************** #
 

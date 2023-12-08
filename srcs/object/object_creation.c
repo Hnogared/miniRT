@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:18:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/06 18:22:31 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:06:55 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_object	*new_camera(t_object *to_set, t_coords coords, int fov)
 	set_object_coords(to_set, coords);
 	set_object_orientation(to_set, (t_vector){0, 0, 0});
 	to_set->special_data.camera.h_fov = fov;
-	to_set->special_data.camera.v_fov = RT_VERTICAL_FOV;
+	to_set->special_data.camera.v_fov = fov / 2;
 	to_set->ft_get_color = &get_uncolored_color;
 	to_set->ft_print_data = &print_camera_data;
 	return (to_set);

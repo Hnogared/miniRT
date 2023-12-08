@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image_management.c                                 :+:      :+:    :+:   */
+/*   image_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:55:03 by hnogared          #+#    #+#             */
-/*   Updated: 2023/11/17 18:12:05 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/08 10:57:57 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ size_t	get_image_pixel(t_image image, int x, int y)
  * @param int y				-> y coordinate of the pixel to change
  * @param size_t color		-> the pixel's new color
  */
-void	my_put_pixel_to_image(t_image *image, int x, int y, size_t color)
+void	set_image_pixel(t_image *image, int x, int y, size_t color)
 {
 	char	*dst;
 

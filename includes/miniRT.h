@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 16:04:00 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/08 11:06:19 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,25 +148,27 @@ t_basis			axial_basis_rotation(t_basis to_rotate, float angle,
 					t_vector axis);
 
 /* SRCS/DISPLAY */
-/* image_management.c */
+/* image_handling.c */
 t_image			my_new_image(void *mlx_ptr, int width, int height);
 size_t			get_image_pixel(t_image image, int x, int y);
-void			my_put_pixel_to_image(t_image *image, int x, int y,
-					size_t color);
+void			set_image_pixel(t_image *image, int x, int y, size_t color);
 
 /* main_window.c */
 int				open_main_window(t_data *data, char *title);
 void			redraw_main_window(t_data *data);
 
-/* window_management.c */
+/* window_handling.c */
 t_window		my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
 	char *title);
 void			my_destroy_window(void *mlx_ptr, t_window *window);
-void			my_put_pixel_to_window(t_window *window, int x, int y,
-					size_t color);
-void			my_put_square_to_window(t_window *window, int start_coords[2],
-					int size[2], size_t color);
 void			redraw_window(void *mlx_ptr, t_window *window);
+
+/* window_modification.c */
+void			set_window_pixel(t_window *window, int x, int y, size_t color);
+void			set_window_virtual_pixel(t_window *window, int x, int y,
+					size_t color);
+void			put_square_to_window(t_window *window, int start_coords[2],
+					int size[2], size_t color);
 
 /* SRCS/RAYTRACING */
 /* get_view_rays.c */

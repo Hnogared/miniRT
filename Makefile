@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/08 15:19:48 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/08 15:24:25 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -153,8 +153,8 @@ AUTO_IFLAGS		:=	$(IFLAGS) -I $(INCLUDES_DIR)
 LOAD		:=	0
 
 ifndef CALL_MAKE
-COMPIL_LOAD := $(shell $(MAKE) $(MAKECMDGOALS) -n SERIOUS=TRUE CALL_MAKE=0 | grep '^gcc'\
-	| grep -v 'miniRT' | wc -l)
+COMPIL_LOAD := $(shell $(MAKE) $(MAKECMDGOALS) -n SERIOUS=TRUE CALL_MAKE=0\
+	| grep '^gcc' | wc -l)
 endif
 
 # Track the progress of a make task #

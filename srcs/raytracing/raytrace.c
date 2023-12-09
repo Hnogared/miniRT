@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/09 19:33:58 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/09 21:41:52 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 size_t	test_grid(t_data *data, int x, int y)
 {
-	int	color;
-
-	color = *(int *)(unsigned char [4]){0, x, y | x, 0};
 	data = data;
-	return (color);
+	return (x << 16 | (y | x) << 8);
 }
 
 static size_t	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
@@ -48,11 +45,26 @@ static size_t	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
 	return (rgb_to_sizet(color));
 }
 
-size_t	raytrace(t_data *data, t_ray ray)
+static t_vector	random_vector_rotation(t_vector to_rotate, t_basis basis,
+	float degrees_angle)
 {
+	float		num;
+	t_vector	new_vector;
+
+	num = (float)(rand() % 101 - 50 % 51) / 50;
+	new_vector = axial_vector_rotation(to_rotate, num * degrees_angle, basis.z);
+	num = (float)(rand() % 101 - 50 % 51) / 50;
+	new_vector = axial_vector_rotation(new_vector, num * degrees_angle, basis.y);
+	return (normalise(new_vector));
+}
+
+size_t	raytrace(t_data *data, t_ray ray, bool random)
+{
+	if (random == true)
+		ray.vector = random_vector_rotation(ray.vector, ray.local_basis, 0.05f);
 	ray_advance(data, &ray);
 	if (ray.nb_ref)
 		return (get_reflections_color(data->ambient_l, ray));
 	return (rgb_to_sizet(rgb_color_mix((t_rgb_color){0, 0, 0},
-			data->ambient_l.color, data->ambient_l.ratio)));
+		data->ambient_l.color, data->ambient_l.ratio)));
 }

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:13:45 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/08 16:53:17 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/09 20:57:32 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	key_handler(int keycode, t_data *data)
  */
 void	init_key_hooks(t_data *data)
 {
-//	mlx_loop_hook(data->ptr, &redraw_main_window, data);
+	mlx_loop_hook(data->mlx_ptr, &redraw_main_window, data);
 	mlx_hook(data->main_window.ptr, KeyPress, KeyPressMask, &key_handler, data);
 	mlx_hook(data->main_window.ptr, DestroyNotify, NoEventMask, &free_and_exit,
 		data);

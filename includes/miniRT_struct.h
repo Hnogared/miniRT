@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/09 19:25:39 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/09 20:20:18 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ typedef union u_special_data
  * bool has_color				-> boolean true if the object has a color
  * t_coords coords				-> coordinates structure of the object
  * t_vector orientation_vector	-> normal vector structure to rotate the object
- * t_basis local_basis			-> obj. x,y,z axes relative to the orient. vector
+ * t_basis local_basis			-> obj. x-y-z axes relative to the orient. vector
  * t_special_data special_data	-> additional special data (camera/light/...)
  * t_rgb_color (*ft_get_color)	-> pointer to the object color getter function
  * void (*ft_print_data)		-> pointer to the special data display function
@@ -198,22 +198,24 @@ typedef struct s_object
  * Ray data structure used for the ray tracing.
  *
  * t_vector vector			-> vector direction towards which the ray is going
+ * t_basis local_basis		-> ray x-y-z axxes relative to the vector 
  * t_coords coords			-> current coordinates of the ray point
  * t_coords origin_coords	-> the coordinates from which the ray originated
  */
 typedef struct s_ray
 {
-	t_vector		vector;
-	t_coords		coords;
-	t_coords		origin_coords;
-	t_object		*objects_touch;
-	int				tl;
-	int				s;
-	int				go;
-	int				touch;
-	int				nb_ref;
-	int				res;
-	float			sol;
+	t_vector	vector;
+	t_basis		local_basis;
+	t_coords	coords;
+	t_coords	origin_coords;
+	t_object	*objects_touch;
+	int			tl;
+	int			s;
+	int			go;
+	int			touch;
+	int			nb_ref;
+	int			res;
+	float		sol;
 }				t_ray;
 
 //give_coord((t_coords){0, 5, 0})

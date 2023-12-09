@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 17:53:48 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/09 18:05:07 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/09 22:20:40 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,23 @@ size_t	sizet_color_mix(size_t color1, size_t color2, float ratio)
 	unsigned char	red;
 	unsigned char	green;
 	unsigned char	blue;
-	size_t			mask;
 
-	mask = 0x0000FF;
-	blue = ((mask & color1) + (mask & color2) * ratio) / 2;
+//	blue = ((0xFF & color1) * (0xFF & color1) + (0xFF & color2)
+//		* (0xFF & color2)) / 2;
+//	blue = sqrt(blue);
+	blue =((0xFF & color1) + (float) (0xFF & color2) * ratio) / 2;
 	color1 >>= 8;
 	color2 >>= 8;
-	green = ((mask & color1) + (mask & color2) * ratio) / 2;
+//	green = ((0xFF & color1) * (0xFF & color1) + (0xFF & color2)
+//		* (0xFF & color2)) / 2;
+//	green = sqrt(green);
+	green = ((0xFF & color1) + (float) (0xFF & color2) * ratio) / 2;
 	color1 >>= 8;
 	color2 >>= 8;
-	red = ((mask & color1) + (mask & color2) * ratio) / 2;
+//	red = ((0xFF & color1) * (0xFF & color1) + (0xFF & color2)
+//		* (0xFF & color2)) / 2;
+//	red = sqrt(green);
+	red = ((0xFF & color1) + (float) (0xFF & color2) * ratio) / 2;
 	return (red << 16 | green << 8 | blue);
 }
 

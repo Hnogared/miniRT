@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:31:00 by tlorne            #+#    #+#             */
-/*   Updated: 2023/11/29 16:31:01 by tlorne           ###   ########.fr       */
+/*   Updated: 2023/12/09 19:18:50 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@ t_coords	find_pos_touch(t_ray *ray, float t)
 {
 	t_coords	new_o;
 
-	new_o.x = ray->origin_coords.x + t * ray->vector.x;
-	new_o.y = ray->origin_coords.y + t * ray->vector.y;
-	new_o.z = ray->origin_coords.z + t * ray->vector.z;
+	new_o.x = ray->origin_coords.x + (t - 0.1f) * ray->vector.x;
+	new_o.y = ray->origin_coords.y + (t - 0.1f) * ray->vector.y;
+	new_o.z = ray->origin_coords.z + (t - 0.1f) * ray->vector.z;
+//	new_o.x = ray->origin_coords.x + t * ray->vector.x;
+//	new_o.y = ray->origin_coords.y + t * ray->vector.y;
+//	new_o.z = ray->origin_coords.z + t * ray->vector.z;
 	return (new_o);
 }
 

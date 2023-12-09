@@ -12,6 +12,46 @@
 
 #include "miniRT.h"
 
+/*equation a resoudre
+P=O+t⋅D avec le p les coordones de la light
+xl   Ox       Dx
+yl = Oy + t x Dy
+zl   Oz       Dz
+
+3 expressions de t, si toutes identiques, ca touche.
+si t = (xl - Ox) / Dx == (yl - Oy)/ Dy == (zl - Oz) / dz;
+alors ca touche !
+*/
+void	try_light(t_ray *ray, t_object l, int i)
+{
+	float	t1;
+	float	t2;
+	float	t3;
+
+	t1 = (l.coords.x - ray->origin_coords.x) / ray->vector.x;
+	t2 = (l.coords.y - ray->origin_coords.y) / ray->vector.y;
+	t3 = (l.coords.z - ray->origin_coords.z) / ray->vector.z;
+	if (t1 == t2 && t1 == t3)
+	{
+		if (ray->res == 0)
+		{
+			//ray->coords = find_pos_touch(ray, t);
+			ray->sol = t1;
+			ray->res = 7;
+			ray->go = i;
+			ray->tl = 1;
+		}
+		else if (t1 <= ray->sol)
+		{
+			//ray->coords = find_pos_touch(ray, t);
+			ray->sol = t1;
+			ray->res = 7;
+			ray->go = i;
+			ray->tl = 1;
+		}
+	}
+}
+
 /*equationa resoudre
 P=O+t⋅D
 Où :

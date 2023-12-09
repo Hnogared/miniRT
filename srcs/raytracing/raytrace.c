@@ -6,16 +6,11 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 16:14:10 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:07:22 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-size_t	rgb_to_uint(t_rgb_color color)
-{
-	return (color.red << 16 | color.green << 8 | color.blue);
-}
 
 size_t	test_grid(t_data *data, int x, int y)
 {
@@ -50,28 +45,18 @@ static size_t	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
 //				objects[i].ft_get_color(objects[i].special_data), 0.5f);
 //		i++;
 //	}
-	return (rgb_to_uint(color));
+	return (rgb_to_sizet(color));
 }
 
-size_t	raytrace(t_data *data, int x, int y)
+size_t	raytrace(t_data *data, int x, int y, bool random)
 {
+	if (random)
+		random = true;
 	ray_advance(data, &data->view_rays[y][x]);
 	if (data->view_rays[y][x].nb_ref)
 	{
 		return (get_reflections_color(data->ambient_l, data->view_rays[y][x]));
 	}
-	return (rgb_to_uint(rgb_color_mix((t_rgb_color){0, 0, 0},
+	return (rgb_to_sizet(rgb_color_mix((t_rgb_color){0, 0, 0},
 			data->ambient_l.color, data->ambient_l.ratio)));
-}
-
-t_rgb_color	rgb_color_mix(t_rgb_color color1, t_rgb_color color2, float ratio)
-{
-	unsigned char	red;
-	unsigned char	green;
-	unsigned char	blue;
-
-	red = (color1.red + (float) color2.red * ratio) / 2;
-	green = (color1.green + (float) color2.green * ratio) / 2;
-	blue = (color1.blue + (float) color2.blue * ratio) / 2;
-	return ((t_rgb_color){red, green, blue});
 }

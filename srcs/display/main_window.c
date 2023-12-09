@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/08 16:54:37 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:06:57 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	redraw_main_window(t_data *data)
 {
 	int		x;
 	int		y;
+	bool	reset;
 	size_t	color;
 
 //	print_vector(data->view_rays[0][0].vector, NULL);
@@ -49,9 +50,15 @@ int	redraw_main_window(t_data *data)
 //		[data->main_window.virtual_width - 1].vector, NULL);
 	x = 0;
 	y = 0;
+	reset = data->main_window.reset;
 	while (y < data->main_window.virtual_height)
 	{
-		color = raytrace(data, x, y);
+		color = raytrace(data, x, y, !reset);
+		if (reset == false)
+		{
+			color = sizet_color_mix(color,
+					get_window_virtual_pixel(data->main_window, x, y), 0.5f);
+		}
 		set_window_virtual_pixel(&data->main_window, x, y, color);
 		x++;
 		if (x < data->main_window.virtual_width)
@@ -62,5 +69,6 @@ int	redraw_main_window(t_data *data)
 	redraw_window(data->mlx_ptr, &data->main_window);
 	mlx_string_put(data->mlx_ptr, data->main_window.ptr, 10, 20, 0xFFFFFF,
 		"THIS IS A TEST TKT");
+	data->main_window.reset = false;
 	return (0);
 }

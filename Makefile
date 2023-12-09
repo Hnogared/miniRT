@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/08 15:38:13 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/09 18:04:37 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRCS			:=	main.c					\
 					window_handling.c		\
 					window_modification.c	\
 					main_window.c			\
+					rgb_color.c				\
 					keyboard.c				\
 					free_and_exit.c			\
 					check_range_numbers1.c	\

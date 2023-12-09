@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/05 11:16:52 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/09 18:54:44 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	obj_c(t_data *data, char *s, int *pos)
 		ft_atoi(args[3]));
 	set_object_orientation(&(data->scene_objects[*pos]),
 		(t_vector){ft_atof(vector[0]), ft_atof(vector[1]), ft_atof(vector[2])});
+	data->active_camera = &(data->scene_objects[*pos]);
 	(*pos)++;
 	free_str_tab(args);
 	free_str_tab(coords);

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/08 16:43:40 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:47:05 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,21 +261,25 @@ typedef struct s_window
 /*
  * Structure holding all the program's data.
  *
- * int pixel_ratio			-> number of pixels used to display one pixel
+ * unsigned short obj_count	-> number of objects in the scene
+ * char *error_tab[]		-> pointer to all error strings (see miniRT_error.h)
  * t_window main_window		-> the main window structure to display on the screen
  * t_ambient_light ambient_l-> the scene's ambient lighting data structure
  * t_object *scene_objects	-> pointer to all the scene objects {plane,light...}
- * void *mlx_ptr			-> pointer to the mlx instance memory block
+ * t_object *active_camera	-> pointer to the currently in use camera
+ * t_xvar *mlx_ptr			-> pointer to the mlx instance memory block
+ * t_ray **view_rays		-> double pointer to the rays to trace for display
  */
 typedef struct s_data
 {
+	unsigned short	obj_count;
 	char			*error_tab[RTERR_COUNT];
 	t_window		main_window;
 	t_ambient_light	ambient_l;
 	t_object		*scene_objects;
+	t_object		*active_camera;
 	t_xvar			*mlx_ptr;
 	t_ray			**view_rays;
-	unsigned short	obj_count;
 }				t_data;
 
 #endif

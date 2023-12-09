@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/09 18:06:57 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/09 18:33:27 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	redraw_main_window(t_data *data)
 	reset = data->main_window.reset;
 	while (y < data->main_window.virtual_height)
 	{
-		color = raytrace(data, x, y, !reset);
+		color = raytrace(data, data->view_rays[y][x]);
 		if (reset == false)
 		{
 			color = sizet_color_mix(color,

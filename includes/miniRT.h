@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 16:04:00 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/09 21:55:50 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,12 @@ float			good_sol(float delta, float b, float a);
 float			prod_scal_coord(t_coords a, t_coords b);
 float			prod_scal_vec_coord(t_vector a, t_coords b);
 float			magnitude_coord(t_coords n);
-int				try_sphere(t_ray *ray, t_object obj);
-int				try_plan(t_ray *ray, t_object plan);
-int				try_plan_cyl(t_ray *ray, t_coords cp, t_vector n, t_object obj);
-int				try_cylinder_ext(t_ray *ray, t_object obj);
-int				try_cylinder_side(t_ray *ray, t_object obj);
+void			try_sphere(t_ray *ray, t_object obj, int i);
+void			try_plan(t_ray *ray, t_object plan, int i);
+void			try_plan_cyl(t_ray *ray, t_coords cp, t_vector n, t_object obj, int i);
+void			try_cylinder_ext(t_ray *ray, t_object obj, int i);
+void			try_cylinder_side(t_ray *ray, t_object obj, int i);
+void			try_light(t_ray *ray, t_object l, int i);
 t_vector		cal_sphere(t_ray *ray, t_object sphere);
 t_vector		cal_plan(t_ray *ray, t_object plan);
 t_vector		cal_cylinder_ext(t_ray *ray, t_object cylindre, int res);
@@ -135,6 +136,7 @@ t_vector		calcul_ref(t_ray *ray, t_object obj, int res);
 void			ray_advance(t_data *data, t_ray *ray);
 void			print_vec(t_vector vec);
 void			print_coord(t_coords cor);
+
 
 /* vect_utils2.c */
 float			to_rad(float degree_angle);
@@ -148,25 +150,34 @@ t_basis			axial_basis_rotation(t_basis to_rotate, float angle,
 					t_vector axis);
 
 /* SRCS/DISPLAY */
-/* image_management.c */
+/* image_handling.c */
 t_image			my_new_image(void *mlx_ptr, int width, int height);
 size_t			get_image_pixel(t_image image, int x, int y);
-void			my_put_pixel_to_image(t_image *image, int x, int y,
-					size_t color);
+void			set_image_pixel(t_image *image, int x, int y, size_t color);
 
 /* main_window.c */
 int				open_main_window(t_data *data, char *title);
-void			redraw_main_window(t_data *data);
+int				redraw_main_window(t_data *data);
 
-/* window_management.c */
+/* rgb_color.c */
+size_t			rgb_to_sizet(t_rgb_color color);
+size_t			sizet_color_mix(size_t color1, size_t color2, float ratio);
+t_rgb_color		rgb_color_mix(t_rgb_color color1, t_rgb_color color2, float ratio);
+
+/* window_handling.c */
 t_window		my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
 	char *title);
 void			my_destroy_window(void *mlx_ptr, t_window *window);
-void			my_put_pixel_to_window(t_window *window, int x, int y,
-					size_t color);
-void			my_put_square_to_window(t_window *window, int start_coords[2],
-					int size[2], size_t color);
 void			redraw_window(void *mlx_ptr, t_window *window);
+
+/* window_modification.c */
+size_t			get_window_pixel(t_window window, int x, int y);
+size_t			get_window_virtual_pixel(t_window window, int x, int y);
+void			set_window_pixel(t_window *window, int x, int y, size_t color);
+void			set_window_virtual_pixel(t_window *window, int x, int y,
+					size_t color);
+void			put_square_to_window(t_window *window, int start_coords[2],
+					int size[2], size_t color);
 
 /* SRCS/RAYTRACING */
 /* get_view_rays.c */
@@ -174,10 +185,8 @@ int				set_view_rays(t_ray ***rays_tab, t_window window,
 					t_object camera, bool needs_alloc);
 
 /* raytrace.c */
-size_t			rgb_to_uint(t_rgb_color color);
 size_t			test_grid(t_data *data, int x, int y);
-size_t			raytrace(t_data *data, int x, int y);
-t_rgb_color		rgb_color_mix(t_rgb_color color1, t_rgb_color color2, float ratio);
+size_t			raytrace(t_data *data, t_ray ray, bool random);
 
 /* SRCS_USER_INTERFACE */
 /* keyboard.c */

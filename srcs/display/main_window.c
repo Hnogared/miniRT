@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 14:17:06 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/09 22:08:42 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,41 @@ int	open_main_window(t_data *data, char *title)
 	return (data->main_window.ptr == NULL);
 }
 
-void	redraw_main_window(t_data *data)
+t_rgb_color	sizet_to_rgb(size_t color)
+{
+	return ((t_rgb_color){0xFF & (color >> 16), 0xFF & (color >> 8), 0xFF & color});
+}
+
+int	redraw_main_window(t_data *data)
 {
 	int		x;
 	int		y;
-	int		pixel_size[2];
 	size_t	color;
 
-	pixel_size[0] = data->main_window.pixel_ratio;
-	pixel_size[1] = data->main_window.pixel_ratio;
-	print_vector(data->view_rays[0][0].vector, NULL);
-	print_vector(data->view_rays[data->main_window.virtual_height - 1]
-		[data->main_window.virtual_width - 1].vector, NULL);
+//	print_vector(data->view_rays[0][0].vector, NULL);
+//	print_vector(data->view_rays[data->main_window.virtual_height - 1]
+//		[data->main_window.virtual_width - 1].vector, NULL);
 	x = 0;
 	y = 0;
 	while (y < data->main_window.virtual_height)
 	{
-		color = raytrace(data, x, y);
-		my_put_square_to_window(&data->main_window,
-			(int [2]){x * pixel_size[0], y * pixel_size[1]}, pixel_size, color);
+		color = raytrace(data, data->view_rays[y][x], !data->main_window.reset);
+		if (data->main_window.reset == false)
+		{
+			color = sizet_color_mix(
+					get_window_virtual_pixel(data->main_window, x, y), color, 1.0f);
+		}
+		set_window_virtual_pixel(&data->main_window, x, y, color);
 		x++;
 		if (x < data->main_window.virtual_width)
 			continue ;
+		redraw_window(data->mlx_ptr, &data->main_window);
 		x = 0;
 		y++;
 	}
-	redraw_window(data->mlx_ptr, &data->main_window);
+	printf("%d\n", data->main_window.reset);
 	mlx_string_put(data->mlx_ptr, data->main_window.ptr, 10, 20, 0xFFFFFF,
 		"THIS IS A TEST TKT");
+	data->main_window.reset = false;
+	return (0);
 }

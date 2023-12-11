@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 22:06:44 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/16 18:13:12 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/08 11:28:33 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ ifneq ($(SERIOUS), TRUE)
  define custom_command
 	$(eval command = $(1))
 	$(eval custom_command_name = $(2))
-	@echo "$(MAKEFILE_NAME): $(THEME_COLOR)$(custom_command_name)$(NC)";\
+	@echo "$(MAKEFILE_NAME): $(custom_command_name)";\
 	$(command)
  endef
 

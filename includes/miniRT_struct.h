@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/07 14:14:58 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/09 20:20:18 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,14 @@ typedef struct s_camera
  * Light special data structure used to complement the t_object structure.
  *
  * float brightness	-> brightness ratio of the light (0.0-1.0)
+ * float diameter	-> diameter of the light source
+ * float radius		-> diameter of the light source
  */
 typedef struct s_light
 {
-	float		brightness;
+	float	brightness;
+	float	diameter;
+	float	radius;
 }				t_light;
 
 /*
@@ -173,7 +177,7 @@ typedef union u_special_data
  * bool has_color				-> boolean true if the object has a color
  * t_coords coords				-> coordinates structure of the object
  * t_vector orientation_vector	-> normal vector structure to rotate the object
- * t_basis local_basis			-> obj. x,y,z axes relative to the orient. vector
+ * t_basis local_basis			-> obj. x-y-z axes relative to the orient. vector
  * t_special_data special_data	-> additional special data (camera/light/...)
  * t_rgb_color (*ft_get_color)	-> pointer to the object color getter function
  * void (*ft_print_data)		-> pointer to the special data display function
@@ -194,18 +198,24 @@ typedef struct s_object
  * Ray data structure used for the ray tracing.
  *
  * t_vector vector			-> vector direction towards which the ray is going
+ * t_basis local_basis		-> ray x-y-z axxes relative to the vector 
  * t_coords coords			-> current coordinates of the ray point
  * t_coords origin_coords	-> the coordinates from which the ray originated
  */
 typedef struct s_ray
 {
-	t_vector		vector;
-	t_coords		coords;
-	t_coords		origin_coords;
-	t_object		*objects_touch;
-	int				s;
-	int				touch;
-	int				nb_ref;
+	t_vector	vector;
+	t_basis		local_basis;
+	t_coords	coords;
+	t_coords	origin_coords;
+	t_object	*objects_touch;
+	int			tl;
+	int			s;
+	int			go;
+	int			touch;
+	int			nb_ref;
+	int			res;
+	float		sol;
 }				t_ray;
 
 //give_coord((t_coords){0, 5, 0})
@@ -239,6 +249,7 @@ typedef struct s_image
  * int pixel_ratio		-> the size of one virtual pixel of the window (ex:2x2px)
  * int virtual_width	-> the amount of virtual pixels at the window's width
  * int virtual_height	-> the amount of virtual pixels at the window's height
+ * bool reset			-> true if the window needs to be reset
  * t_image image		-> the window's corresponding image structure for display
  * void *ptr			-> pointer to the window memory block
  */
@@ -249,6 +260,7 @@ typedef struct s_window
 	int		pixel_ratio;
 	int		virtual_width;
 	int		virtual_height;
+	bool	reset;
 	t_image	image;
 	void	*ptr;
 }				t_window;
@@ -256,21 +268,25 @@ typedef struct s_window
 /*
  * Structure holding all the program's data.
  *
- * int pixel_ratio			-> number of pixels used to display one pixel
+ * unsigned short obj_count	-> number of objects in the scene
+ * char *error_tab[]		-> pointer to all error strings (see miniRT_error.h)
  * t_window main_window		-> the main window structure to display on the screen
  * t_ambient_light ambient_l-> the scene's ambient lighting data structure
  * t_object *scene_objects	-> pointer to all the scene objects {plane,light...}
- * void *mlx_ptr			-> pointer to the mlx instance memory block
+ * t_object *active_camera	-> pointer to the currently in use camera
+ * t_xvar *mlx_ptr			-> pointer to the mlx instance memory block
+ * t_ray **view_rays		-> double pointer to the rays to trace for display
  */
 typedef struct s_data
 {
+	unsigned short	obj_count;
 	char			*error_tab[RTERR_COUNT];
 	t_window		main_window;
 	t_ambient_light	ambient_l;
 	t_object		*scene_objects;
+	t_object		*active_camera;
 	t_xvar			*mlx_ptr;
 	t_ray			**view_rays;
-	unsigned short	obj_count;
 }				t_data;
 
 #endif

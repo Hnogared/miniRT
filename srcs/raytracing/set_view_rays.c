@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_view_rays.c                                    :+:      :+:    :+:   */
+/*   set_view_rays.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 14:10:26 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/09 20:43:43 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@
  * @param t_coords origin_coords	-> coordinates from which the ray starts
  * @return t_ray					-> the newly initialized t_ray structure
  */
-static t_ray	new_ray(t_vector vector, t_coords origin_coords)
+static t_ray	new_ray(t_basis basis, t_coords origin_coords)
 {
 	t_ray	new;
 
 	ft_bzero(&new, sizeof(t_ray));
-	new.vector = vector;
+	new.vector = basis.x;
+	new.local_basis = basis;
 	new.origin_coords = origin_coords;
 	new.coords = origin_coords;
 	return (new);
@@ -61,8 +62,8 @@ static void	set_rays_tab(t_ray ***rays_tab, int tab_sizes[2], t_basis basis,
 		x = -1;
 		while (++x < tab_sizes[0])
 		{
-			(*rays_tab)[y][x] = new_ray(basis.x, camera.coords);
-			basis = axial_basis_rotation(basis, 360.0f - angle[0],
+			(*rays_tab)[y][x] = new_ray(basis, camera.coords);
+			basis = axial_basis_rotation(basis, -angle[0],
 					camera.local_basis.z);
 		}
 		basis = axial_basis_rotation(first_basis, angle[1], first_basis.y);
@@ -135,8 +136,7 @@ int	set_view_rays(t_ray ***rays_tab, t_window window, t_object camera,
 	start_basis = axial_basis_rotation(camera.local_basis,
 			(float) camera.special_data.camera.h_fov / 2, camera.local_basis.z);
 	start_basis = axial_basis_rotation(start_basis,
-			360.0f - (float) camera.special_data.camera.v_fov / 2,
-			start_basis.y);
+			(float) -camera.special_data.camera.v_fov / 2, start_basis.y);
 	set_rays_tab(rays_tab, virtual_res, start_basis, camera);
 	return (0);
 }

@@ -76,9 +76,9 @@ t_vector	calcul_ref(t_ray *ray, t_object obj, int res)
 		vec_ref = cal_sphere(ray, obj);
 	if (obj.type == PLANE_OBJ)
 		vec_ref = cal_plan(ray, obj);
-	if (obj.type == CYLINDER_OBJ && res == 1)
+	if (obj.type == CYLINDER_OBJ && res == 3)
 		vec_ref = cal_cylinder_side(ray, obj);
-	if (obj.type == CYLINDER_OBJ && (res == 2 || res == 3))
+	if (obj.type == CYLINDER_OBJ && (res == 4 || res == 5))
 		vec_ref = cal_cylinder_ext(ray, obj, res);
 	return (vec_ref);
 }

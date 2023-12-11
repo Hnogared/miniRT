@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/11 11:34:04 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/11 21:32:20 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static t_rgb_color	rotated_raytrace(t_data *data, t_ray ray, float angle,
 	ray_advance(data, &ray);
 	if (ray.nb_ref)
 		return (get_reflections_color(data->ambient_l, ray));
+//	printf("%f\n", data->ambient_l.ratio);
 	return (rgb_color_mix((t_rgb_color){0, 0, 0}, data->ambient_l.color,
 		data->ambient_l.ratio));
 }

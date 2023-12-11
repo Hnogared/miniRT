@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:47:12 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/11 11:26:30 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/11 21:21:21 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ t_window	my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
 	window.pixel_ratio = pixel_ratio;
 	window.virtual_width = window.width / pixel_ratio;
 	window.virtual_height = window.height / pixel_ratio;
-//	window.reset = true;
 	return (window);
 }
 

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/11 21:34:30 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/11 22:10:07 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	obj_a(t_data *data, char *s)
 
 	args = ft_split(s, ' ');
 	data->ambient_l.ratio = ft_atof(args[1]);
-	printf("%f\n", data->ambient_l.ratio);
 	color = ft_split(args[2], ',');
 	data->ambient_l.color = (t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]),
 		ft_atoi(color[2])};

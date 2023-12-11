@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 13:49:59 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/11 21:59:47 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/11 22:08:52 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@ static int	is_neg(const char *nptr)
 	return (-1 * (nptr[0] == '-') + (nptr[0] != '-'));
 }
 
-static int	create_nbr(const char *nptr)
+static float	create_nbr(const char *nptr)
 {
 	int		divider;
 	int		i;
@@ -42,17 +42,15 @@ static int	create_nbr(const char *nptr)
 
 float	ft_atof(const char *nptr)
 {
-	int		i;
 	char	*temp_nptr;
 
 	if (!nptr)
 		return (0.0f);
 	temp_nptr = (char *) nptr;
-	i = 0;
 	while (*temp_nptr
 		&& ((*temp_nptr >= 9 && *temp_nptr <= 13) || *temp_nptr == 32))
 		temp_nptr++;
 	if (!*temp_nptr)
 		return (0.0f);
-	return (create_nbr(temp_nptr) * is_neg(temp_nptr));
+	return (create_nbr(temp_nptr) * (float) is_neg(temp_nptr));
 }

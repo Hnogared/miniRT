@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:10 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/11 12:13:16 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:30:14 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,7 @@ void	try_light(t_ray *ray, t_object obj, int i)
 	if (delta >= 0)
 	{
 		t = good_sol(delta, b, a);
-		if (ray->res == 0)
-		{
-			ray->coords = find_pos_touch(ray, t);
-			ray->sol = t;
-			ray->res = 2;
-			ray->go = i;
-		}
-		else if (t <= ray->sol)
+		if (ray->res == 0 || t <= ray->sol)
 		{
 			ray->coords = find_pos_touch(ray, t);
 			ray->sol = t;
@@ -128,14 +121,7 @@ void	try_sphere(t_ray *ray, t_object obj, int i)
 	if (delta >= 0)
 	{
 		t = good_sol(delta, b, a);
-		if (ray->res == 0)
-		{
-			ray->coords = find_pos_touch(ray, t);
-			ray->sol = t;
-			ray->res = 2;
-			ray->go = i;
-		}
-		else if (t <= ray->sol)
+		if (ray->res == 0 || t <= ray->sol)
 		{
 			ray->coords = find_pos_touch(ray, t);
 			ray->sol = t;
@@ -185,14 +171,7 @@ void	try_plan(t_ray *ray, t_object plan, int i)
 	//printf("t vaut %f\n",t);
 	if (t >= 0)
 	{
-		if (ray->res == 0)
-		{
-			ray->coords = find_pos_touch(ray, t);
-			ray->sol = t;
-			ray->res = 1;
-			ray->go = i;
-		}
-		else if (t <= ray->sol)
+		if (ray->res == 0 || t <= ray->sol)
 		{
 			ray->coords = find_pos_touch(ray, t);
 			ray->sol = t;

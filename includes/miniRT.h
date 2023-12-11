@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/09 21:55:50 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/11 11:24:50 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ int				set_view_rays(t_ray ***rays_tab, t_window window,
 
 /* raytrace.c */
 size_t			test_grid(t_data *data, int x, int y);
-size_t			raytrace(t_data *data, t_ray ray, bool random);
+size_t			raytrace(t_data *data, t_ray ray);
 
 /* SRCS_USER_INTERFACE */
 /* keyboard.c */

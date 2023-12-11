@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/11 11:24:50 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/11 21:15:00 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # include "mlx.h"
 # include "mlx_int.h"
 
-# include "miniRT_struct.h"
 # include "miniRT_macro.h"
+# include "miniRT_struct.h"
 # include "miniRT_error.h"
 
 /* parsing */

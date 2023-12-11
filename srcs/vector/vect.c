@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:48:18 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/11 21:08:10 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/11 21:14:11 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,10 @@ void	ray_advance(t_data *data, t_ray *ray)
 	ray->tl = 0;
 	ray->s = 0;
 	ray->sol = -1;
-	ray->objects_touch = malloc(sizeof(t_object) * 4);
+//	ray->objects_touch = malloc(sizeof(t_object) * 4);
 	//printf("avant tentative de touch, veteur ray vaut :\n");
 	//print_vec(ray->vector);
-	while (ray->touch != 0 && ray->nb_ref <= 2 && ray->tl == 0)
+	while (ray->touch != 0 && ray->nb_ref <= RT_MAX_BOUNCES - 1 && ray->tl == 0)
 		touch_object(data, ray);
 	//printf("ok\n");
 	/*printf("** %d ** ", ray->nb_ref);

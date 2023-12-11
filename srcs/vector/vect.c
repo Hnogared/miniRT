@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:48:18 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/11 15:32:12 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/11 21:08:10 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,9 @@ void	touch_object(t_data *data, t_ray *ray)
 		//printf("ca touche !!!!!!!!\n");
 		//printf("avant changement, vecteur rayon vaut\n");
 		//print_vec(ray->vector);
-
 		ray->vector = calcul_ref(ray, data->scene_objects[ray->go], ray->res);
 		//printf("apres changement, vecteur rayon vaut\n");
 		//print_vec(ray->vector);
-//		ray->origin_coords = find_pos_touch(ray, ray->sol);
 		ray->origin_coords = ray->coords;
 		ray->touch = 1;
 		ray->nb_ref++;

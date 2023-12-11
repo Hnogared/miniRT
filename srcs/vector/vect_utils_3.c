@@ -6,14 +6,11 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:29:17 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/11 13:49:00 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/11 13:56:38 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-//0.577350269
-//1.154700538
 
 t_vector	calc_ref_form(t_vector i, t_vector n)
 {
@@ -29,7 +26,7 @@ t_vector	calc_ref_form(t_vector i, t_vector n)
 	//printf("scal vaut %f\n", scal);
 	//printf("I - Truc, truc vaut\n");
 	//print_vec(prod_vec_float(n, 2 * scal));
-	r = sous_vec_vec(i, prod_vec_float(n, 2 * scal));
+	r = sous_vec_vec(prod_vec_float(n, 2 * scal), i);
 	return (r);
 }
 

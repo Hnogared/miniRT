@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/08 16:54:37 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/11 11:25:30 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ int	open_main_window(t_data *data, char *title)
 	return (data->main_window.ptr == NULL);
 }
 
+t_rgb_color	sizet_to_rgb(size_t color)
+{
+	return ((t_rgb_color){0xFF & (color >> 16), 0xFF & (color >> 8), 0xFF & color});
+}
+
 int	redraw_main_window(t_data *data)
 {
 	int		x;
@@ -51,16 +56,23 @@ int	redraw_main_window(t_data *data)
 	y = 0;
 	while (y < data->main_window.virtual_height)
 	{
-		color = raytrace(data, x, y);
+		color = raytrace(data, data->view_rays[y][x]);
+//		if (data->main_window.reset == false)
+//		{
+//			color = sizet_color_mix(
+//					get_window_virtual_pixel(data->main_window, x, y), color, 1.0f);
+//		}
 		set_window_virtual_pixel(&data->main_window, x, y, color);
 		x++;
 		if (x < data->main_window.virtual_width)
 			continue ;
+		redraw_window(data->mlx_ptr, &data->main_window);
 		x = 0;
 		y++;
 	}
-	redraw_window(data->mlx_ptr, &data->main_window);
+//	printf("%d\n", data->main_window.reset);
 	mlx_string_put(data->mlx_ptr, data->main_window.ptr, 10, 20, 0xFFFFFF,
 		"THIS IS A TEST TKT");
+//	data->main_window.reset = false;
 	return (0);
 }

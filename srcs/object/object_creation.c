@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:18:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 17:06:55 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/09 19:23:47 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ t_object	*new_light(t_object *to_set, t_coords coords, float brightness)
 	set_object_coords(to_set, coords);
 	set_object_orientation(to_set, (t_vector){0, 0, 0});
 	to_set->special_data.light.brightness = brightness;
+	to_set->special_data.light.diameter = RT_LIGHT_DIAMETER;
+	to_set->special_data.light.radius = (float) RT_LIGHT_DIAMETER / 2;
 	to_set->ft_get_color = &get_uncolored_color;
 	to_set->ft_print_data = &print_light_data;
 	return (to_set);

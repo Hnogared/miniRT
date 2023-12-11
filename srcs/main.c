@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 16:04:58 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/09 20:35:15 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,10 @@
 
 void	get_main_view_rays(t_data *data, bool needs_alloc)
 {
-	int			status;
-	t_object	*camera;
+	int	status;
 
-	camera = get_object_ptr(CAMERA_OBJ, data->scene_objects, data->obj_count);
-	if (!camera)
-	{
-		status = ft_perror(NULL, data->error_tab, RTERR);
-		free_data(data);
-		exit(status);
-	}
-	status = set_view_rays(&data->view_rays, data->main_window, *camera,
-			needs_alloc);
+	status = set_view_rays(&data->view_rays, data->main_window,
+			*(data->active_camera), needs_alloc);
 	if (status != 0)
 	{
 		status = ft_perror(NULL, data->error_tab, status);
@@ -42,6 +34,14 @@ int	initialize_mlx(t_data *data)
 	init_key_hooks(data);
 	return (0);
 }
+
+/*
+static void	print_scene_objects(unsigned short obj_count, t_object *scene_objects)
+{
+	while (obj_count--)
+		print_object_data(scene_objects[obj_count]);
+}
+*/
 
 int	main(int argc, char **argv)
 {

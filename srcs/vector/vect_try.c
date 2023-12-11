@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:10 by tlorne            #+#    #+#             */
-/*   Updated: 2023/11/29 16:37:12 by tlorne           ###   ########.fr       */
+/*   Updated: 2023/12/11 12:13:16 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ alors ca touche !
 
 finalement, imagine la light comme une sphere.
 */
-void	try_light(t_ray *ray, t_object l, int i)
+void	try_light(t_ray *ray, t_object obj, int i)
 {
 	float	a;
 	float	b;
@@ -41,7 +41,7 @@ void	try_light(t_ray *ray, t_object l, int i)
 		t = good_sol(delta, b, a);
 		if (ray->res == 0)
 		{
-			//ray->coords = find_pos_touch(ray, t);
+			ray->coords = find_pos_touch(ray, t);
 			ray->sol = t;
 			ray->res = 7;
 			ray->go = i;
@@ -57,7 +57,7 @@ void	try_light(t_ray *ray, t_object l, int i)
 		}
 		//return (0);
 	}
-	/*float	t1;
+/*	float	t1;
 	float	t2;
 	float	t3;
 
@@ -122,7 +122,7 @@ void	try_sphere(t_ray *ray, t_object obj, int i)
 
 	a = pow(magnitude(ray->vector), 2);
 	b = 2 * prod_scal_vec(ray->vector, sous_vec_coord(ray->origin_coords, obj.coords));
-	c = pow(magnitude_coord(ray->origin_coords), 2) + pow(magnitude_coord(obj.coords), 2) - 2 * prod_scal_coord(obj.coords, ray->origin_coords) - pow((obj.special_data.sphere.diameter / 2), 2);
+	c = pow(magnitude_coord(ray->origin_coords), 2) + pow(magnitude_coord(obj.coords), 2) - 2 * prod_scal_coord(obj.coords, ray->origin_coords) - pow((obj.special_data.sphere.radius), 2);
 	delta = pow(b, 2) - 4 * a * c;
 	if (delta >= 0)
 	{
@@ -178,6 +178,7 @@ void	try_plan(t_ray *ray, t_object plan, int i)
 	d = -(n.x * plan.coords.x + n.y * plan.coords.y + n.z * plan.coords.z);
 	//printf("d vaut : %f\n", d);
 	t = -((prod_scal_vec_coord(n, ray->origin_coords) + d) / prod_scal_vec(n, ray->vector));
+	t -= 0.1f;
 	//printf("scal de N et 0 vaut %f\n", prod_scal_vec_coord(n, ray->origin_coords));
 	//printf("scal de N et D vaut %f\n", prod_scal_vec(n, ray->vector));
 	//printf("t vaut %f\n",t);

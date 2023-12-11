@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/08 16:54:50 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/11 11:24:50 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,11 @@ void			set_image_pixel(t_image *image, int x, int y, size_t color);
 int				open_main_window(t_data *data, char *title);
 int				redraw_main_window(t_data *data);
 
+/* rgb_color.c */
+size_t			rgb_to_sizet(t_rgb_color color);
+size_t			sizet_color_mix(size_t color1, size_t color2, float ratio);
+t_rgb_color		rgb_color_mix(t_rgb_color color1, t_rgb_color color2, float ratio);
+
 /* window_handling.c */
 t_window		my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
 	char *title);
@@ -180,10 +185,8 @@ int				set_view_rays(t_ray ***rays_tab, t_window window,
 					t_object camera, bool needs_alloc);
 
 /* raytrace.c */
-size_t			rgb_to_uint(t_rgb_color color);
 size_t			test_grid(t_data *data, int x, int y);
-size_t			raytrace(t_data *data, int x, int y);
-t_rgb_color		rgb_color_mix(t_rgb_color color1, t_rgb_color color2, float ratio);
+size_t			raytrace(t_data *data, t_ray ray);
 
 /* SRCS_USER_INTERFACE */
 /* keyboard.c */

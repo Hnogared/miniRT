@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/08 15:38:13 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/11 08:45:43 by motoko           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRCS			:=	main.c					\
 					window_handling.c		\
 					window_modification.c	\
 					main_window.c			\
+					rgb_color.c				\
 					keyboard.c				\
 					free_and_exit.c			\
 					check_range_numbers1.c	\
@@ -313,21 +314,21 @@ $(LFT_ARCHS_DEPEND):	$(LFT_ARCHS_SRCS) | $(ARCHIVES_DIR)
 help:
 	@echo "\nMiniRT Makefile help - Available targets\n";				\
 	echo "$(ANSI_BOLD)BASIC TARGETS$(ANSI_NC)";							\
-	echo "\tall  re  help  test\n";											\
+	echo "\tall  re  help  test";										\
 	echo "$(ANSI_BOLD)FILES TARGETS$(ANSI_NC)";							\
 	echo -n "\t$(NAME)";												\
 	echo -n "$(OBJS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).o  ";		\
-	echo "$(ARCHIVES_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n";		\
+	echo "$(ARCHIVES_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a";		\
 	echo "$(ANSI_BOLD)DIRECTORIES TARGETS$(ANSI_NC)";					\
-	echo "\t$(OBJS_DIR)  $(ARCHIVES_DIR)\n";							\
+	echo "\t$(OBJS_DIR)  $(ARCHIVES_DIR)";							\
 	echo "$(ANSI_BOLD)CLEANUP TARGETS$(ANSI_NC)";						\
-	echo "\tclean  fclean  lclean  dclean\n\n";							\
+	echo "\tclean  fclean  lclean  dclean";							\
 	echo "$(ANSI_BOLD)MINILIBX TARGETS$(ANSI_NC)";						\
-	echo "\tminilibx  minilibx-$(ANSI_FG_RED)<target>$(ANSI_NC)\n";		\
+	echo "\tminilibx  minilibx-$(ANSI_FG_RED)<target>$(ANSI_NC)";		\
 	echo "$(ANSI_BOLD)MINILIBX FILES TARGETS$(ANSI_NC)";				\
-	echo "\t$(MLX_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n\n";	\
+	echo "\t$(MLX_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a";	\
 	echo "$(ANSI_BOLD)LIBFT TARGETS$(ANSI_NC)";							\
-	echo "\tlibft  libft-$(ANSI_FG_RED)<target>$(ANSI_NC)\n";			\
+	echo "\tlibft  libft-$(ANSI_FG_RED)<target>$(ANSI_NC)";			\
 	echo "$(ANSI_BOLD)LIBFT FILES TARGETS$(ANSI_NC)";					\
 	echo "\t$(LFT_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n"
 

@@ -6,22 +6,13 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 13:49:59 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/11 08:18:20 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/11 21:59:47 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 static int	is_neg(const char *nptr)
 {
-	int	i;
-
-	i = 0;
-	if (nptr[i] == '-' || nptr[i] == '+')
-	{
-		if (nptr[i] == '-')
-			return (-1);
-		i++;
-	}
-	return (1);
+	return (-1 * (nptr[0] == '-') + (nptr[0] != '-'));
 }
 
 static int	create_nbr(const char *nptr)
@@ -40,7 +31,7 @@ static int	create_nbr(const char *nptr)
 		i++;
 	}
 	if (!nptr[i])
-		return (nbr * is_neg(nptr));
+		return (nbr);
 	while (nptr[++i] && (nptr[i] >= '0' && nptr[i] <= '9'))
 	{
 		nbr += (float)(nptr[i] - '0') / divider;
@@ -52,9 +43,16 @@ static int	create_nbr(const char *nptr)
 float	ft_atof(const char *nptr)
 {
 	int		i;
+	char	*temp_nptr;
 
+	if (!nptr)
+		return (0.0f);
+	temp_nptr = (char *) nptr;
 	i = 0;
-	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == 32)
-		i++;
-	return (create_nbr(nptr) * is_neg(nptr));
+	while (*temp_nptr
+		&& ((*temp_nptr >= 9 && *temp_nptr <= 13) || *temp_nptr == 32))
+		temp_nptr++;
+	if (!*temp_nptr)
+		return (0.0f);
+	return (create_nbr(temp_nptr) * is_neg(temp_nptr));
 }

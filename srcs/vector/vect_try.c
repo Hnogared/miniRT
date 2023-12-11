@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:10 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/11 14:30:14 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:13:11 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	try_light(t_ray *ray, t_object obj, int i)
 	delta = pow(b, 2) - 4 * a * c;
 	if (delta >= 0)
 	{
-		t = good_sol(delta, b, a);
+		t = good_sol(delta, b, a) - 0.1f;
 		if (ray->res == 0 || t <= ray->sol)
 		{
 			ray->coords = find_pos_touch(ray, t);
@@ -120,7 +120,7 @@ void	try_sphere(t_ray *ray, t_object obj, int i)
 	delta = pow(b, 2) - 4 * a * c;
 	if (delta >= 0)
 	{
-		t = good_sol(delta, b, a);
+		t = good_sol(delta, b, a) - 0.1f;
 		if (ray->res == 0 || t <= ray->sol)
 		{
 			ray->coords = find_pos_touch(ray, t);
@@ -165,12 +165,13 @@ void	try_plan(t_ray *ray, t_object plan, int i)
 	d = -(n.x * plan.coords.x + n.y * plan.coords.y + n.z * plan.coords.z);
 	//printf("d vaut : %f\n", d);
 	t = -((prod_scal_vec_coord(n, ray->origin_coords) + d) / prod_scal_vec(n, ray->vector));
-	t -= 0.1f;
+//	t -= 0.1f;
 	//printf("scal de N et 0 vaut %f\n", prod_scal_vec_coord(n, ray->origin_coords));
 	//printf("scal de N et D vaut %f\n", prod_scal_vec(n, ray->vector));
 	//printf("t vaut %f\n",t);
 	if (t >= 0)
 	{
+		t -= 0.1f;
 		if (ray->res == 0 || t <= ray->sol)
 		{
 			ray->coords = find_pos_touch(ray, t);

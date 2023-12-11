@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:48:18 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/11 14:26:29 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:32:12 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,27 +59,28 @@ void	touch_object(t_data *data, t_ray *ray)
 		i++;
 	}
 	if (ray->res >= 1)
-		{
-			//printf("sol = %f et res vaut : %d --", ray->sol, ray->res);
-			//printf("%d-", ray->res);
-			//printf("ca touche !!!!!!!!\n");
-			//printf("avant changement, vecteur rayon vaut\n");
-			//print_vec(ray->vector);
+	{
+		//printf("sol = %f et res vaut : %d --", ray->sol, ray->res);
+		//printf("%d-", ray->res);
+		//printf("ca touche !!!!!!!!\n");
+		//printf("avant changement, vecteur rayon vaut\n");
+		//print_vec(ray->vector);
 
-			ray->vector = calcul_ref(ray, data->scene_objects[ray->go], ray->res);
-			//printf("apres changement, vecteur rayon vaut\n");
-			//print_vec(ray->vector);
-			ray->origin_coords = give_coord(ray->coords);
-			ray->touch = 1;
-			ray->nb_ref++;
-			/*if (res == 1)
-			{
-				printf("res vaut %d\n", res);
-				printf("nb_ref vaut %d\n", ray->nb_ref);
-			}*/
-			ray->objects_touch[ray->s++] = data->scene_objects[ray->go];
-			return ;
-		}
+		ray->vector = calcul_ref(ray, data->scene_objects[ray->go], ray->res);
+		//printf("apres changement, vecteur rayon vaut\n");
+		//print_vec(ray->vector);
+//		ray->origin_coords = find_pos_touch(ray, ray->sol);
+		ray->origin_coords = ray->coords;
+		ray->touch = 1;
+		ray->nb_ref++;
+		/*if (res == 1)
+		{
+			printf("res vaut %d\n", res);
+			printf("nb_ref vaut %d\n", ray->nb_ref);
+		}*/
+		ray->objects_touch[ray->s++] = data->scene_objects[ray->go];
+		return ;
+	}
 	ray->touch = 0;
 	return ;
 }
@@ -90,6 +91,7 @@ void	ray_advance(t_data *data, t_ray *ray)
 	ray->nb_ref = 0;
 	ray->tl = 0;
 	ray->s = 0;
+	ray->sol = -1;
 	ray->objects_touch = malloc(sizeof(t_object) * 4);
 	//printf("avant tentative de touch, veteur ray vaut :\n");
 	//print_vec(ray->vector);

@@ -55,7 +55,6 @@ void	touch_object(t_data *data, t_ray *ray)
 		//printf("%d-", ray->res);
 		//ray->res = res;
 		//printf("sol = %f et res vaut : %d --", ray->sol, ray->res);
-		
 		i++;
 	}
 	if (ray->res >= 1)
@@ -65,8 +64,9 @@ void	touch_object(t_data *data, t_ray *ray)
 			//printf("ca touche !!!!!!!!\n");
 			//printf("avant changement, vecteur rayon vaut\n");
 			//print_vec(ray->vector);
-
-			ray->vector = calcul_ref(ray, data->scene_objects[ray->go], ray->res);
+			ray->coords = find_pos_touch(ray, ray->sol);
+			if (data->scene_objects[ray->go].type != LIGHT_OBJ)
+				ray->vector = calcul_ref(ray, data->scene_objects[ray->go], ray->res);
 			//printf("apres changement, vecteur rayon vaut\n");
 			//print_vec(ray->vector);
 			ray->origin_coords = give_coord(ray->coords);

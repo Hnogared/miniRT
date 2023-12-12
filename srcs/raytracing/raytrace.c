@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/12 09:44:19 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/12 09:57:02 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,13 @@ static t_rgb_color	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
 		if (objects[i].type == LIGHT_OBJ)
 		{
 			return (rgb_color_lighten(color, (t_rgb_color){0xFF, 0xFF, 0xFF},
-					objects[i].special_data.light.brightness));
+				objects[i].special_data.light.brightness));
 		}
 		color = rgb_color_mix(color,
 				objects[i].ft_get_color(objects[i].special_data), 0.2f);
 		i++;
 	}
-	color = rgb_color_lighten(color, ambient_l.color, ambient_l.ratio);
-	return (color);
+	return (rgb_color_lighten(color, ambient_l.color, ambient_l.ratio));
 }
 
 static t_rgb_color	rotated_raytrace(t_data *data, t_ray ray, float angle,
@@ -52,8 +51,7 @@ static t_rgb_color	rotated_raytrace(t_data *data, t_ray ray, float angle,
 	ray_advance(data, &ray);
 	if (ray.nb_ref)
 		return (get_reflections_color(data->ambient_l, ray));
-//	printf("%f\n", data->ambient_l.ratio);
-	return (rgb_color_mix((t_rgb_color){0, 0, 0}, data->ambient_l.color,
+	return (rgb_color_lighten((t_rgb_color){0, 0, 0}, data->ambient_l.color,
 		data->ambient_l.ratio));
 }
 

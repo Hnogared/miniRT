@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/11 21:32:20 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/12 09:44:19 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,20 @@ static t_rgb_color	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
 		return ((t_rgb_color){255, 255, 255});
 	objects = ray.objects_touch;
 	color = rgb_color_mix(objects[0].ft_get_color(objects[0].special_data),
-			ambient_l.color, ambient_l.ratio);
+			(t_rgb_color){0, 0, 0}, 0.2f);
 	i = 1;
 	while (i < ray.nb_ref)
 	{
 		if (objects[i].type == LIGHT_OBJ)
 		{
-			color = rgb_color_mix(color, (t_rgb_color){0xFF, 0xFF, 0xFF},
-					objects[i].special_data.light.brightness);
-			break ;
+			return (rgb_color_lighten(color, (t_rgb_color){0xFF, 0xFF, 0xFF},
+					objects[i].special_data.light.brightness));
 		}
 		color = rgb_color_mix(color,
 				objects[i].ft_get_color(objects[i].special_data), 0.2f);
 		i++;
 	}
+	color = rgb_color_lighten(color, ambient_l.color, ambient_l.ratio);
 	return (color);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/11 21:15:00 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/12 09:49:38 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,11 @@ int				open_main_window(t_data *data, char *title);
 int				redraw_main_window(t_data *data);
 
 /* rgb_color.c */
+int				ft_min(int num1, int num2);
 size_t			rgb_to_sizet(t_rgb_color color);
 size_t			sizet_color_mix(size_t color1, size_t color2, float ratio);
+t_rgb_color		rgb_color_lighten(t_rgb_color color1, t_rgb_color color2,
+					float ratio);
 t_rgb_color		rgb_color_mix(t_rgb_color color1, t_rgb_color color2, float ratio);
 
 /* window_handling.c */

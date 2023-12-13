@@ -60,7 +60,8 @@ void	touch_object(t_data *data, t_ray *ray)
 	if (ray->res >= 1)
 		{
 			//printf("sol = %f et res vaut : %d --", ray->sol, ray->res);
-			//printf("%d-", ray->res);
+			//if (ray->res == 2)
+			//	printf("%d-", ray->res);
 			//printf("ca touche !!!!!!!!\n");
 			//printf("avant changement, vecteur rayon vaut\n");
 			//print_vec(ray->vector);

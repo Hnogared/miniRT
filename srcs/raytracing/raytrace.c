@@ -38,11 +38,11 @@ static t_rgb_color	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
 					objects[i].special_data.light.brightness);
 			break ;
 		}
-		//color = rgb_color_mix(color,
-		//		objects[i].ft_get_color(objects[i].special_data), 0.5f);
+		color = rgb_color_mix(color,
+				objects[i].ft_get_color(objects[i].special_data), 0.5f);
 		i++;
 	}
-	return (rgb_to_uint(color));
+	return (color);
 }
 
 static t_rgb_color	rotated_raytrace(t_data *data, t_ray ray, float angle,

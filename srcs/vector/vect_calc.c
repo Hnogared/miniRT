@@ -24,6 +24,8 @@ t_vector	cal_sphere(t_ray *ray, t_object sphere)
 
 	n = sous_vec_coord(ray->coords, sphere.coords);
 	n = normalise(n);
+	if (dist(sphere.coords, ray->origin_coords) < sphere.special_data.sphere.diameter / 2)
+		n = prod_vec_float(n, -1);
 	r = calc_ref_form(ray->vector, n);
 	return (r);
 }
@@ -43,10 +45,10 @@ t_vector	cal_cylinder_ext(t_ray *ray, t_object cylindre, int res)
 	t_vector	n;
 	t_vector	r;
 
-	if (res == 2)
+	if (res == 4)
 		n = normalise(cylindre.orientation_vector);
 	else
-		n = normalise(prod_vec_int(cylindre.orientation_vector, -1));
+		n = normalise(prod_vec_float(cylindre.orientation_vector, -1));
 	r = calc_ref_form(ray->vector, n);
 	return (r);
 }
@@ -62,7 +64,7 @@ t_vector	cal_cylinder_side(t_ray *ray, t_object cylindre)
 	if (prod_scal_vec(cylindre.orientation_vector, sous_vec_coord(ray->coords, cylindre.coords)) >= 0)
 		cp = advance_on_vec(cylindre.coords, cylindre.orientation_vector, d);
 	else
-		cp = advance_on_vec(cylindre.coords, prod_vec_int(cylindre.orientation_vector, -1), d);
+		cp = advance_on_vec(cylindre.coords, prod_vec_float(cylindre.orientation_vector, -1), d);
 	n = normalise(sous_vec_coord(ray->coords, cp));
 	r = calc_ref_form(ray->vector, n);
 	return (r);

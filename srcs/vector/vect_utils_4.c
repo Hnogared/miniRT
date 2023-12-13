@@ -66,7 +66,7 @@ float	good_sol(float delta, float b, float a)
 			return (t2 - 0.1f);
 	}
 	else
-		return (0);
+		return (-1);
 }
 
 void	print_vec(t_vector vec)

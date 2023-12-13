@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/13 11:21:26 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:51:53 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,17 @@ typedef struct s_camera
 /*
  * Light special data structure used to complement the t_object structure.
  *
- * float brightness	-> brightness ratio of the light (0.0-1.0)
- * float diameter	-> diameter of the light source
- * float radius		-> diameter of the light source
+ * float brightness		-> brightness ratio of the light (0.0-1.0)
+ * float diameter		-> diameter of the light source
+ * float radius			-> diameter of the light source
+ * t_rgb_color color	-> rgb color of the light source
  */
 typedef struct s_light
 {
-	float	brightness;
-	float	diameter;
-	float	radius;
+	float		brightness;
+	float		diameter;
+	float		radius;
+	t_rgb_color	color;
 }				t_light;
 
 /*

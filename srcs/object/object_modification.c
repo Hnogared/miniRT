@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:10:00 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/06 14:39:26 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:56:35 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ t_object	*set_object_color(t_object *to_set, t_rgb_color new_color)
 		color_to_set = &to_set->special_data.plane.color;
 	if (to_set->type == CYLINDER_OBJ)
 		color_to_set = &to_set->special_data.cylinder.color;
+	if (to_set->type == LIGHT_OBJ)
+		color_to_set = &to_set->special_data.light.color;
 	*color_to_set = new_color;
 	return (to_set);
 }

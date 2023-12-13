@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 11:23:32 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 20:18:34 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_rgb_color	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
 	int				i;
 
 	if (ray.objects_touch[0].type == LIGHT_OBJ)
-		return ((t_rgb_color){255, 255, 255});
+		return (ray.objects_touch[0].special_data.light.color);
 	objects = ray.objects_touch;
 	color = rgb_color_mix(objects[0].ft_get_color(objects[0].special_data),
 			(t_rgb_color){0, 0, 0}, 0.2f);
@@ -34,14 +34,15 @@ static t_rgb_color	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
 	{
 		if (objects[i].type == LIGHT_OBJ)
 		{
-			return (rgb_color_lighten(color, (t_rgb_color){0xFF, 0xFF, 0xFF},
-				objects[i].special_data.light.brightness));
+			return (rgb_color_lighten(color,
+					objects[i].special_data.light.color,
+					objects[i].special_data.light.brightness));
 		}
 		color = rgb_color_mix(color,
-				objects[i].ft_get_color(objects[i].special_data), 0.2f);
+				objects[i].ft_get_color(objects[i].special_data), 0.3f);
 		i++;
 	}
-	return (rgb_color_lighten(color, ambient_l.color, ambient_l.ratio));
+	return (rgb_color_lighten(color, ambient_l.color, ambient_l.ratio * 0.7f));
 }
 
 static t_rgb_color	rotated_raytrace(t_data *data, t_ray ray, float angle,
@@ -55,8 +56,8 @@ static t_rgb_color	rotated_raytrace(t_data *data, t_ray ray, float angle,
 		ray_color = get_reflections_color(data->ambient_l, ray);
 	else
 	{
-		ray_color = rgb_color_lighten((t_rgb_color){0, 0, 0}, data->ambient_l.color,
-				data->ambient_l.ratio);
+		ray_color = rgb_color_lighten((t_rgb_color){0, 0, 0},
+				data->ambient_l.color, data->ambient_l.ratio);
 	}
 	return (rgb_color_lighten(ray_color, ray.light_color, 1.0f));
 }

@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:10 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/13 17:44:17 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 18:51:16 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	try_light(t_ray *ray, t_object obj, int i)
 		t = good_sol(delta, b, a);
 		if (t >= 0 && (ray->res == 0 || t < ray->sol))
 		{
-			ray->coords = find_pos_touch(ray, t - 0.01f);
+			ray->coords = find_pos_touch(ray, t - 0.1f);
 			ray->sol = t;
 			ray->res = 2;
 			ray->go = i;
@@ -108,7 +108,6 @@ ici origine du rayon est la position test = FAUX A AMELIORER !!!!!!!!!!!!!!!!!!!
 */
 void	try_sphere(t_ray *ray, t_object obj, int i)
 {
-//	t_vector	vec;
 	float	a;
 	float	b;
 	float	c;
@@ -125,7 +124,7 @@ void	try_sphere(t_ray *ray, t_object obj, int i)
 		t = good_sol(delta, b, a);
 		if (t >= 0 && (ray->res == 0 || t < ray->sol))
 		{
-			ray->coords = find_pos_touch(ray, t - 0.01f);
+			ray->coords = find_pos_touch(ray, t - 0.1f);
 			ray->sol = t;
 			ray->res = 2;
 			ray->go = i;
@@ -179,7 +178,6 @@ void	try_plan(t_ray *ray, t_object plan, int i)
 	d = -(n.x * plan.coords.x + n.y * plan.coords.y + n.z * plan.coords.z);
 	//printf("d vaut : %f\n", d);
 	t = -((prod_scal_vec_coord(n, ray->origin_coords) + d) / prod_scal_vec(n, ray->vector));
-//	t -= 0.1f;
 	//printf("scal de N et 0 vaut %f\n", prod_scal_vec_coord(n, ray->origin_coords));
 	//printf("scal de N et D vaut %f\n", prod_scal_vec(n, ray->vector));
 	//printf("t vaut %f\n",t);
@@ -187,7 +185,7 @@ void	try_plan(t_ray *ray, t_object plan, int i)
 	{
 		if (ray->res == 0 || t < ray->sol)
 		{
-			ray->coords = find_pos_touch(ray, t - 0.01f);
+			ray->coords = find_pos_touch(ray, t - 0.1f);
 			ray->sol = t;
 			ray->res = 1;
 			ray->go = i;

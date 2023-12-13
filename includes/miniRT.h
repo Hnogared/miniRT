@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 13:42:26 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:55:43 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ t_rgb_color		get_uncolored_color(t_special_data special_data);
 t_rgb_color		get_sphere_color(t_special_data special_data);
 t_rgb_color		get_plane_color(t_special_data special_data);
 t_rgb_color		get_cylinder_color(t_special_data special_data);
+t_rgb_color		get_light_color(t_special_data special_data);
 
 /* object_creation.c */
 t_object		*new_camera(t_object *to_set, t_coords coords, int fov);

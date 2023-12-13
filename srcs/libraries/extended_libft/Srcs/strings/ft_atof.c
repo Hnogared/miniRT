@@ -24,6 +24,8 @@ static float	create_nbr(const char *nptr)
 	i = 0;
 	nbr = 0.0;
 	divider = 10;
+	if (nptr[i] == '-' || nptr[i] == '+')
+		i++;
 	while (nptr[i] && nptr[i] >= '0' && nptr[i] <= '9')
 	{
 		nbr *= 10;

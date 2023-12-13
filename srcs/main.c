@@ -35,13 +35,13 @@ int	initialize_mlx(t_data *data)
 	return (0);
 }
 
-/*
+
 static void	print_scene_objects(unsigned short obj_count, t_object *scene_objects)
 {
 	while (obj_count--)
 		print_object_data(scene_objects[obj_count]);
 }
-*/
+
 
 int	main(int argc, char **argv)
 {
@@ -66,6 +66,7 @@ int	main(int argc, char **argv)
 		return (status);
 	}
 	initialize_object(&data, tab);
+	print_scene_objects(data.obj_count, data.scene_objects);
 	initialize_mlx(&data);
 	free_str_tab(tab);
 	get_main_view_rays(&data, true);

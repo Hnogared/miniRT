@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:48:18 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/13 12:14:01 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:00:06 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,47 +26,6 @@ int	do_touch(t_ray *ray, t_object obj, int i)
 	else if (obj.type == LIGHT_OBJ)
 		try_light(ray, obj, i);
 	return (0);
-}
-
-t_rgb_color	shadow_ray(t_coords start_coords, t_object *objects_array,
-	unsigned short objects_count, int touched_obj_id)
-{
-	int			i;
-	int			j;
-	float		strength;
-	t_rgb_color	light_color;
-	t_vector	placeholder;
-	t_vector	ray_vector;
-	t_ray		shadow_ray;
-
-	light_color = (t_rgb_color){0, 0, 0};
-	placeholder = (t_vector){0, 0, 1};
-	i = -1;
-	while (++i < objects_count)
-	{
-		if (objects_array[i].type != LIGHT_OBJ)
-			continue ;
-		ray_vector = normalise(sous_vec_coord(objects_array[i].coords,
-				start_coords));
-		shadow_ray = new_ray((t_basis){ray_vector, placeholder, placeholder},
-				start_coords);
-		shadow_ray.sol = -1;
-		shadow_ray.go = -1;
-		j = -1;
-		while (++j < objects_count)
-		{
-			if (j == touched_obj_id)
-				continue ;
-			do_touch(&shadow_ray, objects_array[j], j);
-		}
-		if (objects_array[shadow_ray.go].type != LIGHT_OBJ)
-			continue ;
-		strength = objects_array[shadow_ray.go].special_data.light.brightness
-				/ (shadow_ray.sol / 10);
-		light_color = rgb_color_lighten(light_color,
-				(t_rgb_color){0xFF, 0xFF, 0xFF}, strength);
-	}
-	return (light_color);
 }
 
 //ray.objects_touch[ray.s++] = NULL;
@@ -107,8 +66,11 @@ void	touch_object(t_data *data, t_ray *ray)
 		//printf("avant changement, vecteur rayon vaut\n");
 		//print_vec(ray->vector);
 		ray->vector = calcul_ref(ray, data->scene_objects[ray->go], ray->res);
-		ray->light_color = shadow_ray(ray->coords, data->scene_objects,
-				data->obj_count, ray->go);
+		if (!ray->nb_ref)
+		{
+			ray->light_color = shadow_ray(ray->coords, data->scene_objects,
+					data->obj_count, ray->go);
+		}
 		//printf("apres changement, vecteur rayon vaut\n");
 		//print_vec(ray->vector);
 		ray->origin_coords = ray->coords;

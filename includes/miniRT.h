@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 12:18:59 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 13:42:26 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,11 +195,15 @@ size_t			raytrace(t_data *data, t_ray ray);
 
 /* shadow_ray.c */
 t_rgb_color	shadow_ray(t_coords start_coords, t_object *objects_array,
-	unsigned short objects_count, int touched_object_id);
+	unsigned short objects_count, int touched_obj_id);
 
-/* SRCS_USER_INTERFACE */
+/* SRCS/USER_INTERFACE */
 /* keyboard.c */
 int				key_handler(int keycode, t_data *data);
 void			init_key_hooks(t_data *data);
+
+/* SRCS/VECTOR */
+/* vect.c */
+int				do_touch(t_ray *ray, t_object obj, int i);
 
 #endif

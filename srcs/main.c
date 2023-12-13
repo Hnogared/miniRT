@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 16:18:21 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:46:13 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ int	initialize_mlx(t_data *data)
 	return (0);
 }
 
-/*
+
 static void	print_scene_objects(unsigned short obj_count, t_object *scene_objects)
 {
 	while (obj_count--)
 		print_object_data(scene_objects[obj_count]);
 }
-*/
+
 
 int	main(int argc, char **argv)
 {
@@ -66,7 +66,7 @@ int	main(int argc, char **argv)
 		return (status);
 	}
 	initialize_object(&data, tab);
-//	print_scene_objects(data.obj_count, data.scene_objects);
+	print_scene_objects(data.obj_count, data.scene_objects);
 	initialize_mlx(&data);
 	free_str_tab(tab);
 	get_main_view_rays(&data, true);

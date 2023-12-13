@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 13:49:59 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/11 22:08:52 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:47:24 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static float	create_nbr(const char *nptr)
 	i = 0;
 	nbr = 0.0;
 	divider = 10;
+	if (nptr[i] == '-' || nptr[i] == '+')
+		i++;
 	while (nptr[i] && nptr[i] >= '0' && nptr[i] <= '9')
 	{
 		nbr *= 10;

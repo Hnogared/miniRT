@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/11 21:13:51 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 11:21:26 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ typedef struct s_ray
 	t_coords	coords;
 	t_coords	origin_coords;
 	t_object	objects_touch[RT_MAX_BOUNCES];
+	t_rgb_color	light_color;
 	int			tl;
 	int			s;
 	int			go;

@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/11 08:45:43 by motoko           ###   ########.fr        #
+#    Updated: 2023/12/13 12:16:50 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,7 @@ SRCS			:=	main.c					\
 					vect_try.c				\
 					vect_try_2.c			\
 					set_view_rays.c			\
+					shadow_ray.c			\
 					raytrace.c
 
 

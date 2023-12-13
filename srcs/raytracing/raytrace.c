@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/12 09:57:02 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 11:23:32 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,18 @@ static t_rgb_color	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
 static t_rgb_color	rotated_raytrace(t_data *data, t_ray ray, float angle,
 	t_vector axis)
 {
+	t_rgb_color	ray_color;
+
 	ray.vector = axial_vector_rotation(ray.vector, angle, axis);
 	ray_advance(data, &ray);
 	if (ray.nb_ref)
-		return (get_reflections_color(data->ambient_l, ray));
-	return (rgb_color_lighten((t_rgb_color){0, 0, 0}, data->ambient_l.color,
-		data->ambient_l.ratio));
+		ray_color = get_reflections_color(data->ambient_l, ray);
+	else
+	{
+		ray_color = rgb_color_lighten((t_rgb_color){0, 0, 0}, data->ambient_l.color,
+				data->ambient_l.ratio);
+	}
+	return (rgb_color_lighten(ray_color, ray.light_color, 1.0f));
 }
 
 size_t	raytrace(t_data *data, t_ray ray)

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/12 09:49:38 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 12:18:59 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,9 +163,10 @@ int				redraw_main_window(t_data *data);
 int				ft_min(int num1, int num2);
 size_t			rgb_to_sizet(t_rgb_color color);
 size_t			sizet_color_mix(size_t color1, size_t color2, float ratio);
-t_rgb_color		rgb_color_lighten(t_rgb_color color1, t_rgb_color color2,
+t_rgb_color		rgb_color_lighten(t_rgb_color start_color, t_rgb_color add_color,
 					float ratio);
-t_rgb_color		rgb_color_mix(t_rgb_color color1, t_rgb_color color2, float ratio);
+t_rgb_color		rgb_color_mix(t_rgb_color start_color, t_rgb_color mix_color,
+					float ratio);
 
 /* window_handling.c */
 t_window		my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
@@ -184,12 +185,17 @@ void			put_square_to_window(t_window *window, int start_coords[2],
 
 /* SRCS/RAYTRACING */
 /* get_view_rays.c */
+t_ray			new_ray(t_basis basis, t_coords origin_coords);
 int				set_view_rays(t_ray ***rays_tab, t_window window,
 					t_object camera, bool needs_alloc);
 
 /* raytrace.c */
 size_t			test_grid(t_data *data, int x, int y);
 size_t			raytrace(t_data *data, t_ray ray);
+
+/* shadow_ray.c */
+t_rgb_color	shadow_ray(t_coords start_coords, t_object *objects_array,
+	unsigned short objects_count, int touched_object_id);
 
 /* SRCS_USER_INTERFACE */
 /* keyboard.c */

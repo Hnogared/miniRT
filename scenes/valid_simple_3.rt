@@ -1,9 +1,14 @@
+# This is a comment
 A 0.1 255,255,255
 C -100,0,10 1,0,0 90
 L -50,50,0 0.5 0,255,255
 L -50,0,0 0.5 255,255,0
 
 pl 0,0,0 0,0,1 0,0,0
+
+
+# The second sphere is hidden inside the first one.
+# You can move inside the first sphere to see it with the arrow keys.
 sp 50,0,30 100 0,255,255
 sp 50,0,30 50 0,200,255
 sp 50,70,30 70 200,0,255

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:48 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/11 21:42:45 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 22:34:03 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include <stdint.h>
 
 # include <stdarg.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE	127
+# endif
 
 # ifndef ERROR
 #  define ERROR	1
@@ -35,7 +39,6 @@ int		ft_tolower(int c);
 int		ft_strncmp(const char *str, const char *str2, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_atoi(const char *nptr);
-
 float	ft_atof(const char *nptr);
 
 size_t	ft_strlen(const char *str);
@@ -44,8 +47,10 @@ size_t	ft_strlcat(char *dest, const char *src, size_t n);
 
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
+char	*ft_strchrnul(const char *s, int c);
 char	*ft_strnstr(const char *big, const char *little, size_t n);
 char	*ft_strdup(const char *str);
+char	*ft_strndup(const char *str, size_t size);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
 char	*ft_strjoin(const char *s1, const char *s2);
 char	*ft_strtrim(const char *s1, const char *set);
@@ -105,4 +110,6 @@ int		ft_putunsigned_fdout(unsigned int n, int len, int fd);
 int		ft_puthex_fdout(unsigned long n, int len, char cap, int fd);
 int		ft_putlhex_fdout(unsigned long n, int len, char cap, int fd);
 
+/* GET_NEXT_LINE */
+char	*get_next_line(int fd);
 #endif

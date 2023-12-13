@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 20:18:34 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:05:38 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ static t_rgb_color	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
 	t_object		*objects;
 	int				i;
 
-	if (ray.objects_touch[0].type == LIGHT_OBJ)
-		return (ray.objects_touch[0].special_data.light.color);
 	objects = ray.objects_touch;
 	color = rgb_color_mix(objects[0].ft_get_color(objects[0].special_data),
 			(t_rgb_color){0, 0, 0}, 0.2f);
@@ -52,6 +50,8 @@ static t_rgb_color	rotated_raytrace(t_data *data, t_ray ray, float angle,
 
 	ray.vector = axial_vector_rotation(ray.vector, angle, axis);
 	ray_advance(data, &ray);
+	if (ray.objects_touch[0].type == LIGHT_OBJ)
+		return (ray.objects_touch[0].special_data.light.color);
 	if (ray.nb_ref)
 		ray_color = get_reflections_color(data->ambient_l, ray);
 	else

@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strchrnul.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/01 13:44:04 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 22:00:23 by hnogared         ###   ########.fr       */
+/*   Created: 2023/12/13 22:32:48 by hnogared          #+#    #+#             */
+/*   Updated: 2023/12/13 22:33:46 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Includes/libft.h"
+#include "libft.h"
 
-size_t	ft_strlen(const char *str)
+char	*ft_strchrnul(const char *s, int c)
 {
-	char	*iterator;
+	int		i;
 
-	if (!str)
-		return (0);
-	iterator = (char *) str;
-	while (*iterator)
-		iterator++;
-	return (iterator - (char *) str);
+	i = 0;
+	while (s[i] && s[i] != (unsigned char) c)
+		i++;
+	return ((char *) s + i);
 }

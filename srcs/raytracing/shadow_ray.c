@@ -6,24 +6,31 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:16:55 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 20:16:10 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 20:48:28 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+/*
+ * Function 
+ */
 static t_rgb_color	advance_shadow_ray(t_ray *shadow_ray,
-	t_object *objects_array, unsigned short objects_count, int touched_obj_id)
+	t_object *objects_array, unsigned short objects_count, int light_id)
 {
 	int			i;
 	float		strength;
 	t_object	light;
 
 	i = -1;
-	touched_obj_id++;
 	while (++i < (int) objects_count)
+	{
+		if (objects_array[i].type == LIGHT_OBJ && i != light_id)
+			continue ;
 		do_touch(shadow_ray, objects_array[i], i);
-	if (objects_array[shadow_ray->go].type != LIGHT_OBJ)
+	}
+//	ft_printf("%d - %d\n", shadow_ray->go, light_id);
+	if (shadow_ray->go != light_id)
 		return (shadow_ray->light_color);
 	light = objects_array[shadow_ray->go];
 	strength = light.special_data.light.brightness * 20 / shadow_ray->sol;
@@ -33,7 +40,7 @@ static t_rgb_color	advance_shadow_ray(t_ray *shadow_ray,
 }
 
 t_rgb_color	shadow_ray(t_coords start_coords, t_object *objects_array,
-	unsigned short objects_count, int touched_obj_id)
+	unsigned short objects_count)
 {
 	int		i;
 	t_ray	shadow_ray;
@@ -48,9 +55,12 @@ t_rgb_color	shadow_ray(t_coords start_coords, t_object *objects_array,
 			continue ;
 		shadow_ray.vector = normalise(sous_vec_coord(objects_array[i].coords,
 					start_coords));
+//		shadow_ray.origin_coords = start_coords;
+//		shadow_ray.coords = start_coords;
 		shadow_ray.sol = -1;
-		advance_shadow_ray(&shadow_ray, objects_array, objects_count,
-			touched_obj_id);
+		shadow_ray.go = -1;
+		shadow_ray.res = 0;
+		advance_shadow_ray(&shadow_ray, objects_array, objects_count, i);
 	}
 	return (shadow_ray.light_color);
 }

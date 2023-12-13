@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 15:42:43 by hnogared          #+#    #+#             */
-/*   Updated: 2023/06/06 22:32:43 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 22:16:51 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,6 @@ static int	ft_get_wordcnt(char const *s, char const *set)
 		i++;
 	}
 	return (cnt);
-}
-
-static char	*ft_strndup(const char *str, int n)
-{
-	int		i;
-	char	*dup;
-
-	i = 0;
-	while (str[i] && i < n)
-		i++;
-	dup = (char *) malloc((i + 1) * sizeof(char));
-	if (!dup)
-		return (NULL);
-	i = 0;
-	while (str[i] && i < n)
-	{
-		dup[i] = str[i];
-		i++;
-	}
-	dup[i] = 0;
-	return (dup);
 }
 
 char	**ft_split_set(char const *s, char const *set)

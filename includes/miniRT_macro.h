@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:18:25 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/11 21:16:06 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 22:57:36 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 
 # define RT_MAX_BOUNCES	2
 
-# define BUFFER_SIZE 1000
+# define RT_BUFFER_SIZE 1000
 
 /* Different scene object types (see t_object structure at miniRT_struct.h) */
 # define BLANK_OBJ		0

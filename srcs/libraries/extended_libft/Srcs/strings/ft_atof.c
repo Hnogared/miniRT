@@ -6,9 +6,11 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 13:49:59 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 17:47:24 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 22:26:57 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 static int	is_neg(const char *nptr)
 {

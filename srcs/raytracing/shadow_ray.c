@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:16:55 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 13:55:10 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:39:02 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static t_rgb_color	advance_shadow_ray(t_ray *shadow_ray,
 	}
 	if (objects_array[shadow_ray->go].type != LIGHT_OBJ)
 		return (shadow_ray->light_color);
-	strength = objects_array[shadow_ray->go].special_data.light.brightness
-		/ (shadow_ray->sol / 10);
+	strength = objects_array[shadow_ray->go].special_data.light.brightness * 10
+		/ shadow_ray->sol;
 	shadow_ray->light_color = rgb_color_lighten(shadow_ray->light_color,
 			(t_rgb_color){0xFF, 0xFF, 0xFF}, strength);
 	return (shadow_ray->light_color);

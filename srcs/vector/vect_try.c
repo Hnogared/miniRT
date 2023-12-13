@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:10 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/11 12:13:16 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:31:44 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	try_light(t_ray *ray, t_object l, int i)
 		}
 		else if (t <= ray->sol)
 		{
-			ray->coords = find_pos_touch(ray, t);
+			ray->coords = find_pos_touch(ray, t - 0.001f);
 			ray->sol = t;
 			ray->res = 7;
 			ray->go = i;
@@ -114,6 +114,7 @@ ici origine du rayon est la position test = FAUX A AMELIORER !!!!!!!!!!!!!!!!!!!
 */
 void	try_sphere(t_ray *ray, t_object obj, int i)
 {
+//	t_vector	vec;
 	float	a;
 	float	b;
 	float	c;
@@ -136,11 +137,23 @@ void	try_sphere(t_ray *ray, t_object obj, int i)
 		}
 		else if (t <= ray->sol && t != -1)
 		{
-			ray->coords = find_pos_touch(ray, t);
+			ray->coords = find_pos_touch(ray, t - 0.001f);
 			ray->sol = t;
 			ray->res = 2;
 			ray->go = i;
 		}
+
+	/*
+	vec = sous_vec_coord(ray->origin_coords, obj.coords);
+	b = 2 * prod_scal_vec(ray->vector, a);
+	c = prod_scal_vec(vec, vec) - obj.special_data.sphere.radius * obj.special_data.sphere.radius;
+	delta = b * b - 4 * c;
+	if (delta >= 0)
+	{
+		if ()
+	}
+	*/
+
 		//return (0);
 	}
 	/*else
@@ -178,22 +191,15 @@ void	try_plan(t_ray *ray, t_object plan, int i)
 	d = -(n.x * plan.coords.x + n.y * plan.coords.y + n.z * plan.coords.z);
 	//printf("d vaut : %f\n", d);
 	t = -((prod_scal_vec_coord(n, ray->origin_coords) + d) / prod_scal_vec(n, ray->vector));
-	t -= 0.1f;
+//	t -= 0.1f;
 	//printf("scal de N et 0 vaut %f\n", prod_scal_vec_coord(n, ray->origin_coords));
 	//printf("scal de N et D vaut %f\n", prod_scal_vec(n, ray->vector));
 	//printf("t vaut %f\n",t);
 	if (t >= 0)
 	{
-		if (ray->res == 0)
+		if (ray->res == 0 || t < ray->sol)
 		{
-			ray->coords = find_pos_touch(ray, t);
-			ray->sol = t;
-			ray->res = 1;
-			ray->go = i;
-		}
-		else if (t <= ray->sol)
-		{
-			ray->coords = find_pos_touch(ray, t);
+			ray->coords = find_pos_touch(ray, t - 0.001f);
 			ray->sol = t;
 			ray->res = 1;
 			ray->go = i;

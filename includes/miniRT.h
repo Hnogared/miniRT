@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/11 11:24:50 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 13:42:26 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # include "mlx.h"
 # include "mlx_int.h"
 
-# include "miniRT_struct.h"
 # include "miniRT_macro.h"
+# include "miniRT_struct.h"
 # include "miniRT_error.h"
 
 /* parsing */
@@ -160,9 +160,13 @@ int				open_main_window(t_data *data, char *title);
 int				redraw_main_window(t_data *data);
 
 /* rgb_color.c */
+int				ft_min(int num1, int num2);
 size_t			rgb_to_sizet(t_rgb_color color);
 size_t			sizet_color_mix(size_t color1, size_t color2, float ratio);
-t_rgb_color		rgb_color_mix(t_rgb_color color1, t_rgb_color color2, float ratio);
+t_rgb_color		rgb_color_lighten(t_rgb_color start_color, t_rgb_color add_color,
+					float ratio);
+t_rgb_color		rgb_color_mix(t_rgb_color start_color, t_rgb_color mix_color,
+					float ratio);
 
 /* window_handling.c */
 t_window		my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
@@ -181,6 +185,7 @@ void			put_square_to_window(t_window *window, int start_coords[2],
 
 /* SRCS/RAYTRACING */
 /* get_view_rays.c */
+t_ray			new_ray(t_basis basis, t_coords origin_coords);
 int				set_view_rays(t_ray ***rays_tab, t_window window,
 					t_object camera, bool needs_alloc);
 
@@ -188,9 +193,17 @@ int				set_view_rays(t_ray ***rays_tab, t_window window,
 size_t			test_grid(t_data *data, int x, int y);
 size_t			raytrace(t_data *data, t_ray ray);
 
-/* SRCS_USER_INTERFACE */
+/* shadow_ray.c */
+t_rgb_color	shadow_ray(t_coords start_coords, t_object *objects_array,
+	unsigned short objects_count, int touched_obj_id);
+
+/* SRCS/USER_INTERFACE */
 /* keyboard.c */
 int				key_handler(int keycode, t_data *data);
 void			init_key_hooks(t_data *data);
+
+/* SRCS/VECTOR */
+/* vect.c */
+int				do_touch(t_ray *ray, t_object obj, int i);
 
 #endif

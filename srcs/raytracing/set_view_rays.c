@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/09 20:43:43 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/12 11:17:16 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param t_coords origin_coords	-> coordinates from which the ray starts
  * @return t_ray					-> the newly initialized t_ray structure
  */
-static t_ray	new_ray(t_basis basis, t_coords origin_coords)
+t_ray	new_ray(t_basis basis, t_coords origin_coords)
 {
 	t_ray	new;
 
@@ -43,7 +43,6 @@ static t_ray	new_ray(t_basis basis, t_coords origin_coords)
  * @param t_object camera	-> the camera from which to generate the rays
  *
  * @parent_func set_view_rays	-> function to allocate/generate a view's rays
- * @child_func new_ray			-> function to return a newly initialized ray
  */
 static void	set_rays_tab(t_ray ***rays_tab, int tab_sizes[2], t_basis basis,
 	t_object camera)

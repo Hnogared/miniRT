@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:19 by tlorne            #+#    #+#             */
-/*   Updated: 2023/11/29 16:37:20 by tlorne           ###   ########.fr       */
+/*   Updated: 2023/12/11 14:47:33 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	try_plan_cyl_inf(t_ray *ray, t_coords cp, t_vector n, t_object obj, int i)
 			verif = dist(cp, ray->coords);
 			if (verif <= obj.special_data.cylinder.diameter / 2)
 			{
+				ray->coords = find_pos_touch(ray, t);
 				ray->sol = t;
 				ray->res = 5;
 				ray->go = i;
@@ -125,6 +126,7 @@ void	try_plan_cyl_sup(t_ray *ray, t_coords cp, t_vector n, t_object obj, int i)
 			verif = dist(cp, ray->coords);
 			if (verif <= obj.special_data.cylinder.diameter / 2)
 			{
+				ray->coords = find_pos_touch(ray, t);
 				ray->sol = t;
 				ray->res = 4;
 				ray->go = i;

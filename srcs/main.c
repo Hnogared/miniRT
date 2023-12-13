@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/11 22:09:57 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:18:21 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	main(int argc, char **argv)
 		return (status);
 	}
 	initialize_object(&data, tab);
+//	print_scene_objects(data.obj_count, data.scene_objects);
 	initialize_mlx(&data);
 	free_str_tab(tab);
 	get_main_view_rays(&data, true);

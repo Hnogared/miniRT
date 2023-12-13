@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:10 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/13 17:10:26 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:44:17 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	try_light(t_ray *ray, t_object obj, int i)
 		t = good_sol(delta, b, a);
 		if (t >= 0 && (ray->res == 0 || t < ray->sol))
 		{
-			ray->coords = find_pos_touch(ray, t - 0.001f);
+			ray->coords = find_pos_touch(ray, t - 0.01f);
 			ray->sol = t;
 			ray->res = 2;
 			ray->go = i;
@@ -125,7 +125,7 @@ void	try_sphere(t_ray *ray, t_object obj, int i)
 		t = good_sol(delta, b, a);
 		if (t >= 0 && (ray->res == 0 || t < ray->sol))
 		{
-			ray->coords = find_pos_touch(ray, t - 0.001f);
+			ray->coords = find_pos_touch(ray, t - 0.01f);
 			ray->sol = t;
 			ray->res = 2;
 			ray->go = i;
@@ -187,7 +187,7 @@ void	try_plan(t_ray *ray, t_object plan, int i)
 	{
 		if (ray->res == 0 || t < ray->sol)
 		{
-			ray->coords = find_pos_touch(ray, t - 0.001f);
+			ray->coords = find_pos_touch(ray, t - 0.01f);
 			ray->sol = t;
 			ray->res = 1;
 			ray->go = i;

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:16:55 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 14:39:02 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:30:29 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,9 @@ static t_rgb_color	advance_shadow_ray(t_ray *shadow_ray,
 	float	strength;
 
 	i = -1;
+	touched_obj_id++;
 	while (++i < (int) objects_count)
-	{
-		if (i == touched_obj_id)
-			continue ;
 		do_touch(shadow_ray, objects_array[i], i);
-	}
 	if (objects_array[shadow_ray->go].type != LIGHT_OBJ)
 		return (shadow_ray->light_color);
 	strength = objects_array[shadow_ray->go].special_data.light.brightness * 10

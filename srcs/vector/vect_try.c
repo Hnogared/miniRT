@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:10 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/13 15:31:44 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:10:26 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ finalement, imagine la light comme une sphere.
 */
 void	try_light(t_ray *ray, t_object l, int i)
 {
-	float	a;
+	/*float	a;
 	float	b;
 	float	c;
 	float	delta;
@@ -56,7 +56,7 @@ void	try_light(t_ray *ray, t_object l, int i)
 			ray->tl = 1;
 		}
 		//return (0);
-	}
+	}*/
 /*	float	t1;
 	float	t2;
 	float	t3;
@@ -82,6 +82,33 @@ void	try_light(t_ray *ray, t_object l, int i)
 			ray->go = i;
 			ray->tl = 1;
 		}
+	}*/
+
+	float	a;
+	float	b;
+	float	c;
+	float	delta;
+	float	t;
+
+	a = pow(magnitude(ray->vector), 2);
+	b = 2 * prod_scal_vec(ray->vector, sous_vec_coord(ray->origin_coords, obj.coords));
+	c = pow(magnitude_coord(ray->origin_coords), 2) + pow(magnitude_coord(obj.coords), 2) - 2 * prod_scal_coord(obj.coords, ray->origin_coords) - pow((obj.special_data.light.radius), 2);
+	delta = pow(b, 2) - 4 * a * c;
+	if (delta >= 0)
+	{
+		t = good_sol(delta, b, a);
+		if (t >= 0 && (ray->res == 0 || t < ray->sol))
+		{
+			ray->coords = find_pos_touch(ray, t - 0.001f);
+			ray->sol = t;
+			ray->res = 2;
+			ray->go = i;
+		}
+		//return (0);
+	}
+	/*else
+	{
+		return (1);
 	}*/
 }
 
@@ -121,27 +148,22 @@ void	try_sphere(t_ray *ray, t_object obj, int i)
 	float	delta;
 	float	t;
 
-	a = pow(magnitude(ray->vector), 2);
+	a = 1;
+//	a = pow(magnitude(ray->vector), 2);
 	b = 2 * prod_scal_vec(ray->vector, sous_vec_coord(ray->origin_coords, obj.coords));
 	c = pow(magnitude_coord(ray->origin_coords), 2) + pow(magnitude_coord(obj.coords), 2) - 2 * prod_scal_coord(obj.coords, ray->origin_coords) - pow((obj.special_data.sphere.radius), 2);
-	delta = pow(b, 2) - 4 * a * c;
+	delta = b * b - 4 * a * c;
 	if (delta >= 0)
 	{
 		t = good_sol(delta, b, a);
-		if (ray->res == 0 && t != -1)
-		{
-			ray->coords = find_pos_touch(ray, t);
-			ray->sol = t;
-			ray->res = 2;
-			ray->go = i;
-		}
-		else if (t <= ray->sol && t != -1)
+		if (t >= 0 && (ray->res == 0 || t < ray->sol))
 		{
 			ray->coords = find_pos_touch(ray, t - 0.001f);
 			ray->sol = t;
 			ray->res = 2;
 			ray->go = i;
 		}
+	}
 
 	/*
 	vec = sous_vec_coord(ray->origin_coords, obj.coords);
@@ -155,7 +177,6 @@ void	try_sphere(t_ray *ray, t_object obj, int i)
 	*/
 
 		//return (0);
-	}
 	/*else
 	{
 		return (1);

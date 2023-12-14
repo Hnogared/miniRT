@@ -3,7 +3,6 @@
 # of the miniRT project.
 
 errors=0
-status_code=0
 
 ansi_nc="\e[0m"
 ansi_error_color="\e[31m"
@@ -20,19 +19,20 @@ res_paths=""
 
 while IFS= read -r singular_path; do
 	status_code=0
-	norminette "$singular_path"
+	res_norm=$(norminette "$singular_path")
 	status_code=$?
 	if [ $status_code -eq 0 ]; then
-		echo -e "$ansi_success_color[$singular_path][OK]$ansi_nc\n"
+		echo -e "[${ansi_success_color}OK$ansi_nc] $singular_path"
 		res_paths+="[${ansi_success_color}OK$ansi_nc] $singular_path"$'\n'
 	else
-		echo -e "$ansi_error_color[$singular_path][KO]$ansi_nc\n"
+		echo -e "${ansi_error_color}[KO] $singular_path$ansi_nc"
+		echo -e "$res_norm"
 		res_paths+="[${ansi_error_color}KO$ansi_nc] $singular_path"$'\n'
 	fi
 	errors=$(( errors + status_code ))
 done <<< "$paths"
 
-echo -e "Paths tested :\n$res_paths"
+echo -e "\nPaths tested :\n$res_paths"
 echo -n "Status code : "
 if [ $errors -eq 0 ]; then
 	echo -e "$ansi_success_color$errors$ansi_nc"

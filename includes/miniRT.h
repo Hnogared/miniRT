@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 20:28:58 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/14 12:11:41 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void			free_str_tab(char **str_tab);
 
 /* SRCS/OBJECT_MANAGEMENT */
 /* get_object_color.c */
-t_rgb_color		get_uncolored_color(t_special_data special_data);
+t_rgb_color		get_uncolored_color(__attribute__((unused))
+					t_special_data special_data);
 t_rgb_color		get_sphere_color(t_special_data special_data);
 t_rgb_color		get_plane_color(t_special_data special_data);
 t_rgb_color		get_cylinder_color(t_special_data special_data);
@@ -125,7 +126,8 @@ float			prod_scal_vec_coord(t_vector a, t_coords b);
 float			magnitude_coord(t_coords n);
 void			try_sphere(t_ray *ray, t_object obj, int i);
 void			try_plan(t_ray *ray, t_object plan, int i);
-void			try_plan_cyl(t_ray *ray, t_coords cp, t_vector n, t_object obj, int i);
+void			try_plan_cyl(t_ray *ray, t_coords cp, t_vector n, t_object obj,
+					int i);
 void			try_cylinder_ext(t_ray *ray, t_object obj, int i);
 void			try_cylinder_side(t_ray *ray, t_object obj, int i);
 void			try_light(t_ray *ray, t_object l, int i);
@@ -134,10 +136,9 @@ t_vector		cal_plan(t_ray *ray, t_object plan);
 t_vector		cal_cylinder_ext(t_ray *ray, t_object cylindre, int res);
 t_vector		cal_cylinder_side(t_ray *ray, t_object cylindre);
 t_vector		calcul_ref(t_ray *ray, t_object obj, int res);
-void			ray_advance(t_data *data, t_ray *ray);
+void			ray_advance(const t_data *data, t_ray *ray);
 void			print_vec(t_vector vec);
 void			print_coord(t_coords cor);
-
 
 /* vect_utils2.c */
 float			to_rad(float degree_angle);
@@ -164,14 +165,14 @@ int				redraw_main_window(t_data *data);
 int				ft_min(int num1, int num2);
 size_t			rgb_to_sizet(t_rgb_color color);
 size_t			sizet_color_mix(size_t color1, size_t color2, float ratio);
-t_rgb_color		rgb_color_lighten(t_rgb_color start_color, t_rgb_color add_color,
-					float ratio);
+t_rgb_color		rgb_color_lighten(t_rgb_color start_color,
+					t_rgb_color add_color, float ratio);
 t_rgb_color		rgb_color_mix(t_rgb_color start_color, t_rgb_color mix_color,
 					float ratio);
 
 /* window_handling.c */
 t_window		my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
-	char *title);
+					char *title);
 void			my_destroy_window(void *mlx_ptr, t_window *window);
 void			redraw_window(void *mlx_ptr, t_window *window);
 
@@ -191,12 +192,13 @@ int				set_view_rays(t_ray ***rays_tab, t_window window,
 					t_object camera, bool needs_alloc);
 
 /* raytrace.c */
-size_t			test_grid(t_data *data, int x, int y);
-size_t			raytrace(t_data *data, t_ray ray);
+size_t			test_grid(__attribute__((unused)) const t_data *data, int x,
+					int y);
+size_t			raytrace(const t_data *data, t_ray ray);
 
 /* shadow_ray.c */
-t_rgb_color	shadow_ray(t_coords start_coords, t_object *objects_array,
-	unsigned short objects_count);
+t_rgb_color		shadow_ray(t_coords start_coords, const t_object *objects_array,
+					unsigned short objects_count);
 
 /* SRCS/USER_INTERFACE */
 /* keyboard.c */

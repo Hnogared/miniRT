@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:13:45 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/11 11:26:52 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/14 14:02:40 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ int	key_handler(int keycode, t_data *data)
 			return (1);
 		move_object(keycode, camera, camera->local_basis);
 		set_view_rays(&data->view_rays, data->main_window, *camera, false);
-	//	data->main_window.reset = true;
 	}
+	if (keycode == XK_F1)
+		data->anti_aliasing = !data->anti_aliasing;
 	redraw_main_window(data);
 	return (0);
 }

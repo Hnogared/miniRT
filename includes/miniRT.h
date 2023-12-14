@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/14 12:11:41 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/14 14:34:38 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 /* parsing */
 int				check_file(char *scene);
-char			*get_file(t_data *data, char *scene);
+char			*get_file(const t_data *data, const char *scene);
 int				check_scene(t_data *data, char **tab);
 int				check_numbers(char ***block);
 int				check_num_objects(char ***block);
@@ -194,7 +194,7 @@ int				set_view_rays(t_ray ***rays_tab, t_window window,
 /* raytrace.c */
 size_t			test_grid(__attribute__((unused)) const t_data *data, int x,
 					int y);
-size_t			raytrace(const t_data *data, t_ray ray);
+size_t			raytrace(const t_data *data, t_ray ray, bool anti_aliasing);
 
 /* shadow_ray.c */
 t_rgb_color		shadow_ray(t_coords start_coords, const t_object *objects_array,

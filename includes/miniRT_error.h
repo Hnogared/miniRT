@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 16:09:40 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/07 12:02:44 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/14 14:39:40 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@
 # define RTERR_NUM_COMMA		271
 # define RTERR_NUM_DOT			272
 
+# define RTERR_OPEN_WIN			273
+
 /* ************************************************************************** */
 /* Error messages displayed by ft_perror */
 # define RTSUCCESS_MSG			"success"
@@ -72,8 +74,11 @@
 # define RTERR_NUM_COMMA_MSG	"invalid number: too many commas"
 # define RTERR_NUM_DOT_MSG		"invalid number: too many dots"
 
+# define RTERR_OPEN_WIN_MSG		"couldn't open window"
+
 /* ************************************************************************** */
-int		ft_perror(char *prefix, char *error_tab[RTERR_COUNT], int errnum);
+int		ft_perror(const char *prefix, char *const error_tab[RTERR_COUNT],
+			int errnum);
 void	init_error_tab(char *error_tab[RTERR_COUNT]);
 
 #endif

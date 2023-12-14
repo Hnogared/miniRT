@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/14 11:01:23 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/14 14:59:13 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	initialize_mlx(t_data *data)
 {
 	data->mlx_ptr = mlx_init();
 	if (open_main_window(data, "miniRT"))
-		return (2);
+		return (RTERR_OPEN_WIN);
 	init_key_hooks(data);
 	return (0);
 }
@@ -43,33 +43,53 @@ static void	print_scene_objects(unsigned short obj_count, t_object *scene_object
 		print_object_data(scene_objects[obj_count]);
 }*/
 
+int	init_data(t_data *data, const char *file_name)
+{
+	int		status;
+	char	*file;
+	char	**file_split;
+
+	file = get_file(data, file_name);
+	file_split = ft_split(file, '\n');
+	free(file);
+	if (!file_split)
+		return (errno);
+	status = check_scene(data, file_split);
+	if (status != 0 && status != RTSUCCESS)
+	{
+		free_str_tab(file_split);
+		return (status);
+	}
+	status = initialize_object(data, file_split);
+	if (status != 0 && status != RTSUCCESS)
+	{
+		free_str_tab(file_split);
+		return (status);
+	}
+	free_str_tab(file_split);
+	data->anti_aliasing = true;
+	return (initialize_mlx(data));
+}
 
 int	main(int argc, char **argv)
 {
-	char		*line;
-	char		**tab;
 	t_data		data;
 	int			status;
 
 	status = 0;
+	ft_bzero(&data, sizeof(t_data));
 	init_error_tab(data.error_tab);
 	if (argc != 2)
 		return (ft_perror(NULL, data.error_tab, RTERR_ARGS_COUNT));
 	if (check_file(argv[1]) == -1)
 		return (ft_perror(NULL, data.error_tab, RTERR_FILE_NAME));
-	line = get_file(&data, argv[1]);
-	tab = ft_split(line, '\n');
-	free(line);
-	status = check_scene(&data, tab);
+	status = init_data(&data, argv[1]);
 	if (status)
 	{
-		free_str_tab(tab);
+		free_data(&data);
 		return (status);
 	}
-	initialize_object(&data, tab);
 //	print_scene_objects(data.obj_count, data.scene_objects);
-	initialize_mlx(&data);
-	free_str_tab(tab);
 	get_main_view_rays(&data, true);
 	redraw_main_window(&data);
 	mlx_loop(data.mlx_ptr);

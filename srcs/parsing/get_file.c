@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:30:11 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/13 23:37:54 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/14 14:56:44 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*read_file(int fd)
 	char	*str;
 
 	line = ft_strdup("#");
-	while (line[0] == '#')
+	while (line && line[0] == '#')
 	{
 		free(line);
 		line = get_next_line(fd);
@@ -79,7 +79,7 @@ char	*read_file(int fd)
 	return (str);
 }
 
-char	*get_file(t_data *data, char *scene)
+char	*get_file(const t_data *data, const char *scene)
 {
 	int		fd;
 	char	*str;
@@ -88,6 +88,7 @@ char	*get_file(t_data *data, char *scene)
 	if (fd == -1)
 		exit(ft_perror(NULL, data->error_tab, RTERR_OPEN_FILE));
 	str = read_file(fd);
+	close(fd);
 	if (!str)
 		exit(ft_perror(NULL, data->error_tab, RTERR_OPEN_FILE));
 	return (str);

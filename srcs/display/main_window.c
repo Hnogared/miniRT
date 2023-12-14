@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/12 10:23:20 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/14 14:02:50 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	redraw_main_window(t_data *data)
 	y = 0;
 	while (y < data->main_window.virtual_height)
 	{
-		color = raytrace(data, data->view_rays[y][x]);
+		color = raytrace(data, data->view_rays[y][x], data->anti_aliasing);
 		set_window_virtual_pixel(&data->main_window, x, y, color);
 		x++;
 		if (x < data->main_window.virtual_width)

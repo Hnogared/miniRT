@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/14 11:57:22 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/14 13:59:34 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ size_t	test_grid(__attribute__((unused)) const t_data *data, int x, int y)
 	return (x << 16 | (y | x) << 8);
 }
 
+/*
+ *
+ */
 static t_rgb_color	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
 {
 	t_rgb_color		color;
@@ -47,7 +50,8 @@ static t_rgb_color	rotated_raytrace(const t_data *data, t_ray ray, float angle,
 {
 	t_rgb_color	ray_color;
 
-	ray.vector = axial_vector_rotation(ray.vector, angle, axis);
+	if (angle != 0.0f)
+		ray.vector = axial_vector_rotation(ray.vector, angle, axis);
 	ray_advance(data, &ray);
 	if (ray.objects_touch[0].type == LIGHT_OBJ)
 		return (ray.objects_touch[0].special_data.light.color);
@@ -61,11 +65,13 @@ static t_rgb_color	rotated_raytrace(const t_data *data, t_ray ray, float angle,
 	return (rgb_color_lighten(ray_color, ray.light_color, 1.0f));
 }
 
-size_t	raytrace(const t_data *data, t_ray ray)
+size_t	raytrace(const t_data *data, t_ray ray, bool anti_aliasing)
 {
 	size_t		new_rgb[3];
 	t_rgb_color	res_color;
 
+	if (!anti_aliasing)
+		return (rgb_to_sizet(rotated_raytrace(data, ray, 0, (t_vector){0, 0, 0})));
 	res_color = rotated_raytrace(data, ray, 0.05f, ray.local_basis.y);
 	new_rgb[0] = res_color.red;
 	new_rgb[1] = res_color.green;

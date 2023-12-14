@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/13 12:16:50 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/14 16:29:26 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -315,7 +315,7 @@ $(LFT_ARCHS_DEPEND):	$(LFT_ARCHS_SRCS) | $(ARCHIVES_DIR)
 help:
 	@echo "\nMiniRT Makefile help - Available targets\n";				\
 	echo "$(ANSI_BOLD)BASIC TARGETS$(ANSI_NC)";							\
-	echo "\tall  re  help  test";										\
+	echo "\tall  re  help  test  norm";										\
 	echo "$(ANSI_BOLD)FILES TARGETS$(ANSI_NC)";							\
 	echo -n "\t$(NAME)";												\
 	echo -n "$(OBJS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).o  ";		\
@@ -336,10 +336,13 @@ help:
 test:
 	@bash tester.sh
 
+norm:
+	@bash normer.sh
+
 # **************************************************************************** #
 
 # Ignore the following files during rule completeness check
 .PHONY:	all clean fclean lclean dclean libft libft-% minilibx minilibx-% re	\
-		help intro
+		help norm intro
 
 # **************************************************************************** #

@@ -6,15 +6,14 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 21:05:38 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/14 11:57:22 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-size_t	test_grid(t_data *data, int x, int y)
+size_t	test_grid(__attribute__((unused)) const t_data *data, int x, int y)
 {
-	data = data;
 	return (x << 16 | (y | x) << 8);
 }
 
@@ -43,7 +42,7 @@ static t_rgb_color	get_reflections_color(t_ambient_light ambient_l, t_ray ray)
 	return (rgb_color_lighten(color, ambient_l.color, ambient_l.ratio * 0.7f));
 }
 
-static t_rgb_color	rotated_raytrace(t_data *data, t_ray ray, float angle,
+static t_rgb_color	rotated_raytrace(const t_data *data, t_ray ray, float angle,
 	t_vector axis)
 {
 	t_rgb_color	ray_color;
@@ -62,7 +61,7 @@ static t_rgb_color	rotated_raytrace(t_data *data, t_ray ray, float angle,
 	return (rgb_color_lighten(ray_color, ray.light_color, 1.0f));
 }
 
-size_t	raytrace(t_data *data, t_ray ray)
+size_t	raytrace(const t_data *data, t_ray ray)
 {
 	size_t		new_rgb[3];
 	t_rgb_color	res_color;

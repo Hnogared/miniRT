@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:19:58 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 19:55:00 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/14 12:09:13 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ t_rgb_color	get_light_color(t_special_data special_data)
  * @param[unused] t_special_data special_data	-> placeholder special data 
  * @return t_rgb_color							-> the default color structure
  */
-t_rgb_color	get_uncolored_color(t_special_data special_data)
+t_rgb_color	get_uncolored_color(__attribute__((unused))
+	t_special_data special_data)
 {
-	(void)special_data;
 	return ((t_rgb_color){0, 0, 0});
 }

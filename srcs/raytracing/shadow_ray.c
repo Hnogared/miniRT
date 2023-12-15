@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:16:55 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/14 11:49:52 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/15 23:55:01 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static t_rgb_color	advance_shadow_ray(t_ray *shadow_ray,
 	if (shadow_ray->go != light_id)
 		return (shadow_ray->light_color);
 	light = objects_array[shadow_ray->go];
+//	strength = light.special_data.light.brightness / (ft_min(shadow_ray->sol - 10, 0) * ft_min(shadow_ray->sol - 10, 0));
 	strength = light.special_data.light.brightness * 20 / shadow_ray->sol;
 	shadow_ray->light_color = rgb_color_lighten(shadow_ray->light_color,
 			light.special_data.light.color, strength);
@@ -65,6 +66,8 @@ t_rgb_color	shadow_ray(t_coords start_coords, const t_object *objects_array,
 {
 	int		i;
 	t_ray	shadow_ray;
+//	t_rgb_color	color;
+//	t_basis	base;
 
 	shadow_ray = new_ray((t_basis){{0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
 			start_coords);
@@ -79,7 +82,15 @@ t_rgb_color	shadow_ray(t_coords start_coords, const t_object *objects_array,
 		shadow_ray.sol = -1;
 		shadow_ray.go = -1;
 		shadow_ray.res = 0;
-		advance_shadow_ray(&shadow_ray, objects_array, objects_count, i);
+//		color = advance_shadow_ray(&shadow_ray, objects_array, objects_count, i);
+//		shadow_ray.vector = normalise(sous_vec_coord(objects_array[i].coords,
+//					start_coords));
+//		base = get_ortho_basis_from_x(shadow_ray.vector);
+//		shadow_ray.vector = axial_vector_rotation(shadow_ray.vector, 5, base.y);
+//		shadow_ray.sol = -1;
+//		shadow_ray.go = -1;
+///		shadow_ray.res = 0;
+		shadow_ray.light_color = advance_shadow_ray(&shadow_ray, objects_array, objects_count, i);
 	}
 	return (shadow_ray.light_color);
 }

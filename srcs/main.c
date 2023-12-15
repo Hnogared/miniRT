@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/14 16:43:50 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/15 20:42:00 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,10 @@ int	init_data(t_data *data, const char *file_name)
 		return (errno);
 	status = check_scene(data, file_split);
 	if (status != 0 && status != RTSUCCESS)
-	{
-		free_str_tab(file_split);
-		return (status);
-	}
+		return (free_str_tab(file_split), status);
 	status = initialize_object(data, file_split);
 	if (status != 0 && status != RTSUCCESS)
-	{
-		free_str_tab(file_split);
-		return (status);
-	}
+		return (free_str_tab(file_split), status);
 	free_str_tab(file_split);
 	data->anti_aliasing = true;
 	return (initialize_mlx(data));

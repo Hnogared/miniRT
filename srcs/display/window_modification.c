@@ -6,42 +6,29 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 10:55:33 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/08 16:52:25 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/15 22:42:47 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
 /*
- * Function to get the color of a window image's pixel at x-y coordinates.
+ * Function to change the pixel_ratio of a pointed t_window structure.
+ * The parameter pointed window will be directly modified, the returned pointer
+ * is not necessary for all cases.
  *
- * @param t_window window	-> window structure to get the pixel from
- * @param int x				-> x coordinate of the pixel to retrieve
- * @param int y				-> y coordinate of the pixel to retrieve
- * @return size_t			-> the retrieved pixel color
+ * @param t_window *to_modify	-> pointer to the window to modify
+ * @param int pixel_ratio		-> the pointed window's new pixel ratio to set
+ * @return[redundant] t_window	-> instance of the newly modified window
  */
-size_t	get_window_pixel(t_window window, int x, int y)
+t_window	*set_window_pixel_ratio(t_window *to_modify, int pixel_ratio)
 {
-	return (get_image_pixel(window.image, x, y));
-}
-
-/*
- * Function to get the color of a window's virtual pixel at the x-y
- * coordinates of the virtual pixels grid.
- *
- * @param t_window window	-> window structure to get the pixel from
- * @param int x				-> x coordinate of the virtual pixel to retrieve
- * @param int y				-> y coordinate of the virtual pixel to retrieve
- * @return size_t			-> the retrieved pixel color
- */
-size_t	get_window_virtual_pixel(t_window window, int x, int y)
-{
-	int	virtual_x;
-	int	virtual_y;
-
-	virtual_x = x * window.pixel_ratio;
-	virtual_y = y * window.pixel_ratio;
-	return (get_window_pixel(window, virtual_x, virtual_y));
+	if (!to_modify || pixel_ratio <= 0)
+		return (NULL);
+	to_modify->pixel_ratio = pixel_ratio;
+	to_modify->virtual_width = to_modify->width / pixel_ratio;
+	to_modify->virtual_height = to_modify->height / pixel_ratio;
+	return (to_modify);
 }
 
 /*

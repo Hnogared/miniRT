@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/14 14:34:38 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/15 23:48:56 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@
 # include "miniRT_macro.h"
 # include "miniRT_struct.h"
 # include "miniRT_error.h"
+
+
+void	get_main_view_rays(t_data *data, bool needs_alloc);
+
+int		ft_min(int one, int two);
+t_basis	get_ortho_basis_from_x(t_vector xxx_orientation);
 
 /* parsing */
 int				check_file(char *scene);
@@ -171,14 +177,15 @@ t_rgb_color		rgb_color_mix(t_rgb_color start_color, t_rgb_color mix_color,
 					float ratio);
 
 /* window_handling.c */
+size_t			get_window_pixel(t_window window, int x, int y);
+size_t			get_window_virtual_pixel(t_window window, int x, int y);
 t_window		my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
 					char *title);
 void			my_destroy_window(void *mlx_ptr, t_window *window);
 void			redraw_window(void *mlx_ptr, t_window *window);
 
 /* window_modification.c */
-size_t			get_window_pixel(t_window window, int x, int y);
-size_t			get_window_virtual_pixel(t_window window, int x, int y);
+t_window		*set_window_pixel_ratio(t_window *to_modify, int pixel_ratio);
 void			set_window_pixel(t_window *window, int x, int y, size_t color);
 void			set_window_virtual_pixel(t_window *window, int x, int y,
 					size_t color);

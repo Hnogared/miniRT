@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 17:53:48 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/12 10:20:11 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/15 22:53:13 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ t_rgb_color	rgb_color_lighten(t_rgb_color start_color, t_rgb_color add_color,
 	unsigned char	green;
 	unsigned char	blue;
 
-	red = ft_min(start_color.red + (float) add_color.red * ratio, 255);
-	green = ft_min(start_color.green + (float) add_color.green * ratio, 255);
-	blue = ft_min(start_color.blue + (float) add_color.blue * ratio, 255);
+	red = ft_min((int)(start_color.red + (float) add_color.red * ratio), 255);
+	green = ft_min((int)(start_color.green + (float) add_color.green * ratio), 255);
+	blue = ft_min((int)(start_color.blue + (float) add_color.blue * ratio), 255);
 	return ((t_rgb_color){red, green, blue});
 }
 

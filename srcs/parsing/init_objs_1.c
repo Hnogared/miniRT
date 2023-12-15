@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/14 14:46:44 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/15 22:25:09 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ int	initialize_object(t_data *data, char **tab)
 	int	len;
 
 	len = 0;
-//	ft_bzero(data, sizeof(t_data));
 	while (tab[len])
 		len++;
 	data->scene_objects = (t_object *)ft_calloc(sizeof(t_object), len - 1);

@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/14 17:22:49 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/15 20:44:44 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,7 @@ typedef struct s_window
 /*
  * Structure holding all the program's data.
  *
+ * bool control_key			-> true while the left ctrl key is being pressed
  * bool anti_aliasing		-> set to true to enable anti_aliasing
  * unsigned short obj_count	-> number of objects in the scene
  * char *error_tab[]		-> pointer to all error strings (see miniRT_error.h)
@@ -283,6 +284,7 @@ typedef struct s_window
  */
 typedef struct s_data
 {
+	bool			control_key;
 	bool			anti_aliasing;
 	unsigned short	obj_count;
 	char			*error_tab[RTERR_COUNT];

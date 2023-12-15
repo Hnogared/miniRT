@@ -6,11 +6,43 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:47:12 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/14 17:03:23 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/15 22:39:54 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+/*
+ * Function to get the color of a window image's pixel at x-y coordinates.
+ *
+ * @param t_window window	-> window structure to get the pixel from
+ * @param int x				-> x coordinate of the pixel to retrieve
+ * @param int y				-> y coordinate of the pixel to retrieve
+ * @return size_t			-> the retrieved pixel color
+ */
+size_t	get_window_pixel(t_window window, int x, int y)
+{
+	return (get_image_pixel(window.image, x, y));
+}
+
+/*
+ * Function to get the color of a window's virtual pixel at the x-y
+ * coordinates of the virtual pixels grid.
+ *
+ * @param t_window window	-> window structure to get the pixel from
+ * @param int x				-> x coordinate of the virtual pixel to retrieve
+ * @param int y				-> y coordinate of the virtual pixel to retrieve
+ * @return size_t			-> the retrieved pixel color
+ */
+size_t	get_window_virtual_pixel(t_window window, int x, int y)
+{
+	int	virtual_x;
+	int	virtual_y;
+
+	virtual_x = x * window.pixel_ratio;
+	virtual_y = y * window.pixel_ratio;
+	return (get_window_pixel(window, virtual_x, virtual_y));
+}
 
 /*
  * Function to open and initialize a t_window structure.
@@ -41,9 +73,7 @@ t_window	my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
 	}
 	window.width = dimensions[0];
 	window.height = dimensions[1];
-	window.pixel_ratio = pixel_ratio;
-	window.virtual_width = window.width / pixel_ratio;
-	window.virtual_height = window.height / pixel_ratio;
+	set_window_pixel_ratio(&window, pixel_ratio);
 	window.draw_pos[0] = -1;
 	window.draw_pos[1] = 0;
 	return (window);

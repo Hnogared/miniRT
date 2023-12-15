@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:10:00 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 19:56:35 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/15 23:47:19 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_object	*set_object_coords(t_object *to_set, t_coords new_coords)
  * @param t_vector xxx_orientation	-> the new basis' x axis orientation
  * @return t_basis					-> the newly calculated orthogonal basis
  */
-static t_basis	get_ortho_basis_from_x(t_vector xxx_orientation)
+t_basis	get_ortho_basis_from_x(t_vector xxx_orientation)
 {
 	t_vector	z_axis;
 	t_basis		new;

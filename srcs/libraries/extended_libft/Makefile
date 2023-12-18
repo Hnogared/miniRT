@@ -6,19 +6,19 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 07:19:57 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/18 15:01:37 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/19 00:12:50 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:=	libextended_ft.a
 
-SRCS_DIR	:=	Srcs
+SRCS_DIR	:=	srcs
 PRINTF_DIR	:=	$(SRCS_DIR)/display/ft_printf
 GNL_DIR		:=	$(SRCS_DIR)/get_next_line
 
-OBJS_DIR	:=	Objs
+OBJS_DIR	:=	objs
 
-INCL_DIR	:=	Includes
+INCL_DIR	:=	includes
 
 VPATH	:=	$(SRCS_DIR)/char_checks:		\
 			$(SRCS_DIR)/display:			\
@@ -34,6 +34,7 @@ LIB_SRCS	:= 	ft_isalpha.c		\
 				ft_isalnum.c		\
 				ft_isprint.c		\
 				ft_isascii.c		\
+				ft_iswhitespace.c	\
 				ft_toupper.c		\
 				ft_tolower.c		\
 				ft_strlen.c			\
@@ -61,6 +62,7 @@ LIB_SRCS	:= 	ft_isalpha.c		\
 				ft_split.c			\
 				ft_split_set.c		\
 				ft_itoa.c			\
+				ft_itoab.c			\
 				ft_strmapi.c		\
 				ft_striteri.c		\
 				ft_putchar_fd.c		\

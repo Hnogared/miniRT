@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/18 12:11:02 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/19 00:14:33 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ LIBS_SRCS_DIR		:=	$(addprefix $(SRCS_DIR)/, libraries)
 MLX_SRCS_DIR		:=	$(addprefix $(LIBS_SRCS_DIR)/, minilibx-linux)
 MLX_INCL_SRCS_DIR	:=	$(MLX_SRCS_DIR)
 LFT_SRCS_DIR		:=	$(addprefix $(LIBS_SRCS_DIR)/, extended_libft)
-LFT_INCL_SRCS_DIR	:=	$(addprefix $(LFT_SRCS_DIR)/, Includes)
+LFT_INCL_SRCS_DIR	:=	$(addprefix $(LFT_SRCS_DIR)/, includes)
 
 # Object, archive and header files directories respectively #
 OBJS_DIR		:=	objs

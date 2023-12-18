@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/18 17:57:36 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/18 18:01:55 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	open_main_window(t_data *data, char *title)
 	return (data->main_window.ptr == NULL);
 }
 
+
+// TODO comment
 int	redraw_main_window(t_data *data)
 {
 	int			x;

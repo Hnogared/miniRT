@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 10:55:33 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/18 17:48:36 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/18 20:44:43 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,25 +94,19 @@ void	put_square_to_window(t_window *window, int start_coords[2], int size[2],
 	}
 }
 
+
 /*
  * TODO comment
  */
 void	put_percent_to_window(t_xvar *mlx_ptr, t_window window, int percentage,
 	int color)
 {
-	int		i;
+	size_t	itoa_len;
 	char	percentage_str[5];
-	char	*itoa_res;
 
 	percentage = percentage * (percentage >= 0 && percentage <= 100);
-	itoa_res = ft_itoa(percentage);
-	if (!itoa_res)
-		return ;
-	i = -1;
-	while (itoa_res[++i])
-		percentage_str[i] = itoa_res[i];
-	free(itoa_res);
-	percentage_str[i++] = '%';
-	percentage_str[i] = 0;
+	itoa_len = ft_itoab(percentage, percentage_str, 3);
+	percentage_str[itoa_len++] = '%';
+	percentage_str[itoa_len] = 0;
 	mlx_string_put(mlx_ptr, window.ptr, 10, 20, color, percentage_str);
 }

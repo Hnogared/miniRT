@@ -6,11 +6,41 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:31:00 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/18 15:07:24 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/18 15:15:57 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+t_coords	advance_on_vec_z_inf(t_coords dep, t_vector dir, int k)
+{
+	t_coords	new;
+
+	new.x = dep.x;
+	new.y = dep.y;
+	new.z = dep.z - k * dir.z;
+	return (new);
+}
+
+t_coords	advance_on_vec_z_sup(t_coords dep, t_vector dir, int k)
+{
+	t_coords	new;
+
+	new.x = dep.x;
+	new.y = dep.y;
+	new.z = dep.z + k * dir.z;
+	return (new);
+}
+
+t_coords	advance_on_vec_z(t_coords dep, t_coords touch)
+{
+	t_coords	new;
+
+	new.x = dep.x;
+	new.y = dep.y;
+	new.z = touch.z;
+	return (new);
+}
 
 t_coords	advance_on_vec(t_coords dep, t_vector dir, int k)
 {

@@ -55,7 +55,6 @@ void	touch_object(const t_data *data, t_ray *ray)
 		//printf("%d-", ray->res);
 		//ray->res = res;
 		//printf("sol = %f et res vaut : %d --", ray->sol, ray->res);
-		
 		i++;
 	}
 	if (ray->res >= 1)

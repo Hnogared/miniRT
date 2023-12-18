@@ -82,7 +82,7 @@ SRCS			:=	main.c					\
 					vect_utils_5.c			\
 					vect_calc.c				\
 					vect_try.c				\
-					vect_try_2.c			\
+					vect_try_3.c			\
 					set_view_rays.c			\
 					shadow_ray.c			\
 					raytrace.c

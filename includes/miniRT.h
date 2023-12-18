@@ -144,6 +144,9 @@ t_vector		calcul_ref(t_ray *ray, t_object obj, int res);
 void			ray_advance(const t_data *data, t_ray *ray);
 void			print_vec(t_vector vec);
 void			print_coord(t_coords cor);
+t_coords		advance_on_vec_z_sup(t_coords dep, t_vector dir, int k);
+t_coords		advance_on_vec_z_inf(t_coords dep, t_vector dir, int k);
+t_coords		advance_on_vec_z(t_coords dep, t_coords touch);
 
 /* vect_utils2.c */
 float			to_rad(float degree_angle);

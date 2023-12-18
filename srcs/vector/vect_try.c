@@ -91,8 +91,8 @@ void	try_light(t_ray *ray, t_object l, int i)
 	float	t;
 
 	a = pow(magnitude(ray->vector), 2);
-	b = 2 * prod_scal_vec(ray->vector, sous_vec_coord(ray->origin_coords, obj.coords));
-	c = pow(magnitude_coord(ray->origin_coords), 2) + pow(magnitude_coord(obj.coords), 2) - 2 * prod_scal_coord(obj.coords, ray->origin_coords) - pow((obj.special_data.light.radius), 2);
+	b = 2 * prod_scal_vec(ray->vector, sous_vec_coord(ray->origin_coords, l.coords));
+	c = pow(magnitude_coord(ray->origin_coords), 2) + pow(magnitude_coord(l.coords), 2) - 2 * prod_scal_coord(l.coords, ray->origin_coords) - pow((l.special_data.light.radius), 2);
 	delta = pow(b, 2) - 4 * a * c;
 	if (delta >= 0)
 	{

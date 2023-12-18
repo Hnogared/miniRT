@@ -66,7 +66,7 @@ int	main(int argc, char **argv)
 		return (status);
 	}
 	initialize_object(&data, tab);
-//	print_scene_objects(data.obj_count, data.scene_objects);
+	//print_scene_objects(data.obj_count, data.scene_objects);
 	initialize_mlx(&data);
 	free_str_tab(tab);
 	get_main_view_rays(&data, true);

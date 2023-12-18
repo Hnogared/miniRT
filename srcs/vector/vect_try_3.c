@@ -25,7 +25,7 @@ void	try_plan_cyl_inf(t_ray *ray, t_coords cp, t_vector n, t_object obj, int i)
 	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d) / prod_scal_vec(nn, ray->vector));
 	if (t >= 0)
 	{
-		if (ray->res == 0 && t != -1)
+		if (ray->res == 0 || t < ray->sol)
 		{
 			ray->coords = find_pos_touch(ray, t);
 			verif = dist(cp, ray->coords);
@@ -37,7 +37,7 @@ void	try_plan_cyl_inf(t_ray *ray, t_coords cp, t_vector n, t_object obj, int i)
 				//return (1);
 			}
 		}
-		else if (t < ray->sol && t != -1)
+		/*else if (t < ray->sol)
 		{
 			ray->coords = find_pos_touch(ray, t);
 			verif = dist(cp, ray->coords);
@@ -48,7 +48,7 @@ void	try_plan_cyl_inf(t_ray *ray, t_coords cp, t_vector n, t_object obj, int i)
 				ray->go = i;
 				//return (1);
 			}	
-		}
+		}*/
 	}
 	//return (0);
 }
@@ -159,7 +159,9 @@ void	try_cylinder_side(t_ray *ray, t_object obj, int i)
 		//return (try_cylinder_ext(ray, obj));
 		t = good_sol(delta, b, a);
 		//printf("sol vaut :%f\n", t);
-		ray->coords = find_pos_touch(ray, t);
+		if (t >= 0 && (ray->res == 0 || t < ray->sol))
+		{
+			ray->coords = find_pos_touch(ray, t - 0.1f);
 		//if (pow(dist(ray->coords, obj.coords), 2) <= 1250)
 		//	printf("ok pour une valeur de %f\n", pow(dist(ray->coords, obj.coords), 2));
 		//printf("dist test vaut :%f\n", pow(dist(ray->coords, obj.coords), 2));
@@ -175,11 +177,12 @@ void	try_cylinder_side(t_ray *ray, t_object obj, int i)
 			//printf("yes !!!!! sol =%f res = %d \n", ray->sol, ray->res);
 			//return (try_cylinder_ext(ray, obj));
 		}*/
-		if (ray->coords.z <= (obj.coords.z + obj.special_data.cylinder.height / 2) && ray->coords.z >= (obj.coords.z - obj.special_data.cylinder.height / 2))
-		{
-			ray->sol = t;
-			ray->res = 3;
-			ray->go = i;
+			if (ray->coords.z <= (obj.coords.z + obj.special_data.cylinder.height / 2) && ray->coords.z >= (obj.coords.z - obj.special_data.cylinder.height / 2))
+			{
+				ray->sol = t;
+				ray->res = 3;
+				ray->go = i;
+			}
 		}
 	}
 		//else

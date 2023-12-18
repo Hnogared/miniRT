@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:48 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 22:34:03 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/18 14:56:35 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@
 # endif
 
 /* MANDATORY */
+int		ft_min(int n1, int n2);
+int		ft_max(int n1, int n2);
+float	ft_fmin(float n1, float n2);
+float	ft_fmax(float n1, float n2);
+
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);

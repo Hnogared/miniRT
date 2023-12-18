@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/15 23:48:56 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/18 15:04:20 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 
 void	get_main_view_rays(t_data *data, bool needs_alloc);
 
-int		ft_min(int one, int two);
 t_basis	get_ortho_basis_from_x(t_vector xxx_orientation);
 
 /* parsing */

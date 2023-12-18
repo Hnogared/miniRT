@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 07:19:57 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/13 22:34:13 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/18 15:01:37 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ VPATH	:=	$(SRCS_DIR)/char_checks:		\
 			$(SRCS_DIR)/linked_lists:		\
 			$(SRCS_DIR)/memory_management:	\
 			$(SRCS_DIR)/strings:			\
+			$(SRCS_DIR)/numbers:			\
 			$(PRINTF_DIR):					\
 			$(GNL_DIR)
 
@@ -74,7 +75,11 @@ LIB_SRCS	:= 	ft_isalpha.c		\
 				ft_lstdelone.c		\
 				ft_lstclear.c		\
 				ft_lstiter.c		\
-				ft_lstmap.c
+				ft_lstmap.c			\
+				ft_min.c			\
+				ft_max.c			\
+				ft_fmin.c			\
+				ft_fmax.c
 
 PRINTF_SRCS	:=	ft_printf.c		\
 				ft_fprintf.c	\

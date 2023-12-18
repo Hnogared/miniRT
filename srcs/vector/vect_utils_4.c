@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:31:00 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/13 17:14:50 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/18 14:49:17 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ float	good_sol(float delta, float b, float a)
 		return (t1);
 	t2 = (-b - sqrt(delta)) / (2 * a);
 	if (t1 >= 0 && t2 >= 0)
-		return (ft_min(t1, t2));
+		return (ft_fmin(t1, t2));
 	if (t1 >= 0)
 		return (t1);
 	return (t2);

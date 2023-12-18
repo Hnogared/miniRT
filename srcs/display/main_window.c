@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/14 17:35:37 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/18 17:57:36 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,61 +38,31 @@ int	open_main_window(t_data *data, char *title)
 	return (data->main_window.ptr == NULL);
 }
 
-
-// TODO chose the right redraw_main_window
 int	redraw_main_window(t_data *data)
 {
-	bool		decrement;
 	int			x;
 	int			y;
 	size_t		color;
 	t_window	*main_window;
 
-	decrement = false;
 	main_window = &data->main_window;
-	x = main_window->draw_pos[0] + 1;
+	if (main_window->draw_pos[0] >= main_window->virtual_width
+		&& main_window->draw_pos[1] >= main_window->virtual_height)
+		return (0);
+	x = main_window->draw_pos[0];
 	y = main_window->draw_pos[1];
-//	ft_printf("%d\n", x);
-	if (x >= main_window->virtual_width)
-	{
-		y++;
-		if (y >= main_window->virtual_height)
-			return (0);
-		redraw_window(data->mlx_ptr, main_window);
-		decrement = true;
-		x = 0;
-	}
-//	ft_printf("%d %d\n", x, y);
 	color = raytrace(data, data->view_rays[y][x], data->anti_aliasing);
 	set_window_virtual_pixel(main_window, x, y, color);
-	main_window->draw_pos[0] = x - decrement;
+	if (++x >= main_window->virtual_width)
+	{
+		redraw_window(data->mlx_ptr, main_window);
+		put_percent_to_window(data->mlx_ptr, *main_window,
+			++y * 100 / main_window->virtual_height, 0xFF0000);
+		if (y >= main_window->virtual_height)
+			return (0);
+		x = 0;
+	}
+	main_window->draw_pos[0] = x;
 	main_window->draw_pos[1] = y;
-//	mlx_string_put(data->mlx_ptr, data->main_window.ptr, 10, 20, 0xFFFFFF,
-//		"THIS IS A TEST TKT");
 	return (0);
 }
-
-/*
-int	redraw_main_window(t_data *data)
-{
-	int		x;
-	int		y;
-	size_t	color;
-
-	x = 0;
-	y = 0;
-	while (y < data->main_window.virtual_height)
-	{
-		color = raytrace(data, data->view_rays[y][x], data->anti_aliasing);
-		set_window_virtual_pixel(&data->main_window, x, y, color);
-		x++;
-		if (x < data->main_window.virtual_width)
-			continue ;
-		redraw_window(data->mlx_ptr, &data->main_window);
-		x = 0;
-		y++;
-	}
-	mlx_string_put(data->mlx_ptr, data->main_window.ptr, 10, 20, 0xFFFFFF,
-		"THIS IS A TEST TKT");
-	return (0);
-}*/

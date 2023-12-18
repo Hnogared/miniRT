@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:13:45 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/15 22:45:28 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/18 17:11:48 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	key_press_handler(int keycode, t_data *data)
 		{
 			set_window_pixel_ratio(&data->main_window,
 				data->main_window.pixel_ratio + 5);
-			data->main_window.draw_pos[0] = -1;
+			data->main_window.draw_pos[0] = 0;
 			data->main_window.draw_pos[1] = 0;
 			get_main_view_rays(data, true);
 		}
@@ -76,7 +76,7 @@ int	key_press_handler(int keycode, t_data *data)
 		{
 			set_window_pixel_ratio(&data->main_window,
 				data->main_window.pixel_ratio - 5);
-			data->main_window.draw_pos[0] = -1;
+			data->main_window.draw_pos[0] = 0;
 			data->main_window.draw_pos[1] = 0;
 			get_main_view_rays(data, true);
 		}
@@ -90,13 +90,13 @@ int	key_press_handler(int keycode, t_data *data)
 			return (1);
 		move_object(keycode, camera, camera->local_basis, data->control_key);
 		set_view_rays(&data->view_rays, data->main_window, *camera, false);
-		data->main_window.draw_pos[0] = -1;
+		data->main_window.draw_pos[0] = 0;
 		data->main_window.draw_pos[1] = 0;
 	}
 	if (keycode == XK_F1)
 	{
 		data->anti_aliasing = !data->anti_aliasing;
-		data->main_window.draw_pos[0] = -1;
+		data->main_window.draw_pos[0] = 0;
 		data->main_window.draw_pos[1] = 0;
 	}
 	redraw_main_window(data);

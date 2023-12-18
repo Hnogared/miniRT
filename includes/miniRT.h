@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/18 15:04:20 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/18 17:49:17 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,8 @@ void			set_window_virtual_pixel(t_window *window, int x, int y,
 					size_t color);
 void			put_square_to_window(t_window *window, int start_coords[2],
 					int size[2], size_t color);
+void			put_percent_to_window(t_xvar *mlx_ptr, t_window window,
+					int percentage, int color);
 
 /* SRCS/RAYTRACING */
 /* get_view_rays.c */

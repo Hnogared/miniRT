@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:30:11 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/14 14:56:44 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/18 17:53:21 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,8 @@ char	*read_file(int fd)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (line[0] == '#')
-			continue ;
-		str = ft_free_and_join(str, line);
+		if (line[0] != '#')
+			str = ft_free_and_join(str, line);
 		free(line);
 		if (!str)
 			return (NULL);

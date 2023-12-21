@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/21 14:39:20 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:58:39 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,28 @@
 
 void	get_main_view_rays(t_data *data, bool needs_alloc);
 
+/* SRCS/BASIS */
+/* orthonormal_basis.c */
 t_basis	get_ortho_basis_from_x(t_vector xxx_orientation);
+t_basis	get_ortho_basis_from_y(t_vector y_orientation);
+t_basis	get_ortho_basis_from_z(t_vector z_orientation);
 
-/* parsing */
+
+/* SRCS/VECTOR */
+/* rotation.c */
+float			to_rad(float degree_angle);
+t_basis			axial_basis_rotation(t_basis to_rotate, float angle,
+					t_vector axis);
+t_vector		axial_vector_rotation(t_vector to_rotate, float angle,
+					t_vector axis);
+t_vector		matrix_vector_rotation(t_vector to_rotate,
+					float rot_matrix[3][3]);
+t_coords		matrix_coords_rotation(t_coords to_rotate,
+					float rot_matrix[3][3]);
+void			get_rotation_matrix(float rot_matrix_to_set[3][3],
+					t_vector vector1, t_vector vector2);
+
+/* SRCS/PARSING */
 int				check_file(char *scene);
 char			*get_file(const t_data *data, const char *scene);
 int				check_scene(t_data *data, char **tab);
@@ -147,19 +166,6 @@ void			print_coord(t_coords cor);
 t_coords		advance_on_vec_z_sup(t_coords dep, t_vector dir, int k);
 t_coords		advance_on_vec_z_inf(t_coords dep, t_vector dir, int k);
 t_coords		advance_on_vec_z(t_coords dep, t_coords touch);
-
-/* vect_utils2.c */
-float			to_rad(float degree_angle);
-t_vector		axial_vector_rotation(t_vector to_rotate, float angle,
-					t_vector axis);
-t_vector		matrix_vector_rotation(t_vector to_rotate,
-					float rot_matrix[3][3]);
-t_coords		matrix_coords_rotation(t_coords to_rotate,
-					float rot_matrix[3][3]);
-void			get_rotation_matrix(float rot_matrix_to_set[3][3],
-					t_vector vector1, t_vector vector2);
-t_basis			axial_basis_rotation(t_basis to_rotate, float angle,
-					t_vector axis);
 
 /* SRCS/DISPLAY */
 /* image_handling.c */

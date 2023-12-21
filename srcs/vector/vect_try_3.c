@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:19 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/21 16:04:36 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:22:07 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	try_plan_cyl_inf(t_ray *ray, t_coords cp, t_vector n, t_object obj, int i)
 	{
 		if (ray->res == 0 || t < ray->sol)
 		{
-			ray->coords = find_pos_touch(ray, t);
+			ray->coords = find_pos_touch(ray, t - 0.1f);
 			verif = dist(cp, ray->coords);
-			if (verif <= obj.special_data.cylinder.diameter / 2)
+			if (verif <= obj.special_data.cylinder.radius)
 			{
 				ray->sol = t;
 				ray->res = 5;
@@ -63,32 +63,19 @@ void	try_plan_cyl_sup(t_ray *ray, t_coords cp, t_vector n, t_object obj, int i)
 	nn = normalise(n);
 	d = -(nn.x * cp.x + nn.y * cp.y + nn.z * cp.z);
 	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d) / prod_scal_vec(nn, ray->vector));
-	t -= 0.1f;
 	if (t >= 0)
 	{
-		if (ray->res == 0 && t != -1)
+		if ((ray->res == 0 && t != -1) || (t < ray->sol && t != -1))
 		{
-			ray->coords = find_pos_touch(ray, t);
-			verif = dist(cp, ray->coords);
-			if (verif <= obj.special_data.cylinder.diameter / 2)
+			verif = dist(cp, find_pos_touch(ray, t));
+			if (verif <= obj.special_data.cylinder.radius)
 			{
+				ray->coords = find_pos_touch(ray, t - 0.1f);
 				ray->sol = t;
 				ray->res = 4;
 				ray->go = i;
 				//return (1);
 			}
-		}
-		else if (t < ray->sol && t != -1)
-		{
-			ray->coords = find_pos_touch(ray, t);
-			verif = dist(cp, ray->coords);
-			if (verif <= obj.special_data.cylinder.diameter / 2)
-			{
-				ray->sol = t;
-				ray->res = 4;
-				ray->go = i;
-				//return (1);
-			}	
 		}
 	}
 	//return (0);

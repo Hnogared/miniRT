@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/19 00:14:33 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/21 17:00:49 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,13 +40,14 @@ INCLUDES_DIR	:=	includes
 
 # Complementary paths to all source code files #
 VPATH			:=	$(SRCS_DIR):				\
-					$(SRCS_DIR)/object:			\
+					$(SRCS_DIR)/basis:			\
 					$(SRCS_DIR)/display:		\
+					$(SRCS_DIR)/object:			\
 					$(SRCS_DIR)/parsing:		\
 					$(SRCS_DIR)/user_interface:	\
+					$(SRCS_DIR)/utils:			\
 					$(SRCS_DIR)/vector:			\
-					$(SRCS_DIR)/raytracing:		\
-					$(SRCS_DIR)/utils
+					$(SRCS_DIR)/raytracing
 
 # Source files names #
 SRCS			:=	main.c					\
@@ -79,13 +80,14 @@ SRCS			:=	main.c					\
 					vect_utils_2.c			\
 					vect_utils_3.c			\
 					vect_utils_4.c			\
-					vect_utils_5.c			\
+					rotation.c				\
 					vect_calc.c				\
 					vect_try.c				\
 					vect_try_3.c			\
 					set_view_rays.c			\
 					shadow_ray.c			\
-					raytrace.c
+					raytrace.c				\
+					orthonormal_basis.c
 
 
 ## Libraries files ##

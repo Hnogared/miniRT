@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 12:50:45 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/21 14:38:49 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:31:36 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@ t_vector	prod_vec_float(t_vector a, float k)
 	c.y = a.y * k;
 	c.z = a.z * k;
 	return (c);
+}
+
+t_basis	axial_basis_rotation(t_basis to_rotate, float angle, t_vector axis)
+{
+	t_basis	rotated;
+
+	rotated = to_rotate;
+	if (prod_scal_vec(to_rotate.x, axis) != 1.0f)
+		rotated.x = axial_vector_rotation(to_rotate.x, angle, axis);
+	if (prod_scal_vec(to_rotate.y, axis) != 1.0f)
+		rotated.y = axial_vector_rotation(to_rotate.y, angle, axis);
+	if (prod_scal_vec(to_rotate.z, axis) != 1.0f)
+		rotated.z = axial_vector_rotation(to_rotate.z, angle, axis);
+	return (rotated);
 }
 
 /*
@@ -152,18 +166,4 @@ void	get_rotation_matrix(float rot_matrix_to_set[3][3], t_vector vector1,
 	rot_matrix_to_set[2][0] = (axis.x * axis.z * coeff) - axis.y;
 	rot_matrix_to_set[2][1] = (axis.y * axis.z * coeff) + axis.x;
 	rot_matrix_to_set[2][2] = (axis.z * axis.z * coeff) + cos;
-}
-
-t_basis	axial_basis_rotation(t_basis to_rotate, float angle, t_vector axis)
-{
-	t_basis	rotated;
-
-	rotated = to_rotate;
-	if (prod_scal_vec(to_rotate.x, axis) != 1.0f)
-		rotated.x = axial_vector_rotation(to_rotate.x, angle, axis);
-	if (prod_scal_vec(to_rotate.y, axis) != 1.0f)
-		rotated.y = axial_vector_rotation(to_rotate.y, angle, axis);
-	if (prod_scal_vec(to_rotate.z, axis) != 1.0f)
-		rotated.z = axial_vector_rotation(to_rotate.z, angle, axis);
-	return (rotated);
 }

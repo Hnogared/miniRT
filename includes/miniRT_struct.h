@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/18 16:51:05 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/21 14:49:46 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ typedef struct s_plane
 typedef struct s_cylinder
 {
 	float		diameter;
+	float		radius;
 	float		height;
 	t_rgb_color	color;
 }				t_cylinder;

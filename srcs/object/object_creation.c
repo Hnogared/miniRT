@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:18:49 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 19:53:23 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/21 14:51:02 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ t_object	*new_cylinder(t_object *to_set, t_coords coords, float diameter,
 	set_object_coords(to_set, coords);
 	set_object_orientation(to_set, (t_vector){0, 0, 0});
 	to_set->special_data.cylinder.diameter = diameter;
+	to_set->special_data.cylinder.radius = diameter / 2;
 	to_set->special_data.cylinder.height = height;
 	to_set->ft_get_color = &get_cylinder_color;
 	to_set->ft_print_data = &print_cylinder_data;

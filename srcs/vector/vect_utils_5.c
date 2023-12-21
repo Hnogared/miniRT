@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 12:50:45 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/05 10:57:13 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/21 14:38:49 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,19 @@ t_vector	axial_vector_rotation(t_vector to_rotate, float degree_angle,
 t_vector	matrix_vector_rotation(t_vector to_rotate, float rot_matrix[3][3])
 {
 	t_vector	res;
+
+	res.x = rot_matrix[0][0] * to_rotate.x + rot_matrix[0][1] * to_rotate.y
+		+ rot_matrix[0][2] * to_rotate.z;
+	res.y = rot_matrix[1][0] * to_rotate.x + rot_matrix[1][1] * to_rotate.y
+		+ rot_matrix[1][2] * to_rotate.z;
+	res.z = rot_matrix[2][0] * to_rotate.x + rot_matrix[2][1] * to_rotate.y
+		+ rot_matrix[2][2] * to_rotate.z;
+	return (res);
+}
+
+t_coords	matrix_coords_rotation(t_coords to_rotate, float rot_matrix[3][3])
+{
+	t_coords	res;
 
 	res.x = rot_matrix[0][0] * to_rotate.x + rot_matrix[0][1] * to_rotate.y
 		+ rot_matrix[0][2] * to_rotate.z;

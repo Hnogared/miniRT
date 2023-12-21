@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:18:25 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/13 22:57:36 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:08:39 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 #  define PI	3.141592654
 # endif
 
-# define RT_MAX_BOUNCES	2
+# define RT_MAX_BOUNCES	1
 
 # define RT_BUFFER_SIZE 1000
 

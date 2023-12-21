@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:19 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/21 16:22:07 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/21 18:17:14 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,10 @@ void	try_cylinder_side(t_ray *ray, t_object obj, int i)
 //t				ray->res = 3;
 //t				ray->go = i;
 //t			}
-			if (aligned_ray.coords.z <= (obj.coords.z + obj.special_data.cylinder.height / 2) && aligned_ray.coords.z >= (obj.coords.z - obj.special_data.cylinder.height / 2))
+			if (aligned_ray.coords.z
+				<= (obj.coords.z + obj.special_data.cylinder.height / 2)
+				&& aligned_ray.coords.z
+				>= (obj.coords.z - obj.special_data.cylinder.height / 2))
 			{
 				aligned_ray.sol = t;
 				aligned_ray.res = 3;

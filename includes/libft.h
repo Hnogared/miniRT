@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:48 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/19 00:17:13 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/19 00:19:24 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
  * @param int c	-> character to check
  * @return int	-> 1 if true | 0 if false
  */
-int	ft_isalnum(int c);
+int		ft_isalnum(int c);
 
 /*
  * Function to check if a character is alphabetical [a-zA-Z].
@@ -43,7 +43,7 @@ int	ft_isalnum(int c);
  * @param int c	-> character to check
  * @return int	-> 1 if true | 0 if false
  */
-int	ft_isalpha(int c);
+int		ft_isalpha(int c);
 
 /*
  * Function to check if a character is within the ascii table.
@@ -51,7 +51,7 @@ int	ft_isalpha(int c);
  * @param int c	-> character to check
  * @return int	-> 1 if true | 0 if false
  */
-int	ft_isascii(int c);
+int		ft_isascii(int c);
 
 /*
  * Function to check if a character is a number [0-9].
@@ -59,7 +59,7 @@ int	ft_isascii(int c);
  * @param int c	-> character to check
  * @return int	-> 1 if true | 0 if false
  */
-int	ft_isdigit(int c);
+int		ft_isdigit(int c);
 
 /*
  * Function to check if a character is displayable.
@@ -67,7 +67,7 @@ int	ft_isdigit(int c);
  * @param int c	-> character to check
  * @return int	-> 1 if true | 0 if false
  */
-int	ft_isprint(int c);
+int		ft_isprint(int c);
 
 /*
  * Function to check if a character is a whitespace.
@@ -75,7 +75,7 @@ int	ft_isprint(int c);
  * @param int c	-> character to check
  * @return int	-> 1 if true | 0 if false
  */
-int	ft_iswhitespace(int c);
+int		ft_iswhitespace(int c);
 
 /*
  * Function to change an alphabetical character to the lowercase.
@@ -83,7 +83,7 @@ int	ft_iswhitespace(int c);
  * @param int c	-> character to change
  * @return int	-> the resulting character
  */
-int	ft_tolower(int c);
+int		ft_tolower(int c);
 
 /*
  * Function to change an alphabetical character to the uppercase.
@@ -91,7 +91,7 @@ int	ft_tolower(int c);
  * @param int c	-> character to change
  * @return int	-> the resulting character
  */
-int	ft_toupper(int c);
+int		ft_toupper(int c);
 
 /*
  * Function to convert a string into a float.
@@ -114,7 +114,7 @@ float	ft_atof(const char *nptr);
  * @param const char *nptr	-> pointer to the strong to convert
  * @return int				-> the resulting converted integer
  */
-int	ft_atoi(const char *nptr);
+int		ft_atoi(const char *nptr);
 
 /*
  * Function to convert an integer into an allocated string.

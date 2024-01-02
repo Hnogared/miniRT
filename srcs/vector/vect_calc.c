@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:35:57 by tlorne            #+#    #+#             */
-/*   Updated: 2023/11/29 16:35:58 by tlorne           ###   ########.fr       */
+/*   Updated: 2023/12/18 15:53:38 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ t_vector	cal_sphere(t_ray *ray, t_object sphere)
 
 	n = sous_vec_coord(ray->coords, sphere.coords);
 	n = normalise(n);
-	if (dist(sphere.coords, ray->origin_coords) < sphere.special_data.sphere.diameter / 2)
-		n = prod_vec_float(n, -1);
+	if (dist(sphere.coords, ray->origin_coords)
+		< sphere.special_data.sphere.radius)
+		n = prod_vec_int(n, -1);
 	r = calc_ref_form(ray->vector, n);
 	return (r);
 }

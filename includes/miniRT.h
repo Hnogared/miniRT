@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/13 13:42:26 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:58:39 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,33 @@
 # include "miniRT_struct.h"
 # include "miniRT_error.h"
 
-/* parsing */
+
+void	get_main_view_rays(t_data *data, bool needs_alloc);
+
+/* SRCS/BASIS */
+/* orthonormal_basis.c */
+t_basis	get_ortho_basis_from_x(t_vector xxx_orientation);
+t_basis	get_ortho_basis_from_y(t_vector y_orientation);
+t_basis	get_ortho_basis_from_z(t_vector z_orientation);
+
+
+/* SRCS/VECTOR */
+/* rotation.c */
+float			to_rad(float degree_angle);
+t_basis			axial_basis_rotation(t_basis to_rotate, float angle,
+					t_vector axis);
+t_vector		axial_vector_rotation(t_vector to_rotate, float angle,
+					t_vector axis);
+t_vector		matrix_vector_rotation(t_vector to_rotate,
+					float rot_matrix[3][3]);
+t_coords		matrix_coords_rotation(t_coords to_rotate,
+					float rot_matrix[3][3]);
+void			get_rotation_matrix(float rot_matrix_to_set[3][3],
+					t_vector vector1, t_vector vector2);
+
+/* SRCS/PARSING */
 int				check_file(char *scene);
-char			*get_file(t_data *data, char *scene);
+char			*get_file(const t_data *data, const char *scene);
 int				check_scene(t_data *data, char **tab);
 int				check_numbers(char ***block);
 int				check_num_objects(char ***block);
@@ -63,10 +87,12 @@ void			free_str_tab(char **str_tab);
 
 /* SRCS/OBJECT_MANAGEMENT */
 /* get_object_color.c */
-t_rgb_color		get_uncolored_color(t_special_data special_data);
+t_rgb_color		get_uncolored_color(__attribute__((unused))
+					t_special_data special_data);
 t_rgb_color		get_sphere_color(t_special_data special_data);
 t_rgb_color		get_plane_color(t_special_data special_data);
 t_rgb_color		get_cylinder_color(t_special_data special_data);
+t_rgb_color		get_light_color(t_special_data special_data);
 
 /* object_creation.c */
 t_object		*new_camera(t_object *to_set, t_coords coords, int fov);
@@ -124,7 +150,8 @@ float			prod_scal_vec_coord(t_vector a, t_coords b);
 float			magnitude_coord(t_coords n);
 void			try_sphere(t_ray *ray, t_object obj, int i);
 void			try_plan(t_ray *ray, t_object plan, int i);
-void			try_plan_cyl(t_ray *ray, t_coords cp, t_vector n, t_object obj, int i);
+void			try_plan_cyl(t_ray *ray, t_coords cp, t_vector n, t_object obj,
+					int i);
 void			try_cylinder_ext(t_ray *ray, t_object obj, int i);
 void			try_cylinder_side(t_ray *ray, t_object obj, int i);
 void			try_light(t_ray *ray, t_object l, int i);
@@ -133,24 +160,12 @@ t_vector		cal_plan(t_ray *ray, t_object plan);
 t_vector		cal_cylinder_ext(t_ray *ray, t_object cylindre, int res);
 t_vector		cal_cylinder_side(t_ray *ray, t_object cylindre);
 t_vector		calcul_ref(t_ray *ray, t_object obj, int res);
-void			ray_advance(t_data *data, t_ray *ray);
+void			ray_advance(const t_data *data, t_ray *ray);
 void			print_vec(t_vector vec);
 void			print_coord(t_coords cor);
 t_coords		advance_on_vec_z_sup(t_coords dep, t_vector dir, int k);
 t_coords		advance_on_vec_z_inf(t_coords dep, t_vector dir, int k);
 t_coords		advance_on_vec_z(t_coords dep, t_coords touch);
-
-
-/* vect_utils2.c */
-float			to_rad(float degree_angle);
-t_vector		axial_vector_rotation(t_vector to_rotate, float angle,
-					t_vector axis);
-t_vector		matrix_vector_rotation(t_vector to_rotate,
-					float rot_matrix[3][3]);
-void			get_rotation_matrix(float rot_matrix_to_set[3][3],
-					t_vector vector1, t_vector vector2);
-t_basis			axial_basis_rotation(t_basis to_rotate, float angle,
-					t_vector axis);
 
 /* SRCS/DISPLAY */
 /* image_handling.c */
@@ -166,25 +181,28 @@ int				redraw_main_window(t_data *data);
 int				ft_min(int num1, int num2);
 size_t			rgb_to_sizet(t_rgb_color color);
 size_t			sizet_color_mix(size_t color1, size_t color2, float ratio);
-t_rgb_color		rgb_color_lighten(t_rgb_color start_color, t_rgb_color add_color,
-					float ratio);
+t_rgb_color		rgb_color_lighten(t_rgb_color start_color,
+					t_rgb_color add_color, float ratio);
 t_rgb_color		rgb_color_mix(t_rgb_color start_color, t_rgb_color mix_color,
 					float ratio);
 
 /* window_handling.c */
+size_t			get_window_pixel(t_window window, int x, int y);
+size_t			get_window_virtual_pixel(t_window window, int x, int y);
 t_window		my_new_window(void *mlx_ptr, int dimensions[2], int pixel_ratio,
-	char *title);
+					char *title);
 void			my_destroy_window(void *mlx_ptr, t_window *window);
 void			redraw_window(void *mlx_ptr, t_window *window);
 
 /* window_modification.c */
-size_t			get_window_pixel(t_window window, int x, int y);
-size_t			get_window_virtual_pixel(t_window window, int x, int y);
+t_window		*set_window_pixel_ratio(t_window *to_modify, int pixel_ratio);
 void			set_window_pixel(t_window *window, int x, int y, size_t color);
 void			set_window_virtual_pixel(t_window *window, int x, int y,
 					size_t color);
 void			put_square_to_window(t_window *window, int start_coords[2],
 					int size[2], size_t color);
+void			put_percent_to_window(t_xvar *mlx_ptr, t_window window,
+					int percentage, int color);
 
 /* SRCS/RAYTRACING */
 /* get_view_rays.c */
@@ -193,12 +211,13 @@ int				set_view_rays(t_ray ***rays_tab, t_window window,
 					t_object camera, bool needs_alloc);
 
 /* raytrace.c */
-size_t			test_grid(t_data *data, int x, int y);
-size_t			raytrace(t_data *data, t_ray ray);
+size_t			test_grid(__attribute__((unused)) const t_data *data, int x,
+					int y);
+size_t			raytrace(const t_data *data, t_ray ray, bool anti_aliasing);
 
 /* shadow_ray.c */
-t_rgb_color	shadow_ray(t_coords start_coords, t_object *objects_array,
-	unsigned short objects_count, int touched_obj_id);
+t_rgb_color		shadow_ray(t_coords start_coords, const t_object *objects_array,
+					unsigned short objects_count);
 
 /* SRCS/USER_INTERFACE */
 /* keyboard.c */

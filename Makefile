@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/13 12:16:50 by hnogared         ###   ########.fr        #
+#    Updated: 2023/12/21 17:00:49 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,12 @@ include $(MK_INCLUDES_DIR)/Makefile.graphical_variables
 NAME			:=	miniRT
 
 # Source code directories #
-SRCS_DIR		:=	srcs
-LIBS_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, libraries)
-MLX_SRCS_DIR	:=	$(addprefix $(LIBS_SRCS_DIR)/, minilibx-linux)
-LFT_SRCS_DIR	:=	$(addprefix $(LIBS_SRCS_DIR)/, extended_libft)
+SRCS_DIR			:=	srcs
+LIBS_SRCS_DIR		:=	$(addprefix $(SRCS_DIR)/, libraries)
+MLX_SRCS_DIR		:=	$(addprefix $(LIBS_SRCS_DIR)/, minilibx-linux)
+MLX_INCL_SRCS_DIR	:=	$(MLX_SRCS_DIR)
+LFT_SRCS_DIR		:=	$(addprefix $(LIBS_SRCS_DIR)/, extended_libft)
+LFT_INCL_SRCS_DIR	:=	$(addprefix $(LFT_SRCS_DIR)/, includes)
 
 # Object, archive and header files directories respectively #
 OBJS_DIR		:=	objs
@@ -38,13 +40,14 @@ INCLUDES_DIR	:=	includes
 
 # Complementary paths to all source code files #
 VPATH			:=	$(SRCS_DIR):				\
-					$(SRCS_DIR)/object:			\
+					$(SRCS_DIR)/basis:			\
 					$(SRCS_DIR)/display:		\
+					$(SRCS_DIR)/object:			\
 					$(SRCS_DIR)/parsing:		\
 					$(SRCS_DIR)/user_interface:	\
+					$(SRCS_DIR)/utils:			\
 					$(SRCS_DIR)/vector:			\
-					$(SRCS_DIR)/raytracing:		\
-					$(SRCS_DIR)/utils
+					$(SRCS_DIR)/raytracing
 
 # Source files names #
 SRCS			:=	main.c					\
@@ -77,18 +80,20 @@ SRCS			:=	main.c					\
 					vect_utils_2.c			\
 					vect_utils_3.c			\
 					vect_utils_4.c			\
-					vect_utils_5.c			\
+					rotation.c				\
 					vect_calc.c				\
 					vect_try.c				\
 					vect_try_3.c			\
 					set_view_rays.c			\
 					shadow_ray.c			\
-					raytrace.c
+					raytrace.c				\
+					orthonormal_basis.c
 
 
 ## Libraries files ##
 # Minilibx and libft header files #
 MLX_INCLUDES	:=	mlx.h mlx_int.h
+LFT_INCLUDES	:=	libft.h
 
 
 # Minilibx and libft archive files #
@@ -115,11 +120,12 @@ OBJS			:=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
 ## Libraries header files ##
 # Minilibx and libft header files source path #
-MLX_INCL_SRCS	:=	$(addprefix $(MLX_SRCS_DIR)/, $(MLX_INCLUDES))
+MLX_INCL_SRCS	:=	$(addprefix $(MLX_INCL_SRCS_DIR)/, $(MLX_INCLUDES))
+LFT_INCL_SRCS	:=	$(addprefix $(LFT_INCL_SRCS_DIR)/, $(LFT_INCLUDES))
 
 # Minilibx and libft header files separate dependencies #
 MLX_INCL_DEPEND	:=	$(addprefix $(INCLUDES_DIR)/, $(MLX_INCLUDES))
-
+LFT_INCL_DEPEND	:=	$(addprefix $(INCLUDES_DIR)/, $(LFT_INCLUDES))
 
 # Minilibx and libft header files dependencies for compilation #
 INCL_DEPEND		:=	$(MLX_INCL_DEPEND) $(LFT_INCL_DEPEND)
@@ -197,7 +203,7 @@ $(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS) | print_flags
 		"$(THEME_COLOR)Creating executable \ \ : $(NAME)$(ANSI_NC)")
 
 # Compile an object file depending on its source file and the object directory #
-$(OBJS_DIR)/%.o:	%.c | get_obj_load $(OBJS_DIR) print_flags
+$(OBJS_DIR)/%.o:	%.c $(ARCHS_DEPEND) $(INCL_DEPEND) | get_obj_load $(OBJS_DIR) print_flags
 	$(call custom_loading_command,									\
 		$(CC) $(CFLAGS) -c $< -o $@ $(AUTO_IFLAGS) $(AUTO_LFLAGS),	\
 		"$(THEME_COLOR)Compiling object file : $@$(ANSI_NC)")
@@ -207,8 +213,8 @@ $(OBJS_DIR)/%.o:	%.c | get_obj_load $(OBJS_DIR) print_flags
 # Calculate the amount of object files to compile for the loading bar #
 get_obj_load:
 ifndef CALL_MAKE
-	$(eval LOAD := $(shell $(MAKE) -n SERIOUS=TRUE CALL_MAKE=0 | grep '^gcc'\
-		 | grep -v 'miniRT' | wc -l))
+	$(eval LOAD := $(shell $(MAKE) $(MAKECMDGOALS) -n SERIOUS=TRUE CALL_MAKE=0\
+		| grep '^gcc' | grep -v 'miniRT' | wc -l))
 	$(eval PROGRESS := 0)
 endif
 
@@ -287,8 +293,14 @@ $(MLX_SRCS_DIR)/%.a:
 # Copy the minilibx archive into the archive directory #
 # Depends on the minilibx source archive and the archive directory #
 $(MLX_ARCHS_DEPEND):	$(MLX_ARCHS_SRCS) | $(ARCHIVES_DIR)
-	cp $^ $(ARCHIVES_DIR)
+	$(call custom_command, cp $^ $(ARCHIVES_DIR),\
+		"$(THEME_COLOR)Retrieved the minilibx $(MLX_ARCHIVES) files.$(ANSI_NC)")
 
+# Copy the minilibx header files into the includes directory #
+# Depends on the minilibx source include files #
+$(MLX_INCL_DEPEND):	$(MLX_INCL_SRCS)
+	$(call custom_command, cp $^ $(INCLUDES_DIR),\
+		"$(THEME_COLOR)Retrieved the minilibx $(MLX_INCLUDES) files.$(ANSI_NC)")
 
 ## Libft making rules ##
 # Call the libft makefile to make #
@@ -306,7 +318,14 @@ $(LFT_SRCS_DIR)/%.a:
 # Copy the libft archive into the archive directory #
 # Depends on the libft source archive and the archive directory #
 $(LFT_ARCHS_DEPEND):	$(LFT_ARCHS_SRCS) | $(ARCHIVES_DIR)
-	cp $^ $(ARCHIVES_DIR)
+	$(call custom_command, cp $^ $(ARCHIVES_DIR),\
+		"$(THEME_COLOR)Retrieved the libft $(LFT_ARCHIVES) files.$(ANSI_NC)")
+
+# Copy the libft header files into the includes directory #
+# Depends on the libft source include files #
+$(LFT_INCL_DEPEND):	$(LFT_INCL_SRCS)
+	$(call custom_command, cp $^ $(INCLUDES_DIR),\
+		"$(THEME_COLOR)Retrieved the libft $(LFT_INCLUDES) files.$(ANSI_NC)")
 
 
 # * MISCELANEOUS RULES ******************************************************* #
@@ -315,7 +334,7 @@ $(LFT_ARCHS_DEPEND):	$(LFT_ARCHS_SRCS) | $(ARCHIVES_DIR)
 help:
 	@echo "\nMiniRT Makefile help - Available targets\n";				\
 	echo "$(ANSI_BOLD)BASIC TARGETS$(ANSI_NC)";							\
-	echo "\tall  re  help  test";										\
+	echo "\tall  re  help  test  norm";										\
 	echo "$(ANSI_BOLD)FILES TARGETS$(ANSI_NC)";							\
 	echo -n "\t$(NAME)";												\
 	echo -n "$(OBJS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).o  ";		\
@@ -336,10 +355,13 @@ help:
 test:
 	@bash tester.sh
 
+norm:
+	@bash normer.sh
+
 # **************************************************************************** #
 
 # Ignore the following files during rule completeness check
 .PHONY:	all clean fclean lclean dclean libft libft-% minilibx minilibx-% re	\
-		help intro
+		help norm intro
 
 # **************************************************************************** #

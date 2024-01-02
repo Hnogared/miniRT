@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/13 11:21:26 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/21 14:49:46 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,17 @@ typedef struct s_camera
 /*
  * Light special data structure used to complement the t_object structure.
  *
- * float brightness	-> brightness ratio of the light (0.0-1.0)
- * float diameter	-> diameter of the light source
- * float radius		-> diameter of the light source
+ * float brightness		-> brightness ratio of the light (0.0-1.0)
+ * float diameter		-> diameter of the light source
+ * float radius			-> diameter of the light source
+ * t_rgb_color color	-> rgb color of the light source
  */
 typedef struct s_light
 {
 	float		brightness;
 	float		diameter;
 	float		radius;
+	t_rgb_color	color;
 }				t_light;
 
 /*
@@ -146,6 +148,7 @@ typedef struct s_plane
 typedef struct s_cylinder
 {
 	float		diameter;
+	float		radius;
 	float		height;
 	t_rgb_color	color;
 }				t_cylinder;
@@ -250,7 +253,7 @@ typedef struct s_image
  * int pixel_ratio		-> the size of one virtual pixel of the window (ex:2x2px)
  * int virtual_width	-> the amount of virtual pixels at the window's width
  * int virtual_height	-> the amount of virtual pixels at the window's height
- * bool reset			-> true if the window needs to be reset
+ * int draw_pos[2]		-> last pixel drawn on screen at x-y coordinates
  * t_image image		-> the window's corresponding image structure for display
  * void *ptr			-> pointer to the window memory block
  */
@@ -261,7 +264,7 @@ typedef struct s_window
 	int		pixel_ratio;
 	int		virtual_width;
 	int		virtual_height;
-///	bool	reset;
+	int		draw_pos[2];
 	t_image	image;
 	void	*ptr;
 }				t_window;
@@ -269,6 +272,8 @@ typedef struct s_window
 /*
  * Structure holding all the program's data.
  *
+ * bool control_key			-> true while the left ctrl key is being pressed
+ * bool anti_aliasing		-> set to true to enable anti_aliasing
  * unsigned short obj_count	-> number of objects in the scene
  * char *error_tab[]		-> pointer to all error strings (see miniRT_error.h)
  * t_window main_window		-> the main window structure to display on the screen
@@ -280,6 +285,8 @@ typedef struct s_window
  */
 typedef struct s_data
 {
+	bool			control_key;
+	bool			anti_aliasing;
 	unsigned short	obj_count;
 	char			*error_tab[RTERR_COUNT];
 	t_window		main_window;

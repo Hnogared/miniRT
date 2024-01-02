@@ -6,13 +6,13 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:38:24 by motoko            #+#    #+#             */
-/*   Updated: 2023/11/29 17:43:16 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/14 14:39:16 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-int	ft_perror(char *prefix, char *error_tab[RTERR_COUNT], int errnum)
+int	ft_perror(const char *prefix, char *const error_tab[RTERR_COUNT], int errnum)
 {
 	ft_fprintf(STDERR_FILENO, PROG_NAME);
 	if (errnum < FIRST_ERRVAL)
@@ -46,9 +46,10 @@ void	init_error_tab(char *error_tab[RTERR_COUNT])
 	error_tab[14] = RTERR_NUM_MSG;
 	error_tab[15] = RTERR_NUM_COMMA_MSG;
 	error_tab[16] = RTERR_NUM_DOT_MSG;
+	error_tab[17] = RTERR_OPEN_WIN_MSG;
 }
 
-void	ft_panic(t_data *data, char *prefix, int errnum)
+void	ft_panic(const t_data *data, const char *prefix, int errnum)
 {
 	exit(ft_perror(prefix, data->error_tab, errnum));
 }
@@ -71,7 +72,7 @@ void	free_parsing_and_exit(t_data *data, char ***block)
 }
 */
 
-void	err(char *str)
+void	err(const char *str)
 {
 	printf("%s\n", str);
 	exit(0);

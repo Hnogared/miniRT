@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:03:44 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/03 13:01:40 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/21 15:52:47 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	check_scene(t_data *data, char **tab)
 	block = malloc((len + 1) * sizeof(*block));
 	while (tab[i])
 	{
-		block[i] = ft_split(tab[i], ' ');
+		block[i] = ft_split_set(tab[i], " \t\n\v\f\r");
 		i++;
 	}
 	block[i] = NULL;

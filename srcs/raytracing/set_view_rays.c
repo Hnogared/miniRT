@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/12 11:17:16 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/14 11:51:18 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ t_ray	new_ray(t_basis basis, t_coords origin_coords)
  *
  * @parent_func set_view_rays	-> function to allocate/generate a view's rays
  */
-static void	set_rays_tab(t_ray ***rays_tab, int tab_sizes[2], t_basis basis,
-	t_object camera)
+static void	set_rays_tab(t_ray ***rays_tab, const int tab_sizes[2],
+	t_basis basis, t_object camera)
 {
 	int		x;
 	int		y;
@@ -78,7 +78,7 @@ static void	set_rays_tab(t_ray ***rays_tab, int tab_sizes[2], t_basis basis,
  *
  * @parent_func set_view_rays	-> function to allocate/generate a view's rays
  */
-static int	alloc_rays_tab(t_ray ***rays_tab, int tab_sizes[2])
+static int	alloc_rays_tab(t_ray ***rays_tab, const int tab_sizes[2])
 {
 	int	i;
 

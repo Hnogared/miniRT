@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:48:18 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/13 14:00:06 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:13:11 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	do_touch(t_ray *ray, t_object obj, int i)
 }
 
 //ray.objects_touch[ray.s++] = NULL;
-void	touch_object(t_data *data, t_ray *ray)
+void	touch_object(const t_data *data, t_ray *ray)
 {
 	unsigned short	i;
 	//int				res;
@@ -64,12 +64,12 @@ void	touch_object(t_data *data, t_ray *ray)
 		//printf("ca touche !!!!!!!!\n");
 		//printf("avant changement, vecteur rayon vaut\n");
 		//print_vec(ray->vector);
-		ray->vector = calcul_ref(ray, data->scene_objects[ray->go], ray->res);
 		if (!ray->nb_ref)
 		{
 			ray->light_color = shadow_ray(ray->coords, data->scene_objects,
-					data->obj_count, ray->go);
+					data->obj_count);
 		}
+		ray->vector = calcul_ref(ray, data->scene_objects[ray->go], ray->res);
 		//printf("apres changement, vecteur rayon vaut\n");
 		//print_vec(ray->vector);
 		ray->origin_coords = ray->coords;
@@ -87,7 +87,7 @@ void	touch_object(t_data *data, t_ray *ray)
 	return ;
 }
 
-void	ray_advance(t_data *data, t_ray *ray)
+void	ray_advance(const t_data *data, t_ray *ray)
 {
 	ray->touch = 1;
 	ray->nb_ref = 0;

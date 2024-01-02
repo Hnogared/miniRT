@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/09 18:53:37 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/21 15:55:01 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	obj_pl(t_data *data, char *s, int *pos)
 	char	**vector;
 	char	**color;
 
-	args = ft_split(s, ' ');
+	args = ft_split_set(s, " \t\n\v\f\r");
 	coords = ft_split(args[1], ',');
 	vector = ft_split(args[2], ',');
 	color = ft_split(args[3], ',');
@@ -42,7 +42,7 @@ void	obj_sp(t_data *data, char *s, int *pos)
 	char	**coords;
 	char	**color;
 
-	args = ft_split(s, ' ');
+	args = ft_split_set(s, " \t\n\v\f\r");
 	coords = ft_split(args[1], ',');
 	color = ft_split(args[3], ',');
 	new_sphere(&(data->scene_objects[*pos]),
@@ -63,7 +63,7 @@ void	obj_cy(t_data *data, char *s, int *pos)
 	char	**vector;
 	char	**color;
 
-	args = ft_split(s, ' ');
+	args = ft_split_set(s, " \t\n\v\f\r");
 	coords = ft_split(args[1], ',');
 	vector = ft_split(args[2], ',');
 	color = ft_split(args[5], ',');
@@ -111,12 +111,11 @@ int	initialize_object(t_data *data, char **tab)
 	int	len;
 
 	len = 0;
-	ft_bzero(data, sizeof(t_data));
 	while (tab[len])
 		len++;
 	data->scene_objects = (t_object *)ft_calloc(sizeof(t_object), len - 1);
 	if (!data->scene_objects)
-		return (3);
+		return (errno);
 	data->obj_count = len - 1;
 	exec_objs(data, tab);
 	return (0);

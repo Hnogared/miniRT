@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:37:20 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/09 19:24:52 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/21 14:50:38 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_camera_data(t_special_data special_data)
 {
 	printf("[Camera data]\n");
 	printf("Horizontal FOV : %d\n", special_data.camera.h_fov);
-	printf("Vertical FOV : %d\n", special_data.camera.v_fov);
+	printf("Vertical FOV   : %d\n", special_data.camera.v_fov);
 }
 
 /*
@@ -37,7 +37,7 @@ void	print_light_data(t_special_data special_data)
 {
 	printf("[Light data]\n");
 	printf("Brightness : %f\n", special_data.light.brightness);
-	printf("Diameter : %f\n", special_data.light.diameter);
+	printf("Diameter   : %f\n", special_data.light.diameter);
 }
 
 /*
@@ -51,7 +51,7 @@ void	print_sphere_data(t_special_data special_data)
 {
 	printf("[Sphere data]\n");
 	printf("Diameter : %f\n", special_data.sphere.diameter);
-	printf("Radius : %f\n", special_data.sphere.radius);
+	printf("Radius   : %f\n", special_data.sphere.radius);
 	print_rgb_color(special_data.sphere.color, NULL);
 }
 
@@ -79,6 +79,7 @@ void	print_cylinder_data(t_special_data special_data)
 {
 	printf("[Cylinder data]\n");
 	printf("Diameter : %f\n", special_data.cylinder.diameter);
-	printf("Height : %f\n", special_data.cylinder.height);
+	printf("Radius   : %f\n", special_data.cylinder.radius);
+	printf("Height   : %f\n", special_data.cylinder.height);
 	print_rgb_color(special_data.cylinder.color, NULL);
 }

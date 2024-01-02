@@ -6,26 +6,45 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 07:19:57 by hnogared          #+#    #+#              #
-#    Updated: 2023/11/29 15:34:00 by motoko           ###   ########.fr        #
+#    Updated: 2023/12/19 00:12:50 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= libextended_ft.a
+NAME	:=	libextended_ft.a
 
-LIB_D		=	Srcs
-LIB_SRCS	= 	ft_isalpha.c		\
+SRCS_DIR	:=	srcs
+PRINTF_DIR	:=	$(SRCS_DIR)/display/ft_printf
+GNL_DIR		:=	$(SRCS_DIR)/get_next_line
+
+OBJS_DIR	:=	objs
+
+INCL_DIR	:=	includes
+
+VPATH	:=	$(SRCS_DIR)/char_checks:		\
+			$(SRCS_DIR)/display:			\
+			$(SRCS_DIR)/linked_lists:		\
+			$(SRCS_DIR)/memory_management:	\
+			$(SRCS_DIR)/strings:			\
+			$(SRCS_DIR)/numbers:			\
+			$(PRINTF_DIR):					\
+			$(GNL_DIR)
+
+LIB_SRCS	:= 	ft_isalpha.c		\
 				ft_isdigit.c		\
 				ft_isalnum.c		\
 				ft_isprint.c		\
 				ft_isascii.c		\
+				ft_iswhitespace.c	\
 				ft_toupper.c		\
 				ft_tolower.c		\
 				ft_strlen.c			\
 				ft_strchr.c			\
 				ft_strrchr.c		\
+				ft_strchrnul.c		\
 				ft_strncmp.c		\
 				ft_strnstr.c		\
 				ft_atoi.c			\
+				ft_atof.c			\
 				ft_strlcpy.c		\
 				ft_strlcat.c		\
 				ft_bzero.c			\
@@ -36,13 +55,14 @@ LIB_SRCS	= 	ft_isalpha.c		\
 				ft_memmove.c		\
 				ft_calloc.c			\
 				ft_strdup.c			\
+				ft_strndup.c		\
 				ft_substr.c			\
 				ft_strjoin.c		\
 				ft_strtrim.c		\
 				ft_split.c			\
 				ft_split_set.c		\
 				ft_itoa.c			\
-				ft_atof.c			\
+				ft_itoab.c			\
 				ft_strmapi.c		\
 				ft_striteri.c		\
 				ft_putchar_fd.c		\
@@ -57,58 +77,50 @@ LIB_SRCS	= 	ft_isalpha.c		\
 				ft_lstdelone.c		\
 				ft_lstclear.c		\
 				ft_lstiter.c		\
-				ft_lstmap.c
+				ft_lstmap.c			\
+				ft_min.c			\
+				ft_max.c			\
+				ft_fmin.c			\
+				ft_fmax.c
 
-PRINTF_D	=	Srcs/display/ft_printf
-PRINTF_SRCS	=	ft_printf.c		\
+PRINTF_SRCS	:=	ft_printf.c		\
 				ft_fprintf.c	\
 				ft_output.c		\
 				ft_output2.c	\
 				ft_strings.c
 
-OBJS_D	= Objs
-OBJS	= $(addprefix $(OBJS_D)/, $(LIB_SRCS:.c=.o) $(PRINTF_SRCS:.c=.o))
+GNL_SRCS	:=	get_next_line_bonus.c
 
-CC		= gcc -g
-CFLAGS	= -Werror -Wall -Wextra
+OBJS		:=	$(addprefix $(OBJS_DIR)/,\
+					$(LIB_SRCS:.c=.o)\
+					$(PRINTF_SRCS:.c=.o)\
+					$(GNL_SRCS:.c=.o))
 
-AR		= ar rcs
+CC		:=	gcc
+IFLAGS	:=	-I $(INCL_DIR)
+CFLAGS	:=	-g -Werror -Wall -Wextra
 
-RM		= rm -rf
+AR		:=	ar rcs
+
+RM		:=	rm -rf
 
 
 all:		$(NAME)
 
-$(NAME):	$(OBJS_D) $(OBJS)
+$(NAME):	$(OBJS) | $(OBJS_DIR)
 	@$(AR) $@ $(OBJS)
 	@echo "Created $(NAME) library !"
 
-$(OBJS_D):
-	@if [ ! -d $(OBJS_D) ]; then						\
-		mkdir $(OBJS_D);								\
-		echo "Created missing $(OBJS_D)/ directory";	\
-	fi
+$(OBJS_DIR):
+	@mkdir $(OBJS_DIR)
+	@echo "Created missing $(OBJS_DIR)/ directory"
 
-$(OBJS_D)/%.o:	$(LIB_D)/char_checks/%.c
-	$(CC) $(CFLAGS) -c $^ -o $@
-
-$(OBJS_D)/%.o:	$(LIB_D)/display/%.c
-	$(CC) $(CFLAGS) -c $^ -o $@
-
-$(OBJS_D)/%.o:	$(LIB_D)/linked_lists/%.c
-	$(CC) $(CFLAGS) -c $^ -o $@
-
-$(OBJS_D)/%.o:	$(LIB_D)/memory_management/%.c
-	$(CC) $(CFLAGS) -c $^ -o $@
-
-$(OBJS_D)/%.o:	$(LIB_D)/strings/%.c
-	$(CC) $(CFLAGS) -c $^ -o $@
-
-$(OBJS_D)/%.o:	$(PRINTF_D)/%.c
-	$(CC) $(CFLAGS) -c $^ -o $@
+$(OBJS_DIR)/%.o:	%.c | $(OBJS_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@ $(IFLAGS)
+	@echo "Compiled $@ object file !"
 
 clean:
-	@if ls $(OBJS_D)/*.o > /dev/null 2>&1; then		\
+	@if ls $(OBJS_DIR)/*.o > /dev/null 2>&1; then	\
 		$(RM) $(OBJS);								\
 		echo "Removed object files";				\
 	else											\
@@ -124,11 +136,11 @@ fclean:	clean
 	fi
 
 dclean:	clean
-	@if [ -d $(OBJS_D) ]; then								\
-		$(RM) $(OBJS_D);									\
-		echo "Removed $(OBJS_D)/ objects directory";		\
+	@if [ -d $(OBJS_DIR) ]; then							\
+		$(RM) $(OBJS_DIR);									\
+		echo "Removed $(OBJS_DIR)/ objects directory";		\
 	else													\
-		echo "Nothing to be done for : $(RM) $(OBJS_D)/";	\
+		echo "Nothing to be done for : $(RM) $(OBJS_DIR)/";	\
 	fi
 
 re:			fclean all

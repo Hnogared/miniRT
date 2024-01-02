@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:07:54 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/03 13:04:20 by motoko           ###   ########.fr       */
+/*   Updated: 2023/12/13 21:19:41 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int	check_is_present(char ***block, int i)
 		is_present[1] += 1;
 	if (!ft_strncmp(block[i][0], "L", 2))
 		is_present[2] += 1;
-	if (is_present[0] != 1 || is_present[1] != 1 || is_present[2] != 1)
+	if (is_present[0] != 1 || is_present[1] != 1)
 		return (RTERR_DUPLIC_OBJ);
 	return (0);
 }

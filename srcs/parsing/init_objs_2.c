@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/11 22:10:07 by hnogared         ###   ########.fr       */
+/*   Updated: 2023/12/21 15:55:15 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	obj_a(t_data *data, char *s)
 	char	**args;
 	char	**color;
 
-	args = ft_split(s, ' ');
+	args = ft_split_set(s, " \t\n\v\f\r");
 	data->ambient_l.ratio = ft_atof(args[1]);
 	color = ft_split(args[2], ',');
 	data->ambient_l.color = (t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]),
@@ -32,7 +32,7 @@ void	obj_c(t_data *data, char *s, int *pos)
 	char	**coords;
 	char	**vector;
 
-	args = ft_split(s, ' ');
+	args = ft_split_set(s, " \t\n\v\f\r");
 	coords = ft_split(args[1], ',');
 	vector = ft_split(args[2], ',');
 	new_camera(&(data->scene_objects[*pos]),
@@ -51,13 +51,18 @@ void	obj_l(t_data *data, char *s, int *pos)
 {
 	char	**args;
 	char	**coords;
+	char	**color;
 
-	args = ft_split(s, ' ');
+	args = ft_split_set(s, " \t\n\v\f\r");
 	coords = ft_split(args[1], ',');
+	color = ft_split(args[3], ',');
 	new_light(&(data->scene_objects[*pos]),
 		(t_coords){ft_atof(coords[0]), ft_atof(coords[1]), ft_atof(coords[2])},
 		ft_atof(args[2]));
+	set_object_color(&(data->scene_objects[*pos]),
+		(t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2])});
 	(*pos)++;
 	free_str_tab(args);
 	free_str_tab(coords);
+	free_str_tab(color);
 }

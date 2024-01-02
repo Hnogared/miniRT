@@ -136,6 +136,4 @@ int	mlx_mouse_show(void *mlx_ptr, void *win_ptr);
 
 int	mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey);
 
-int	mlx_ext_fullscreen(void *xvar, void *win, int fullscreen);
-
 #endif /* MLX_H */

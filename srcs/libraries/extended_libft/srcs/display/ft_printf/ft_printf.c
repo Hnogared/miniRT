@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 22:22:07 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/18 23:11:54 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/04 21:31:54 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_check_input(const char *input)
 	{
 		if (input[i] == '%' && input[i + 1] == '%')
 			i++;
-		else if (input[i] == '%' && !ft_check_char(input[i + 1], "cspdiuxX"))
+		else if (input[i] == '%' && !ft_check_char(input[i + 1], "bcspdiuxX"))
 			return (ERROR);
 		i++;
 	}
@@ -47,6 +47,8 @@ int	ft_print_nbrconv(const char conv, va_list args, int fd)
 		return (ft_putunsigned_fdout(va_arg(args, unsigned int), 0, fd));
 	if (conv == 'x' || conv == 'X')
 		return (ft_puthex_fdout(va_arg(args, unsigned int), 0, conv, fd));
+	if (conv == 'b')
+		return (ft_putnbits_fdout(va_arg(args, int), fd));
 	return (0);
 }
 
@@ -88,7 +90,7 @@ int	ft_print_input(char *input, va_list args, int fd)
 		count += j;
 		if (input[i] == '%')
 		{
-			if (ft_check_char(input[i + 1], "pdiuxX"))
+			if (ft_check_char(input[i + 1], "bpdiuxX"))
 				count += ft_print_nbrconv(input[i + 1], args, fd);
 			if (ft_check_char(input[i + 1], "cs%"))
 				count += ft_print_chrconv(input[i + 1], args, fd);

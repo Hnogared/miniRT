@@ -6,11 +6,14 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 07:19:57 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/19 00:12:50 by hnogared         ###   ########.fr        #
+#    Updated: 2024/01/04 21:41:02 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:=	libextended_ft.a
+LIB_NAME	:=	extended_ft
+
+STATIC_NAME		:=	$(addsuffix .a, $(addprefix lib, $(LIB_NAME)))
+DYNAMIC_NAME	:=	$(addsuffix .so, $(addprefix lib, $(LIB_NAME)))
 
 SRCS_DIR	:=	srcs
 PRINTF_DIR	:=	$(SRCS_DIR)/display/ft_printf
@@ -105,11 +108,15 @@ AR		:=	ar rcs
 RM		:=	rm -rf
 
 
-all:		$(NAME)
+all:		$(STATIC_NAME) $(DYNAMIC_NAME)
 
-$(NAME):	$(OBJS) | $(OBJS_DIR)
+$(STATIC_NAME):	$(OBJS) | $(OBJS_DIR)
 	@$(AR) $@ $(OBJS)
-	@echo "Created $(NAME) library !"
+	@echo "Created $(STATIC_NAME) static library !"
+
+$(DYNAMIC_NAME):	$(OBJS) | $(OBJS_DIR)
+	@$(CC) -shared -o $(DYNAMIC_NAME) $(OBJS)
+	@echo "Created $(DYNAMIC_NAME) dynamic library !"
 
 $(OBJS_DIR):
 	@mkdir $(OBJS_DIR)
@@ -128,11 +135,18 @@ clean:
 	fi
 
 fclean:	clean
-	@if [ -f $(NAME) ]; then							\
-		$(RM) $(NAME);									\
-		echo "Removed $(NAME)";							\
-	else												\
-		echo "Nothing to bo done for : $(RM) $(NAME)";	\
+	@if [ ! -f $(STATIC_NAME) ] && [ ! -f $(DYNAMIC_NAME) ]; then			\
+		echo -n "Nothing to bo done for : $(RM) $(STATIC_NAME)";			\
+		echo " || $(RM) $(DYNAMIC_NAME)";									\
+		return;																\
+	fi;																		\
+	if [ -f $(STATIC_NAME) ]; then											\
+		$(RM) $(STATIC_NAME);												\
+		echo "Removed $(STATIC_NAME)";										\
+	fi;																		\
+	if [ -f $(DYNAMIC_NAME) ]; then	   										\
+		$(RM) $(DYNAMIC_NAME);		   										\
+		echo "Removed $(DYNAMIC_NAME)";										\
 	fi
 
 dclean:	clean

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:13:45 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/04 23:45:15 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 13:15:08 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 /*
  * Function to handle the keys pressed in association with the L_CTRL key.
  * If one of the following shortcuts is triggered, redraws the render window.
- * <CTRL-u>	: increase the virtual pixels = decrease the resolution.
- * <CTRL-d> : decrease the virtual pixels = increase the resolution.
- * <CTRL-a> : switch ON/OFF the anti-aliasing.
+ * <CTRL-r>	: increase the virtual pixels = decrease the resolution.
+ * <CTRL-f> : decrease the virtual pixels = increase the resolution.
+ * <CTRL-t> : switch ON/OFF the anti-aliasing.
  *
  * @param int keycode	-> X11 keycode of the pressed key to check
  * @param t_data *data	-> the program's data to modify at matching shortcut
  */
 static void	control_key_handler(int keycode, t_data *data)
 {
-	if (keycode == XK_u)
+	if (keycode == XK_r)
 	{
 		set_window_pixel_ratio(&data->render_window,
 			data->render_window.pixel_ratio + 5);
@@ -32,7 +32,7 @@ static void	control_key_handler(int keycode, t_data *data)
 		data->render_window.draw_pos[1] = 0;
 		get_main_view_rays(data, true);
 	}
-	if (keycode == XK_d)
+	if (keycode == XK_f)
 	{
 		set_window_pixel_ratio(&data->render_window,
 			data->render_window.pixel_ratio - 5);
@@ -40,7 +40,7 @@ static void	control_key_handler(int keycode, t_data *data)
 		data->render_window.draw_pos[1] = 0;
 		get_main_view_rays(data, true);
 	}
-	if (keycode == XK_a)
+	if (keycode == XK_t)
 	{
 		data->anti_aliasing = !data->anti_aliasing;
 		data->render_window.draw_pos[0] = 0;
@@ -58,13 +58,12 @@ static void	control_key_handler(int keycode, t_data *data)
  * <L_shift> : move the camera down relative to its local basis (z axis --).
  * If a movement key is pressed in association with the L_CTRL key, the movement
  * distance is increased.
- * A camera movement triggers the recalculation of the view rays and redraws the
- * render window.
  *
  * @param int keycode	-> X11 keycode of the pressed key to check
  * @param t_data *data	-> pointer to the data to modify at matching keypress
+ * @return int			-> 1 if the camera was moved, 0 otherwise
  */
-static void	camera_move_check(int keycode, t_data *data)
+static int	camera_move_check(int keycode, t_data *data)
 {
 	int			distance;
 	t_basis		basis;
@@ -85,17 +84,54 @@ static void	camera_move_check(int keycode, t_data *data)
 	else if (keycode == XK_Shift_L)
 		coos = advance_on_vec(data->active_camera->coords, basis.z, -distance);
 	else
-		return ;
+		return (0);
 	set_object_coords(data->active_camera, coos);
-	set_view_rays(&data->view_rays, data->render_window,
-		*(data->active_camera), false);
-	data->render_window.draw_pos[0] = 0;
-	data->render_window.draw_pos[1] = 0;
+	return (1);
+}
+
+/*
+ * Function to rotate the scene's active camera at a rotation key press.
+ * <w> : pitch the camera up relative to its local basis (y axis ++).
+ * <s> : pitch the camera down relative to its local basis (y axis --).
+ * <d> : yaw the camera right relative to its local basis (z axis ++).
+ * <a> : yaw the camera left relative to its local basis (z axis --).
+ * <e> : roll the camera right relative to its local basis (x axis ++).
+ * <q> : roll the camera left relative to its local basis (x axis --).
+ * If a rotation key is pressed in association with the L_CTRL key, the rotation
+ * angle is increased.
+ *
+ * @param int keycode	-> X11 keycode of the pressed key to check
+ * @param t_data *data	-> pointer to the data to modify at matching keypress
+ * @return int			-> 1 if the camera was rotated, 0 otherwise
+ */
+static int	camera_rotate_check(int keycode, t_data *data)
+{
+	float	angle;
+	t_basis	camera_basis;
+
+	angle = (3 * data->control_key + 1) * 10;
+	camera_basis = data->active_camera->local_basis;
+	if (keycode == XK_w)
+		rotate_object(data->active_camera, -angle, camera_basis.y);
+	if (keycode == XK_s)
+		rotate_object(data->active_camera, angle, camera_basis.y);
+	if (keycode == XK_d)
+		rotate_object(data->active_camera, -angle, camera_basis.z);
+	if (keycode == XK_a)
+		rotate_object(data->active_camera, angle, camera_basis.z);
+	if (keycode == XK_e)
+		rotate_object(data->active_camera, angle, camera_basis.x);
+	if (keycode == XK_q)
+		rotate_object(data->active_camera, -angle, camera_basis.x);
+	return (keycode == XK_w || keycode == XK_s || keycode == XK_d
+		|| keycode == XK_a || keycode == XK_e || keycode == XK_q);
 }
 
 /*
  * Function to interpret a keyboard key press.
  * Saves the L_CTRL key press in the program data to enable shortcuts with it.
+ * A camera movement or rotation triggers the recalculation of the view rays
+ * and redraws the render window.
  *
  * @param int keycode		-> X11 keycode of the pressed key
  * @param t_data *data		-> pointer to the data to modify with the key press
@@ -109,7 +145,13 @@ int	key_press_handler(int keycode, t_data *data)
 		free_and_exit(data);
 	if (data->control_key)
 		control_key_handler(keycode, data);
-	camera_move_check(keycode, data);
+	if (camera_move_check(keycode, data) || camera_rotate_check(keycode, data))
+	{
+		set_view_rays(&data->view_rays, data->render_window,
+			*(data->active_camera), false);
+		data->render_window.draw_pos[0] = 0;
+		data->render_window.draw_pos[1] = 0;
+	}
 	redraw_render_window(data);
 	return (0);
 }

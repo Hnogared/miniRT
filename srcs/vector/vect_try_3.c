@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:19 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/05 11:10:23 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 14:50:18 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,6 @@ void	try_cylinder_side(t_ray *ray, t_object obj, int i)
 	
 	aligned_ray = switch_ray_basis(*ray, obj.local_basis,
 			(t_basis) {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}});
-//	print_vector(ray->vector, "Origin");
-//	print_vector(aligned_ray.vector, "Aligned");
 	obj.coords = switch_coords_basis(obj.coords, obj.local_basis,
 			(t_basis) {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}});
 	ox = aligned_ray.origin_coords.x;

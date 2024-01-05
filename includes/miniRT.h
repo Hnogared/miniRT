@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/05 11:21:48 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 11:51:22 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ t_object		*get_object_ptr(unsigned short type, t_object *objects_list,
 t_object		*set_object_coords(t_object *to_set, t_coords coords);
 t_object		*set_object_orientation(t_object *to_set,
 					t_vector orient_vector);
+t_object		*rotate_object(t_object *to_rotate, float angle, t_vector axis);
 t_object		*set_object_color(t_object *to_set, t_rgb_color color);
 
 /* print_object_data.c */

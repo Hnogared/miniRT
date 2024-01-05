@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 10:59:56 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/05 11:21:34 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 14:50:07 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_ray	switch_ray_basis(t_ray to_rotate, t_basis new_basis, t_basis old_basis)
 		&& check_vector_equality(new_basis.y, old_basis.y)
 		&& check_vector_equality(new_basis.z, old_basis.z))
 		return (to_rotate);
-	get_rotation_matrix(rot_matrix, old_basis.z, new_basis.z);
+	get_rotation_matrix(rot_matrix, new_basis.z, old_basis.z);
 	ft_memmove(&res, &to_rotate, sizeof(t_ray));
 	res.origin_coords = matrix_coords_rotation(to_rotate.origin_coords,
 			rot_matrix);
@@ -48,7 +48,7 @@ t_coords	switch_coords_basis(t_coords to_rotate, t_basis new_basis,
 		&& check_vector_equality(new_basis.y, old_basis.y)
 		&& check_vector_equality(new_basis.z, old_basis.z))
 		return (to_rotate);
-	get_rotation_matrix(rot_matrix, old_basis.z, new_basis.z);
+	get_rotation_matrix(rot_matrix, new_basis.z, old_basis.z);
 	return (matrix_coords_rotation(to_rotate, rot_matrix));
 }
 
@@ -61,6 +61,6 @@ t_vector	switch_vector_basis(t_vector to_rotate, t_basis new_basis,
 		&& check_vector_equality(new_basis.y, old_basis.y)
 		&& check_vector_equality(new_basis.z, old_basis.z))
 		return (to_rotate);
-	get_rotation_matrix(rot_matrix, old_basis.z, new_basis.z);
+	get_rotation_matrix(rot_matrix, new_basis.z, old_basis.z);
 	return (matrix_vector_rotation(to_rotate, rot_matrix));
 }

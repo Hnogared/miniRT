@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:35:57 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/05 11:30:06 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 11:52:47 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_vector	cal_cylinder_side(t_ray *ray, t_object cylinder)
 	world_basis = (t_basis){(t_vector){1, 0, 0}, (t_vector){0, 1, 0},
 			(t_vector){0, 0, 1}};
 	aligned_ray = switch_ray_basis(*ray, cylinder.local_basis, world_basis);
-	cylindre.coords = switch_coords_basis(cylinder.coords, cylinder.local_basis,
+	cylinder.coords = switch_coords_basis(cylinder.coords, cylinder.local_basis,
 			world_basis);
 	cp = advance_on_vec_z(cylinder.coords, aligned_ray.coords);
 	n = normalise(sous_vec_coord(aligned_ray.coords, cp));

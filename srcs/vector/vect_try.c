@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:10 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/05 00:37:04 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 11:11:19 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	try_light(t_ray *ray, t_object l, int i)
 		t = good_sol(delta, b, 1);
 		if (t >= 0 && (ray->res == 0 || t < ray->sol))
 		{
-			ray->coords = find_pos_touch(ray, t - 0.1f);
+			ray->coords = find_pos_touch(ray, t);
 			ray->sol = t;
 			ray->res = 2;
 			ray->go = i;

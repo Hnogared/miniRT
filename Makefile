@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2024/01/04 23:22:04 by hnogared         ###   ########.fr        #
+#    Updated: 2024/01/05 11:03:52 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,7 @@ SRCS			:=	main.c					\
 					rotation.c				\
 					set_view_rays.c			\
 					shadow_ray.c			\
+					switch_basis.c			\
 					vect.c					\
 					vect_calc.c				\
 					vect_try.c				\

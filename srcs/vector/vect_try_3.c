@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:19 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/05 00:26:31 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 11:10:23 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,43 +117,6 @@ void	try_cylinder_ext(t_ray *ray, t_object obj, int i)
 	c = (Ox - a)^2 + (Oy - b)^2 - r^2;
 	
 */
-
-bool	vector_equality(t_vector vector1, t_vector vector2)
-{
-	return (vector1.x == vector2.x && vector1.y == vector2.y
-		&& vector1.z == vector2.z);
-}
-
-t_ray	switch_ray_basis(t_ray to_rotate, t_basis new_basis, t_basis old_basis)
-{
-	float	rot_matrix[3][3];
-	t_ray	res;
-
-	if (vector_equality(new_basis.x, old_basis.x)
-		&& vector_equality(new_basis.y, old_basis.y)
-		&& vector_equality(new_basis.z, old_basis.z))
-		return (to_rotate);
-	get_rotation_matrix(rot_matrix, old_basis.z, new_basis.z);
-	ft_memmove(&res, &to_rotate, sizeof(t_ray));
-	res.origin_coords = matrix_coords_rotation(to_rotate.origin_coords,
-			rot_matrix);
-	res.coords = matrix_coords_rotation(to_rotate.coords, rot_matrix);
-	res.vector = matrix_vector_rotation(to_rotate.vector, rot_matrix);
-	return (res);
-}
-
-t_coords	switch_coords_basis(t_coords to_rotate, t_basis new_basis,
-	t_basis old_basis)
-{
-	float		rot_matrix[3][3];
-
-	if (vector_equality(new_basis.x, old_basis.x)
-		&& vector_equality(new_basis.y, old_basis.y)
-		&& vector_equality(new_basis.z, old_basis.z))
-		return (to_rotate);
-	get_rotation_matrix(rot_matrix, old_basis.z, new_basis.z);
-	return (matrix_coords_rotation(to_rotate, rot_matrix));
-}
 
 void	try_cylinder_side(t_ray *ray, t_object obj, int i)
 {

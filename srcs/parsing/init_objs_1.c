@@ -6,13 +6,13 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/21 15:55:01 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 00:49:12 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	obj_pl(t_data *data, char *s, int *pos)
+void	obj_pl(unsigned int index, t_data *data, char *s, int *pos)
 {
 	char	**args;
 	char	**coords;
@@ -29,6 +29,7 @@ void	obj_pl(t_data *data, char *s, int *pos)
 		(t_vector){ft_atof(vector[0]), ft_atof(vector[1]), ft_atof(vector[2])});
 	set_object_color(&(data->scene_objects[*pos]),
 		(t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2])});
+	data->scene_objects[*pos].id = index;
 	(*pos)++;
 	free_str_tab(args);
 	free_str_tab(coords);
@@ -36,7 +37,7 @@ void	obj_pl(t_data *data, char *s, int *pos)
 	free_str_tab(color);
 }
 
-void	obj_sp(t_data *data, char *s, int *pos)
+void	obj_sp(unsigned int index, t_data *data, char *s, int *pos)
 {
 	char	**args;
 	char	**coords;
@@ -50,13 +51,14 @@ void	obj_sp(t_data *data, char *s, int *pos)
 		ft_atof(args[2]));
 	set_object_color(&(data->scene_objects[*pos]),
 		(t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2])});
+	data->scene_objects[*pos].id = index;
 	(*pos)++;
 	free_str_tab(args);
 	free_str_tab(coords);
 	free_str_tab(color);
 }
 
-void	obj_cy(t_data *data, char *s, int *pos)
+void	obj_cy(unsigned int index, t_data *data, char *s, int *pos)
 {
 	char	**args;
 	char	**coords;
@@ -74,6 +76,7 @@ void	obj_cy(t_data *data, char *s, int *pos)
 		(t_vector){ft_atof(vector[0]), ft_atof(vector[1]), ft_atof(vector[2])});
 	set_object_color(&(data->scene_objects[*pos]),
 		(t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2])});
+	data->scene_objects[*pos].id = index;
 	(*pos)++;
 	free_str_tab(color);
 	free_str_tab(vector);
@@ -93,15 +96,15 @@ void	exec_objs(t_data *data, char **tab)
 		if (tab[i][0] == 'A')
 			obj_a(data, tab[i]);
 		if (tab[i][0] == 'C')
-			obj_c(data, tab[i], &pos);
+			obj_c(i, data, tab[i], &pos);
 		if (tab[i][0] == 'L')
-			obj_l(data, tab[i], &pos);
+			obj_l(i, data, tab[i], &pos);
 		if (!ft_strncmp(tab[i], "pl", 2))
-			obj_pl(data, tab[i], &pos);
+			obj_pl(i, data, tab[i], &pos);
 		if (!ft_strncmp(tab[i], "sp", 2))
-			obj_sp(data, tab[i], &pos);
+			obj_sp(i, data, tab[i], &pos);
 		if (!ft_strncmp(tab[i], "cy", 2))
-			obj_cy(data, tab[i], &pos);
+			obj_cy(i, data, tab[i], &pos);
 		i++;
 	}
 }

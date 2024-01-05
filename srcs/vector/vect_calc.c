@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:35:57 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/18 15:53:38 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 11:30:06 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,37 +54,23 @@ t_vector	cal_cylinder_ext(t_ray *ray, t_object cylindre, int res)
 	return (r);
 }
 
-t_vector	cal_cylinder_side(t_ray *ray, t_object cylindre)
+t_vector	cal_cylinder_side(t_ray *ray, t_object cylinder)
 {
 	t_vector	n;
 	t_vector	r;
 	t_coords	cp;
-	//float		d;
+	t_basis		world_basis;
+	t_ray		aligned_ray;
 
-	//d = pow(dist(ray->coords, cylindre.coords), 2) - pow(cylindre.special_data.cylinder.diameter / 2, 2);
-	//if (prod_scal_vec(cylindre.orientation_vector, sous_vec_coord(ray->coords, cylindre.coords)) >= 0)
-	//	cp = advance_on_vec(cylindre.coords, cylindre.orientation_vector, d);
-	/*if (cylindre.coords.z <= ray->coords.z)
-		cp = advance_on_vec_z_sup(cylindre.coords, cylindre.orientation_vector, d);
-	else
-	{
-		cp = advance_on_vec_z_inf(cylindre.coords, cylindre.orientation_vector, d);
-		printf("\n cp vaut :");
-		print_coord(cp);
-		printf("\n ray->coords vaut :");
-		print_coord(ray->coords);
-	}*/
-	cp = advance_on_vec_z(cylindre.coords, ray->coords);
-	n = normalise(sous_vec_coord(ray->coords, cp));
-	r = calc_ref_form(ray->vector, n);
-	/*if (cylindre.coords.z > ray->coords.z)
-	{
-		printf("\n n vaut :");
-		print_vec(n);
-		printf("\n r vaut :");
-		print_vec(r);
-	}*/
-	return (r);
+	world_basis = (t_basis){(t_vector){1, 0, 0}, (t_vector){0, 1, 0},
+			(t_vector){0, 0, 1}};
+	aligned_ray = switch_ray_basis(*ray, cylinder.local_basis, world_basis);
+	cylindre.coords = switch_coords_basis(cylinder.coords, cylinder.local_basis,
+			world_basis);
+	cp = advance_on_vec_z(cylinder.coords, aligned_ray.coords);
+	n = normalise(sous_vec_coord(aligned_ray.coords, cp));
+	r = calc_ref_form(aligned_ray.vector, n);
+	return (switch_vector_basis(r, world_basis, cylinder.local_basis));
 }
 
 t_vector	calcul_ref(t_ray *ray, t_object obj, int res)

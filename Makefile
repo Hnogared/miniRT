@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/21 17:00:49 by hnogared         ###   ########.fr        #
+#    Updated: 2024/01/05 11:03:52 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,43 +51,44 @@ VPATH			:=	$(SRCS_DIR):				\
 
 # Source files names #
 SRCS			:=	main.c					\
+					check_args.c			\
 					check_file.c			\
-					get_file.c				\
-					check_scene.c			\
 					check_numbers.c			\
 					check_range_numbers.c	\
+					check_range_numbers1.c	\
+					check_scene.c			\
 					conv_hexa.c				\
+					free_and_exit.c			\
+					get_file.c				\
+					get_object_color.c		\
+					handle_errors.c			\
+					image_handling.c		\
 					init_objs_1.c			\
 					init_objs_2.c			\
-					get_object_color.c		\
+					keyboard.c				\
 					object_creation.c		\
+					object_data_display.c	\
+					object_data_display_2.c	\
 					object_interaction.c	\
 					object_modification.c	\
-					print_object_data.c		\
-					print_object_data_2.c	\
-					check_args.c			\
-					image_handling.c		\
-					window_handling.c		\
-					window_modification.c	\
-					main_window.c			\
+					orthonormal_basis.c		\
+					raytrace.c				\
+					render_window.c			\
 					rgb_color.c				\
-					keyboard.c				\
-					free_and_exit.c			\
-					check_range_numbers1.c	\
-					handle_errors.c			\
+					rotation.c				\
+					set_view_rays.c			\
+					shadow_ray.c			\
+					switch_basis.c			\
 					vect.c					\
+					vect_calc.c				\
+					vect_try.c				\
+					vect_try_3.c			\
 					vect_utils.c			\
 					vect_utils_2.c			\
 					vect_utils_3.c			\
 					vect_utils_4.c			\
-					rotation.c				\
-					vect_calc.c				\
-					vect_try.c				\
-					vect_try_3.c			\
-					set_view_rays.c			\
-					shadow_ray.c			\
-					raytrace.c				\
-					orthonormal_basis.c
+					window_handling.c		\
+					window_modification.c
 
 
 ## Libraries files ##

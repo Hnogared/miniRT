@@ -6,34 +6,25 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 21:01:38 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/18 23:11:25 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/04 21:23:00 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_putnbr_fdout(int n, int len, int fd)
+int	ft_putnbits_fdout(int nbr, int fd)
 {
-	if (n == -2147483648)
+	char			bit;
+	unsigned int	int_size;
+	unsigned int	mask;
+
+	int_size = sizeof(int) * 8;
+	mask = 1 << (int_size - 1);
+	while (mask)
 	{
-		write(fd, "-2147483648", 11);
-		return (11);
+		bit = '0' + !!(nbr & mask);
+		write(fd, &bit, 1);
+		mask = mask >> 1;
 	}
-	if (n < 0)
-	{
-		write(fd, "-", 1);
-		len++;
-		n *= -1;
-	}
-	if (n > 9)
-	{
-		len += ft_putnbr_fdout(n / 10, 0, fd);
-		len += ft_putnbr_fdout(n % 10, 0, fd);
-	}
-	if (n <= 9)
-	{
-		ft_putchar_fdout(n + '0', fd);
-		len++;
-	}
-	return (len);
+	return (int_size);
 }

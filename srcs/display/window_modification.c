@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 10:55:33 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/18 20:44:43 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/04 21:59:14 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,13 @@ void	put_square_to_window(t_window *window, int start_coords[2], int size[2],
 	}
 }
 
-
 /*
- * TODO comment
+ * Function to draw a colored percentage on the top left corner of a window.
+ *
+ * @param t_xvar *mlx_ptr	-> pointer to the mlx instance
+ * @param t_window window	-> data of the window to draw the percentage on
+ * @param int percentage	-> percentage to display
+ * @param int color			-> color of the percentage to display
  */
 void	put_percent_to_window(t_xvar *mlx_ptr, t_window window, int percentage,
 	int color)

@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:10 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/18 16:53:15 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 11:11:19 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void	try_light(t_ray *ray, t_object l, int i)
 	float	t;
 
 	a = pow(magnitude(ray->vector), 2);
-	b = 2 * prod_scal_vec(ray->vector, sous_vec_coord(ray->origin_coords, l.coords));
-	c = pow(magnitude_coord(ray->origin_coords), 2) + pow(magnitude_coord(l.coords), 2) - 2 * prod_scal_coord(l.coords, ray->origin_coords) - pow((l.special_data.sphere.diameter / 2), 2);
+	b = 2 * prod_scaous_vec_coord(ray->origin_coords, l.coords));
 	delta = pow(b, 2) - 4 * a * c;
 	if (delta >= 0)
 	{
@@ -99,7 +98,7 @@ void	try_light(t_ray *ray, t_object l, int i)
 		t = good_sol(delta, b, 1);
 		if (t >= 0 && (ray->res == 0 || t < ray->sol))
 		{
-			ray->coords = find_pos_touch(ray, t - 0.1f);
+			ray->coords = find_pos_touch(ray, t);
 			ray->sol = t;
 			ray->res = 2;
 			ray->go = i;
@@ -213,7 +212,6 @@ void	try_plan(t_ray *ray, t_object plan, int i)
 	t = -((prod_scal_vec_coord(n, ray->origin_coords) + d) / prod_scal_vec(n, ray->vector));
 	//printf("scal de N et 0 vaut %f\n", prod_scal_vec_coord(n, ray->origin_coords));
 	//printf("scal de N et D vaut %f\n", prod_scal_vec(n, ray->vector));
-	//printf("t vaut %f\n",t);
 	if (t >= 0)
 	{
 		if (ray->res == 0 || t < ray->sol)
@@ -223,7 +221,6 @@ void	try_plan(t_ray *ray, t_object plan, int i)
 			ray->res = 1;
 			ray->go = i;
 		}
-		//return (1);
 	}
 	//else
 	//	return (0);

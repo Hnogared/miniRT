@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:16:55 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/18 14:53:56 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/04 23:56:42 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,16 @@ static t_rgb_color	advance_shadow_ray(t_ray *shadow_ray,
  * @param t_coords start_coords			-> coords of the point in space to check
  * @param t_object *objects_array		-> pointer to the scene objects to check
  * @param unsigned short objects_count	-> amount of scene objects to check
+ * @param t_ambient_light ambient_l		-> the scene ambient lighting
  * @return t_rgb_color					-> the resulting lighting color
  *
  * @child_func advance_shadow_ray	-> function to check if a ray touches a light
  */
 t_rgb_color	shadow_ray(t_coords start_coords, const t_object *objects_array,
-	unsigned short objects_count)
+	unsigned short objects_count, t_ambient_light ambient_l)
 {
 	int		i;
 	t_ray	shadow_ray;
-//	t_rgb_color	color;
-//	t_basis	base;
 
 	shadow_ray = new_ray((t_basis){{0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
 			start_coords);
@@ -81,15 +80,9 @@ t_rgb_color	shadow_ray(t_coords start_coords, const t_object *objects_array,
 		shadow_ray.sol = -1;
 		shadow_ray.go = -1;
 		shadow_ray.res = 0;
-//		color = advance_shadow_ray(&shadow_ray, objects_array, objects_count, i);
-//		shadow_ray.vector = normalise(sous_vec_coord(objects_array[i].coords,
-//					start_coords));
-//		base = get_ortho_basis_from_x(shadow_ray.vector);
-//		shadow_ray.vector = axial_vector_rotation(shadow_ray.vector, 5, base.y);
-//		shadow_ray.sol = -1;
-//		shadow_ray.go = -1;
-///		shadow_ray.res = 0;
-		shadow_ray.light_color = advance_shadow_ray(&shadow_ray, objects_array, objects_count, i);
+		shadow_ray.light_color = advance_shadow_ray(&shadow_ray, objects_array,
+				objects_count, i);
 	}
-	return (shadow_ray.light_color);
+	return (rgb_color_lighten(shadow_ray.light_color, ambient_l.color,
+			ambient_l.ratio * 0.7f));
 }

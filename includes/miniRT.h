@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:56 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/21 16:58:39 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 11:21:48 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ t_basis	get_ortho_basis_from_x(t_vector xxx_orientation);
 t_basis	get_ortho_basis_from_y(t_vector y_orientation);
 t_basis	get_ortho_basis_from_z(t_vector z_orientation);
 
+/* switch_basis.c */
+t_ray			switch_ray_basis(t_ray to_rotate, t_basis new_basis,
+					t_basis old_basis);
+t_coords		switch_coords_basis(t_coords to_rotate, t_basis new_basis,
+					t_basis old_basis);
+t_vector	switch_vector_basis(t_vector to_rotate, t_basis new_basis,
+					t_basis old_basis);
 
 /* SRCS/VECTOR */
 /* rotation.c */
@@ -74,11 +81,11 @@ void			free_block(char ***block);
 int				initialize_object(t_data *data, char **tab);
 int				initialize_mlx(t_data *data);
 void			obj_a(t_data *data, char *s);
-void			obj_c(t_data *data, char *s, int *pos);
-void			obj_l(t_data *data, char *s, int *pos);
-void			obj_pl(t_data *data, char *s, int *pos);
-void			obj_sp(t_data *data, char *s, int *pos);
-void			obj_cy(t_data *data, char *s, int *pos);
+void			obj_c(unsigned int index, t_data *data, char *s, int *pos);
+void			obj_l(unsigned int index, t_data *data, char *s, int *pos);
+void			obj_pl(unsigned int index, t_data *data, char *s, int *pos);
+void			obj_sp(unsigned int index, t_data *data, char *s, int *pos);
+void			obj_cy(unsigned int index, t_data *data, char *s, int *pos);
 
 /* free_and_exit.c */
 noreturn int	free_and_exit(t_data *data);
@@ -173,9 +180,9 @@ t_image			my_new_image(void *mlx_ptr, int width, int height);
 size_t			get_image_pixel(t_image image, int x, int y);
 void			set_image_pixel(t_image *image, int x, int y, size_t color);
 
-/* main_window.c */
-int				open_main_window(t_data *data, char *title);
-int				redraw_main_window(t_data *data);
+/* render_window.c */
+int				open_render_window(t_data *data, char *title);
+int				redraw_render_window(t_data *data);
 
 /* rgb_color.c */
 int				ft_min(int num1, int num2);
@@ -217,12 +224,12 @@ size_t			raytrace(const t_data *data, t_ray ray, bool anti_aliasing);
 
 /* shadow_ray.c */
 t_rgb_color		shadow_ray(t_coords start_coords, const t_object *objects_array,
-					unsigned short objects_count);
+					unsigned short objects_count, t_ambient_light ambient_l);
 
 /* SRCS/USER_INTERFACE */
 /* keyboard.c */
-int				key_handler(int keycode, t_data *data);
-void			init_key_hooks(t_data *data);
+int				key_press_handler(int keycode, t_data *data);
+int				key_release_handler(int keycode, t_data *data);
 
 /* SRCS/VECTOR */
 /* vect.c */

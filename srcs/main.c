@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/21 17:21:42 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/04 23:46:07 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	get_main_view_rays(t_data *data, bool needs_alloc)
 {
 	int	status;
 
-	status = set_view_rays(&data->view_rays, data->main_window,
+	status = set_view_rays(&data->view_rays, data->render_window,
 			*(data->active_camera), needs_alloc);
 	if (status != 0)
 	{
@@ -26,12 +26,28 @@ void	get_main_view_rays(t_data *data, bool needs_alloc)
 	}
 }
 
+/*
+ * Function to intialise the program's minilibx instance.
+ * Opens the program's render window displaying the raytracing results.
+ * Sets up the events hooks (e.g a key press) for the minilibx.
+ * The 'KeyPressMask' applies to when a key starts being pressed.
+ * The 'KeyReleaseMask' applies to when a key stops being pressed.
+ * The 'DestroyNotify' event triggers at a click on the window closing cross.
+ *
+ * @param t_data *data	-> pointer to the data to initialize the mlx instance
+ */
 int	initialize_mlx(t_data *data)
 {
 	data->mlx_ptr = mlx_init();
-	if (open_main_window(data, "miniRT"))
+	if (open_render_window(data, "miniRT"))
 		return (RTERR_OPEN_WIN);
-	init_key_hooks(data);
+	mlx_hook(data->render_window.ptr, KeyPress, KeyPressMask,
+		&key_press_handler, data);
+	mlx_hook(data->render_window.ptr, KeyRelease, KeyReleaseMask,
+		&key_release_handler, data);
+	mlx_hook(data->render_window.ptr, DestroyNotify, NoEventMask,
+		&free_and_exit, data);
+	mlx_loop_hook(data->mlx_ptr, &redraw_render_window, data);
 	return (0);
 }
 
@@ -76,7 +92,7 @@ int	main(int argc, char **argv)
 		return (status);
 	}
 	get_main_view_rays(&data, true);
-	redraw_main_window(&data);
+	redraw_render_window(&data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

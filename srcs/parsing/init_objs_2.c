@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/21 15:55:15 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 00:49:15 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	obj_a(t_data *data, char *s)
 	free_str_tab(args);
 }
 
-void	obj_c(t_data *data, char *s, int *pos)
+void	obj_c(unsigned int index, t_data *data, char *s, int *pos)
 {
 	char	**args;
 	char	**coords;
@@ -41,13 +41,14 @@ void	obj_c(t_data *data, char *s, int *pos)
 	set_object_orientation(&(data->scene_objects[*pos]),
 		(t_vector){ft_atof(vector[0]), ft_atof(vector[1]), ft_atof(vector[2])});
 	data->active_camera = &(data->scene_objects[*pos]);
+	data->scene_objects[*pos].id = index;
 	(*pos)++;
 	free_str_tab(args);
 	free_str_tab(coords);
 	free_str_tab(vector);
 }
 
-void	obj_l(t_data *data, char *s, int *pos)
+void	obj_l(unsigned int index, t_data *data, char *s, int *pos)
 {
 	char	**args;
 	char	**coords;
@@ -61,6 +62,7 @@ void	obj_l(t_data *data, char *s, int *pos)
 		ft_atof(args[2]));
 	set_object_color(&(data->scene_objects[*pos]),
 		(t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2])});
+	data->scene_objects[*pos].id = index;
 	(*pos)++;
 	free_str_tab(args);
 	free_str_tab(coords);

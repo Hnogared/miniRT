@@ -174,6 +174,12 @@ void			print_coord(t_coords cor);
 t_coords		advance_on_vec_z_sup(t_coords dep, t_vector dir, int k);
 t_coords		advance_on_vec_z_inf(t_coords dep, t_vector dir, int k);
 t_coords		advance_on_vec_z(t_coords dep, t_coords touch);
+float			to_rad(float degree_angle);
+t_vector		prod_vec_float(t_vector a, float k);
+int 			test(t_ray aligned_ray, t_object obj);
+void			give_sol(t_ray	*aligned_ray, float	t, int i);
+t_ray			switch_rb(t_ray *ray, t_object obj);
+t_coords		switch_cb(t_object obj);
 
 /* SRCS/DISPLAY */
 /* image_handling.c */

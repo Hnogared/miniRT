@@ -63,7 +63,7 @@ t_vector	cal_cylinder_side(t_ray *ray, t_object cylinder)
 	t_ray		aligned_ray;
 
 	world_basis = (t_basis){(t_vector){1, 0, 0}, (t_vector){0, 1, 0},
-			(t_vector){0, 0, 1}};
+		(t_vector){0, 0, 1}};
 	aligned_ray = switch_ray_basis(*ray, cylinder.local_basis, world_basis);
 	cylinder.coords = switch_coords_basis(cylinder.coords, cylinder.local_basis,
 			world_basis);

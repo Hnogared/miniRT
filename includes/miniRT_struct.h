@@ -299,4 +299,16 @@ typedef struct s_data
 	t_ray			**view_rays;
 }				t_data;
 
+/*structure for the norm*/
+typedef struct s_sol
+{
+	float	a;
+	float	b;
+	float	c;
+	float	ox;
+	float	oy;
+	float	dx;
+	float	dy;
+}			t_sol;
+
 #endif

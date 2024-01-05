@@ -76,6 +76,7 @@ SRCS			:=	main.c					\
 					render_window.c			\
 					rgb_color.c				\
 					rotation.c				\
+					rotation_2.c			\
 					set_view_rays.c			\
 					shadow_ray.c			\
 					switch_basis.c			\
@@ -83,10 +84,12 @@ SRCS			:=	main.c					\
 					vect_calc.c				\
 					vect_try.c				\
 					vect_try_3.c			\
+					vect_try_3_utils.c		\
 					vect_utils.c			\
 					vect_utils_2.c			\
 					vect_utils_3.c			\
 					vect_utils_4.c			\
+					vect_utils_advance.c	\
 					window_handling.c		\
 					window_modification.c
 

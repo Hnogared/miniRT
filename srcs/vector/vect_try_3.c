@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:19 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/05 16:25:18 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 21:31:28 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	try_plan_cyl_inf(t_ray *ray, t_coords cp, t_object obj, int i)
 {
 	float		d;
 	float		t;
+	t_coords	touch_pos;
 	t_vector	nn;
 	t_vector	n;
 
@@ -25,18 +26,15 @@ void	try_plan_cyl_inf(t_ray *ray, t_coords cp, t_object obj, int i)
 	d = -(nn.x * cp.x + nn.y * cp.y + nn.z * cp.z);
 	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d));
 	t = t / prod_scal_vec(nn, ray->vector);
-	if (t >= 0)
+	if (t >= 0 && (ray->res == 0 || t < ray->sol))
 	{
-		if (ray->res == 0 || t < ray->sol)
-		{
-			ray->coords = find_pos_touch(ray, t - 0.1f);
-			if (dist(cp, ray->coords) <= obj.special_data.cylinder.radius)
-			{
-				ray->sol = t;
-				ray->res = 5;
-				ray->go = i;
-			}
-		}
+		touch_pos = find_pos_touch(ray, t - 0.1f);
+		if (dist(cp, touch_pos) > obj.special_data.cylinder.radius + 0.01f)
+			return ;
+		ray->coords = touch_pos;
+		ray->sol = t;
+		ray->res = 5;
+		ray->go = i;
 	}
 }
 
@@ -44,7 +42,7 @@ void	try_plan_cyl_sup(t_ray *ray, t_coords cp, t_object obj, int i)
 {
 	float		d;
 	float		t;
-	float		verif;
+	t_coords	touch_pos;
 	t_vector	nn;
 	t_vector	n;
 
@@ -53,19 +51,15 @@ void	try_plan_cyl_sup(t_ray *ray, t_coords cp, t_object obj, int i)
 	d = -(nn.x * cp.x + nn.y * cp.y + nn.z * cp.z);
 	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d));
 	t = t / prod_scal_vec(nn, ray->vector);
-	if (t >= 0)
+	if (t >= 0 && (ray->res == 0 || t < ray->sol))
 	{
-		if ((ray->res == 0 && t != -1) || (t < ray->sol && t != -1))
-		{
-			verif = dist(cp, find_pos_touch(ray, t));
-			if (verif <= obj.special_data.cylinder.radius)
-			{
-				ray->coords = find_pos_touch(ray, t - 0.1f);
-				ray->sol = t;
-				ray->res = 4;
-				ray->go = i;
-			}
-		}
+		touch_pos = find_pos_touch(ray, t - 0.1f);
+		if (dist(cp, touch_pos) > obj.special_data.cylinder.radius + 0.01f)
+			return ;
+		ray->coords = touch_pos;
+		ray->sol = t;
+		ray->res = 4;
+		ray->go = i;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/04 23:46:07 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 17:08:16 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	main(int argc, char **argv)
 		return (status);
 	}
 	get_main_view_rays(&data, true);
-	redraw_render_window(&data);
 	mlx_loop(data.mlx_ptr);
 	return (0);
 }

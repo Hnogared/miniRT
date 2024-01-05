@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 15:35:35 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/05 15:35:36 by tlorne           ###   ########.fr       */
+/*   Updated: 2024/01/05 21:30:01 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int	test(t_ray aligned_ray, t_object obj)
 {
 	if (aligned_ray.coords.z
-		<= (obj.coords.z + obj.special_data.cylinder.height / 2)
+		<= (obj.coords.z + (obj.special_data.cylinder.height + 0.1f) / 2)
 		&& aligned_ray.coords.z
-		>= (obj.coords.z - obj.special_data.cylinder.height / 2))
+		>= (obj.coords.z - (obj.special_data.cylinder.height + 0.1f) / 2))
 	{
 		return (1);
 	}

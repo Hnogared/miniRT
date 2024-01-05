@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:01:02 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/05 01:02:33 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 15:39:51 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,31 +65,38 @@ static t_rgb_color	rotated_raytrace(const t_data *data, t_ray ray, float angle,
 	return (rgb_color_lighten(ray_color, ray.light_color, 1.0f));
 }
 
-size_t	raytrace(const t_data *data, t_ray ray, bool anti_aliasing)
+static size_t	anti_aliased_raytracing(const t_data *data, t_ray ray)
 {
 	size_t		new_rgb[3];
 	t_rgb_color	res_color;
+	t_vector	angle_vect;
 
-	if (!anti_aliasing)
-	{
-		return (rgb_to_sizet(rotated_raytrace(data, ray, 0,
-					(t_vector){0, 0, 0})));
-	}
-	res_color = rotated_raytrace(data, ray, 0.05f, ray.local_basis.y);
+	angle_vect = axial_vector_rotation(ray.local_basis.y, 45.0f,
+			ray.local_basis.x);
+	res_color = rotated_raytrace(data, ray, 0.03f, angle_vect);
 	new_rgb[0] = res_color.red;
 	new_rgb[1] = res_color.green;
 	new_rgb[2] = res_color.blue;
-	res_color = rotated_raytrace(data, ray, -0.05f, ray.local_basis.y);
+	res_color = rotated_raytrace(data, ray, -0.03f, angle_vect);
 	new_rgb[0] += res_color.red;
 	new_rgb[1] += res_color.green;
 	new_rgb[2] += res_color.blue;
-	res_color = rotated_raytrace(data, ray, 0.05f, ray.local_basis.z);
+	angle_vect = axial_vector_rotation(ray.local_basis.y, -45.0f,
+			ray.local_basis.x);
+	res_color = rotated_raytrace(data, ray, 0.03f, angle_vect);
 	new_rgb[0] += res_color.red;
 	new_rgb[1] += res_color.green;
 	new_rgb[2] += res_color.blue;
-	res_color = rotated_raytrace(data, ray, -0.05f, ray.local_basis.z);
+	res_color = rotated_raytrace(data, ray, -0.03f, angle_vect);
 	new_rgb[0] += res_color.red;
 	new_rgb[1] += res_color.green;
 	new_rgb[2] += res_color.blue;
 	return ((new_rgb[0] / 4) << 16 | (new_rgb[1] / 4) << 8 | new_rgb[2] / 4);
+}
+
+size_t	raytrace(const t_data *data, t_ray ray, bool anti_aliasing)
+{
+	if (anti_aliasing)
+		return (anti_aliased_raytracing(data, ray));
+	return (rgb_to_sizet(rotated_raytrace(data, ray, 0, (t_vector){0, 0, 0})));
 }

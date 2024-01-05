@@ -6,14 +6,18 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 10:59:56 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/05 14:50:07 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 15:22:16 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
 /*
+ * Function to return true if two vectors are the same, false otherwise.
  *
+ * @param t_vector vector1	-> the first vector structure to compare
+ * @param t_vector vector2	-> the second vector structure to compare
+ * @return bool				-> the result of the comparison
  */
 static bool	check_vector_equality(t_vector vector1, t_vector vector2)
 {
@@ -21,6 +25,15 @@ static bool	check_vector_equality(t_vector vector1, t_vector vector2)
 		&& vector1.z == vector2.z);
 }
 
+/*
+ * Function to transpose a t_ray structure from one basis to another.
+ * If the bases are the same, return the original ray.
+ *
+ * @param t_ray to_rotate	-> ray structure to modify for the transposition
+ * @param t_basis new_basis	-> the basis into which the ray is converted
+ * @param t_basis old_basis	-> the basis from which the ray is converted
+ * @return t_ray			-> the new transposed ray
+ */
 t_ray	switch_ray_basis(t_ray to_rotate, t_basis new_basis, t_basis old_basis)
 {
 	float	rot_matrix[3][3];
@@ -39,6 +52,15 @@ t_ray	switch_ray_basis(t_ray to_rotate, t_basis new_basis, t_basis old_basis)
 	return (res);
 }
 
+/*
+ * Function to transpose a t_coords structure from one basis to the other.
+ * If the bases are the same, return the original coordinates.
+ *
+ * @param t_coords to_rotate-> coords structure to modify for the transposition
+ * @param t_basis new_basis	-> the basis into which the coords are converted
+ * @param t_basis old_basis	-> the basis from which the coords are converted
+ * @return t_coords			-> the new transposed coordinates
+ */
 t_coords	switch_coords_basis(t_coords to_rotate, t_basis new_basis,
 	t_basis old_basis)
 {
@@ -52,6 +74,15 @@ t_coords	switch_coords_basis(t_coords to_rotate, t_basis new_basis,
 	return (matrix_coords_rotation(to_rotate, rot_matrix));
 }
 
+/*
+ * Function to transpose a t_vector structure from one basis to the other.
+ * If the bases are the same, return the original vector.
+ *
+ * @param t_vector to_rotate-> vector structure to modify for the transposition
+ * @param t_basis new_basis	-> the basis into which the vector is converted
+ * @param t_basis old_basis	-> the basis from which the vector is converted
+ * @return t_vector			-> the new transposed vector
+ */
 t_vector	switch_vector_basis(t_vector to_rotate, t_basis new_basis,
 	t_basis old_basis)
 {

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:25:22 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/14 14:47:10 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/04 22:21:06 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_data(t_data *data)
 		free(data->scene_objects);
 	if (data->mlx_ptr)
 	{
-		my_destroy_window(data->mlx_ptr, &data->main_window);
+		my_destroy_window(data->mlx_ptr, &data->render_window);
 		mlx_destroy_display(data->mlx_ptr);
 		free(data->mlx_ptr);
 	}

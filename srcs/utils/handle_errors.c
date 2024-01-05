@@ -6,13 +6,14 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:38:24 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/14 14:39:16 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/04 22:27:51 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-int	ft_perror(const char *prefix, char *const error_tab[RTERR_COUNT], int errnum)
+int	ft_perror(const char *prefix, char *const error_tab[RTERR_COUNT],
+	int errnum)
 {
 	ft_fprintf(STDERR_FILENO, PROG_NAME);
 	if (errnum < FIRST_ERRVAL)

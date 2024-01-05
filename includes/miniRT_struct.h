@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/21 14:49:46 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 00:41:04 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,8 @@ typedef union u_special_data
  * Structure holding an object's data, as well as its function to display its
  * special data (camera / light / sphere / plane / cylinder).
  *
- * unsigned short type			-> obj. type [ex:SPHERE_OBJ](see miniRT_macro.h)
+ * unsigned int id				-> obj. index in the scene
+ * unsigned int type			-> obj. type [ex:SPHERE_OBJ](see miniRT_macro.h)
  * bool has_color				-> boolean true if the object has a color
  * t_coords coords				-> coordinates structure of the object
  * t_vector orientation_vector	-> normal vector structure to rotate the object
@@ -187,7 +188,8 @@ typedef union u_special_data
  */
 typedef struct s_object
 {
-	unsigned short	type;
+	unsigned int	id;
+	unsigned int	type;
 	bool			has_color;
 	t_coords		coords;
 	t_vector		orientation_vector;
@@ -276,7 +278,7 @@ typedef struct s_window
  * bool anti_aliasing		-> set to true to enable anti_aliasing
  * unsigned short obj_count	-> number of objects in the scene
  * char *error_tab[]		-> pointer to all error strings (see miniRT_error.h)
- * t_window main_window		-> the main window structure to display on the screen
+ * t_window render_window	-> the render window displaying the raytracing result
  * t_ambient_light ambient_l-> the scene's ambient lighting data structure
  * t_object *scene_objects	-> pointer to all the scene objects {plane,light...}
  * t_object *active_camera	-> pointer to the currently in use camera
@@ -289,7 +291,7 @@ typedef struct s_data
 	bool			anti_aliasing;
 	unsigned short	obj_count;
 	char			*error_tab[RTERR_COUNT];
-	t_window		main_window;
+	t_window		render_window;
 	t_ambient_light	ambient_l;
 	t_object		*scene_objects;
 	t_object		*active_camera;

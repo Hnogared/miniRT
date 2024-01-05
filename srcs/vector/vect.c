@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:48:18 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/15 18:13:11 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 00:48:39 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	touch_object(const t_data *data, t_ray *ray)
 	ray->go = -1;
 	while (i < data->obj_count)
 	{
-		do_touch(ray, data->scene_objects[i], i);
+		if (data->scene_objects[i].id != ray->objects_touch[ray->s - 1].id)
+			do_touch(ray, data->scene_objects[i], i);
 		//res == i;
 		//if (res == 2 || res == 3)
 		//	printf("res vaut %d\n", res);
@@ -67,7 +68,7 @@ void	touch_object(const t_data *data, t_ray *ray)
 		if (!ray->nb_ref)
 		{
 			ray->light_color = shadow_ray(ray->coords, data->scene_objects,
-					data->obj_count);
+					data->obj_count, data->ambient_l);
 		}
 		ray->vector = calcul_ref(ray, data->scene_objects[ray->go], ray->res);
 		//printf("apres changement, vecteur rayon vaut\n");

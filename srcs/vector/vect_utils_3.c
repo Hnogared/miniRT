@@ -17,15 +17,7 @@ t_vector	calc_ref_form(t_vector i, t_vector n)
 	t_vector	r;
 	float		scal;
 
-	/*printf("\n\nentre calcul ref\n");
-	printf("vector rayon \n");
-	print_vec(i);
-	printf("vector plan \n");
-	print_vec(n);*/
 	scal = prod_scal_vec(i, n);
-	//printf("scal vaut %f\n", scal);
-	//printf("I - Truc, truc vaut\n");
-	//print_vec(prod_vec_float(n, 2 * scal));
 	r = sous_vec_vec(i, prod_vec_float(n, 2 * scal));
 	return (r);
 }

@@ -48,7 +48,7 @@
 #  define PI	3.141592654
 # endif
 
-# define RT_MAX_BOUNCES	2
+# define RT_MAX_BOUNCES	1
 
 # define RT_BUFFER_SIZE 1000
 

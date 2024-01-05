@@ -12,57 +12,47 @@
 
 #include "miniRT.h"
 
-void	try_plan_cyl_inf(t_ray *ray, t_coords cp, t_vector n, t_object obj, int i)
+void	try_plan_cyl_inf(t_ray *ray, t_coords cp, t_object obj, int i)
 {
 	float		d;
 	float		t;
-	float		verif;
 	t_vector	nn;
+	t_vector	n;
 
+	n = obj.orientation_vector;
 	nn = normalise(n);
 	nn = prod_vec_float(nn, -1);
 	d = -(nn.x * cp.x + nn.y * cp.y + nn.z * cp.z);
-	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d) / prod_scal_vec(nn, ray->vector));
+	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d));
+	t = t / prod_scal_vec(nn, ray->vector);
 	if (t >= 0)
 	{
 		if (ray->res == 0 || t < ray->sol)
 		{
 			ray->coords = find_pos_touch(ray, t - 0.1f);
-			verif = dist(cp, ray->coords);
-			if (verif <= obj.special_data.cylinder.radius)
+			if (dist(cp, ray->coords) <= obj.special_data.cylinder.radius)
 			{
 				ray->sol = t;
 				ray->res = 5;
 				ray->go = i;
-				//return (1);
 			}
 		}
-		/*else if (t < ray->sol)
-		{
-			ray->coords = find_pos_touch(ray, t);
-			verif = dist(cp, ray->coords);
-			if (verif <= obj.special_data.cylinder.diameter / 2)
-			{
-				ray->sol = t;
-				ray->res = 5;
-				ray->go = i;
-				//return (1);
-			}	
-		}*/
 	}
-	//return (0);
 }
 
-void	try_plan_cyl_sup(t_ray *ray, t_coords cp, t_vector n, t_object obj, int i)
+void	try_plan_cyl_sup(t_ray *ray, t_coords cp, t_object obj, int i)
 {
 	float		d;
 	float		t;
 	float		verif;
 	t_vector	nn;
+	t_vector	n;
 
+	n = obj.orientation_vector;
 	nn = normalise(n);
 	d = -(nn.x * cp.x + nn.y * cp.y + nn.z * cp.z);
-	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d) / prod_scal_vec(nn, ray->vector));
+	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d));
+	t = t / prod_scal_vec(nn, ray->vector);
 	if (t >= 0)
 	{
 		if ((ray->res == 0 && t != -1) || (t < ray->sol && t != -1))
@@ -74,11 +64,9 @@ void	try_plan_cyl_sup(t_ray *ray, t_coords cp, t_vector n, t_object obj, int i)
 				ray->sol = t;
 				ray->res = 4;
 				ray->go = i;
-				//return (1);
 			}
 		}
 	}
-	//return (0);
 }
 
 void	try_cylinder_ext(t_ray *ray, t_object obj, int i)
@@ -86,14 +74,12 @@ void	try_cylinder_ext(t_ray *ray, t_object obj, int i)
 	t_coords	cps;
 	t_coords	cpi;
 
-	cps = advance_on_vec(obj.coords, obj.orientation_vector, obj.special_data.cylinder.height / 2);
-	cpi = advance_on_vec(obj.coords, obj.orientation_vector, -obj.special_data.cylinder.height / 2);
-	try_plan_cyl_sup(ray, cps, obj.orientation_vector, obj, i);
-		//return (2);
-	try_plan_cyl_inf(ray, cpi, obj.orientation_vector, obj, i);
-		//return (3);
-	//else
-	//	return (0);
+	cps = advance_on_vec(obj.coords, obj.orientation_vector,
+			obj.special_data.cylinder.height / 2);
+	cpi = advance_on_vec(obj.coords, obj.orientation_vector,
+			-obj.special_data.cylinder.height / 2);
+	try_plan_cyl_sup(ray, cps, obj, i);
+	try_plan_cyl_inf(ray, cpi, obj, i);
 }
 
 /*pour cylindre side test avec cylindre centre sur z.
@@ -118,99 +104,49 @@ void	try_cylinder_ext(t_ray *ray, t_object obj, int i)
 	
 */
 
+t_sol	init_param(t_ray aligned_ray, t_object obj)
+{
+	t_sol	s;
+
+	s.ox = aligned_ray.origin_coords.x;
+	s.oy = aligned_ray.origin_coords.y;
+	s.dx = aligned_ray.vector.x;
+	s.dy = aligned_ray.vector.y;
+	s.a = pow(s.dx, 2) + pow(s.dy, 2);
+	s.b = s.ox * s.dx + s.oy * s.dy - s.dx * obj.coords.x;
+	s.b = s.b - s.dy * obj.coords.y;
+	s.b = 2 * s.b;
+	s.c = s.ox * s.ox - 2 * obj.coords.x * s.ox;
+	s.c = s.c + pow(obj.coords.x, 2) + s.oy * s.oy;
+	s.c = s.c - 2 * obj.coords.y * s.oy + pow(obj.coords.y, 2);
+	s.c = s.c - pow(obj.special_data.cylinder.radius, 2);
+	return (s);
+}
+
 void	try_cylinder_side(t_ray *ray, t_object obj, int i)
 {
-	float	a;
-	float	b;
-	float	c;
-	float	ox;
-	float	oy;
-	float	dx;
-	float	dy;
+	t_sol	s;
 	float	delta;
 	float	t;
 	t_ray	aligned_ray;
-	
-	aligned_ray = switch_ray_basis(*ray, obj.local_basis,
-			(t_basis) {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}});
-//	print_vector(ray->vector, "Origin");
-//	print_vector(aligned_ray.vector, "Aligned");
-	obj.coords = switch_coords_basis(obj.coords, obj.local_basis,
-			(t_basis) {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}});
-	ox = aligned_ray.origin_coords.x;
-	oy = aligned_ray.origin_coords.y;
-	dx = aligned_ray.vector.x;
-	dy = aligned_ray.vector.y;
-	a = pow(dx, 2) + pow(dy, 2);
-	b = 2 * (ox * dx + oy * dy - dx * obj.coords.x - dy * obj.coords.y);
-	c = ox * ox - 2 * obj.coords.x * ox + pow(obj.coords.x, 2) + oy * oy - 2 * obj.coords.y * oy + pow(obj.coords.y, 2) - pow(obj.special_data.cylinder.radius, 2);
-	delta = pow(b, 2) - 4 * a * c;
-/*t ox = ray->origin_coords.x;
-	oy = ray->origin_coords.y;
-	dx = ray->vector.x;
-	dy = ray->vector.y;
-	a = pow(dx, 2) + pow(dy, 2);
-	b = 2 * (ox * dx + oy * dy - dx * obj.coords.x - dy * obj.coords.y);
-	c = ox * ox - 2 * obj.coords.x * ox + pow(obj.coords.x, 2) + oy * oy - 2 * obj.coords.y * oy + pow(obj.coords.y, 2) - pow(obj.special_data.cylinder.diameter / 2, 2);
-	delta = pow(b, 2) - 4 * a * c;
-*/	//printf("Delta vaut : %f\n", delta);
+
+	aligned_ray = switch_rb(ray, obj);
+	obj.coords = switch_cb(obj);
+	s = init_param(aligned_ray, obj);
+	delta = pow(s.b, 2) - 4 * s.a * s.c;
 	if (delta >= 0)
 	{
-		//printf("Delta vaut : %f\n", delta);
-		//return (try_cylinder_ext(ray, obj));
-		t = good_sol(delta, b, a);
-		//printf("sol vaut :%f\n", t);
-//t		if (t >= 0 && (ray->res == 0 || t < ray->sol))
+		t = good_sol(delta, s.b, s.a);
 		if (t >= 0 && (ray->res == 0 || t < ray->sol))
 		{
 			aligned_ray.coords = find_pos_touch(&aligned_ray, t - 0.1f);
-//			ray->coords = switch_coords_basis(find_pos_touch(ray, t - 0.1f),
-//					(t_basis){{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}, obj.local_basis);
-//t			ray->coords = find_pos_touch(ray, t - 0.1f);
-	
-
-	//if (pow(dist(ray->coords, obj.coords), 2) <= 1250)
-		//	printf("ok pour une valeur de %f\n", pow(dist(ray->coords, obj.coords), 2));
-		//printf("dist test vaut :%f\n", pow(dist(ray->coords, obj.coords), 2));
-		//printf("H/2 vaut :%f\n", pow(obj.special_data.cylinder.height / 2, 2));
-		//printf("rayon vaut :%f\n", pow(obj.special_data.cylinder.diameter / 2, 2));
-		//printf("somme de H/2 et r vaut :%f\n\n\n", pow(obj.special_data.cylinder.height / 2, 2) + pow(obj.special_data.cylinder.diameter / 2, 2));
-		/*if (pow(dist(obj.coords, ray->coords), 2) <= (pow(obj.special_data.cylinder.height / 2, 2) + pow(obj.special_data.cylinder.diameter / 2, 2)) && t != -1)
-		{
-			//return (1);
-			ray->sol = t;
-			ray->res = 3;
-			ray->go = i;
-			//printf("yes !!!!! sol =%f res = %d \n", ray->sol, ray->res);
-			//return (try_cylinder_ext(ray, obj));
-		}*/
-
-//t			if (ray->coords.z <= (obj.coords.z + obj.special_data.cylinder.height / 2) && ray->coords.z >= (obj.coords.z - obj.special_data.cylinder.height / 2))
-//t			{
-//t				ray->sol = t;
-//t				ray->res = 3;
-//t				ray->go = i;
-//t			}
-			if (aligned_ray.coords.z
-				<= (obj.coords.z + obj.special_data.cylinder.height / 2)
-				&& aligned_ray.coords.z
-				>= (obj.coords.z - obj.special_data.cylinder.height / 2))
-			{
-				aligned_ray.sol = t;
-				aligned_ray.res = 3;
-				aligned_ray.go = i;
-			}
+			if (test(aligned_ray, obj) == 1)
+				give_sol(&aligned_ray, t, i);
 		}
 	}
-		//else
-			//return (try_cylinder_ext(ray, obj));
-	//return ;
-
-
-	*ray = switch_ray_basis(aligned_ray, (t_basis){{1, 0, 0}, {0, 1, 0}, {0, 0, 1}},
-			obj.local_basis);
+	*ray = switch_ray_basis(aligned_ray,
+			(t_basis){{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}, obj.local_basis);
 	obj.coords = switch_coords_basis(obj.coords,
-			(t_basis) {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}, obj.local_basis);
+			(t_basis){{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}, obj.local_basis);
 	try_cylinder_ext(ray, obj, i);
-//	try_cylinder_ext(&aligned_ray, obj, i);
 }

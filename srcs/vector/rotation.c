@@ -12,21 +12,6 @@
 
 #include "miniRT.h"
 
-float	to_rad(float degree_angle)
-{
-	return ((degree_angle * PI) / 180);
-}
-
-t_vector	prod_vec_float(t_vector a, float k)
-{
-	t_vector	c;
-
-	c.x = a.x * k;
-	c.y = a.y * k;
-	c.z = a.z * k;
-	return (c);
-}
-
 t_basis	axial_basis_rotation(t_basis to_rotate, float angle, t_vector axis)
 {
 	t_basis	rotated;

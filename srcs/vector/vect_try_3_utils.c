@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 15:35:35 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/05 21:30:01 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/05 21:51:13 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,10 @@
 
 int	test(t_ray aligned_ray, t_object obj)
 {
-	if (aligned_ray.coords.z
-		<= (obj.coords.z + (obj.special_data.cylinder.height + 0.1f) / 2)
-		&& aligned_ray.coords.z
-		>= (obj.coords.z - (obj.special_data.cylinder.height + 0.1f) / 2))
-	{
-		return (1);
-	}
-	else
-		return (0);
+	return (aligned_ray.coords.z <= (obj.coords.z
+			+ (obj.special_data.cylinder.height + 0.1f) / 2)
+		&& aligned_ray.coords.z >= (obj.coords.z
+			- (obj.special_data.cylinder.height + 0.1f) / 2));
 }
 
 void	give_sol(t_ray *aligned_ray, float t, int i)
@@ -34,16 +29,12 @@ void	give_sol(t_ray *aligned_ray, float t, int i)
 
 t_ray	switch_rb(t_ray *ray, t_object obj)
 {
-	t_ray	aligned_ray;
-
-	aligned_ray = switch_ray_basis(*ray, obj.local_basis,
-			(t_basis){{1, 0, 0}, {0, 1, 0}, {0, 0, 1}});
-	return (aligned_ray);
+	return (switch_ray_basis(*ray, obj.local_basis,
+			(t_basis){{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}));
 }
 
 t_coords	switch_cb(t_object obj)
 {
-	obj.coords = switch_coords_basis(obj.coords, obj.local_basis,
-			(t_basis){{1, 0, 0}, {0, 1, 0}, {0, 0, 1}});
-	return (obj.coords);
+	return (switch_coords_basis(obj.coords, obj.local_basis,
+			(t_basis){{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}));
 }

@@ -41,7 +41,8 @@ void	touch_object(const t_data *data, t_ray *ray)
 	init_ray(ray);
 	while (i < data->obj_count)
 	{
-		if (data->scene_objects[i].id != ray->objects_touch[ray->s - 1].id)
+		if (ray->s == 0
+			|| data->scene_objects[i].id != ray->objects_touch[ray->s - 1].id)
 			do_touch(ray, data->scene_objects[i], i);
 		i++;
 	}

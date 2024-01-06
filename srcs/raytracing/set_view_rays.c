@@ -124,11 +124,19 @@ int	set_view_rays(t_ray ***rays_tab, t_window window, t_object camera,
 {
 	int		virtual_res[2];
 	t_basis	start_basis;
+	int		i;
 
 	if (!rays_tab)
 		return (RTERR);
 	virtual_res[0] = window.virtual_width;
 	virtual_res[1] = window.virtual_height;
+	i = 0;
+	if (*rays_tab && needs_alloc == true)
+	{
+		while ((*rays_tab)[i])
+			free((*rays_tab)[i++]);
+		free(*rays_tab);
+	}
 	if ((needs_alloc == true || !(*rays_tab))
 		&& alloc_rays_tab(rays_tab, virtual_res) != 0)
 		return (errno);

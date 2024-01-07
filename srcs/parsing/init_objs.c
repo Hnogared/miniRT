@@ -6,12 +6,23 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/07 18:32:54 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 18:52:32 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+/*
+ * Function to initialize a plane object using the parameter string pointer and
+ * add it to the parameter data scene objects array.
+ * The object arguments inside the parameter string can be separated by any
+ * number of whitespaces and must be checked beforehand.
+ *
+ * @param unsigned int index	-> index of the new object
+ * @param t_data *data			-> pointer to the program data to add into
+ * @param const char *s			-> the object's arguments
+ * @param int *pos				-> pointer to the last added object's array index
+ */
 void	obj_pl(unsigned int index, t_data *data, const char *s, int *pos)
 {
 	char	**args;
@@ -37,6 +48,17 @@ void	obj_pl(unsigned int index, t_data *data, const char *s, int *pos)
 	free_double_pointer((void **) color);
 }
 
+/*
+ * Function to initialize a sphere object using the parameter string pointer and
+ * add it to the parameter data scene objects array.
+ * The object arguments inside the parameter string can be separated by any
+ * number of whitespaces and must be checked beforehand.
+ *
+ * @param unsigned int index	-> index of the new object
+ * @param t_data *data			-> pointer to the program data to add into
+ * @param const char *s			-> the object's arguments
+ * @param int *pos				-> pointer to the last added object's array index
+ */
 void	obj_sp(unsigned int index, t_data *data, const char *s, int *pos)
 {
 	char	**args;
@@ -58,6 +80,17 @@ void	obj_sp(unsigned int index, t_data *data, const char *s, int *pos)
 	free_double_pointer((void **) color);
 }
 
+/*
+ * Function to initialize a cylinder object using the parameter string pointer
+ * and add it to the parameter data scene objects array.
+ * The object arguments inside the parameter string can be separated by any
+ * number of whitespaces and must be checked beforehand.
+ *
+ * @param unsigned int index	-> index of the new object
+ * @param t_data *data			-> pointer to the program data to add into
+ * @param const char *s			-> the object's arguments
+ * @param int *pos				-> pointer to the last added object's array index
+ */
 void	obj_cy(unsigned int index, t_data *data, const char *s, int *pos)
 {
 	char	**args;
@@ -84,6 +117,13 @@ void	obj_cy(unsigned int index, t_data *data, const char *s, int *pos)
 	free_double_pointer((void **) args);
 }
 
+/*
+ * Function to initialize all the objects described inside the parameter strings
+ * array pointer and store them inside the parameter data scene objects array.
+ *
+ * @param t_data *data		-> program data pointer updated with the new objects
+ * @param const char **tab	-> pointer to the objects and their arguments array
+ */
 static void	exec_objs(t_data *data, const char **tab)
 {
 	int	i;
@@ -109,6 +149,13 @@ static void	exec_objs(t_data *data, const char **tab)
 	}
 }
 
+/*
+ * Function to allocate and fill the pointed parameter data scene objects array
+ * with the objects described inside the parameter strings array pointer.
+ *
+ * @param t_data *data		-> program data pointer updated with the new objects
+ * @param const char **tab	-> pointer to the objects and their arguments array
+ */
 int	initialize_object(t_data *data, const char **tab)
 {
 	int	len;

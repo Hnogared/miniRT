@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 22:20:53 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 18:33:18 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 18:52:46 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,16 +149,95 @@ char	*get_file(const t_data *data, const char *scene_file_path);
 /* ************************************************************************** */
 /* init_objs.c                                                                */
 /* ************************************************************************** */
-int		initialize_object(t_data *data, const char **tab);
+/*
+ * Function to initialize a plane object using the parameter string pointer and
+ * add it to the parameter data scene objects array.
+ * The object arguments inside the parameter string can be separated by any
+ * number of whitespaces and must be checked beforehand.
+ *
+ * @param unsigned int index	-> index of the new object
+ * @param t_data *data			-> pointer to the program data to add into
+ * @param const char *s			-> the object's arguments
+ * @param int *pos				-> pointer to the last added object's array index
+ */
 void	obj_pl(unsigned int index, t_data *data, const char *s, int *pos);
+
+/*
+ * Function to initialize a sphere object using the parameter string pointer and
+ * add it to the parameter data scene objects array.
+ * The object arguments inside the parameter string can be separated by any
+ * number of whitespaces and must be checked beforehand.
+ *
+ * @param unsigned int index	-> index of the new object
+ * @param t_data *data			-> pointer to the program data to add into
+ * @param const char *s			-> the object's arguments
+ * @param int *pos				-> pointer to the last added object's array index
+ */
 void	obj_sp(unsigned int index, t_data *data, const char *s, int *pos);
+
+/*
+ * Function to initialize a cylinder object using the parameter string pointer
+ * and add it to the parameter data scene objects array.
+ * The object arguments inside the parameter string can be separated by any
+ * number of whitespaces and must be checked beforehand.
+ *
+ * @param unsigned int index	-> index of the new object
+ * @param t_data *data			-> pointer to the program data to add into
+ * @param const char *s			-> the object's arguments
+ * @param int *pos				-> pointer to the last added object's array index
+ */
 void	obj_cy(unsigned int index, t_data *data, const char *s, int *pos);
+
+/*
+ * Function to allocate and fill the pointed parameter data scene objects array
+ * with the objects described inside the parameter strings array pointer.
+ *
+ * @param t_data *data		-> program data pointer updated with the new objects
+ * @param const char **tab	-> pointer to the objects and their arguments array
+ */
+int		initialize_object(t_data *data, const char **tab);
 
 /* ************************************************************************** */
 /* init_objs_2.c                                                              */
 /* ************************************************************************** */
+/*
+ * Function to initialize the scene ambient lighting using the parameter string
+ * pointer and add it to the parameter data scene objects array.
+ * The object arguments inside the parameter string can be separated by any
+ * number of whitespaces and must be checked beforehand.
+ *
+ * @param unsigned int index	-> index of the new object
+ * @param t_data *data			-> pointer to the program data to add into
+ * @param const char *s			-> the object's arguments
+ * @param int *pos				-> pointer to the last added object's array index
+ */
 void	obj_a(t_data *data, const char *s);
+
+/*
+ * Function to initialize a camera object using the parameter string pointer
+ * and add it to the parameter data scene objects array.
+ * The object arguments inside the parameter string can be separated by any
+ * number of whitespaces and must be checked beforehand.
+ * The initialized camera becomes the active camera of the parameter data.
+ *
+ * @param unsigned int index	-> index of the new object
+ * @param t_data *data			-> pointer to the program data to add into
+ * @param const char *s			-> the object's arguments
+ * @param int *pos				-> pointer to the last added object's array index
+ */
 void	obj_c(unsigned int index, t_data *data, const char *s, int *pos);
+
+/*
+ * Function to initialize a light object using the parameter string pointer
+ * and add it to the parameter data scene objects array.
+ * The object arguments inside the parameter string can be separated by any
+ * number of whitespaces and must be checked beforehand.
+ *
+ * @param unsigned int index	-> index of the new object
+ * @param t_data *data			-> pointer to the program data to add into
+ * @param const char *s			-> the object's arguments
+ * @param int *pos				-> pointer to the last added object's array index
+ */
 void	obj_l(unsigned int index, t_data *data, const char *s, int *pos);
 
 #endif

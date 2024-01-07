@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/06 23:47:48 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 21:30:25 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ static int	alloc_rays_tab(t_ray ***rays_tab, const int tab_sizes[2])
  * The window is used for the size of the double pointer (1 ray / virtual pixel)
  * and the camera's FOV is used to calculate the orientation of each ray.
  * The calculated rays are ready to be traced.
+ * If the parameter rays tab is already allocated and the allocation boolean is
+ * true, the rays tab gets reallocated.
  *
  * @param t_ray ***rays_tab	-> pointer to the t_ray double pointer to alloc/fill
  * @param t_window window	-> window for which to generate the rays
@@ -148,16 +150,26 @@ int	set_view_rays(t_ray ***rays_tab, t_window window, t_object camera,
 	return (0);
 }
 
-void	get_main_view_rays(t_data *data, bool needs_alloc)
+/*
+ * Function to setup the view rays using the parameter data active camera and
+ * render window.
+ * If the parameter boolean is true, allocates the view rays if they haven't been
+ * yet or reallocates them if already allocated.
+ * Displays an error, frees up the data and exits if the function set_view_rays
+ * failed (which would very likely mean an allocation issue).
+ *
+ * @param t_data *data		-> pointer to the data for the rays generation
+ * @param bool needs_alloc	-> true if allocation/reallocation is needed
+ */
+void	get_render_view_rays(t_data *data, bool needs_alloc)
 {
 	int	status;
 
 	status = set_view_rays(&data->view_rays, data->render_window,
 			*(data->active_camera), needs_alloc);
-	if (status != 0)
-	{
-		status = ft_perror(NULL, data->error_tab, status);
-		free_data(data);
-		exit(status);
-	}
+	if (!status)
+		return ;
+	status = ft_perror(NULL, data->error_tab, status);
+	free_data(data);
+	exit(status);
 }

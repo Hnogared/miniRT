@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 23:57:14 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 02:11:21 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 22:05:43 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ void		print_vec(t_vector vec);
 void		print_coord(t_coords cor);
 
 /* vect_utils_5.c */
+/*
+ * Function to return true if two vectors are the same, false otherwise.
+ *
+ * @param t_vector vector1	-> the first vector structure to compare
+ * @param t_vector vector2	-> the second vector structure to compare
+ * @return bool				-> the result of the comparison
+ */
+bool	is_vector_equal(t_vector vector1, t_vector vector2);
+
 float		to_rad(float degree_angle);
 t_vector	prod_vec_float(t_vector a, float k);
 

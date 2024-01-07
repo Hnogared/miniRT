@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:16:55 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/04 23:56:42 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 22:01:32 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static t_rgb_color	advance_shadow_ray(t_ray *shadow_ray,
 }
 
 /*
- * Function to get the lighting color of a point at '@param start_coords'
- * according to the lights present in the given '@param objects_array'.
+ * Function to get the lighting color of a point at the parameter coords
+ * according to the lights present in the parameter objects array.
  *
  * @param t_coords start_coords			-> coords of the point in space to check
  * @param t_object *objects_array		-> pointer to the scene objects to check

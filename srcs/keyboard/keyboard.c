@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:13:45 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 14:15:27 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 21:22:38 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	control_key_handler(int keycode, t_data *data)
 			data->render_window.pixel_ratio + 5);
 		data->render_window.draw_pos[0] = 0;
 		data->render_window.draw_pos[1] = 0;
-		get_main_view_rays(data, true);
+		get_render_view_rays(data, true);
 	}
 	if (keycode == XK_f)
 	{
@@ -38,7 +38,7 @@ static void	control_key_handler(int keycode, t_data *data)
 			data->render_window.pixel_ratio - 5);
 		data->render_window.draw_pos[0] = 0;
 		data->render_window.draw_pos[1] = 0;
-		get_main_view_rays(data, true);
+		get_render_view_rays(data, true);
 	}
 	if (keycode == XK_t)
 	{
@@ -147,8 +147,7 @@ int	key_press_handler(int keycode, t_data *data)
 		control_key_handler(keycode, data);
 	if (camera_move_check(keycode, data) || camera_rotate_check(keycode, data))
 	{
-		set_view_rays(&data->view_rays, data->render_window,
-			*(data->active_camera), false);
+		get_render_view_rays(data, false);
 		data->render_window.draw_pos[0] = 0;
 		data->render_window.draw_pos[1] = 0;
 	}

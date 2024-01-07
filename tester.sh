@@ -4,6 +4,8 @@ if [ "$1" == "1" ]; then
 	VALGRIND="valgrind --leak-check=full --show-leak-kinds=all"
 fi
 
+ERROR_DIR="scenes/error"
+
 echo -e "\e[31m_PARSING_TESTER_\e[0m\n"
 
 echo -e "\n\e[32m_FILE_NAME_\e[0m\n"
@@ -20,7 +22,7 @@ make -s
 file_syntax=("err_comma_everywhere_1.rt" "err_comma_everywhere_2.rt" "err_comma_everywhere_3.rt" "err_comma_everywhere_4.rt")
 for file_name in "${file_syntax[@]}"; do
 	echo -n "$file_name : "
-	$VALGRIND ./miniRT scenes/"${file_name}"
+	$VALGRIND ./miniRT "${ERROR_DIR}/${file_name}"
 	echo -e "Error code : $?\n"
 done
 
@@ -29,6 +31,6 @@ make -s
 file_syntax=("err_double_A.rt" "err_duplicate_C.rt" "err_empty_map.rt" "err_first_el.rt" "err_number.rt" "err_too_many_args_objects.rt" "err_color_range.rt")
 for file_name in "${file_syntax[@]}"; do
 	echo -n "$file_name : "
-	$VALGRIND ./miniRT scenes/"${file_name}"
+	$VALGRIND ./miniRT "${ERROR_DIR}/${file_name}"
 	echo -e "Error code : $?\n"
 done

@@ -11,7 +11,7 @@ make -s
 file_syntax=("test1.rt" "test.rt.rt" "test.rt.blabla" ".rt.test.rt" "wqer.rt.qwer")
 for file_name in "${file_syntax[@]}"; do
 	echo -n "$file_name : "
-	./miniRT "$Sfile_name"
+	./miniRT "$file_name"
 	echo -e "Error code : $?\n"
 done
 

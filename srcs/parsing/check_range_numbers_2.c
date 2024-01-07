@@ -6,12 +6,15 @@
 /*   By: leudelin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:46:03 by leudelin          #+#    #+#             */
-/*   Updated: 2024/01/07 15:16:58 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 17:34:18 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+/*
+ * Function to check if the parameter
+ */
 int	check_range_fov(const char *fov)
 {
 	int	temp;
@@ -27,17 +30,17 @@ int	check_range_fov(const char *fov)
 int	check_range_vectors(const char *str)
 {
 	char	**split;
-	int		temp;
 	int		i;
 	int		status;
+	float	temp;
 
 	status = 0;
 	i = 0;
 	split = ft_split(str, ',');
 	while (split[i])
 	{
-		temp = ft_atoi(split[i]);
-		if (!status && (temp < -1 || temp > 1))
+		temp = ft_atof(split[i]);
+		if (!status && (temp < -1.0f || temp > 1.0f))
 			status = RTERR_VECTOR;
 		i++;
 	}
@@ -69,17 +72,17 @@ int	check_range_color(const char *str)
 int	check_range_light(const char *str)
 {
 	char	**split;
-	int		temp;
 	int		i;
 	int		status;
+	float	temp;
 
 	status = 0;
 	i = 0;
 	split = ft_split(str, ',');
 	while (split[i])
 	{
-		temp = ft_atoi(split[i]);
-		if (!status && (temp < 0 || temp > 1))
+		temp = ft_atof(split[i]);
+		if (!status && (temp < 0.0f || temp > 1.0f))
 			status = RTERR_BRIGHTNESS;
 		i++;
 	}

@@ -6,12 +6,18 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:03:44 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/07 15:18:00 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 18:06:04 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+/*
+ * Function to check if all the objects names in the parameter block are valid.
+ *
+ * @param const char ***block	-> pointer to the objects data to check
+ * @return int	-> true = 0 || false = RTERR_OBJ
+ */
 static int	check_first_el(const char ***block)
 {
 	int		i;
@@ -41,7 +47,27 @@ static int	check_first_el(const char ***block)
 	return (0);
 }
 
-static int	all_test(t_data *data, const char ***block)
+/*
+ * Function to check if the objects and their data inside the parameter block
+ * are valid.
+ * Displays an error message if an error is found.
+ * Return RTERR_OBJ if an invalid object name is present.
+ * Return RTERR_OBJS_ARGS if an object has an invalid numbers of arguments.
+ * Return RTERR_DUPLIC_OBJ if duplicate unique objects are present.
+ * Return RTERR_NUM_DOT if one number has too many dots.
+ * Return RTERR_NUM_COMMA if an argument has too many commas.
+ * Return RTERR_NUM if a number or an argument is invalid.
+ * Return RTERR_BRIGHTNESS if brightness parameters are out of range.
+ * Return RTERR_VECTOR if vector parameters are out of range.
+ * Return RTERR_COLOR if color parameters are out of range.
+ * Return RTERR_FOV if FOV parameters are out of range.
+ * Return 0 else.
+ *
+ * @param const t_data *data	-> pointer to the program data (for ft_perror)
+ * @param const char ***block	-> pointer to the objects data to check
+ * @return int	-> checks result
+ */
+static int	all_test(const t_data *data, const char ***block)
 {
 	int		status;
 
@@ -61,6 +87,11 @@ static int	all_test(t_data *data, const char ***block)
 	return (0);
 }
 
+/*
+ * Function to free the parameter objects data block.
+ *
+ * @param char ***block	-> pointer to the objects block to free
+ */
 static void	free_block(char ***block)
 {
 	char	***tmp;
@@ -71,7 +102,27 @@ static void	free_block(char ***block)
 	free(block);
 }
 
-int	check_scene(t_data *data, char **tab)
+/*
+ * Function to split the lines inside the parameter tab and check if the
+ * resulting objects and their parameters data are valid.
+ * Displays an error message if an error is found.
+ * Return RTERR_OBJ if an invalid object name is present.
+ * Return RTERR_OBJS_ARGS if an object has an invalid numbers of arguments.
+ * Return RTERR_DUPLIC_OBJ if duplicate unique objects are present.
+ * Return RTERR_NUM_DOT if one number has too many dots.
+ * Return RTERR_NUM_COMMA if an argument has too many commas.
+ * Return RTERR_NUM if a number or an argument is invalid.
+ * Return RTERR_BRIGHTNESS if brightness parameters are out of range.
+ * Return RTERR_VECTOR if vector parameters are out of range.
+ * Return RTERR_COLOR if color parameters are out of range.
+ * Return RTERR_FOV if FOV parameters are out of range.
+ * Return 0 else.
+ *
+ * @param const t_data *data	-> pointer to the program data (for ft_perror)
+ * @param const char **tab		-> pointer to the strings array to check
+ * @return int	-> checks result
+ */
+int	check_scene(const t_data *data, const char **tab)
 {
 	char	***block;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 14:31:30 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 18:05:44 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	init_data(t_data *data, const char *file_name)
 	free(file);
 	if (!file_split)
 		return (errno);
-	status = check_scene(data, file_split);
+	status = check_scene(data, (const char **) file_split);
 	if (status != 0 && status != RTSUCCESS)
 		return (free_double_pointer((void **) file_split), status);
 	status = initialize_object(data, file_split);

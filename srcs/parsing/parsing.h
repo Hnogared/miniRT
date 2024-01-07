@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 22:20:53 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 17:41:08 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 18:04:56 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,27 @@ int		check_range_light(const char *str);
 /* ************************************************************************** */
 /* check_scene.c                                                              */
 /* ************************************************************************** */
-int		check_scene(t_data *data, char **tab);
+/*
+ * Function to split the lines inside the parameter tab and check if the
+ * resulting objects and their parameters data are valid.
+ * Displays an error message if an error is found.
+ * Return RTERR_OBJ if an invalid object name is present.
+ * Return RTERR_OBJS_ARGS if an object has an invalid numbers of arguments.
+ * Return RTERR_DUPLIC_OBJ if duplicate unique objects are present.
+ * Return RTERR_NUM_DOT if one number has too many dots.
+ * Return RTERR_NUM_COMMA if an argument has too many commas.
+ * Return RTERR_NUM if a number or an argument is invalid.
+ * Return RTERR_BRIGHTNESS if brightness parameters are out of range.
+ * Return RTERR_VECTOR if vector parameters are out of range.
+ * Return RTERR_COLOR if color parameters are out of range.
+ * Return RTERR_FOV if FOV parameters are out of range.
+ * Return 0 else.
+ *
+ * @param const t_data *data	-> pointer to the program data (for ft_perror)
+ * @param const char **tab		-> pointer to the strings array to split
+ * @return int	-> checks result
+ */
+int		check_scene(const t_data *data, const char **tab);
 
 /* ************************************************************************** */
 /* get_file.c                                                                 */

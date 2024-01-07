@@ -6,14 +6,17 @@
 /*   By: leudelin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:46:03 by leudelin          #+#    #+#             */
-/*   Updated: 2024/01/07 17:34:18 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 17:41:36 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
 /*
- * Function to check if the parameter
+ * Function to check if the parameter string pointer contains an FOV in range.
+ *
+ * @param const char *fov	-> string pointer to check
+ * @return int	-> true = 0 || false = RTERR_FOV
  */
 int	check_range_fov(const char *fov)
 {
@@ -27,7 +30,13 @@ int	check_range_fov(const char *fov)
 	return (status);
 }
 
-int	check_range_vectors(const char *str)
+/*
+ * Function to check if the parameter string pointer contains a vector in range.
+ *
+ * @param const char *fov	-> string pointer to check
+ * @return int	-> true = 0 || false = RTERR_VECTOR
+ */
+int	check_range_vector(const char *str)
 {
 	char	**split;
 	int		i;
@@ -48,6 +57,12 @@ int	check_range_vectors(const char *str)
 	return (status);
 }
 
+/*
+ * Function to check if the parameter string pointer contains a color in range.
+ *
+ * @param const char *fov	-> string pointer to check
+ * @return int	-> true = 0 || false = RTERR_COLOR
+ */
 int	check_range_color(const char *str)
 {
 	char	**split;
@@ -69,6 +84,13 @@ int	check_range_color(const char *str)
 	return (status);
 }
 
+/*
+ * Function to check if the parameter string pointer contains a light
+ * brightness in range.
+ *
+ * @param const char *fov	-> string pointer to check
+ * @return int	-> true = 0 || false = RTERR_BRIGTHNESS
+ */
 int	check_range_light(const char *str)
 {
 	char	**split;

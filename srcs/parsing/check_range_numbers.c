@@ -6,7 +6,7 @@
 /*   By: leudelin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:47:33 by leudelin          #+#    #+#             */
-/*   Updated: 2024/01/07 17:29:45 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 17:41:31 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	check_range_numbers_part1(const char **object)
 	}
 	if (!ft_strncmp(object[0], "C", 2))
 	{
-		status = check_range_vectors(object[2]);
+		status = check_range_vector(object[2]);
 		if (status)
 			return (status);
 		status = check_range_fov(object[3]);
@@ -101,7 +101,7 @@ static int	check_range_numbers_part3(const char **object)
 	status = 0;
 	if (!ft_strncmp(object[0], "pl", 2))
 	{
-		status = check_range_vectors(object[2]);
+		status = check_range_vector(object[2]);
 		if (status)
 			return (status);
 		status = check_range_color(object[3]);
@@ -110,7 +110,7 @@ static int	check_range_numbers_part3(const char **object)
 	}
 	if (!strncmp(object[0], "cy", 3))
 	{
-		status = check_range_vectors(object[2]);
+		status = check_range_vector(object[2]);
 		if (status)
 			return (status);
 		status = check_range_color(object[5]);

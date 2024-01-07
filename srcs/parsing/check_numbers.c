@@ -6,12 +6,16 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:07:54 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/07 16:04:56 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 16:49:39 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+/*
+ * Function to count the amount of commas in a string and check the amount of
+ * dots between each pair of them.
+ */
 static void	count_dot_and_comma(const char *s, int *dot, int *comma)
 {
 	int		i;
@@ -34,7 +38,7 @@ static void	count_dot_and_comma(const char *s, int *dot, int *comma)
 		if (s[j])
 			(*comma)++;
 		i = j + 1;
-		if (i > (int)len)
+		if (i > (int)len || *dot > 1)
 			return ;
 	}
 }
@@ -86,15 +90,20 @@ static int	check_is_digit(const char *s)
 }
 
 /*
- * Function to check if the ambient lighting and 
+ * Function to check if there is one ambient lighting, one camera and one
+ * (or any number if the bonus features are enabled) light pressent in the block.
+ *
+ * @param const char *obj_name	-> string name of the object to check
+ * @param int is_present[3]		-> occurences array of each object to check
+ * @return int	-> true = 0 || false = RTERR_DUPLIC_OBJ
  */
-static int	check_is_present(const char ***block, int is_present[3], int i)
+static int	check_is_present(const char *obj_name, int is_present[3])
 {
-	if (!ft_strncmp(block[i][0], "A", 2))
+	if (!ft_strncmp(obj_name, "A", 2))
 		is_present[0] += 1;
-	if (!ft_strncmp(block[i][0], "C", 2))
+	if (!ft_strncmp(obj_name, "C", 2))
 		is_present[1] += 1;
-	if (!ft_strncmp(block[i][0], "L", 2))
+	if (!ft_strncmp(obj_name, "L", 2))
 		is_present[2] += 1;
 	if (is_present[0] != 1 || is_present[1] != 1
 		|| (RT_BONUS == 0 && is_present[2] != 1))
@@ -102,6 +111,9 @@ static int	check_is_present(const char ***block, int is_present[3], int i)
 	return (0);
 }
 
+/*
+ * Function 
+ */
 int	check_numbers(const char ***block)
 {
 	int	i;
@@ -122,7 +134,7 @@ int	check_numbers(const char ***block)
 				return (status);
 			j++;
 		}
-		status = check_is_present(block, is_present, i);
+		status = check_is_present(block[i][0], is_present);
 		i++;
 	}
 	return (status);

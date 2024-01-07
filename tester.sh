@@ -19,7 +19,10 @@ done
 
 echo -e "\e[32m_ERROR_MAP_COMMA_EVERYWHERE\e[0m\n"
 make -s
-file_syntax=("err_comma_everywhere_1.rt" "err_comma_everywhere_2.rt" "err_comma_everywhere_3.rt" "err_comma_everywhere_4.rt")
+file_syntax=("err_comma_everywhere_1.rt"
+	"err_comma_everywhere_2.rt"
+	"err_comma_everywhere_3.rt"
+	"err_comma_everywhere_4.rt")
 for file_name in "${file_syntax[@]}"; do
 	echo -n "$file_name : "
 	$VALGRIND ./miniRT "${ERROR_DIR}/${file_name}"
@@ -28,7 +31,7 @@ done
 
 echo -e "\e[32m_ERROR_MAP\e[0m\n"
 make -s
-file_syntax=("err_double_A.rt" "err_duplicate_C.rt" "err_empty_map.rt" "err_first_el.rt" "err_number.rt" "err_too_many_args_objects.rt" "err_color_range.rt")
+file_syntax=("err_double_A.rt" "err_duplicate_C.rt" "err_empty_map.rt" "err_first_el.rt" "err_number.rt" "err_too_many_args_objects.rt" "err_color_range.rt" "err_vector_range.rt")
 for file_name in "${file_syntax[@]}"; do
 	echo -n "$file_name : "
 	$VALGRIND ./miniRT "${ERROR_DIR}/${file_name}"

@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fmin.c                                          :+:      :+:    :+:   */
+/*   free_double_pointer.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 14:57:36 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/05 21:59:30 by hnogared         ###   ########.fr       */
+/*   Created: 2024/01/06 23:26:06 by hnogared          #+#    #+#             */
+/*   Updated: 2024/01/06 23:29:37 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
- * Function to return the smallest of two floats.
- *
- * @param float n1	-> first float to compare
- * @param float n2	-> second float to compare
- * @return float	-> the smallest float
- */
-float	ft_fmin(float n1, float n2)
+void	free_double_pointer(void **double_pointer)
 {
-	return (n1 * (n1 < n2) + n2 * (n1 >= n2));
+	void	**temp;
+
+	if (!double_pointer)
+		return ;
+	temp = double_pointer;
+	while (*double_pointer)
+		free(*(double_pointer++));
+	free(temp);
 }

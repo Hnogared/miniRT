@@ -6,24 +6,36 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/05 17:08:16 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 00:04:45 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	get_main_view_rays(t_data *data, bool needs_alloc)
+noreturn int	free_and_exit(t_data *data)
 {
-	int	status;
+	free_data(data);
+	exit(0);
+}
 
-	status = set_view_rays(&data->view_rays, data->render_window,
-			*(data->active_camera), needs_alloc);
-	if (status != 0)
+void	free_data(t_data *data)
+{
+	int	i;
+
+	if (data->scene_objects)
+		free(data->scene_objects);
+	if (data->mlx_ptr)
 	{
-		status = ft_perror(NULL, data->error_tab, status);
-		free_data(data);
-		exit(status);
+		my_destroy_window(data->mlx_ptr, &data->render_window);
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
 	}
+	if (!data->view_rays)
+		return ;
+	i = 0;
+	while (data->view_rays[i])
+		free(data->view_rays[i++]);
+	free(data->view_rays);
 }
 
 /*
@@ -36,7 +48,7 @@ void	get_main_view_rays(t_data *data, bool needs_alloc)
  *
  * @param t_data *data	-> pointer to the data to initialize the mlx instance
  */
-int	initialize_mlx(t_data *data)
+static int	initialize_mlx(t_data *data)
 {
 	data->mlx_ptr = mlx_init();
 	if (open_render_window(data, "miniRT"))
@@ -51,7 +63,7 @@ int	initialize_mlx(t_data *data)
 	return (0);
 }
 
-int	init_data(t_data *data, const char *file_name)
+static int	init_data(t_data *data, const char *file_name)
 {
 	int		status;
 	char	*file;
@@ -64,11 +76,11 @@ int	init_data(t_data *data, const char *file_name)
 		return (errno);
 	status = check_scene(data, file_split);
 	if (status != 0 && status != RTSUCCESS)
-		return (free_str_tab(file_split), status);
+		return (free_double_pointer((void **) file_split), status);
 	status = initialize_object(data, file_split);
 	if (status != 0 && status != RTSUCCESS)
-		return (free_str_tab(file_split), status);
-	free_str_tab(file_split);
+		return (free_double_pointer((void **) file_split), status);
+	free_double_pointer((void **) file_split);
 	data->anti_aliasing = true;
 	return (initialize_mlx(data));
 }

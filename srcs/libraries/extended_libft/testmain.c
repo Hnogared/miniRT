@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialize_mlx.c                                   :+:      :+:    :+:   */
+/*   testmain.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/07 14:15:28 by hnogared         ###   ########.fr       */
+/*   Created: 2024/01/04 21:37:13 by hnogared          #+#    #+#             */
+/*   Updated: 2024/01/04 21:37:15 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "includes/libft.h"
 
-int	initialize_mlx(t_data *data)
+int	main(void)
 {
-	data->mlx_ptr = mlx_init();
-	if (open_main_window(data, "miniRT"))
-		return (2);
-	init_key_hooks(data);
+	ft_printf("%d: ", ft_printf("bits: %b\n", 42));
 	return (0);
 }

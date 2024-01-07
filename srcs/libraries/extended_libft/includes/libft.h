@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:11:48 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/04 21:38:10 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/06 23:28:15 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,40 @@ char	*ft_itoa(int n);
  */
 size_t	ft_itoab(int n, char *buf, size_t bufsize);
 
+/*
+ * Function to return the smallest of two integers.
+ *
+ * @param int n1	-> first integer to compare
+ * @param int n2	-> second integer to compare
+ * @return int		-> the smallest integer
+ */
 int		ft_min(int n1, int n2);
+
+/*
+ * Function to return the bigest of two integers.
+ *
+ * @param int n1	-> first integer to compare
+ * @param int n2	-> second integer to compare
+ * @return int		-> the bigest integer
+ */
 int		ft_max(int n1, int n2);
+
+/*
+ * Function to return the smallest of two floats.
+ *
+ * @param float n1	-> first float to compare
+ * @param float n2	-> second float to compare
+ * @return float	-> the smallest float
+ */
 float	ft_fmin(float n1, float n2);
+
+/*
+ * Function to return the bigest of two floats.
+ *
+ * @param float n1	-> first float to compare
+ * @param float n2	-> second float to compare
+ * @return float	-> the bigest float
+ */
 float	ft_fmax(float n1, float n2);
 
 int		ft_strncmp(const char *str, const char *str2, size_t n);
@@ -171,6 +202,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 
+void	free_double_pointer(void **doube_pointer);
 void	*ft_memset(void *s, int c, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n);

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:51:17 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/14 11:51:18 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/06 23:47:48 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,4 +146,18 @@ int	set_view_rays(t_ray ***rays_tab, t_window window, t_object camera,
 			(float) -camera.special_data.camera.v_fov / 2, start_basis.y);
 	set_rays_tab(rays_tab, virtual_res, start_basis, camera);
 	return (0);
+}
+
+void	get_main_view_rays(t_data *data, bool needs_alloc)
+{
+	int	status;
+
+	status = set_view_rays(&data->view_rays, data->render_window,
+			*(data->active_camera), needs_alloc);
+	if (status != 0)
+	{
+		status = ft_perror(NULL, data->error_tab, status);
+		free_data(data);
+		exit(status);
+	}
 }

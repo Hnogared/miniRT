@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:10 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/05 11:11:19 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 00:32:58 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,14 +135,11 @@ void	try_plan(t_ray *ray, t_object plan, int i)
 	d = -(n.x * plan.coords.x + n.y * plan.coords.y + n.z * plan.coords.z);
 	t = -((prod_scal_vec_coord(n, ray->origin_coords) + d));
 	t = t / prod_scal_vec(n, ray->vector);
-	if (t >= 0)
+	if (t >= 0 && (ray->res == 0 || t < ray->sol))
 	{
-		if (ray->res == 0 || t < ray->sol)
-		{
-			ray->coords = find_pos_touch(ray, t - 0.1f);
-			ray->sol = t;
-			ray->res = 1;
-			ray->go = i;
-		}
+		ray->coords = find_pos_touch(ray, t - 0.1f);
+		ray->sol = t;
+		ray->res = 1;
+		ray->go = i;
 	}
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_range_numbers1.c                             :+:      :+:    :+:   */
+/*   check_range_numbers_2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leudelin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:46:03 by leudelin          #+#    #+#             */
-/*   Updated: 2023/12/03 13:03:33 by motoko           ###   ########.fr       */
+/*   Updated: 2024/01/06 23:34:36 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	check_range_vectors(char *str)
 			status = RTERR_VECTOR;
 		i++;
 	}
-	free_str_tab(split);
+	free_double_pointer((void **) split);
 	return (status);
 }
 
@@ -62,7 +62,7 @@ int	check_range_color(char *str)
 			status = RTERR_COLOR;
 		i++;
 	}
-	free_str_tab(split);
+	free_double_pointer((void **) split);
 	return (status);
 }
 
@@ -83,6 +83,6 @@ int	check_range_light(char *str)
 			status = RTERR_BRIGHTNESS;
 		i++;
 	}
-	free_str_tab(split);
+	free_double_pointer((void **) split);
 	return (status);
 }

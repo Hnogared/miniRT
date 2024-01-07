@@ -6,14 +6,14 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:41:32 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/05 00:41:04 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 01:47:08 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_STRUCT_H
 # define MINIRT_STRUCT_H
 
-# include "miniRT_error.h"
+# include "../srcs/error/error.h"
 
 /*
  * Vector structure holding its amplitudes in the x, y and z axes.
@@ -300,7 +300,7 @@ typedef struct s_data
 }				t_data;
 
 /*structure for the norm*/
-typedef struct s_sol
+/*typedef struct s_sol
 {
 	float	a;
 	float	b;
@@ -310,5 +310,5 @@ typedef struct s_sol
 	float	dx;
 	float	dy;
 }			t_sol;
-
+*/
 #endif

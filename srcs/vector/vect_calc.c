@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:35:57 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/05 11:52:47 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 00:27:12 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 //donc CC' = CP^2 - r^2
 // et C' = C + CC'*N;
 
-t_vector	cal_sphere(t_ray *ray, t_object sphere)
+static t_vector	cal_sphere(const t_ray *ray, t_object sphere)
 {
 	t_vector	n;
 	t_vector	r;
@@ -31,7 +31,7 @@ t_vector	cal_sphere(t_ray *ray, t_object sphere)
 	return (r);
 }
 
-t_vector	cal_plan(t_ray *ray, t_object plan)
+static t_vector	cal_plan(const t_ray *ray, t_object plan)
 {
 	t_vector	n;
 	t_vector	r;
@@ -41,7 +41,7 @@ t_vector	cal_plan(t_ray *ray, t_object plan)
 	return (r);
 }
 
-t_vector	cal_cylinder_ext(t_ray *ray, t_object cylindre, int res)
+static t_vector	cal_cylinder_ext(const t_ray *ray, t_object cylindre, int res)
 {
 	t_vector	n;
 	t_vector	r;
@@ -54,7 +54,7 @@ t_vector	cal_cylinder_ext(t_ray *ray, t_object cylindre, int res)
 	return (r);
 }
 
-t_vector	cal_cylinder_side(t_ray *ray, t_object cylinder)
+static t_vector	cal_cylinder_side(const t_ray *ray, t_object cylinder)
 {
 	t_vector	n;
 	t_vector	r;
@@ -73,7 +73,7 @@ t_vector	cal_cylinder_side(t_ray *ray, t_object cylinder)
 	return (switch_vector_basis(r, world_basis, cylinder.local_basis));
 }
 
-t_vector	calcul_ref(t_ray *ray, t_object obj, int res)
+t_vector	calcul_ref(const t_ray *ray, t_object obj, int res)
 {
 	t_vector	vec_ref;
 

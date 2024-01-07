@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/05 00:49:15 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/06 23:35:32 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	obj_a(t_data *data, char *s)
 	color = ft_split(args[2], ',');
 	data->ambient_l.color = (t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]),
 		ft_atoi(color[2])};
-	free_str_tab(color);
-	free_str_tab(args);
+	free_double_pointer((void **) color);
+	free_double_pointer((void **) args);
 }
 
 void	obj_c(unsigned int index, t_data *data, char *s, int *pos)
@@ -43,9 +43,9 @@ void	obj_c(unsigned int index, t_data *data, char *s, int *pos)
 	data->active_camera = &(data->scene_objects[*pos]);
 	data->scene_objects[*pos].id = index;
 	(*pos)++;
-	free_str_tab(args);
-	free_str_tab(coords);
-	free_str_tab(vector);
+	free_double_pointer((void **) args);
+	free_double_pointer((void **) coords);
+	free_double_pointer((void **) vector);
 }
 
 void	obj_l(unsigned int index, t_data *data, char *s, int *pos)
@@ -64,7 +64,7 @@ void	obj_l(unsigned int index, t_data *data, char *s, int *pos)
 		(t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2])});
 	data->scene_objects[*pos].id = index;
 	(*pos)++;
-	free_str_tab(args);
-	free_str_tab(coords);
-	free_str_tab(color);
+	free_double_pointer((void **) args);
+	free_double_pointer((void **) coords);
+	free_double_pointer((void **) color);
 }

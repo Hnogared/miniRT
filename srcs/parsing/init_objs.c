@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_objs_1.c                                      :+:      :+:    :+:   */
+/*   init_objs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/05 00:49:12 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/06 23:35:12 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	obj_pl(unsigned int index, t_data *data, char *s, int *pos)
 		(t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2])});
 	data->scene_objects[*pos].id = index;
 	(*pos)++;
-	free_str_tab(args);
-	free_str_tab(coords);
-	free_str_tab(vector);
-	free_str_tab(color);
+	free_double_pointer((void **) args);
+	free_double_pointer((void **) coords);
+	free_double_pointer((void **) vector);
+	free_double_pointer((void **) color);
 }
 
 void	obj_sp(unsigned int index, t_data *data, char *s, int *pos)
@@ -53,9 +53,9 @@ void	obj_sp(unsigned int index, t_data *data, char *s, int *pos)
 		(t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2])});
 	data->scene_objects[*pos].id = index;
 	(*pos)++;
-	free_str_tab(args);
-	free_str_tab(coords);
-	free_str_tab(color);
+	free_double_pointer((void **) args);
+	free_double_pointer((void **) coords);
+	free_double_pointer((void **) color);
 }
 
 void	obj_cy(unsigned int index, t_data *data, char *s, int *pos)
@@ -78,13 +78,13 @@ void	obj_cy(unsigned int index, t_data *data, char *s, int *pos)
 		(t_rgb_color){ft_atoi(color[0]), ft_atoi(color[1]), ft_atoi(color[2])});
 	data->scene_objects[*pos].id = index;
 	(*pos)++;
-	free_str_tab(color);
-	free_str_tab(vector);
-	free_str_tab(coords);
-	free_str_tab(args);
+	free_double_pointer((void **) color);
+	free_double_pointer((void **) vector);
+	free_double_pointer((void **) coords);
+	free_double_pointer((void **) args);
 }
 
-void	exec_objs(t_data *data, char **tab)
+static void	exec_objs(t_data *data, char **tab)
 {
 	int	i;
 	int	pos;

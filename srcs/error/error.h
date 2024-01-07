@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT_error.h                                     :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 16:09:40 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/14 14:39:40 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/06 23:53:51 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_ERROR_H
-# define MINIRT_ERROR_H
+#ifndef ERROR_H
+# define ERROR_H
 
 /* The program name to display in ft_perror */
 # ifndef PROG_NAME

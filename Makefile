@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2024/01/05 11:03:52 by hnogared         ###   ########.fr        #
+#    Updated: 2024/01/07 01:46:53 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,10 +42,10 @@ INCLUDES_DIR	:=	includes
 VPATH			:=	$(SRCS_DIR):				\
 					$(SRCS_DIR)/basis:			\
 					$(SRCS_DIR)/display:		\
+					$(SRCS_DIR)/error:			\
+					$(SRCS_DIR)/keyboard:		\
 					$(SRCS_DIR)/object:			\
 					$(SRCS_DIR)/parsing:		\
-					$(SRCS_DIR)/user_interface:	\
-					$(SRCS_DIR)/utils:			\
 					$(SRCS_DIR)/vector:			\
 					$(SRCS_DIR)/raytracing
 
@@ -55,15 +55,13 @@ SRCS			:=	main.c					\
 					check_file.c			\
 					check_numbers.c			\
 					check_range_numbers.c	\
-					check_range_numbers1.c	\
+					check_range_numbers_2.c	\
 					check_scene.c			\
-					conv_hexa.c				\
-					free_and_exit.c			\
+					error.c					\
 					get_file.c				\
 					get_object_color.c		\
-					handle_errors.c			\
 					image_handling.c		\
-					init_objs_1.c			\
+					init_objs.c				\
 					init_objs_2.c			\
 					keyboard.c				\
 					object_creation.c		\
@@ -83,8 +81,7 @@ SRCS			:=	main.c					\
 					vect.c					\
 					vect_calc.c				\
 					vect_try.c				\
-					vect_try_3.c			\
-					vect_try_3_utils.c		\
+					vect_try_2.c			\
 					vect_utils.c			\
 					vect_utils_2.c			\
 					vect_utils_3.c			\

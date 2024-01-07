@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:03:44 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/21 15:52:47 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/06 23:31:54 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	check_first_el(char ***block)
 	return (0);
 }
 
-int	all_test(t_data *data, char ***block)
+static int	all_test(t_data *data, char ***block)
 {
 	int		status;
 
@@ -59,6 +59,16 @@ int	all_test(t_data *data, char ***block)
 	if (status)
 		return (ft_perror(RTERR_MSG, data->error_tab, status));
 	return (0);
+}
+
+static void	free_block(char ***block)
+{
+	char	***tmp;
+
+	tmp = block;
+	while (*tmp)
+		free_double_pointer((void **) *(tmp++));
+	free(block);
 }
 
 int	check_scene(t_data *data, char **tab)

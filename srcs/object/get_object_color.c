@@ -6,11 +6,23 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 11:19:58 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/14 12:09:13 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 14:38:16 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+/*
+ * Function to return the color of an object with no color attribute.
+ *
+ * @param[unused] t_special_data special_data	-> placeholder special data 
+ * @return t_rgb_color							-> the default color structure
+ */
+t_rgb_color	get_uncolored_color(__attribute__((unused))
+	t_special_data special_data)
+{
+	return ((t_rgb_color){0, 0, 0});
+}
 
 /*
  * Function to return the color of a sphere's special data.
@@ -62,16 +74,4 @@ t_rgb_color	get_cylinder_color(t_special_data special_data)
 t_rgb_color	get_light_color(t_special_data special_data)
 {
 	return (special_data.light.color);
-}
-
-/*
- * Function to return the color of an object with no color attribute.
- *
- * @param[unused] t_special_data special_data	-> placeholder special data 
- * @return t_rgb_color							-> the default color structure
- */
-t_rgb_color	get_uncolored_color(__attribute__((unused))
-	t_special_data special_data)
-{
-	return ((t_rgb_color){0, 0, 0});
 }

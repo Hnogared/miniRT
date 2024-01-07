@@ -6,18 +6,29 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 00:04:45 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 14:31:30 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+/*
+ * Function to free the program data and exit with code 0.
+ *
+ * @param t_data *data	-> pointer to the data to free
+ * @noreturn int		-> needed for the minilibx hooking to the function
+ */
 noreturn int	free_and_exit(t_data *data)
 {
 	free_data(data);
 	exit(0);
 }
 
+/*
+ * Function to free the program data.
+ * 
+ * @param t_data *data	-> pointer to the data to free
+ */
 void	free_data(t_data *data)
 {
 	int	i;
@@ -63,6 +74,15 @@ static int	initialize_mlx(t_data *data)
 	return (0);
 }
 
+/*
+ * Function to initialize the parameter data by reading the parameter scene file.
+ * Display an error message and exit with a status code if the file is invalid
+ * or a fatal error occured.
+ *
+ * @param t_data *data			-> pointer to the data to initialize
+ * @param const char *file_name	-> name of the file to read for initialization
+ * @return int					-> status code of the function
+ */
 static int	init_data(t_data *data, const char *file_name)
 {
 	int		status;
@@ -85,6 +105,18 @@ static int	init_data(t_data *data, const char *file_name)
 	return (initialize_mlx(data));
 }
 
+/*
+ * Main function of the program.
+ * Initializes the program data and the minilibx instance by reading the arguemnt
+ * scene file. On success, starts the drawing of the render window and loops
+ * waiting for user input until the user quits or a fatal error occurs.
+ * Displays an error message and exits with an error code if the argument scene
+ * file is invalid or a fatal error occured.
+ *
+ * @params int argc		-> number of arguments
+ * @params char **argv	-> 1 additional argument expected : the scene file
+ * @return int			-> status code of the program
+ */
 int	main(int argc, char **argv)
 {
 	t_data		data;

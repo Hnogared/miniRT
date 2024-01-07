@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:33:00 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/12 10:28:27 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 14:48:22 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
  * Function to retrieve the pointer to the first t_object structure of the given
  * type in an array of objects.
  *
- * @param unsigned short type	-> type of the object to look for
- * @param t_object *objects_list-> array of objects 
+ * @param unsigned short type			-> type of the object to look for
+ * @param const t_object *objects_list	-> array of objects 
  */
-t_object	*get_object_ptr(unsigned short type, t_object *objects_list,
+t_object	*get_object_ptr(unsigned short type, const t_object *objects_list,
 	int list_size)
 {
 	int	i;

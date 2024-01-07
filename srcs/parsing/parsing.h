@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 22:20:53 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 18:52:46 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 23:07:42 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
  *
  * @param const char ***block	-> pointer to the array of objects to test
  * @return int	-> true = 0 || false = RTERR_OBJS_ARGS
+ *
+ * @child_func check_args_amount	-> function to check an object's args count
  */
 int		check_num_objects_args(const char ***block);
 
@@ -50,6 +52,9 @@ int		check_file(const char *scene_file_path);
  *
  * @param const char ***block	-> pointer to the objects array to check
  * @return int	-> checks result
+ *
+ * @child_func check_is_digit	-> function to check a string's numbers
+ * @child_func check_is_present	-> function to check the amount of unique objs
  */
 int		check_numbers(const char ***block);
 
@@ -67,6 +72,8 @@ int		check_numbers(const char ***block);
  *
  * @param const char ***block	-> pointer to the objects + parameters to check
  * @return int	-> checks result
+ *
+ * @child_func check_range_numbers_1	-> function to check A/C ranges
  */
 int		check_range_numbers(const char ***block);
 
@@ -128,6 +135,9 @@ int		check_range_light(const char *str);
  * @param const t_data *data	-> pointer to the program data (for ft_perror)
  * @param const char **tab		-> pointer to the strings array to split
  * @return int	-> checks result
+ *
+ * @child_func all_test		-> function to check an objects' block args
+ * @child_func free_block	-> function to free an objects' block
  */
 int		check_scene(const t_data *data, const char **tab);
 
@@ -142,7 +152,9 @@ int		check_scene(const t_data *data, const char **tab);
  *
  * @param const t_data *data			-> program data pointer (for ft_perror)
  * @param const char *scene_file_path	-> pointer to the file path to open
- * @return char *	-> pointer to the file contents if successfull
+ * @return char *						-> pointer to the file contents
+ *
+ * @child_func read_file	-> function to get the contents of an fd
  */
 char	*get_file(const t_data *data, const char *scene_file_path);
 
@@ -194,6 +206,8 @@ void	obj_cy(unsigned int index, t_data *data, const char *s, int *pos);
  *
  * @param t_data *data		-> program data pointer updated with the new objects
  * @param const char **tab	-> pointer to the objects and their arguments array
+ *
+ * @child_func exec_objs	-> function to initialize scene objects
  */
 int		initialize_object(t_data *data, const char **tab);
 

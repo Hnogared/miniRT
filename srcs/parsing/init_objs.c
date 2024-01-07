@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/07 18:52:32 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 23:07:27 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ void	obj_cy(unsigned int index, t_data *data, const char *s, int *pos)
  *
  * @param t_data *data		-> program data pointer updated with the new objects
  * @param const char **tab	-> pointer to the objects and their arguments array
+ *
+ * @parent_func initialize_object	-> function to alloc and init scene objects
  */
 static void	exec_objs(t_data *data, const char **tab)
 {
@@ -155,6 +157,8 @@ static void	exec_objs(t_data *data, const char **tab)
  *
  * @param t_data *data		-> program data pointer updated with the new objects
  * @param const char **tab	-> pointer to the objects and their arguments array
+ *
+ * @child_func exec_objs	-> function to initialize scene objects
  */
 int	initialize_object(t_data *data, const char **tab)
 {

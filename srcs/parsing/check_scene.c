@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:03:44 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/07 18:06:04 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 23:01:37 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
  *
  * @param const char ***block	-> pointer to the objects data to check
  * @return int	-> true = 0 || false = RTERR_OBJ
+ *
+ * @parent_func all_test	-> function to check an objects' block args
  */
 static int	check_first_el(const char ***block)
 {
@@ -66,6 +68,9 @@ static int	check_first_el(const char ***block)
  * @param const t_data *data	-> pointer to the program data (for ft_perror)
  * @param const char ***block	-> pointer to the objects data to check
  * @return int	-> checks result
+ *
+ * @child_func check_first_el	-> function to check a block's objects names
+ * @parent_func check_scene		-> function to check an objects' array args
  */
 static int	all_test(const t_data *data, const char ***block)
 {
@@ -91,6 +96,8 @@ static int	all_test(const t_data *data, const char ***block)
  * Function to free the parameter objects data block.
  *
  * @param char ***block	-> pointer to the objects block to free
+ *
+ * @parent_func check_scene	-> function to check an objects' array args
  */
 static void	free_block(char ***block)
 {
@@ -121,6 +128,9 @@ static void	free_block(char ***block)
  * @param const t_data *data	-> pointer to the program data (for ft_perror)
  * @param const char **tab		-> pointer to the strings array to check
  * @return int	-> checks result
+ *
+ * @child_func all_test		-> function to check an objects' block args
+ * @child_func free_block	-> function to free an objects' block
  */
 int	check_scene(const t_data *data, const char **tab)
 {

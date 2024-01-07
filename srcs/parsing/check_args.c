@@ -6,7 +6,7 @@
 /*   By: leudelin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:00:54 by leudelin          #+#    #+#             */
-/*   Updated: 2024/01/07 15:34:45 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 22:21:55 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
  * @param const char **object_block	-> pointer to the object + arguments strings
  * @param size_t amount_to_check	-> amount of arguments to check for
  * @return int	-> true = 0 || false = RTERR_OBJS_ARGS
+ *
+ * @parent_func check_num_objects_args	-> function to check objects' args count
  */
 static int	check_args_amount(const char **object_block, size_t amount_to_check)
 {
@@ -36,6 +38,8 @@ static int	check_args_amount(const char **object_block, size_t amount_to_check)
  *
  * @param const char ***block	-> pointer to the array of objects to test
  * @return int	-> true = 0 || false = RTERR_OBJS_ARGS
+ *
+ * @child_func check_args_amount	-> function to check an object's args count
  */
 int	check_num_objects_args(const char ***block)
 {

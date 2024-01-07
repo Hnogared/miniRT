@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:07:54 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/07 17:11:16 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 22:30:59 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
  * @param const char *s	-> pointer to the string to check
  * @param int *dot		-> pointer to the counter to increment at each dot
  * @param int *comma	-> pointer to the counter to increment at each comma
+ *
+ * @parent_func check_all	-> function to check a number's commas/dots
  */
 static void	count_dot_and_comma(const char *s, int *dot, int *comma)
 {
@@ -57,6 +59,9 @@ static void	count_dot_and_comma(const char *s, int *dot, int *comma)
  *
  * @param const char *s	-> pointer to the string to check
  * @return int	-> checks result
+ *
+ * @child_func count_dot_and_comma	-> function to count a string's commas/dots
+ * @parent_func check_is_digit		-> function to check a string's numbers
  */
 static int	check_all(const char *s)
 {
@@ -85,6 +90,9 @@ static int	check_all(const char *s)
  *
  * @param const char *s	-> pointer to the string to check
  * @return int	-> true = 0 || false = RTERR_NUM
+ *
+ * @child_func check_all		-> function to check a number's commas/dots
+ * @parent_func check_numbers	-> function to check a block's numbers
  */
 static int	check_is_digit(const char *s)
 {
@@ -118,6 +126,8 @@ static int	check_is_digit(const char *s)
  * @param const char *obj_name	-> string name of the object to check
  * @param int is_present[3]		-> occurences array of each object to check
  * @return int	-> true = 0 || false = RTERR_DUPLIC_OBJ
+ *
+ * @parent_func check_numbers	-> function to check a block's numbers
  */
 static int	check_is_present(const char *obj_name, int is_present[3])
 {
@@ -144,6 +154,9 @@ static int	check_is_present(const char *obj_name, int is_present[3])
  *
  * @param const char ***block	-> pointer to the objects array to check
  * @return int	-> checks result
+ *
+ * @child_func check_is_digit	-> function to check a string's numbers
+ * @child_func check_is_present	-> function to check the amount of unique objs
  */
 int	check_numbers(const char ***block)
 {

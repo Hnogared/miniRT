@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 15:30:11 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/07 18:25:20 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 23:05:31 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
  *
  * @param char *stash		-> pointer to the first concatenation string to free
  * @param const char *buf	-> pointer to the second concatenation string
- * @return char *	-> pointer to the result of teh concatenation
+ * @return char *			-> pointer to the result of teh concatenation
+ *
+ * @parent_func read_file	-> function to get the contents of an fd
  */
-static char	*ft_free_and_join(char *stash, const char *buf)
+static char	*free_and_join(char *stash, const char *buf)
 {
 	char	*temp;
 
@@ -35,6 +37,9 @@ static char	*ft_free_and_join(char *stash, const char *buf)
  *
  * @param int fd	-> file descriptor to read from
  * @return char *	-> pointer to the entire read concatenation if successfull
+ *
+ * @child_func free_and_join-> function to concatenate two strings
+ * @parent_func get_file	-> function to open and get the contents of a file
  */
 static char	*read_file(int fd)
 {
@@ -56,7 +61,7 @@ static char	*read_file(int fd)
 		if (!line)
 			break ;
 		if (line[0] != '#')
-			str = ft_free_and_join(str, line);
+			str = free_and_join(str, line);
 		free(line);
 		if (!str)
 			return (NULL);
@@ -72,7 +77,9 @@ static char	*read_file(int fd)
  *
  * @param const t_data *data			-> program data pointer (for ft_perror)
  * @param const char *scene_file_path	-> pointer to the file path to open
- * @return char *	-> pointer to the file contents if successfull
+ * @return char *						-> pointer to the file contents
+ *
+ * @child_func read_file	-> function to get the contents of an fd
  */
 char	*get_file(const t_data *data, const char *scene_file_path)
 {

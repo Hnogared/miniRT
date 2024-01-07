@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 10:13:45 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 21:22:38 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 22:12:31 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
  *
  * @param int keycode	-> X11 keycode of the pressed key to check
  * @param t_data *data	-> the program's data to modify at matching shortcut
+ *
+ * @parent_func key_press_handler	-> function to interpret a keyboard press
  */
 static void	control_key_handler(int keycode, t_data *data)
 {
@@ -62,6 +64,8 @@ static void	control_key_handler(int keycode, t_data *data)
  * @param int keycode	-> X11 keycode of the pressed key to check
  * @param t_data *data	-> pointer to the data to modify at matching keypress
  * @return int			-> 1 if the camera was moved, 0 otherwise
+ *
+ * @parent_func key_press_handler	-> function to interpret a keyboard press
  */
 static int	camera_move_check(int keycode, t_data *data)
 {
@@ -103,6 +107,8 @@ static int	camera_move_check(int keycode, t_data *data)
  * @param int keycode	-> X11 keycode of the pressed key to check
  * @param t_data *data	-> pointer to the data to modify at matching keypress
  * @return int			-> 1 if the camera was rotated, 0 otherwise
+ *
+ * @parent_func key_press_handler	-> function to interpret a keyboard press
  */
 static int	camera_rotate_check(int keycode, t_data *data)
 {
@@ -136,6 +142,10 @@ static int	camera_rotate_check(int keycode, t_data *data)
  * @param int keycode		-> X11 keycode of the pressed key
  * @param t_data *data		-> pointer to the data to modify with the key press
  * @[redundant]return int	-> 0
+ *
+ * @child_func camera_rotate_check	-> function to rotate the camera at key press
+ * @child_func camera_move_check	-> function to move the camera at key press
+ * @child_func control_key_handler	-> function to handle L_CTRL shortcuts
  */
 int	key_press_handler(int keycode, t_data *data)
 {

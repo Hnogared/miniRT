@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 21:19:42 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 23:11:10 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ static int	init_data(t_data *data, const char *file_name)
  * Displays an error message and exits with an error code if the argument scene
  * file is invalid or a fatal error occured.
  *
- * @params int argc		-> number of arguments
- * @params char **argv	-> 1 additional argument expected : the scene file
+ * @param int argc		-> number of arguments
+ * @param char **argv	-> 1 additional argument expected : the scene file
  * @return int			-> status code of the program
  */
 int	main(int argc, char **argv)

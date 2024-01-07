@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 22:18:03 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 14:49:44 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 22:15:41 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,33 +141,33 @@ void		print_object_data(t_object object);
  * Function to display a t_coords coordinates structure in the terminal.
  *
  * @param t_coords coords	-> coordinates structure to display
- * @param char *name		-> name of the coordinates displayed
+ * @param const char *name	-> name of the coordinates displayed
  */
-void		print_coords(t_coords coords, char *name);
+void		print_coords(t_coords coords, const char *name);
 
 /*
  * Function to display a t_vector vector structure in the terminal.
  *
  * @param t_vector vector	-> vector structure to display
- * @param char *name		-> name of the vector displayed
+ * @param const char *name	-> name of the vector displayed
  */
-void		print_vector(t_vector vector, char *name);
+void		print_vector(t_vector vector, const char *name);
 
 /*
  * Function to display a t_rgb_color color structure in the terminal.
  *
  * @param t_rgb_color color	-> rgb color structure to display
- * @param char *name		-> name of the color displayed
+ * @param const char *name	-> name of the color displayed
  */
-void		print_rgb_color(t_rgb_color color, char *name);
+void		print_rgb_color(t_rgb_color color, const char *name);
 
 /*
  * Function to display a t_basis basis structure in the terminal.
  *
- * @param t_basis basis	-> basis structure to display
- * @param char *name	-> name of the basis displayed
+ * @param t_basis basis		-> basis structure to display
+ * @param const char *name	-> name of the basis displayed
  */
-void		print_basis(t_basis basis, char *name);
+void		print_basis(t_basis basis, const char *name);
 
 /* ************************************************************************** */
 /* object_data_display_2.c                                                    */

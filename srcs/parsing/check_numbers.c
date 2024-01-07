@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:07:54 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/07 16:49:39 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 17:11:16 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 /*
  * Function to count the amount of commas in a string and check the amount of
  * dots between each pair of them.
+ * If more than one dot is found between two commas, set *dot to 2 and return.
+ *
+ * @param const char *s	-> pointer to the string to check
+ * @param int *dot		-> pointer to the counter to increment at each dot
+ * @param int *comma	-> pointer to the counter to increment at each comma
  */
 static void	count_dot_and_comma(const char *s, int *dot, int *comma)
 {
@@ -43,6 +48,16 @@ static void	count_dot_and_comma(const char *s, int *dot, int *comma)
 	}
 }
 
+/*
+ * Function to check the number of commas and dots betw. two commas in a string.
+ * Return RTERR_NUM if the parameter string starts/ends with a dot or a comma.
+ * Return RTERR_NUM_DOT if more than one dots are present between two commas
+ * Return RTERR_NUM_COMMA if more than two commas are present in the string
+ * Return 0 else
+ *
+ * @param const char *s	-> pointer to the string to check
+ * @return int	-> checks result
+ */
 static int	check_all(const char *s)
 {
 	int	dot;
@@ -64,6 +79,13 @@ static int	check_all(const char *s)
 	return (0);
 }
 
+/*
+ * Function to check if the characters between two commas in a string are
+ * valid numbers.
+ *
+ * @param const char *s	-> pointer to the string to check
+ * @return int	-> true = 0 || false = RTERR_NUM
+ */
 static int	check_is_digit(const char *s)
 {
 	int	i;
@@ -112,7 +134,16 @@ static int	check_is_present(const char *obj_name, int is_present[3])
 }
 
 /*
- * Function 
+ * Function to check if the characters of all the arguments of the objects in the
+ * parameter block are valid numbers and parameters.
+ * Return RTERR_DUPLIC_OBJ if duplicate unique objects are present.
+ * Return RTERR_NUM_DOT if one number has too many dots.
+ * Return RTERR_NUM_COMMA if an argument has too many commas.
+ * Return RTERR_NUM if a number or an argument is invalid.
+ * Return 0 else.
+ *
+ * @param const char ***block	-> pointer to the objects array to check
+ * @return int	-> checks result
  */
 int	check_numbers(const char ***block)
 {

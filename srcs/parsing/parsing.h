@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 22:20:53 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 15:34:08 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 17:27:38 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,35 @@ int		check_file(const char *scene_file_path);
 /* ************************************************************************** */
 /* check_numbers.c                                                            */
 /* ************************************************************************** */
+/*
+ * Function to check if the characters of all the arguments of the objects in the
+ * parameter block are valid numbers and parameters.
+ * Return RTERR_DUPLIC_OBJ if duplicate unique objects are present.
+ * Return RTERR_NUM_DOT if one number has too many dots.
+ * Return RTERR_NUM_COMMA if an argument has too many commas.
+ * Return RTERR_NUM if a number or an argument is invalid.
+ * Return 0 else.
+ *
+ * @param const char ***block	-> pointer to the objects array to check
+ * @return int	-> checks result
+ */
 int		check_numbers(const char ***block);
 
 /* ************************************************************************** */
 /* check_range_numbers.c                                                      */
 /* ************************************************************************** */
+/*
+ * Function to check if the numbers of all the arguments of the objects in the
+ * parameter block are in valid ranges.
+ * Return RTERR_BRIGHTNESS if brightness parameters are out of range.
+ * Return RTERR_VECTOR if vector parameters are out of range.
+ * Return RTERR_COLOR if color parameters are out of range.
+ * Return RTERR_FOV if FOV parameters are out of range.
+ * Return 0 else.
+ *
+ * @param const char ***block	-> pointer to the objects + parameters to check
+ * @return int	-> checks result
+ */
 int		check_range_numbers(const char ***block);
 
 /* ************************************************************************** */

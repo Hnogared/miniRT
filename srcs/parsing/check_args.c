@@ -6,85 +6,62 @@
 /*   By: leudelin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:00:54 by leudelin          #+#    #+#             */
-/*   Updated: 2023/12/13 23:04:42 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 15:34:45 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static int	check_num_objects1(char	**block)
+/*
+ * Function to check if the number of arguments for an object corresponds to
+ * the parameter amount.
+ *
+ * @param const char **object_block	-> pointer to the object + arguments strings
+ * @param size_t amount_to_check	-> amount of arguments to check for
+ * @return int	-> true = 0 || false = RTERR_OBJS_ARGS
+ */
+static int	check_args_amount(const char **object_block, size_t amount_to_check)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (block[i])
+	while (object_block[i])
 		i++;
-	if (i != 4)
-		return (RTERR_OBJS_COUNT);
-	return (0);
+	return (RTERR_OBJS_ARGS * (i != amount_to_check));
 }
 
-static int	check_num_objects2(char **block)
-{
-	int	i;
-
-	i = 0;
-	while (block[i])
-		i++;
-	if (i != 6)
-		return (RTERR_OBJS_COUNT);
-	return (0);
-}
-
-static int	check_num_objects3(char **block)
-{
-	int	i;
-
-	i = 0;
-	while (block[i])
-		i++;
-	if (i != 3)
-		return (RTERR_OBJS_COUNT);
-	return (0);
-}
-
-static int	all_test(char ***block, char **tab, char **tab1, int i)
-{
-	int	j;
-
-	j = 0;
-	while (block[i][j])
-	{
-		if (!ft_strncmp(block[i][j], tab[1], 2) ||
-				(!ft_strncmp(block[i][j], tab[2], 2)))
-			return (check_num_objects1(block[i]));
-		if (!ft_strncmp(block[i][j], tab[0], 2))
-			return (check_num_objects3(block[i]));
-		if (!ft_strncmp(block[i][j], tab1[2], 3))
-			return (check_num_objects2(block[i]));
-		if (!ft_strncmp(block[i][j], tab1[0], 3) ||
-				(!ft_strncmp(block[i][j], tab1[1], 3)))
-			return (check_num_objects1(block[i]));
-		j++;
-	}
-	return (0);
-}
-
-int	check_num_objects(char	***block)
+/*
+ * Function to check if all the objects in the parameter block each have the
+ * valid number of arguments.
+ *
+ * @param const char ***block	-> pointer to the array of objects to test
+ * @return int	-> true = 0 || false = RTERR_OBJS_ARGS
+ */
+int	check_num_objects_args(const char ***block)
 {
 	char	**tab;
 	char	**tab1;
 	int		i;
-	int		status;
+	int		j;
 
-	i = 0;
-	status = 0;
 	tab = (char *[]){"A", "C", "L", NULL};
 	tab1 = (char *[]){"pl", "sp", "cy", NULL};
-	while (block[i])
+	i = -1;
+	while (block[++i])
 	{
-		status = all_test(block, tab, tab1, i);
-		i++;
+		j = -1;
+		while (block[i][++j])
+		{
+			if (!ft_strncmp(block[i][j], tab[1], 2)
+					|| !ft_strncmp(block[i][j], tab[2], 2)
+				|| !ft_strncmp(block[i][j], tab1[0], 3)
+				|| !ft_strncmp(block[i][j], tab1[1], 3))
+				return (check_args_amount(block[i], 4));
+			if (!ft_strncmp(block[i][j], tab[0], 2))
+				return (check_args_amount(block[i], 3));
+			if (!ft_strncmp(block[i][j], tab1[2], 3))
+				return (check_args_amount(block[i], 6));
+		}
 	}
-	return (status);
+	return (0);
 }

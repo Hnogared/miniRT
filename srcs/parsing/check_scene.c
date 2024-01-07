@@ -6,13 +6,13 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:03:44 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/06 23:31:54 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 15:18:00 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static int	check_first_el(char ***block)
+static int	check_first_el(const char ***block)
 {
 	int		i;
 	int		j;
@@ -41,7 +41,7 @@ static int	check_first_el(char ***block)
 	return (0);
 }
 
-static int	all_test(t_data *data, char ***block)
+static int	all_test(t_data *data, const char ***block)
 {
 	int		status;
 
@@ -49,7 +49,7 @@ static int	all_test(t_data *data, char ***block)
 	status = check_first_el(block);
 	if (status)
 		return (ft_perror(RTERR_MSG, data->error_tab, status));
-	status = check_num_objects(block);
+	status = check_num_objects_args(block);
 	if (status)
 		return (ft_perror(RTERR_MSG, data->error_tab, status));
 	status = check_numbers(block);
@@ -90,7 +90,7 @@ int	check_scene(t_data *data, char **tab)
 		i++;
 	}
 	block[i] = NULL;
-	status = all_test(data, block);
+	status = all_test(data, (const char ***) block);
 	free_block(block);
 	return (status);
 }

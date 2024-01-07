@@ -6,7 +6,7 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:38:24 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/07 14:09:58 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 15:09:06 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	init_error_tab(char *error_tab[RTERR_COUNT])
 	error_tab[6] = RTERR_READ_FILE_MSG;
 	error_tab[7] = RTERR_OBJ_MSG;
 	error_tab[8] = RTERR_DUPLIC_OBJ_MSG;
-	error_tab[9] = RTERR_OBJS_COUNT_MSG;
+	error_tab[9] = RTERR_OBJS_ARGS_MSG;
 	error_tab[10] = RTERR_COLOR_MSG;
 	error_tab[11] = RTERR_FOV_MSG;
 	error_tab[12] = RTERR_VECTOR_MSG;

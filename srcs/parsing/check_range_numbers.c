@@ -6,13 +6,13 @@
 /*   By: leudelin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:47:33 by leudelin          #+#    #+#             */
-/*   Updated: 2023/12/03 10:19:32 by motoko           ###   ########.fr       */
+/*   Updated: 2024/01/07 15:14:54 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static int	check_range_numbers_part1(char ***block, int i)
+static int	check_range_numbers_part1(const char ***block, int i)
 {
 	int	status;
 
@@ -38,7 +38,7 @@ static int	check_range_numbers_part1(char ***block, int i)
 	return (status);
 }
 
-static int	check_range_numbers_part2(char ***block, int i)
+static int	check_range_numbers_part2(const char ***block, int i)
 {
 	int	status;
 
@@ -61,7 +61,7 @@ static int	check_range_numbers_part2(char ***block, int i)
 	return (status);
 }
 
-static int	check_range_numbers_part3(char ***block, int i)
+static int	check_range_numbers_part3(const char ***block, int i)
 {
 	int	status;
 
@@ -87,7 +87,7 @@ static int	check_range_numbers_part3(char ***block, int i)
 	return (status);
 }
 
-int	check_range_numbers(char ***block)
+int	check_range_numbers(const char ***block)
 {
 	int	i;
 	int	j;

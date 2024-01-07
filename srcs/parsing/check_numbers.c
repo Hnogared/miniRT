@@ -6,13 +6,13 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:07:54 by motoko            #+#    #+#             */
-/*   Updated: 2023/12/13 21:19:41 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 16:04:56 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static void	count_dot_and_comma(char *s, int *dot, int *comma)
+static void	count_dot_and_comma(const char *s, int *dot, int *comma)
 {
 	int		i;
 	int		j;
@@ -39,7 +39,7 @@ static void	count_dot_and_comma(char *s, int *dot, int *comma)
 	}
 }
 
-static int	check_all(char *s)
+static int	check_all(const char *s)
 {
 	int	dot;
 	int	comma;
@@ -60,7 +60,7 @@ static int	check_all(char *s)
 	return (0);
 }
 
-static int	check_is_digit(char *s)
+static int	check_is_digit(const char *s)
 {
 	int	i;
 	int	status;
@@ -85,29 +85,33 @@ static int	check_is_digit(char *s)
 	return (0);
 }
 
-static int	check_is_present(char ***block, int i)
+/*
+ * Function to check if the ambient lighting and 
+ */
+static int	check_is_present(const char ***block, int is_present[3], int i)
 {
-	static int	is_present[3] = {0, 0, 0};
-
 	if (!ft_strncmp(block[i][0], "A", 2))
 		is_present[0] += 1;
 	if (!ft_strncmp(block[i][0], "C", 2))
 		is_present[1] += 1;
 	if (!ft_strncmp(block[i][0], "L", 2))
 		is_present[2] += 1;
-	if (is_present[0] != 1 || is_present[1] != 1)
+	if (is_present[0] != 1 || is_present[1] != 1
+		|| (RT_BONUS == 0 && is_present[2] != 1))
 		return (RTERR_DUPLIC_OBJ);
 	return (0);
 }
 
-int	check_numbers(char ***block)
+int	check_numbers(const char ***block)
 {
 	int	i;
 	int	j;
 	int	status;
+	int	is_present[3];
 
 	i = 0;
 	status = 0;
+	ft_bzero(is_present, 3 * sizeof(int));
 	while (block[i])
 	{
 		j = 1;
@@ -118,7 +122,7 @@ int	check_numbers(char ***block)
 				return (status);
 			j++;
 		}
-		status = check_is_present(block, i);
+		status = check_is_present(block, is_present, i);
 		i++;
 	}
 	return (status);

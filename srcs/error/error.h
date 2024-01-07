@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 16:09:40 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 14:12:20 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 15:09:22 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 
 # define RTERR_OBJ				263
 # define RTERR_DUPLIC_OBJ		264
-# define RTERR_OBJS_COUNT		265
+# define RTERR_OBJS_ARGS		265
 # define RTERR_COLOR			266
 # define RTERR_FOV				267
 # define RTERR_VECTOR			268
@@ -65,7 +65,7 @@
 
 # define RTERR_OBJ_MSG			"invalid object"
 # define RTERR_DUPLIC_OBJ_MSG	"invalid object: duplicate object"
-# define RTERR_OBJS_COUNT_MSG	"too many objects"
+# define RTERR_OBJS_ARGS_MSG	"invalid object: invalid arguments count"
 # define RTERR_COLOR_MSG		"invalid object: invalid color: exp 0:255"
 # define RTERR_FOV_MSG			"invalid object: invalid FOV: exp 0:180"
 # define RTERR_VECTOR_MSG		"invalid object: invalid vector: exp -1.:1."

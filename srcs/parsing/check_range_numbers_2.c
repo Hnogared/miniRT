@@ -6,13 +6,13 @@
 /*   By: leudelin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:46:03 by leudelin          #+#    #+#             */
-/*   Updated: 2024/01/06 23:34:36 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 15:16:58 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-int	check_range_fov(char *fov)
+int	check_range_fov(const char *fov)
 {
 	int	temp;
 	int	status;
@@ -24,7 +24,7 @@ int	check_range_fov(char *fov)
 	return (status);
 }
 
-int	check_range_vectors(char *str)
+int	check_range_vectors(const char *str)
 {
 	char	**split;
 	int		temp;
@@ -45,7 +45,7 @@ int	check_range_vectors(char *str)
 	return (status);
 }
 
-int	check_range_color(char *str)
+int	check_range_color(const char *str)
 {
 	char	**split;
 	int		temp;
@@ -66,7 +66,7 @@ int	check_range_color(char *str)
 	return (status);
 }
 
-int	check_range_light(char *str)
+int	check_range_light(const char *str)
 {
 	char	**split;
 	int		temp;

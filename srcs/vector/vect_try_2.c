@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:19 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/07 01:48:04 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 02:20:11 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,59 @@ static void	try_cylinder_ext(t_ray *ray, t_object obj, int i)
 	c = (Ox - a)^2 + (Oy - b)^2 - r^2;
 	
 */
+float	try_vertical_cylinder_side(t_ray ray, t_object obj)
+{
+	float	delta;
+	float	params[3];
+	float	o_coos[2];
+	float	r_vec[2];
+
+	ft_memmove(o_coos, (float [2]){ray.origin_coords.x, ray.origin_coords.y},
+		sizeof(o_coos));
+	ft_memmove(r_vec, (float [2]){ray.vector.x, ray.vector.y}, sizeof(r_vec));
+	params[0] = r_vec[0] * r_vec[0] + r_vec[1] * r_vec[1];
+	params[1] = o_coos[0] * r_vec[0] + o_coos[1] * r_vec[1];
+	params[1] = 2 * (params[1] - r_vec[0] * obj.coords.x - r_vec[1]
+			* obj.coords.y);
+	params[2] = o_coos[0] * o_coos[0] - 2 * obj.coords.x * o_coos[0];
+	params[2] = params[2] + obj.coords.x * obj.coords.x + o_coos[1] * o_coos[1];
+	params[2] = params[2] - 2 * obj.coords.y * o_coos[1] + obj.coords.y
+		* obj.coords.y;
+	params[2] = params[2] - obj.special_data.cylinder.radius
+		* obj.special_data.cylinder.radius;
+	delta = params[1] * params[1] - 4 * params[0] * params[2];
+	if (delta < 0)
+		return (-1.0f);
+	return (good_sol(delta, params[1], params[0]));
+}
+
+void	try_cylinder(t_ray *ray, t_object obj, int i)
+{
+	float		res;
+	t_ray		aligned_ray;
+	t_basis		world_basis;
+
+	world_basis = (t_basis){{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
+	aligned_ray = switch_ray_basis(*ray, obj.local_basis, world_basis);
+	obj.coords = switch_coords_basis(obj.coords, obj.local_basis, world_basis);
+	res = try_vertical_cylinder_side(aligned_ray, obj);
+	if (res >= 0 && (ray->res == 0 || res < ray->sol))
+	{
+		aligned_ray.coords = find_pos_touch(&aligned_ray, res - 0.1f);
+		if (aligned_ray.coords.z <= (obj.coords.z
+				+ (obj.special_data.cylinder.height + 0.1f) / 2)
+			&& aligned_ray.coords.z >= (obj.coords.z
+				- (obj.special_data.cylinder.height + 0.1f) / 2))
+		{
+			aligned_ray.sol = res;
+			aligned_ray.res = 3;
+			aligned_ray.go = i;
+		}
+	}
+	*ray = switch_ray_basis(aligned_ray, world_basis, obj.local_basis);
+	obj.coords = switch_coords_basis(obj.coords, world_basis, obj.local_basis);
+	try_cylinder_ext(ray, obj, i);
+}
 /*
 t_sol	init_param(t_ray aligned_ray, t_object obj)
 {
@@ -117,53 +170,3 @@ t_sol	init_param(t_ray aligned_ray, t_object obj)
 	return (s);
 }
 */
-float	calc_vertical_cylinder_side(t_ray ray, t_object obj, float params[4])
-{
-	float	o_coos[2];
-	float	r_vec[2];
-
-	o_coos[0] = ray.origin_coords.x;
-	o_coos[1] = ray.origin_coords.y;
-	r_vec[0] = ray.vector.x;
-	r_vec[1] = ray.vector.y;
-	params[0] = r_vec[0] * r_vec[0] + r_vec[1] * r_vec[1];
-	params[1] = o_coos[0] * r_vec[0] + o_coos[1] * r_vec[1];
-	params[1] = 2 * (params[1] - r_vec[0] * obj.coords.x - r_vec[1]
-			* obj.coords.y);
-	params[2] = o_coos[0] * o_coos[0] - 2 * obj.coords.x * o_coos[0];
-	params[2] = params[2] + obj.coords.x * obj.coords.x + o_coos[1] * o_coos[1];
-	params[2] = params[2] - 2 * obj.coords.y * o_coos[1] + obj.coords.y
-		* obj.coords.y;
-	params[2] = params[2] - obj.special_data.cylinder.radius
-		* obj.special_data.cylinder.radius;
-	params[3] = params[1] * params[1] - 4 * params[0] * params[2];
-	return (params[3]);
-}
-
-void	try_cylinder(t_ray *ray, t_object obj, int i)
-{
-	float		t;
-	t_ray		aligned_ray;
-	t_basis		world_basis;
-	float		params[4];
-
-	world_basis = (t_basis){{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
-	aligned_ray = switch_ray_basis(*ray, obj.local_basis, world_basis);
-	obj.coords = switch_coords_basis(obj.coords, obj.local_basis, world_basis);
-	if (calc_vertical_cylinder_side(aligned_ray, obj, params) >= 0)
-	{
-		t = good_sol(params[3], params[1], params[0]);
-		if (t >= 0 && (ray->res == 0 || t < ray->sol))
-		{
-			aligned_ray.coords = find_pos_touch(&aligned_ray, t - 0.1f);
-			if (aligned_ray.coords.z <= (obj.coords.z
-					+ (obj.special_data.cylinder.height + 0.1f) / 2)
-				&& aligned_ray.coords.z >= (obj.coords.z
-					- (obj.special_data.cylinder.height + 0.1f) / 2))
-				give_sol(&aligned_ray, t, i);
-		}
-	}
-	*ray = switch_ray_basis(aligned_ray, world_basis, obj.local_basis);
-	obj.coords = switch_coords_basis(obj.coords, world_basis, obj.local_basis);
-	try_cylinder_ext(ray, obj, i);
-}

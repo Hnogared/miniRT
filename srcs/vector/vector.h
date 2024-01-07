@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 23:57:14 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 01:50:16 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 02:11:21 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,29 +51,33 @@ t_coords	add_vec_coord_vec(t_coords a, t_vector b);
 /* vect_utils_2.c */
 t_vector	prod_vec_int(t_vector a, int k);
 float		prod_scal_vec(t_vector a, t_vector b);
-
-
-/* Theouche*/
-char		*conv(t_rgb_color color);
+float		prod_scal_coord(t_coords a, t_coords b);
+float		prod_scal_vec_coord(t_vector a, t_coords b);
 t_vector	prod_vec_vec(t_vector a, t_vector b);
+
+/* vect_utils_3.c */
 t_vector	calc_ref_form(t_vector i, t_vector n);
 float		magnitude(t_vector n);
+float		magnitude_coord(t_coords n);
 t_vector	normalise(t_vector n);
 float		dist(t_coords a, t_coords b);
-t_coords	advance_on_vec(t_coords dep, t_vector dir, int k);
+
+/* vect_utils_4.c */
 t_coords	find_pos_touch(t_ray *ray, float t);
 t_coords	give_coord(t_coords coord);
 float		good_sol(float delta, float b, float a);
-float		prod_scal_coord(t_coords a, t_coords b);
-float		prod_scal_vec_coord(t_vector a, t_coords b);
-float		magnitude_coord(t_coords n);
 void		print_vec(t_vector vec);
 void		print_coord(t_coords cor);
-t_coords	advance_on_vec_z_sup(t_coords dep, t_vector dir, int k);
-t_coords	advance_on_vec_z_inf(t_coords dep, t_vector dir, int k);
-t_coords	advance_on_vec_z(t_coords dep, t_coords touch);
+
+/* vect_utils_5.c */
 float		to_rad(float degree_angle);
 t_vector	prod_vec_float(t_vector a, float k);
+
+/* vect_utils_advance.c */
+t_coords	advance_on_vec_z_inf(t_coords dep, t_vector dir, int k);
+t_coords	advance_on_vec_z_sup(t_coords dep, t_vector dir, int k);
+t_coords	advance_on_vec_z(t_coords dep, t_coords touch);
+t_coords	advance_on_vec(t_coords dep, t_vector dir, int k);
 
 /* vect_try_2_utils.c */
 //int 		test(t_ray aligned_ray, t_object obj);

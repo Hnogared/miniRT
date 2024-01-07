@@ -6,13 +6,13 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/06 23:35:12 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 18:32:54 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	obj_pl(unsigned int index, t_data *data, char *s, int *pos)
+void	obj_pl(unsigned int index, t_data *data, const char *s, int *pos)
 {
 	char	**args;
 	char	**coords;
@@ -37,7 +37,7 @@ void	obj_pl(unsigned int index, t_data *data, char *s, int *pos)
 	free_double_pointer((void **) color);
 }
 
-void	obj_sp(unsigned int index, t_data *data, char *s, int *pos)
+void	obj_sp(unsigned int index, t_data *data, const char *s, int *pos)
 {
 	char	**args;
 	char	**coords;
@@ -58,7 +58,7 @@ void	obj_sp(unsigned int index, t_data *data, char *s, int *pos)
 	free_double_pointer((void **) color);
 }
 
-void	obj_cy(unsigned int index, t_data *data, char *s, int *pos)
+void	obj_cy(unsigned int index, t_data *data, const char *s, int *pos)
 {
 	char	**args;
 	char	**coords;
@@ -84,7 +84,7 @@ void	obj_cy(unsigned int index, t_data *data, char *s, int *pos)
 	free_double_pointer((void **) args);
 }
 
-static void	exec_objs(t_data *data, char **tab)
+static void	exec_objs(t_data *data, const char **tab)
 {
 	int	i;
 	int	pos;
@@ -109,7 +109,7 @@ static void	exec_objs(t_data *data, char **tab)
 	}
 }
 
-int	initialize_object(t_data *data, char **tab)
+int	initialize_object(t_data *data, const char **tab)
 {
 	int	len;
 

@@ -6,13 +6,13 @@
 /*   By: motoko <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:23:05 by motoko            #+#    #+#             */
-/*   Updated: 2024/01/06 23:35:32 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 18:34:28 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	obj_a(t_data *data, char *s)
+void	obj_a(t_data *data, const char *s)
 {
 	char	**args;
 	char	**color;
@@ -26,7 +26,7 @@ void	obj_a(t_data *data, char *s)
 	free_double_pointer((void **) args);
 }
 
-void	obj_c(unsigned int index, t_data *data, char *s, int *pos)
+void	obj_c(unsigned int index, t_data *data, const char *s, int *pos)
 {
 	char	**args;
 	char	**coords;
@@ -48,7 +48,7 @@ void	obj_c(unsigned int index, t_data *data, char *s, int *pos)
 	free_double_pointer((void **) vector);
 }
 
-void	obj_l(unsigned int index, t_data *data, char *s, int *pos)
+void	obj_l(unsigned int index, t_data *data, const char *s, int *pos)
 {
 	char	**args;
 	char	**coords;

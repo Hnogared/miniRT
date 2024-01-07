@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 22:20:53 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 18:25:38 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 18:33:18 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,16 +149,16 @@ char	*get_file(const t_data *data, const char *scene_file_path);
 /* ************************************************************************** */
 /* init_objs.c                                                                */
 /* ************************************************************************** */
-int		initialize_object(t_data *data, char **tab);
-void	obj_pl(unsigned int index, t_data *data, char *s, int *pos);
-void	obj_sp(unsigned int index, t_data *data, char *s, int *pos);
-void	obj_cy(unsigned int index, t_data *data, char *s, int *pos);
+int		initialize_object(t_data *data, const char **tab);
+void	obj_pl(unsigned int index, t_data *data, const char *s, int *pos);
+void	obj_sp(unsigned int index, t_data *data, const char *s, int *pos);
+void	obj_cy(unsigned int index, t_data *data, const char *s, int *pos);
 
 /* ************************************************************************** */
 /* init_objs_2.c                                                              */
 /* ************************************************************************** */
-void	obj_a(t_data *data, char *s);
-void	obj_c(unsigned int index, t_data *data, char *s, int *pos);
-void	obj_l(unsigned int index, t_data *data, char *s, int *pos);
+void	obj_a(t_data *data, const char *s);
+void	obj_c(unsigned int index, t_data *data, const char *s, int *pos);
+void	obj_l(unsigned int index, t_data *data, const char *s, int *pos);
 
 #endif

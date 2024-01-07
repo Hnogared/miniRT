@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 22:20:53 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 18:04:56 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/07 18:25:38 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,17 @@ int		check_scene(const t_data *data, const char **tab);
 /* ************************************************************************** */
 /* get_file.c                                                                 */
 /* ************************************************************************** */
-char	*get_file(const t_data *data, const char *scene);
+/*
+ * Function to open and save the contents of a parameter scene file.
+ * The file is read line by line. Lines starting with '#' (comments) are ignored.
+ * Print an error and return NULL if an error occured, else return the file
+ * contents.
+ *
+ * @param const t_data *data			-> program data pointer (for ft_perror)
+ * @param const char *scene_file_path	-> pointer to the file path to open
+ * @return char *	-> pointer to the file contents if successfull
+ */
+char	*get_file(const t_data *data, const char *scene_file_path);
 
 /* ************************************************************************** */
 /* init_objs.c                                                                */

@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:19 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/08 16:24:28 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/08 23:44:33 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,8 @@ static void	try_cylinder_ext(t_ray *ray, t_object cylinder, int i)
  *
  * @param t_ray ray		-> the ray to test for collision
  * @param t_object cyl	-> cylinder object to check the collision with
- * @param int i			-> objects array index of the object struct
+ *
+ * @parent_func try_cylinder	-> function to test a cylinder-ray collision
  */
 static float	try_vertical_cylinder_side(t_ray ray, t_object cyl)
 {
@@ -155,7 +156,7 @@ static float	try_vertical_cylinder_side(t_ray ray, t_object cyl)
 	ft_memmove(r_vec, (float [2]){ray.vector.x, ray.vector.y}, sizeof(r_vec));
 	params[0] = r_vec[0] * r_vec[0] + r_vec[1] * r_vec[1];
 	params[1] = o_coos[0] * r_vec[0] + o_coos[1] * r_vec[1];
-	params[1] = 2 * (params[1] - r_vec[0] * obj.coords.x - r_vec[1]
+	params[1] = 2 * (params[1] - r_vec[0] * cyl.coords.x - r_vec[1]
 			* cyl.coords.y);
 	params[2] = o_coos[0] * o_coos[0] - 2 * cyl.coords.x * o_coos[0];
 	params[2] = params[2] + cyl.coords.x * cyl.coords.x + o_coos[1] * o_coos[1];
@@ -170,35 +171,42 @@ static float	try_vertical_cylinder_side(t_ray ray, t_object cyl)
 }
 
 /*
+ * Function to trace a ray, check if it touches a cylinder object and update it
+ * if true.
  *
+ * @param t_ray *ray	-> pointer to the ray to test and update
+ * @param t_object cyl	-> cylinder object to check the collision with
+ * @param int i			-> objects array index of the object struct
+ *
+ * @child_func try_vertical_cylinder_side-> function to test the cylindrical side
  * @child_func try_cylinder_ext	-> function to test a [cy-ends]-ray collision
  */
-void	try_cylinder(t_ray *ray, t_object obj, int i)
+void	try_cylinder(t_ray *ray, t_object cyl, int i)
 {
 	float		res;
 	t_ray		aligned_ray;
 	t_basis		world_basis;
 
 	world_basis = (t_basis){{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
-	aligned_ray = switch_ray_basis(*ray, obj.local_basis, world_basis);
-	obj.coords = switch_coords_basis(obj.coords, obj.local_basis, world_basis);
-	res = try_vertical_cylinder_side(aligned_ray, obj);
+	aligned_ray = switch_ray_basis(*ray, cyl.local_basis, world_basis);
+	cyl.coords = switch_coords_basis(cyl.coords, cyl.local_basis, world_basis);
+	res = try_vertical_cylinder_side(aligned_ray, cyl);
 	if (res >= 0 && (ray->res == 0 || res < ray->sol))
 	{
 		aligned_ray.coords = find_pos_touch(&aligned_ray, res - 0.1f);
-		if (aligned_ray.coords.z <= (obj.coords.z
-				+ (obj.special_data.cylinder.height + 0.1f) / 2)
-			&& aligned_ray.coords.z >= (obj.coords.z
-				- (obj.special_data.cylinder.height + 0.1f) / 2))
+		if (aligned_ray.coords.z <= (cyl.coords.z
+				+ (cyl.special_data.cylinder.height + 0.1f) / 2)
+			&& aligned_ray.coords.z >= (cyl.coords.z
+				- (cyl.special_data.cylinder.height + 0.1f) / 2))
 		{
 			aligned_ray.sol = res;
 			aligned_ray.res = 3;
 			aligned_ray.go = i;
 		}
 	}
-	*ray = switch_ray_basis(aligned_ray, world_basis, obj.local_basis);
-	obj.coords = switch_coords_basis(obj.coords, world_basis, obj.local_basis);
-	try_cylinder_ext(ray, obj, i);
+	*ray = switch_ray_basis(aligned_ray, world_basis, cyl.local_basis);
+	cyl.coords = switch_coords_basis(cyl.coords, world_basis, cyl.local_basis);
+	try_cylinder_ext(ray, cyl, i);
 }
 /*
 t_sol	init_param(t_ray aligned_ray, t_object obj)

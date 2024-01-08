@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 16:41:00 by hnogared          #+#    #+#             */
-/*   Updated: 2023/12/21 17:18:25 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/08 23:50:56 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_basis	get_ortho_basis_from_x(t_vector xxx_orientation)
 	else
 	{
 		new.z = prod_vec_float(new.x, prod_scal_vec(new.x, z_axis));
-		new.z = normalise(sous_vec_vec(z_axis, new.z));
+		new.z = normalise(subs_vec_vec(z_axis, new.z));
 	}
 	new.y = normalise(prod_vec_vec(new.z, new.x));
 	return (new);
@@ -58,7 +58,7 @@ t_basis	get_ortho_basis_from_y(t_vector y_orientation)
 	else
 	{
 		new.x = prod_vec_float(new.y, prod_scal_vec(new.y, x_axis));
-		new.x = normalise(sous_vec_vec(x_axis, new.x));
+		new.x = normalise(subs_vec_vec(x_axis, new.x));
 	}
 	new.z = normalise(prod_vec_vec(new.x, new.y));
 	return (new);
@@ -84,7 +84,7 @@ t_basis	get_ortho_basis_from_z(t_vector z_orientation)
 	else
 	{
 		new.y = prod_vec_float(new.z, prod_scal_vec(new.z, y_axis));
-		new.y = normalise(sous_vec_vec(y_axis, new.y));
+		new.y = normalise(subs_vec_vec(y_axis, new.y));
 	}
 	new.x = normalise(prod_vec_vec(new.y, new.z));
 	return (new);

@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 23:57:14 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/08 15:44:41 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/09 00:00:20 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,55 @@ int			do_touch(t_ray *ray, t_object obj, int i);
 void		ray_advance(const t_data *data, t_ray *ray);
 
 /* ************************************************************************** */
+/* vect_add_subs.c                                                            */
+/* ************************************************************************** */
+/*
+ * Function to return the substraction of two coords structures as a vector.
+ *
+ * @param t_coords a	-> coords structure from which to substract
+ * @param t_coords b	-> coords structure to substract
+ * @return t_vector		-> the vector resulting from the substraction
+ */
+t_vector	subs_vec_coord(t_coords a, t_coords b);
+
+/*
+ * Function to return the addition of two coords structures as a vector.
+ *
+ * @param t_coords a	-> coords structure to add to
+ * @param t_coords b	-> coords structure to add
+ * @return t_vector		-> the vector resulting from the addition
+ */
+t_vector	add_vec_coord(t_coords a, t_coords b);
+
+/*
+ * Function to return the substraction of two vector structures as a vector.
+ *
+ * @param t_vector a	-> vector structure from which to substract
+ * @param t_vector b	-> vector structure to substract
+ * @return t_vector		-> the vector resulting from the substraction
+ */
+t_vector	subs_vec_vec(t_vector a, t_vector b);
+
+/*
+ * Function to return the addition of two vector structures as a vector.
+ *
+ * @param t_vector a	-> vector structure to add to
+ * @param t_vector b	-> vector structure to add
+ * @return t_vector		-> the vector resulting from the addition
+ */
+t_vector	add_vec_vec(t_vector a, t_vector b);
+
+/*
+ * Function to return the addition of a coords structure and a vector structure
+ * as a coords structure.
+ *
+ * @param t_coords a	-> coords structure to add to
+ * @param t_vector b	-> vector structure to add
+ * @return t_coords		-> the coords resulting from the addition
+ */
+t_coords	add_vec_coord_vec(t_coords a, t_vector b);
+
+/* ************************************************************************** */
 /* vect_calc.c                                                                */
 /* ************************************************************************** */
 /*
@@ -127,16 +176,18 @@ void		try_plane(t_ray *ray, t_object plane, int i);
 /* ************************************************************************** */
 /* vect_try_2.c                                                               */
 /* ************************************************************************** */
-void		try_cylinder(t_ray *ray, t_object obj, int i);
-
-/* ************************************************************************** */
-/* vect_utils.c                                                               */
-/* ************************************************************************** */
-t_vector	sous_vec_coord(t_coords a, t_coords b);
-t_vector	add_vec_coord(t_coords a, t_coords b);
-t_vector	sous_vec_vec(t_vector a, t_vector b);
-t_vector	add_vec_vec(t_vector a, t_vector b);
-t_coords	add_vec_coord_vec(t_coords a, t_vector b);
+/*
+ * Function to trace a ray, check if it touches a cylinder object and update it
+ * if true.
+ *
+ * @param t_ray *ray	-> pointer to the ray to test and update
+ * @param t_object cyl	-> cylinder object to check the collision with
+ * @param int i			-> objects array index of the object struct
+ *
+ * @child_func try_vertical_cylinder_side-> function to test the cylindrical side
+ * @child_func try_cylinder_ext	-> function to test a [cy-ends]-ray collision
+ */
+void		try_cylinder(t_ray *ray, t_object cyl, int i);
 
 /* ************************************************************************** */
 /* vect_utils_2.c                                                             */

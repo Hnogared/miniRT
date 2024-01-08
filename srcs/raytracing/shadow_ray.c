@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:16:55 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 22:01:32 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/08 23:51:14 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_rgb_color	shadow_ray(t_coords start_coords, const t_object *objects_array,
 	{
 		if (objects_array[i].type != LIGHT_OBJ)
 			continue ;
-		shadow_ray.vector = normalise(sous_vec_coord(objects_array[i].coords,
+		shadow_ray.vector = normalise(subs_vec_coord(objects_array[i].coords,
 					start_coords));
 		shadow_ray.sol = -1;
 		shadow_ray.go = -1;

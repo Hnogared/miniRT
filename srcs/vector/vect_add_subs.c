@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vect_utils.c                                       :+:      :+:    :+:   */
+/*   vect_add_subs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:03:20 by tlorne            #+#    #+#             */
-/*   Updated: 2023/11/24 11:51:01 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/08 23:57:37 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_vector	sous_vec_coord(t_coords a, t_coords b)
+/*
+ * Function to return the substraction of two coords structures as a vector.
+ *
+ * @param t_coords a	-> coords structure from which to substract
+ * @param t_coords b	-> coords structure to substract
+ * @return t_vector		-> the vector resulting from the substraction
+ */
+t_vector	subs_vec_coord(t_coords a, t_coords b)
 {
 	t_vector	c;
 
@@ -22,6 +29,13 @@ t_vector	sous_vec_coord(t_coords a, t_coords b)
 	return (c);
 }
 
+/*
+ * Function to return the addition of two coords structures as a vector.
+ *
+ * @param t_coords a	-> coords structure to add to
+ * @param t_coords b	-> coords structure to add
+ * @return t_vector		-> the vector resulting from the addition
+ */
 t_vector	add_vec_coord(t_coords a, t_coords b)
 {
 	t_vector	c;
@@ -32,7 +46,14 @@ t_vector	add_vec_coord(t_coords a, t_coords b)
 	return (c);
 }
 
-t_vector	sous_vec_vec(t_vector a, t_vector b)
+/*
+ * Function to return the substraction of two vector structures as a vector.
+ *
+ * @param t_vector a	-> vector structure from which to substract
+ * @param t_vector b	-> vector structure to substract
+ * @return t_vector		-> the vector resulting from the substraction
+ */
+t_vector	subs_vec_vec(t_vector a, t_vector b)
 {
 	t_vector	c;
 
@@ -42,6 +63,13 @@ t_vector	sous_vec_vec(t_vector a, t_vector b)
 	return (c);
 }
 
+/*
+ * Function to return the addition of two vector structures as a vector.
+ *
+ * @param t_vector a	-> vector structure to add to
+ * @param t_vector b	-> vector structure to add
+ * @return t_vector		-> the vector resulting from the substraction
+ */
 t_vector	add_vec_vec(t_vector a, t_vector b)
 {
 	t_vector	c;

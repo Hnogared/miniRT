@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:35:57 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/08 15:29:02 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/08 23:51:36 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_vector	sphere_ref(t_ray ray, t_object sphere)
 	t_vector	n;
 	t_vector	r;
 
-	n = sous_vec_coord(ray.coords, sphere.coords);
+	n = subs_vec_coord(ray.coords, sphere.coords);
 	n = normalise(n);
 	if (dist(sphere.coords, ray.origin_coords)
 		< sphere.special_data.sphere.radius)
@@ -108,7 +108,7 @@ static t_vector	cylinder_side_ref(t_ray ray, t_object cylinder)
 	cylinder.coords = switch_coords_basis(cylinder.coords, cylinder.local_basis,
 			world_basis);
 	cp = advance_on_vec_z(cylinder.coords, aligned_ray.coords);
-	n = normalise(sous_vec_coord(aligned_ray.coords, cp));
+	n = normalise(subs_vec_coord(aligned_ray.coords, cp));
 	r = calc_ref_form(aligned_ray.vector, n);
 	return (switch_vector_basis(r, world_basis, cylinder.local_basis));
 }

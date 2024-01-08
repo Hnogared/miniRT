@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:10 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/08 15:41:52 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/08 23:52:02 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	try_light(t_ray *ray, t_object light, int i)
 	float		t;
 	t_vector	s;
 
-	s = sous_vec_coord(ray->origin_coords, light.coords);
+	s = subs_vec_coord(ray->origin_coords, light.coords);
 	b = 2 * prod_scal_vec(ray->vector, s);
 	c = pow(magnitude_coord(ray->origin_coords), 2);
 	c += pow(magnitude_coord(light.coords), 2);
@@ -94,7 +94,7 @@ void	try_sphere(t_ray *ray, t_object sphere, int i)
 	float		t;
 	t_vector	s;
 
-	s = sous_vec_coord(ray->origin_coords, sphere.coords);
+	s = subs_vec_coord(ray->origin_coords, sphere.coords);
 	b = 2 * prod_scal_vec(ray->vector, s);
 	c = pow(magnitude_coord(ray->origin_coords), 2);
 	c += pow(magnitude_coord(sphere.coords), 2);

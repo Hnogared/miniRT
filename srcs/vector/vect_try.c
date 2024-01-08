@@ -6,25 +6,24 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:10 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/07 00:32:58 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:41:52 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-/*equation a resoudre
-P=O+t⋅D avec le p les coordones de la light
-xl   Ox       Dx
-yl = Oy + t x Dy
-zl   Oz       Dz
-
-3 expressions de t, si toutes identiques, ca touche.
-si t = (xl - Ox) / Dx == (yl - Oy)/ Dy == (zl - Oz) / dz;
-alors ca touche !
-
-finalement, imagine la light comme une sphere.
-*/
-void	try_light(t_ray *ray, t_object l, int i)
+/*
+ * imagine la light comme une sphere.
+ */
+/*
+ * Function to trace a ray, check if it touches a light object and update
+ * it if true.
+ *
+ * @param t_ray *ray		-> pointer to the ray to test and update
+ * @param t_object light	-> light object to check the collision with
+ * @param int i				-> objects array index of the object structure
+ */
+void	try_light(t_ray *ray, t_object light, int i)
 {
 	float		b;
 	float		c;
@@ -32,12 +31,12 @@ void	try_light(t_ray *ray, t_object l, int i)
 	float		t;
 	t_vector	s;
 
-	s = sous_vec_coord(ray->origin_coords, l.coords);
+	s = sous_vec_coord(ray->origin_coords, light.coords);
 	b = 2 * prod_scal_vec(ray->vector, s);
 	c = pow(magnitude_coord(ray->origin_coords), 2);
-	c += pow(magnitude_coord(l.coords), 2);
-	c -= 2 * prod_scal_coord(l.coords, ray->origin_coords);
-	c -= pow((l.special_data.light.radius), 2);
+	c += pow(magnitude_coord(light.coords), 2);
+	c -= 2 * prod_scal_coord(light.coords, ray->origin_coords);
+	c -= pow((light.special_data.light.radius), 2);
 	delta = pow(b, 2) - 4 * c;
 	if (delta >= 0)
 	{
@@ -52,34 +51,42 @@ void	try_light(t_ray *ray, t_object l, int i)
 	}
 }
 
-/*equationa resoudre
-P=O+t⋅D
-Où :
-P est le point d'intersection.
-O est le point d'origine du rayon.
-D est la direction normalisée du rayon.
-t est le paramètre a déterminer.*/
-
-/*equation d'une sphere :
-(x-a)^2 + (y−b)^2 + (z-c)^2 = r^2.
-Où (a,b,c) est le centre de la sphère, et r le rayon.
-*/
-
-/*pour trouver t, equation a resoudre :
-((Ox+t⋅Dx) - a)^2 + ((Oy+t⋅Dy) - b)^2 + ((Oz+t⋅Dz) - c)^2.
-at^2 + bt + c = 0;
-a = ||D||^2;
-b = 2 x D.(O - C) 
-c = ||O||^2 + ||C||^2 -2x(C.O) - r^2
-    
-C = centre de la sphere et r son rayon.
-
-delta = B^2 - 4AC; si pas de solution dans le reel (= delta < 0)
-alors pas d'intersection.
-
-pour plus de precision, voir cahier.
-*/
-void	try_sphere(t_ray *ray, t_object obj, int i)
+/*
+ * equationa a resoudre
+ * P=O+t⋅D
+ * Où :
+ * P est le point d'intersection.
+ * O est le point d'origine du rayon.
+ * D est la direction normalisée du rayon.
+ * t est le paramètre a déterminer.
+ *
+ * equation d'une sphere :
+ * (x-a)^2 + (y−b)^2 + (z-c)^2 = r^2.
+ * Où (a,b,c) est le centre de la sphère, et r le rayon.
+ *
+ * pour trouver t, equation a resoudre :
+ * ((Ox+t⋅Dx) - a)^2 + ((Oy+t⋅Dy) - b)^2 + ((Oz+t⋅Dz) - c)^2.
+ * at^2 + bt + c = 0;
+ * a = ||D||^2;
+ * b = 2 x D.(O - C) 
+ * c = ||O||^2 + ||C||^2 -2x(C.O) - r^2
+ * 
+ * C = centre de la sphere et r son rayon.
+ *
+ * delta = B^2 - 4AC; si pas de solution dans le reel (= delta < 0)
+ * alors pas d'intersection.
+ * 
+ * pour plus de precision, voir cahier.
+ */
+/*
+ * Function to trace a ray, check if it touches a sphere object and update
+ * it if true.
+ *
+ * @param t_ray *ray		-> pointer to the ray to test and update
+ * @param t_object sphere	-> sphere object to check the collision with
+ * @param int i				-> objects array index of the object structure
+ */
+void	try_sphere(t_ray *ray, t_object sphere, int i)
 {
 	float		b;
 	float		c;
@@ -87,12 +94,12 @@ void	try_sphere(t_ray *ray, t_object obj, int i)
 	float		t;
 	t_vector	s;
 
-	s = sous_vec_coord(ray->origin_coords, obj.coords);
+	s = sous_vec_coord(ray->origin_coords, sphere.coords);
 	b = 2 * prod_scal_vec(ray->vector, s);
 	c = pow(magnitude_coord(ray->origin_coords), 2);
-	c += pow(magnitude_coord(obj.coords), 2);
-	c -= 2 * prod_scal_coord(obj.coords, ray->origin_coords);
-	c -= pow((obj.special_data.sphere.radius), 2);
+	c += pow(magnitude_coord(sphere.coords), 2);
+	c -= 2 * prod_scal_coord(sphere.coords, ray->origin_coords);
+	c -= pow((sphere.special_data.sphere.radius), 2);
 	delta = b * b - 4 * c;
 	if (delta >= 0)
 	{
@@ -107,32 +114,42 @@ void	try_sphere(t_ray *ray, t_object obj, int i)
 	}
 }
 
-/*equation a resoudre (ax + by + cz + d =0) avec vecteur normal du plan
-(donne dans le sujet) N(a, b, c) et d a determiner avec le point du plan 
-(aussi donne dans le sujet)
- d = -(ax + by + cz) avec toujours N(a, b, c) 
- et (x, y, z) les coordonnees du point*/
-/*equationa resoudre
-P=O+t⋅D
-Où :
-P est le point d'intersection.
-O est le point d'origine du rayon.
-D est la direction normalisée du rayon.
-t est le paramètre a déterminer.*/
-
-/*si il existe un t > 0 qui resout 
-(a[Ox + t * Dx] + b[Oy + t * Dy] + c[Oz + t * Dz] + d =0)
-alors ok.
-revient a verifier si t = - [(N.O) + d]/(N.D) > 0;
-*/
-void	try_plan(t_ray *ray, t_object plan, int i)
+/*
+ * equation a resoudre (ax + by + cz + d =0) avec vecteur normal du plan
+ * (donne dans le sujet) N(a, b, c) et d a determiner avec le point du plan 
+ * (aussi donne dans le sujet)
+ * d = -(ax + by + cz) avec toujours N(a, b, c) 
+ * et (x, y, z) les coordonnees du point
+ *
+ * equation a resoudre
+ * P=O+t⋅D
+ * Où :
+ * P est le point d'intersection.
+ * O est le point d'origine du rayon.
+ * D est la direction normalisée du rayon.
+ * t est le paramètre a déterminer.
+ *
+ * si il existe un t > 0 qui resout 
+ * (a[Ox + t * Dx] + b[Oy + t * Dy] + c[Oz + t * Dz] + d =0)
+ * alors ok.
+ * revient a verifier si t = - [(N.O) + d]/(N.D) > 0;
+ */
+/*
+ * Function to trace a ray, check if it touches a plane object and update
+ * it if true.
+ *
+ * @param t_ray *ray		-> pointer to the ray to test and update
+ * @param t_object plane	-> plane object to check the collision with
+ * @param int i				-> objects array index of the object structure
+ */
+void	try_plane(t_ray *ray, t_object plane, int i)
 {
 	float		d;
 	float		t;
 	t_vector	n;
 
-	n = normalise(plan.orientation_vector);
-	d = -(n.x * plan.coords.x + n.y * plan.coords.y + n.z * plan.coords.z);
+	n = normalise(plane.orientation_vector);
+	d = -(n.x * plane.coords.x + n.y * plane.coords.y + n.z * plane.coords.z);
 	t = -((prod_scal_vec_coord(n, ray->origin_coords) + d));
 	t = t / prod_scal_vec(n, ray->vector);
 	if (t >= 0 && (ray->res == 0 || t < ray->sol))

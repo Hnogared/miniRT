@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:48:18 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/08 15:24:01 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/08 16:00:47 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	do_touch(t_ray *ray, t_object obj, int i)
 	if (obj.type == SPHERE_OBJ)
 		try_sphere(ray, obj, i);
 	else if (obj.type == PLANE_OBJ)
-		try_plan(ray, obj, i);
+		try_plane(ray, obj, i);
 	else if (obj.type == CYLINDER_OBJ)
 		try_cylinder(ray, obj, i);
 	else if (obj.type == LIGHT_OBJ)

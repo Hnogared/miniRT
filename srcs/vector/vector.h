@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 23:57:14 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/08 15:29:12 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:44:41 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ t_vector	axial_vector_rotation(t_vector to_rotate, float angle,
  * Function to initialize the parameter rotation matrix between two vectors.
  * The rotation starts from vector1 and ends at vector2.
  *
- * prod_scal_vec() --> dot product
- * prod_vec_vec() --> cross product
- *
  * @param float ro_matrix_to_set[3][3]	-> rotation matrix array to initialize
  * @param t_vector vector1				-> vector at the rotation start
  * @param t_vector vector2				-> vector at the rotation end
@@ -97,9 +94,35 @@ t_vector	get_reflection_vector(t_ray ray, t_object obj);
 /* ************************************************************************** */
 /* vect_try.c                                                                 */
 /* ************************************************************************** */
-void		try_light(t_ray *ray, t_object l, int i);
-void		try_sphere(t_ray *ray, t_object obj, int i);
-void		try_plan(t_ray *ray, t_object plan, int i);
+/*
+ * Function to trace a ray, check if it touches a light object and update
+ * it if true.
+ *
+ * @param t_ray *ray		-> pointer to the ray to test and update
+ * @param t_object light	-> light object to check the collision with
+ * @param int i				-> objects array index of the object structure
+ */
+void		try_light(t_ray *ray, t_object light, int i);
+
+/*
+ * Function to trace a ray, check if it touches a sphere object and update
+ * it if true.
+ *
+ * @param t_ray *ray		-> pointer to the ray to test and update
+ * @param t_object sphere	-> sphere object to check the collision with
+ * @param int i				-> objects array index of the object structure
+ */
+void		try_sphere(t_ray *ray, t_object sphere, int i);
+
+/*
+ * Function to trace a ray, check if it touches a plane object and update
+ * it if true.
+ *
+ * @param t_ray *ray		-> pointer to the ray to test and update
+ * @param t_object plane	-> plane object to check the collision with
+ * @param int i				-> objects array index of the object structure
+ */
+void		try_plane(t_ray *ray, t_object plane, int i);
 
 /* ************************************************************************** */
 /* vect_try_2.c                                                               */

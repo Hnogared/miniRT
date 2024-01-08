@@ -6,13 +6,25 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:19 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/07 02:20:11 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/08 16:24:28 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static void	try_plan_cyl_inf(t_ray *ray, t_coords cp, t_object obj, int i)
+/*
+ * Function to trace a ray, check if it touches a cylinder's top side in relative
+ * to its orientation vector and update it if true.
+ *
+ * @param t_ray *ray		-> pointer to the ray to test and update
+ * @param t_coords side_pos	-> coordinates of the side center
+ * @param t_object cylinder	-> cylinder object to check the collision with
+ * @param int i				-> objects array index of the object struct
+ *
+ * @parent_func try_cylinder_ext	-> function to test a [cy-ends]-ray collision
+ */
+static void	try_plane_cyl_sup(t_ray *ray, t_coords side_pos, t_object cylinder,
+	int i)
 {
 	float		d;
 	float		t;
@@ -20,41 +32,16 @@ static void	try_plan_cyl_inf(t_ray *ray, t_coords cp, t_object obj, int i)
 	t_vector	nn;
 	t_vector	n;
 
-	n = obj.orientation_vector;
+	n = cylinder.orientation_vector;
 	nn = normalise(n);
-	nn = prod_vec_float(nn, -1);
-	d = -(nn.x * cp.x + nn.y * cp.y + nn.z * cp.z);
+	d = -(nn.x * side_pos.x + nn.y * side_pos.y + nn.z * side_pos.z);
 	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d));
 	t = t / prod_scal_vec(nn, ray->vector);
 	if (t >= 0 && (ray->res == 0 || t < ray->sol))
 	{
 		touch_pos = find_pos_touch(ray, t - 0.1f);
-		if (dist(cp, touch_pos) > obj.special_data.cylinder.radius + 0.01f)
-			return ;
-		ray->coords = touch_pos;
-		ray->sol = t;
-		ray->res = 5;
-		ray->go = i;
-	}
-}
-
-static void	try_plan_cyl_sup(t_ray *ray, t_coords cp, t_object obj, int i)
-{
-	float		d;
-	float		t;
-	t_coords	touch_pos;
-	t_vector	nn;
-	t_vector	n;
-
-	n = obj.orientation_vector;
-	nn = normalise(n);
-	d = -(nn.x * cp.x + nn.y * cp.y + nn.z * cp.z);
-	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d));
-	t = t / prod_scal_vec(nn, ray->vector);
-	if (t >= 0 && (ray->res == 0 || t < ray->sol))
-	{
-		touch_pos = find_pos_touch(ray, t - 0.1f);
-		if (dist(cp, touch_pos) > obj.special_data.cylinder.radius + 0.01f)
+		if (dist(side_pos, touch_pos)
+			> cylinder.special_data.cylinder.radius + 0.01f)
 			return ;
 		ray->coords = touch_pos;
 		ray->sol = t;
@@ -63,20 +50,72 @@ static void	try_plan_cyl_sup(t_ray *ray, t_coords cp, t_object obj, int i)
 	}
 }
 
-static void	try_cylinder_ext(t_ray *ray, t_object obj, int i)
+/*
+ * Function to trace a ray, check if it touches a cylinder's bottom side relative
+ * to its orientation vector and update it if true.
+ *
+ * @param t_ray *ray		-> pointer to the ray to test and update
+ * @param t_coords side_pos	-> coordinates of the side center
+ * @param t_object cylinder	-> cylinder object to check the collision with
+ * @param int i				-> objects array index of the object struct
+ *
+ * @parent_func try_cylinder_ext	-> function to test a [cy-ends]-ray collision
+ */
+static void	try_plane_cyl_inf(t_ray *ray, t_coords side_pos, t_object cylinder,
+	int i)
 {
-	t_coords	cps;
-	t_coords	cpi;
+	float		d;
+	float		t;
+	t_coords	touch_pos;
+	t_vector	nn;
+	t_vector	n;
 
-	cps = advance_on_vec(obj.coords, obj.orientation_vector,
-			obj.special_data.cylinder.height / 2);
-	cpi = advance_on_vec(obj.coords, obj.orientation_vector,
-			-obj.special_data.cylinder.height / 2);
-	try_plan_cyl_sup(ray, cps, obj, i);
-	try_plan_cyl_inf(ray, cpi, obj, i);
+	n = cylinder.orientation_vector;
+	nn = normalise(n);
+	nn = prod_vec_float(nn, -1);
+	d = -(nn.x * side_pos.x + nn.y * side_pos.y + nn.z * side_pos.z);
+	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d));
+	t = t / prod_scal_vec(nn, ray->vector);
+	if (t >= 0 && (ray->res == 0 || t < ray->sol))
+	{
+		touch_pos = find_pos_touch(ray, t - 0.1f);
+		if (dist(side_pos, touch_pos)
+			> cylinder.special_data.cylinder.radius + 0.01f)
+			return ;
+		ray->coords = touch_pos;
+		ray->sol = t;
+		ray->res = 5;
+		ray->go = i;
+	}
 }
 
-/*pour cylindre side test avec cylindre centre sur z.
+/*
+ * Function to trace a ray, check if it touches a cylinder's bottom or top side
+ * relative to its orientation vector and update it if true.
+ *
+ * @param t_ray *ray		-> pointer to the ray to test and update
+ * @param t_object cylinder	-> cylinder object to check the collision with
+ * @param int i				-> objects array index of the object struct
+ *
+ * @child_func try_plane_cyl_sup-> function to test a [cy-top]-ray collision
+ * @child_func try_plane_cyl_inf-> function to test a [cy-inf]-ray collision
+ * @parent_func try_cylinder	-> function to test a cylinder-ray collision
+ */
+static void	try_cylinder_ext(t_ray *ray, t_object cylinder, int i)
+{
+	t_coords	sup_side_pos;
+	t_coords	inf_side_pos;
+
+	sup_side_pos = advance_on_vec(cylinder.coords, cylinder.orientation_vector,
+			cylinder.special_data.cylinder.height / 2);
+	inf_side_pos = advance_on_vec(cylinder.coords, cylinder.orientation_vector,
+			-cylinder.special_data.cylinder.height / 2);
+	try_plane_cyl_sup(ray, sup_side_pos, cylinder, i);
+	try_plane_cyl_inf(ray, inf_side_pos, cylinder, i);
+}
+
+/*
+	pour cylindre side test avec cylindre centre sur z.
 
     equationa resoudre
     P=O+t⋅D
@@ -95,9 +134,16 @@ static void	try_cylinder_ext(t_ray *ray, t_object obj, int i)
 	a = dx^2 + dy^2;
 	b = 2 * (0xdx + Oydy -Dxa - Dyb)
 	c = (Ox - a)^2 + (Oy - b)^2 - r^2;
-	
 */
-float	try_vertical_cylinder_side(t_ray ray, t_object obj)
+/*
+ * Function to trace a ray, check if it touches a z axis aligned cylinder's
+ * cylindrical side and return the result.
+ *
+ * @param t_ray ray		-> the ray to test for collision
+ * @param t_object cyl	-> cylinder object to check the collision with
+ * @param int i			-> objects array index of the object struct
+ */
+static float	try_vertical_cylinder_side(t_ray ray, t_object cyl)
 {
 	float	delta;
 	float	params[3];
@@ -110,19 +156,23 @@ float	try_vertical_cylinder_side(t_ray ray, t_object obj)
 	params[0] = r_vec[0] * r_vec[0] + r_vec[1] * r_vec[1];
 	params[1] = o_coos[0] * r_vec[0] + o_coos[1] * r_vec[1];
 	params[1] = 2 * (params[1] - r_vec[0] * obj.coords.x - r_vec[1]
-			* obj.coords.y);
-	params[2] = o_coos[0] * o_coos[0] - 2 * obj.coords.x * o_coos[0];
-	params[2] = params[2] + obj.coords.x * obj.coords.x + o_coos[1] * o_coos[1];
-	params[2] = params[2] - 2 * obj.coords.y * o_coos[1] + obj.coords.y
-		* obj.coords.y;
-	params[2] = params[2] - obj.special_data.cylinder.radius
-		* obj.special_data.cylinder.radius;
+			* cyl.coords.y);
+	params[2] = o_coos[0] * o_coos[0] - 2 * cyl.coords.x * o_coos[0];
+	params[2] = params[2] + cyl.coords.x * cyl.coords.x + o_coos[1] * o_coos[1];
+	params[2] = params[2] - 2 * cyl.coords.y * o_coos[1] + cyl.coords.y
+		* cyl.coords.y;
+	params[2] = params[2] - cyl.special_data.cylinder.radius
+		* cyl.special_data.cylinder.radius;
 	delta = params[1] * params[1] - 4 * params[0] * params[2];
 	if (delta < 0)
 		return (-1.0f);
 	return (good_sol(delta, params[1], params[0]));
 }
 
+/*
+ *
+ * @child_func try_cylinder_ext	-> function to test a [cy-ends]-ray collision
+ */
 void	try_cylinder(t_ray *ray, t_object obj, int i)
 {
 	float		res;

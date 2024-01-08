@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2024/01/07 16:28:03 by hnogared         ###   ########.fr        #
+#    Updated: 2024/01/08 14:52:04 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -205,7 +205,7 @@ all:	$(NAME)
 ## Compilation rules ##
 # Compile the executable depending on the libraries archives and header files, #
 #  as well as all the object files #
-$(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS) | add_bonus_flags print_flags
+$(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS) | add_bonus_flag print_flags
 	$(call custom_loading_command,										\
 		$(CC) $(CFLAGS) -o $@ $(OBJS) $(AUTO_IFLAGS) $(AUTO_LFLAGS),	\
 		"$(THEME_COLOR)Creating executable \ \ : $(NAME)$(ANSI_NC)")
@@ -233,7 +233,7 @@ endif
 
 # Add the bonus compilation flag if 'bonus' is the called rule #
 add_bonus_flag:
-ifeq ($(MAKECMDGOALS), bonus)
+ifneq (,$(findstring bonus, $(MAKECMDGOALS)))
 	$(eval CFLAGS += -D RT_BONUS=1)
 endif
 
@@ -241,7 +241,7 @@ endif
 print_flags:
 ifneq ($(COMPIL_LOAD),0)
 	$(call custom_command, true, "compilation flags: $(CFLAGS)")
-else ifeq ("$(MAKECMDGOALS)","re")
+else ifneq (,$(findstring re, $(MAKECMDGOALS)))
 	$(call custom_command, true, "compilation flags: $(CFLAGS)")
 endif
 
@@ -285,8 +285,11 @@ dclean:	clean
 		$(RM) $(OBJS_DIR),												\
 		"$(THEME_COLOR)Deleted the $(OBJS_DIR)/ directory.$(ANSI_NC)")
 
-# Remove all object files and the executable, then recompile everything #
+# Remove all object files and the executable, then recompile #
 re:	fclean all
+
+# Remove all object files and the executable, the recompile with bonus features #
+re-bonus:	fclean bonus
 
 
 # ??? #
@@ -353,7 +356,7 @@ $(LFT_INCL_DEPEND):	$(LFT_INCL_SRCS)
 help:
 	@echo "\nMiniRT Makefile help - Available targets\n";				\
 	echo "$(ANSI_BOLD)BASIC TARGETS$(ANSI_NC)";							\
-	echo "\tall  re  bonus  help  test  norm";							\
+	echo "\tall  re  bonus  re-bonus  help  test  norm";				\
 	echo "$(ANSI_BOLD)FILES TARGETS$(ANSI_NC)";							\
 	echo -n "\t$(NAME)";												\
 	echo -n "$(OBJS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).o  ";		\
@@ -381,6 +384,6 @@ norm:
 
 # Ignore the following files during rule completeness check
 .PHONY:	all clean fclean lclean dclean libft libft-% minilibx minilibx-% re	\
-		help norm intro bonus add_bonus_flags
+		help norm intro bonus re-bonus add_bonus_flags
 
 # **************************************************************************** #

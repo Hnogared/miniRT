@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 23:57:14 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/08 14:30:06 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:29:12 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,6 @@ void		get_rotation_matrix(float rot_matrix_to_set[3][3], t_vector vector1,
 				t_vector vector2);
 
 /* ************************************************************************** */
-/* rotation_2.c                                                               */
-/* ************************************************************************** */
-float		to_rad(float degree_angle);
-t_vector	prod_vec_float(t_vector a, float k);
-
-/* ************************************************************************** */
 /* vect.c                                                                     */
 /* ************************************************************************** */
 int			do_touch(t_ray *ray, t_object obj, int i);
@@ -85,7 +79,20 @@ void		ray_advance(const t_data *data, t_ray *ray);
 /* ************************************************************************** */
 /* vect_calc.c                                                                */
 /* ************************************************************************** */
-t_vector	calcul_ref(const t_ray *ray, t_object obj, int res);
+/*
+ * Function to calculate the vector resulting from the reflection of a ray on an
+ * object.
+ *
+ * @param t_ray ray		-> the ray to reflect
+ * @param t_object obj	-> the object structure to reflect onto
+ * @return t_vector		-> the reflection vector
+ *
+ * @child_func sphere_ref			-> function to reflect a ray on a sphere
+ * @child_func plane_ref			-> function to reflect a ray on a plane
+ * @child_func cylinder_side_ref	-> function to reflect a ray on a cyl. side
+ * @child_func cylinder_ext_ref		-> function to reflect a ray on a cyl. end
+ */
+t_vector	get_reflection_vector(t_ray ray, t_object obj);
 
 /* ************************************************************************** */
 /* vect_try.c                                                                 */

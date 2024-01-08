@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:48:18 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/07 00:39:50 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:24:01 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	touch_object(const t_data *data, t_ray *ray)
 		ray->light_color = shadow_ray(ray->coords, data->scene_objects,
 				data->obj_count, data->ambient_l);
 	}
-	ray->vector = calcul_ref(ray, data->scene_objects[ray->go], ray->res);
+	ray->vector = get_reflection_vector(*ray, data->scene_objects[ray->go]);
 	ray->origin_coords = ray->coords;
 	ray->touch = 1;
 	ray->nb_ref++;
@@ -58,7 +58,7 @@ void	ray_advance(const t_data *data, t_ray *ray)
 	ray->nb_ref = 0;
 	ray->tl = 0;
 	ray->s = 0;
-	while (ray->touch != 0 && ray->nb_ref <= RT_MAX_BOUNCES - 1 && ray->tl == 0)
+	while (ray->touch != 0 && ray->nb_ref < RT_MAX_BOUNCES && ray->tl == 0)
 	{
 		ray->res = 0;
 		ray->sol = -1;

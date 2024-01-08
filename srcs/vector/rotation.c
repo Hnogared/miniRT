@@ -6,12 +6,80 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 12:50:45 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/03 12:17:23 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/08 14:29:36 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+/*
+ * Function to rotate a vector structure using a rotation matrix.
+ * The rotation matrix can be calculated using get_rotation_matrix().
+ *
+ * Origin vector (v) = {x, y, z}
+ * Rotated vector (v') = {x', y', z'}
+ * Rotation matrix (R) = {{r00, r01, r02}, {r10, r11, r12}, {r20, r21, r22}}
+ *
+ * (v') = (R)(v)
+ * x' ( res.x ) = r00 * x + r01 * y + r02 * z
+ * y' ( res.y ) = r10 * x + r11 * y + r12 * z
+ * z' ( res.z ) = r20 * x + r21 * y + r22 * z
+ *
+ * @param t_vector to_rotate		-> vector to rotate
+ * @param float rot_matrix[3][3]	-> matrix used for the rotation
+ * @return t_vector					-> the rotated vector
+ */
+t_vector	matrix_vector_rotation(t_vector to_rotate, float rot_matrix[3][3])
+{
+	t_vector	res;
+
+	res.x = rot_matrix[0][0] * to_rotate.x + rot_matrix[0][1] * to_rotate.y
+		+ rot_matrix[0][2] * to_rotate.z;
+	res.y = rot_matrix[1][0] * to_rotate.x + rot_matrix[1][1] * to_rotate.y
+		+ rot_matrix[1][2] * to_rotate.z;
+	res.z = rot_matrix[2][0] * to_rotate.x + rot_matrix[2][1] * to_rotate.y
+		+ rot_matrix[2][2] * to_rotate.z;
+	return (res);
+}
+
+/*
+ * Function to rotate a coordinates structure using a rotation matrix.
+ * The rotation matrix can be calculated using get_rotation_matrix().
+ *
+ * Origin coords (c) = {x, y, z}
+ * Rotated coords (c') = {x', y', z'}
+ * Rotation matrix (R) = {{r00, r01, r02}, {r10, r11, r12}, {r20, r21, r22}}
+ *
+ * (c') = (R)(c)
+ * x' ( res.x ) = r00 * x + r01 * y + r02 * z
+ * y' ( res.y ) = r10 * x + r11 * y + r12 * z
+ * z' ( res.z ) = r20 * x + r21 * y + r22 * z
+ *
+ * @param t_coords to_rotate		-> coordinates to rotate
+ * @param float rot_matrix[3][3]	-> rotation matrix used for the roation
+ * @return t_coords					-> the rotated coordinates
+ */
+t_coords	matrix_coords_rotation(t_coords to_rotate, float rot_matrix[3][3])
+{
+	t_coords	res;
+
+	res.x = rot_matrix[0][0] * to_rotate.x + rot_matrix[0][1] * to_rotate.y
+		+ rot_matrix[0][2] * to_rotate.z;
+	res.y = rot_matrix[1][0] * to_rotate.x + rot_matrix[1][1] * to_rotate.y
+		+ rot_matrix[1][2] * to_rotate.z;
+	res.z = rot_matrix[2][0] * to_rotate.x + rot_matrix[2][1] * to_rotate.y
+		+ rot_matrix[2][2] * to_rotate.z;
+	return (res);
+}
+
+/*
+ * Function to rotate a basis structure along a vector axis at a degrees angle.
+ *
+ * @param t_basis to_rotate	-> basis to rotate
+ * @param float angle		-> angle of the rotation in degrees
+ * @param t_vector axis		-> axis along which to rotate
+ * @return t_basis			-> the rotated basis structure
+ */
 t_basis	axial_basis_rotation(t_basis to_rotate, float angle, t_vector axis)
 {
 	t_basis	rotated;
@@ -27,24 +95,11 @@ t_basis	axial_basis_rotation(t_basis to_rotate, float angle, t_vector axis)
 }
 
 /*
- * https://en.wikipedia.org/wiki/Rotation_matrix
- * Rotation matrix from axis and angle
+ * Function to rotate a vector structure along a vector axis at a degrees angle.
  *
- * Vector to rotate (v):
- * ┌             ┐
- * | to_rotate.x |
- * | to_rotate.y |
- * | to_rotate.z |
- * └             ┘
- *
- *
- * Rotation matrix (R):
- * ┌             ┐
- * | r00 r01 r02 |
- * | r10 r11 r12 |
- * | r20 r21 r22 |
- * └             ┘
+ * Rotation matrix (R) = {{r00, r01, r02}, {r10, r11, r12}, {r20, r21, r22}}
  * Ø = angle in radians
+ *
  * r00 ( rot_matrix[0][0] ) = cosØ + axis.u^2 * (1 - cosØ)
  * r01 ( rot_matrix[0][1] ) = axis.x * axis.y * (1 - cosØ) - axis.z * sinØ
  * r02 ( rot_matrix[0][2] ) = axis.x * axis.z * (1 - cosØ) + axis.y * sinØ
@@ -57,9 +112,11 @@ t_basis	axial_basis_rotation(t_basis to_rotate, float angle, t_vector axis)
  * r21 ( rot_matrix[2][1] ) = axis.z * axis.y * (1 - cosØ) + axis.x * sinØ
  * r22 ( rot_matrix[2][2] ) = cosØ + axis.z^2 * (1 - cosØ)
  *
+ * Vector rotation (rot_vector) = (R)(vector) --> see matrix_vector_rotation()
  *
- * Vector rotation (v') = (R)(v) :
- * see matrix_vector_rotation()
+ * @param t_vector to_rotate	-> vector to rotate
+ * @param float degree_angle	-> angle of the rotation in degrees
+ * @return t_vector				-> the rotated vector structure
  */
 t_vector	axial_vector_rotation(t_vector to_rotate, float degree_angle,
 	t_vector axis)
@@ -85,46 +142,15 @@ t_vector	axial_vector_rotation(t_vector to_rotate, float degree_angle,
 }
 
 /*
- * Vector v rotation using the matrix R | (v') = (R)(v) :
- * ┌    ┐   ┌             ┐┌   ┐
- * | x' |   | r00 r01 r02 || x |
- * | y' | = | r10 r11 r12 || y |
- * | z' |   | r20 r21 r22 || z |
- * └    ┘   └             ┘└   ┘
- * x' ( res.x ) = r00 * x + r01 * y + r02 * z
- * y' ( res.y ) = r10 * x + r11 * y + r12 * z
- * z' ( res.z ) = r20 * x + r21 * y + r22 * z
- */
-t_vector	matrix_vector_rotation(t_vector to_rotate, float rot_matrix[3][3])
-{
-	t_vector	res;
-
-	res.x = rot_matrix[0][0] * to_rotate.x + rot_matrix[0][1] * to_rotate.y
-		+ rot_matrix[0][2] * to_rotate.z;
-	res.y = rot_matrix[1][0] * to_rotate.x + rot_matrix[1][1] * to_rotate.y
-		+ rot_matrix[1][2] * to_rotate.z;
-	res.z = rot_matrix[2][0] * to_rotate.x + rot_matrix[2][1] * to_rotate.y
-		+ rot_matrix[2][2] * to_rotate.z;
-	return (res);
-}
-
-t_coords	matrix_coords_rotation(t_coords to_rotate, float rot_matrix[3][3])
-{
-	t_coords	res;
-
-	res.x = rot_matrix[0][0] * to_rotate.x + rot_matrix[0][1] * to_rotate.y
-		+ rot_matrix[0][2] * to_rotate.z;
-	res.y = rot_matrix[1][0] * to_rotate.x + rot_matrix[1][1] * to_rotate.y
-		+ rot_matrix[1][2] * to_rotate.z;
-	res.z = rot_matrix[2][0] * to_rotate.x + rot_matrix[2][1] * to_rotate.y
-		+ rot_matrix[2][2] * to_rotate.z;
-	return (res);
-}
-
-/*
- * https://gist.github.com/kevinmoran/b45980723e53edeb8a5a43c49f134724
- * prod_scal_vec() = dot_product()
- * prod_vec_vec() = cross_product()
+ * Function to initialize the parameter rotation matrix between two vectors.
+ * The rotation starts from vector1 and ends at vector2.
+ *
+ * prod_scal_vec() --> dot product
+ * prod_vec_vec() --> cross product
+ *
+ * @param float ro_matrix_to_set[3][3]	-> rotation matrix array to initialize
+ * @param t_vector vector1				-> vector at the rotation start
+ * @param t_vector vector2				-> vector at the rotation end
  */
 void	get_rotation_matrix(float rot_matrix_to_set[3][3], t_vector vector1,
 	t_vector vector2)

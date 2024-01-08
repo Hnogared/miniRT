@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 23:57:14 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/07 23:11:36 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/08 14:30:06 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,57 @@
 /* ************************************************************************** */
 /* rotation.c                                                                 */
 /* ************************************************************************** */
+/*
+ * Function to rotate a vector structure using a rotation matrix.
+ * The rotation matrix can be calculated using get_rotation_matrix().
+ *
+ * @param t_vector to_rotate		-> vector to rotate
+ * @param float rot_matrix[3][3]	-> matrix used for the rotation
+ * @return t_vector					-> the rotated vector
+ */
+t_vector	matrix_vector_rotation(t_vector to_rotate, float rot_matrix[3][3]);
+
+/*
+ * Function to rotate a coordinates structure using a rotation matrix.
+ * The rotation matrix can be calculated using get_rotation_matrix().
+ *
+ * @param t_coords to_rotate		-> coordinates to rotate
+ * @param float rot_matrix[3][3]	-> matrix used for the rotation
+ * @return t_coords					-> the rotated coordinates
+ */
+t_coords	matrix_coords_rotation(t_coords to_rotate, float rot_matrix[3][3]);
+
+/*
+ * Function to rotate a basis structure along an axis at a given angle.
+ *
+ * @param t_basis to_rotate	-> basis to rotate
+ * @param float angle		-> angle of the rotation in degrees
+ * @param t_vector axis		-> axis along which to rotate
+ * @return t_basis			-> the rotated basis structure
+ */
 t_basis		axial_basis_rotation(t_basis to_rotate, float angle, t_vector axis);
+
+/*
+ * Function to rotate a vector structure along a vector axis at a degrees angle.
+ *
+ * @param t_vector to_rotate	-> vector to rotate
+ * @param float degree_angle	-> angle of the rotation in degrees
+ * @return t_vector				-> the rotated vector structure
+ */
 t_vector	axial_vector_rotation(t_vector to_rotate, float angle,
 				t_vector axis);
-t_vector	matrix_vector_rotation(t_vector to_rotate, float rot_matrix[3][3]);
-t_coords	matrix_coords_rotation(t_coords to_rotate, float rot_matrix[3][3]);
+
+/*
+ * Function to initialize the parameter rotation matrix between two vectors.
+ * The rotation starts from vector1 and ends at vector2.
+ *
+ * prod_scal_vec() --> dot product
+ * prod_vec_vec() --> cross product
+ *
+ * @param float ro_matrix_to_set[3][3]	-> rotation matrix array to initialize
+ * @param t_vector vector1				-> vector at the rotation start
+ * @param t_vector vector2				-> vector at the rotation end
+ */
 void		get_rotation_matrix(float rot_matrix_to_set[3][3], t_vector vector1,
 				t_vector vector2);
 

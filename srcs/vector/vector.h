@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 23:57:14 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/09 00:00:20 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/09 00:20:29 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void		ray_advance(const t_data *data, t_ray *ray);
  * @param t_coords b	-> coords structure to substract
  * @return t_vector		-> the vector resulting from the substraction
  */
-t_vector	subs_vec_coord(t_coords a, t_coords b);
+t_vector	subs_vec_coords(t_coords a, t_coords b);
 
 /*
  * Function to return the addition of two coords structures as a vector.
@@ -92,7 +92,7 @@ t_vector	subs_vec_coord(t_coords a, t_coords b);
  * @param t_coords b	-> coords structure to add
  * @return t_vector		-> the vector resulting from the addition
  */
-t_vector	add_vec_coord(t_coords a, t_coords b);
+t_vector	add_vec_coords(t_coords a, t_coords b);
 
 /*
  * Function to return the substraction of two vector structures as a vector.
@@ -139,6 +139,55 @@ t_coords	add_vec_coord_vec(t_coords a, t_vector b);
  * @child_func cylinder_ext_ref		-> function to reflect a ray on a cyl. end
  */
 t_vector	get_reflection_vector(t_ray ray, t_object obj);
+
+/* ************************************************************************** */
+/* vect_prod.c                                                                */
+/* ************************************************************************** */
+/*
+ * Function to return the product of a vector structure and an integer.
+ *
+ * @param t_vector a	-> vector to multiply
+ * @param int k			-> integer to multiply
+ * @return t_vector		-> the vecotr resulting from the multiplication
+ */
+t_vector	prod_vec_int(t_vector a, int k);
+
+/*
+ * Function to return the scalar product of two vector structures.
+ *
+ * @param t_vector a	-> first vector of the product
+ * @param t_vector b	-> second vector of the product
+ * @return float		-> result of the scalar product
+ */
+float		prod_scal_vec(t_vector a, t_vector b);
+
+/*
+ * Function to return the scalar product of two coords structures.
+ *
+ * @param t_coords a	-> first coords of the product
+ * @param t_coords b	-> second coords of the product
+ * @return float		-> result of the scalar product
+ */
+float		prod_scal_coords(t_coords a, t_coords b);
+
+/*
+ * Function to return the scalar product of a vector structure and a coords
+ * structure.
+ *
+ * @param t_vector a	-> vector structure as first factor of the product
+ * @param t_coords b	-> coords structure as second factor of the product
+ * @return float		-> result of the scalar product
+ */
+float		prod_scal_vec_coords(t_vector a, t_coords b);
+
+/*
+ * Function to return the cross product between two vector stuctures.
+ *
+ * @param t_vector a	-> vector structure as first factor of the product
+ * @param t_coords b	-> coords structure as second factor of the product
+ * @return t_vector		-> result of the cross product
+ */
+t_vector	prod_vec_vec(t_vector a, t_vector b);
 
 /* ************************************************************************** */
 /* vect_try.c                                                                 */
@@ -188,15 +237,6 @@ void		try_plane(t_ray *ray, t_object plane, int i);
  * @child_func try_cylinder_ext	-> function to test a [cy-ends]-ray collision
  */
 void		try_cylinder(t_ray *ray, t_object cyl, int i);
-
-/* ************************************************************************** */
-/* vect_utils_2.c                                                             */
-/* ************************************************************************** */
-t_vector	prod_vec_int(t_vector a, int k);
-float		prod_scal_vec(t_vector a, t_vector b);
-float		prod_scal_coord(t_coords a, t_coords b);
-float		prod_scal_vec_coord(t_vector a, t_coords b);
-t_vector	prod_vec_vec(t_vector a, t_vector b);
 
 /* ************************************************************************** */
 /* vect_utils_3.c                                                             */

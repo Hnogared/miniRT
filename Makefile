@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2024/01/08 23:48:53 by hnogared         ###   ########.fr        #
+#    Updated: 2024/01/09 00:02:51 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,9 +80,9 @@ SRCS			:=	main.c					\
 					vect.c					\
 					vect_add_subs.c			\
 					vect_calc.c				\
+					vect_prod.c				\
 					vect_try.c				\
 					vect_try_2.c			\
-					vect_utils_2.c			\
 					vect_utils_3.c			\
 					vect_utils_4.c			\
 					vect_utils_5.c			\

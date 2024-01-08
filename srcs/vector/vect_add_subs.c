@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 11:03:20 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/08 23:57:37 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/09 00:09:13 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param t_coords b	-> coords structure to substract
  * @return t_vector		-> the vector resulting from the substraction
  */
-t_vector	subs_vec_coord(t_coords a, t_coords b)
+t_vector	subs_vec_coords(t_coords a, t_coords b)
 {
 	t_vector	c;
 
@@ -36,7 +36,7 @@ t_vector	subs_vec_coord(t_coords a, t_coords b)
  * @param t_coords b	-> coords structure to add
  * @return t_vector		-> the vector resulting from the addition
  */
-t_vector	add_vec_coord(t_coords a, t_coords b)
+t_vector	add_vec_coords(t_coords a, t_coords b)
 {
 	t_vector	c;
 
@@ -68,7 +68,7 @@ t_vector	subs_vec_vec(t_vector a, t_vector b)
  *
  * @param t_vector a	-> vector structure to add to
  * @param t_vector b	-> vector structure to add
- * @return t_vector		-> the vector resulting from the substraction
+ * @return t_vector		-> the vector resulting from the addition
  */
 t_vector	add_vec_vec(t_vector a, t_vector b)
 {
@@ -80,6 +80,14 @@ t_vector	add_vec_vec(t_vector a, t_vector b)
 	return (c);
 }
 
+/*
+ * Function to return the addition of a coords structure and a vector structure
+ * as a coords structure.
+ *
+ * @param t_coords a	-> coords structure to add to
+ * @param t_vector b	-> vector structure to add
+ * @return t_coords		-> the coords resulting from the addition
+ */
 t_coords	add_vec_coord_vec(t_coords a, t_vector b)
 {
 	t_coords	c;

@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:10 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/08 23:52:02 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/09 00:13:07 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	try_light(t_ray *ray, t_object light, int i)
 	float		t;
 	t_vector	s;
 
-	s = subs_vec_coord(ray->origin_coords, light.coords);
+	s = subs_vec_coords(ray->origin_coords, light.coords);
 	b = 2 * prod_scal_vec(ray->vector, s);
 	c = pow(magnitude_coord(ray->origin_coords), 2);
 	c += pow(magnitude_coord(light.coords), 2);
-	c -= 2 * prod_scal_coord(light.coords, ray->origin_coords);
+	c -= 2 * prod_scal_coords(light.coords, ray->origin_coords);
 	c -= pow((light.special_data.light.radius), 2);
 	delta = pow(b, 2) - 4 * c;
 	if (delta >= 0)
@@ -94,11 +94,11 @@ void	try_sphere(t_ray *ray, t_object sphere, int i)
 	float		t;
 	t_vector	s;
 
-	s = subs_vec_coord(ray->origin_coords, sphere.coords);
+	s = subs_vec_coords(ray->origin_coords, sphere.coords);
 	b = 2 * prod_scal_vec(ray->vector, s);
 	c = pow(magnitude_coord(ray->origin_coords), 2);
 	c += pow(magnitude_coord(sphere.coords), 2);
-	c -= 2 * prod_scal_coord(sphere.coords, ray->origin_coords);
+	c -= 2 * prod_scal_coords(sphere.coords, ray->origin_coords);
 	c -= pow((sphere.special_data.sphere.radius), 2);
 	delta = b * b - 4 * c;
 	if (delta >= 0)
@@ -150,7 +150,7 @@ void	try_plane(t_ray *ray, t_object plane, int i)
 
 	n = normalise(plane.orientation_vector);
 	d = -(n.x * plane.coords.x + n.y * plane.coords.y + n.z * plane.coords.z);
-	t = -((prod_scal_vec_coord(n, ray->origin_coords) + d));
+	t = -((prod_scal_vec_coords(n, ray->origin_coords) + d));
 	t = t / prod_scal_vec(n, ray->vector);
 	if (t >= 0 && (ray->res == 0 || t < ray->sol))
 	{

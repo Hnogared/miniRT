@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:19 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/08 23:44:33 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/09 00:13:18 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	try_plane_cyl_sup(t_ray *ray, t_coords side_pos, t_object cylinder,
 	n = cylinder.orientation_vector;
 	nn = normalise(n);
 	d = -(nn.x * side_pos.x + nn.y * side_pos.y + nn.z * side_pos.z);
-	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d));
+	t = -((prod_scal_vec_coords(nn, ray->origin_coords) + d));
 	t = t / prod_scal_vec(nn, ray->vector);
 	if (t >= 0 && (ray->res == 0 || t < ray->sol))
 	{
@@ -74,7 +74,7 @@ static void	try_plane_cyl_inf(t_ray *ray, t_coords side_pos, t_object cylinder,
 	nn = normalise(n);
 	nn = prod_vec_float(nn, -1);
 	d = -(nn.x * side_pos.x + nn.y * side_pos.y + nn.z * side_pos.z);
-	t = -((prod_scal_vec_coord(nn, ray->origin_coords) + d));
+	t = -((prod_scal_vec_coords(nn, ray->origin_coords) + d));
 	t = t / prod_scal_vec(nn, ray->vector);
 	if (t >= 0 && (ray->res == 0 || t < ray->sol))
 	{

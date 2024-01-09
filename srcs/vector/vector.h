@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   vector.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/06 23:57:14 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/09 00:20:29 by hnogared         ###   ########.fr       */
+/*                                                         ::::::::     :::   */
+/*   vector.h                                            :+:    :+:   :+:     */
+/*                                                            +:+   +:+ +:+   */
+/*   By: hnogared <hnogared@student.42perpignan.fr         +#+    +#+  +:+    */
+/*                                                      +#+     +#+#+#+#+#+   */
+/*   Created: 2024/01/09 03:04:55 by hnogared         #+#            #+#      */
+/*   Updated: 2024/01/09 03:08:24 by hnogared       ########        ###.lol   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,23 +241,14 @@ void		try_cylinder(t_ray *ray, t_object cyl, int i);
 /* ************************************************************************** */
 /* vect_utils_3.c                                                             */
 /* ************************************************************************** */
-t_vector	calc_ref_form(t_vector i, t_vector n);
 float		magnitude(t_vector n);
 float		magnitude_coord(t_coords n);
-t_vector	normalise(t_vector n);
 float		dist(t_coords a, t_coords b);
+t_vector	normalise(t_vector n);
+t_vector	calc_ref_form(t_vector i, t_vector n);
 
 /* ************************************************************************** */
 /* vect_utils_4.c                                                             */
-/* ************************************************************************** */
-t_coords	find_pos_touch(t_ray *ray, float t);
-t_coords	give_coord(t_coords coord);
-float		good_sol(float delta, float b, float a);
-void		print_vec(t_vector vec);
-void		print_coord(t_coords cor);
-
-/* ************************************************************************** */
-/* vect_utils_5.c                                                             */
 /* ************************************************************************** */
 /*
  * Function to return true if two vectors are the same, false otherwise.
@@ -267,8 +258,9 @@ void		print_coord(t_coords cor);
  * @return bool				-> the result of the comparison
  */
 bool		is_vector_equal(t_vector vector1, t_vector vector2);
-
 float		to_rad(float degree_angle);
+float		good_sol(float delta, float b, float a);
+t_coords	find_pos_touch(t_ray *ray, float t);
 t_vector	prod_vec_float(t_vector a, float k);
 
 /* ************************************************************************** */

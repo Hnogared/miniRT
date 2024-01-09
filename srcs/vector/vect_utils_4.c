@@ -6,30 +6,27 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:31:00 by tlorne            #+#    #+#             */
-/*   Updated: 2023/12/18 15:15:57 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/09 00:24:56 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-t_coords	find_pos_touch(t_ray *ray, float t)
+/*
+ * Function to return true if two vectors are the same, false otherwise.
+ *
+ * @param t_vector vector1	-> the first vector structure to compare
+ * @param t_vector vector2	-> the second vector structure to compare
+ * @return bool				-> the result of the comparison
+ */
+bool	is_vector_equal(t_vector vector1, t_vector vector2)
 {
-	t_coords	new_o;
-
-	new_o.x = ray->origin_coords.x + t * ray->vector.x;
-	new_o.y = ray->origin_coords.y + t * ray->vector.y;
-	new_o.z = ray->origin_coords.z + t * ray->vector.z;
-	return (new_o);
+	return (vector1.x == vector2.x && vector1.y == vector2.y
+		&& vector1.z == vector2.z);
 }
 
-t_coords	give_coord(t_coords coord)
+float	to_rad(float degree_angle)
 {
-	t_coords	new_c;
-
-	new_c.x = coord.x;
-	new_c.y = coord.y;
-	new_c.z = coord.z;
-	return (new_c);
+	return ((degree_angle * M_PI) / 180);
 }
 
 float	good_sol(float delta, float b, float a)
@@ -48,16 +45,22 @@ float	good_sol(float delta, float b, float a)
 	return (t2);
 }
 
-void	print_vec(t_vector vec)
+t_coords	find_pos_touch(t_ray *ray, float t)
 {
-	printf("x vaut : %f\n", vec.x);
-	printf("y vaut : %f\n", vec.y);
-	printf("z vaut : %f\n", vec.z);
+	t_coords	new_o;
+
+	new_o.x = ray->origin_coords.x + t * ray->vector.x;
+	new_o.y = ray->origin_coords.y + t * ray->vector.y;
+	new_o.z = ray->origin_coords.z + t * ray->vector.z;
+	return (new_o);
 }
 
-void	print_coord(t_coords cor)
+t_vector	prod_vec_float(t_vector a, float k)
 {
-	printf("x vaut : %f\n", cor.x);
-	printf("y vaut : %f\n", cor.y);
-	printf("z vaut : %f\n", cor.z);
+	t_vector	c;
+
+	c.x = a.x * k;
+	c.y = a.y * k;
+	c.z = a.z * k;
+	return (c);
 }

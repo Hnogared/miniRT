@@ -12,8 +12,33 @@ srcs_dir="srcs"
 libs_srcs_dir="${srcs_dir}/libraries"
 libft_srcs_dir="${libs_srcs_dir}/extended_libft"
 
+includes_dir="includes"
+ignore_includes=("mlx.h" "mlx_int.h")
+
+join()
+{
+	local sep="$1"
+	shift
+	local len="$#"
+	local i=0
+	for file in "$@"; do
+		echo -n "$file"
+		if [ $i -lt $(( len - 1 )) ]; then
+			echo -n "$sep"
+		fi
+		i=$(( i + 1 ))
+	done
+}
+
+if [ ${#ignore_includes[@]} -gt 1 ]; then
+	ignore_includes=$(join "\\|" ${ignore_includes[@]})
+else
+	ignore_includes="$ignore_includes[0]"
+fi
+
 paths="$libft_srcs_dir"$'\n'
-paths+=`ls "$srcs_dir" | grep -v "${libs_srcs_dir##*/}" | sed -e 's/^/'"$srcs_dir"'\//'`
+paths+=`ls "$srcs_dir" | grep -v "${libs_srcs_dir##*/}" | sed -e "s/^/$srcs_dir\//"`
+paths+=" "`ls "$includes_dir" | grep -v "$ignore_includes" | sed -e "s/^/$includes_dir\//"`
 
 res_paths=""
 

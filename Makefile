@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2024/01/13 22:19:45 by hnogared         ###   ########.fr        #
+#    Updated: 2024/01/13 22:26:55 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,10 +98,10 @@ dclean:	clean
 		"$(THEME_COLOR)Deleted the $(OBJS_DIR)/ directory.$(ANSI_NC)")
 endif
 
-# Remove all object files and the executable, then recompile #
+# Remove all object files and the executable and recompile #
 re:	fclean $(NAME)
 
-# Remove all object files and the executable, the recompile with bonus features #
+# Remove all object files and the executable and recompile with bonus features #
 re-bonus:	fclean bonus
 
 
@@ -229,6 +229,7 @@ endif
 
 # Ignore the following files during rule completeness check
 .PHONY:	all clean fclean lclean dclean libft libft-% minilibx minilibx-% re	\
-		help norm intro bonus re-bonus add_bonus_flags
+		help test norm intro bonus re-bonus get_obj_load add_bonus_flags	\
+		print_flags
 
 # **************************************************************************** #

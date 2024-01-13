@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 22:06:44 by hnogared          #+#    #+#              #
-#    Updated: 2024/01/13 13:42:26 by hnogared         ###   ########.fr        #
+#    Updated: 2024/01/13 22:04:31 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # Makefile for functions declarations                                          #
@@ -78,88 +78,5 @@ else # ifneq ($(SERIOUS), TRUE) #
  endef
 
 endif # ifneq ($(SERIOUS), TRUE) #
-
-# Function to play the Makefile introduction cinematic #
-define play_intro
-	clear
-	@echo -n "\e[0;0H\e[s"
-	$(call put_frame, 60, 11, $(FRAME_CHARS), $(ANSI_BG_BLA)$(ANSI_FG_BBLA))
-	@echo -n "\e[u\e[B\e[9C"
-	@echo -n $(ANSI_FG_WHI)$(ANSI_BG_BLA)$(ASCII_MINI)$(ANSI_NC)
-	@echo -n "\e[3A\e[4D"
-	@echo $(ANSI_FG_RED)$(ANSI_BG_BLA)$(ASCII_RT)$(ANSI_NC)
-	@echo
-endef
-
-#	while read -n1 character; do	\
-		echo -e $$character;	\
-	done < <(echo -ne "$$logo")
-#		if [ $${logo:$$i:1} != " " ]
-define put_logo_light
-	@logo='$(ASCII_MINI)';		\
-	new_logo="";				\
-	while read -n1 character; do	\
-		if [ $$character == "\\" ]; then	\
-			new_logo="$$new_logo\\";	\
-		fi;	\
-		if [ $$character == " " ]; then\
-			new_logo=$$new_logo ;	\
-		fi;	\
-		new_logo="$$new_logo$$character";	\
-	done < <(echo -ne "$$logo");	\
-	echo -n $$new_logo
-endef
-
-# Function to display a colored square on terminal at cursor location #
-define put_square
-	$(eval width = $(1))
-	$(eval height = $(2))
-	$(eval color = $(3))
-	@line=" ";										\
-	x=1;											\
-	while [ $$x -lt $(width) ]; do					\
-		line="$$line ";								\
-		x=$$(( $$x + 1 ));							\
-	done;											\
-	square="$$line\e[B\e[$(width)D";				\
-	y=1;											\
-	while [ $$y -lt $(height) ]; do					\
-		square="$$square$$line\e[B\e[$(width)D";	\
-		y=$$(( $$y + 1 ));							\
-	done;											\
-	echo -n "$(color)$$square$(ANSI_NC)"
-endef
-
-# Function to display a colored and filled frame at cursor location #
-define put_frame
-	$(eval width = $(1))
-	$(eval height = $(2))
-	$(eval horizontal = $(word 1, $(3)))
-	$(eval vertical = $(word 2, $(3)))
-	$(eval tl_corner = $(word 3, $(3)))
-	$(eval tr_corner = $(word 4, $(3)))
-	$(eval bl_corner = $(word 5, $(3)))
-	$(eval br_corner = $(word 6, $(3)))
-	$(eval color = $(4))
-	@frame_top="$(tl_corner)";							\
-	frame_middle="$(vertical)";							\
-	frame_bottom="$(bl_corner)";						\
-	x=1;												\
-	while [ $$x -lt $$(( $(width) - 1 )) ];	do			\
-		frame_top="$$frame_top$(horizontal)";			\
-		frame_middle="$$frame_middle ";					\
-		frame_bottom="$$frame_bottom$(horizontal)";		\
-		x=$$(( $$x + 1 ));								\
-	done;												\
-	frame_middle="$$frame_middle$(vertical)";			\
-	frame="$$frame_top$(tr_corner)\e[B\e[$(width)D";	\
-	y=1;												\
-	while [ $$y -lt $$(( $(height) - 1 )) ]; do			\
-		frame="$$frame$$frame_middle\e[B\e[$(width)D";	\
-		y=$$(( $$y + 1 ));								\
-	done;												\
-	frame="$$frame$$frame_bottom$(br_corner)";			\
-	echo -n "$(color)$$frame$(ANSI_NC)"
-endef
 
 # **************************************************************************** #

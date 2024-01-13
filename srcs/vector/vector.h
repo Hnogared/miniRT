@@ -6,7 +6,7 @@
 /*   By: hnogared <hnogared@student.42perpignan.fr         +#+    +#+  +:+    */
 /*                                                      +#+     +#+#+#+#+#+   */
 /*   Created: 2024/01/09 03:04:55 by hnogared         #+#            #+#      */
-/*   Updated: 2024/01/13 11:58:11 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/13 12:59:11 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,29 @@ void		get_rotation_matrix(float rot_matrix_to_set[3][3], t_vector vector1,
 /* ************************************************************************** */
 /* vect.c                                                                     */
 /* ************************************************************************** */
+/*
+ * Function to trace a ray, check if it touches the parameter object and update
+ * it if true.
+ *
+ * @param t_ray *ray	-> pointer to the ray to test and update
+ * @param t_object obj	-> object to check the collision with
+ * @param int i			-> objects array index of the object structure
+ */
 int			do_touch(t_ray *ray, t_object obj, int i);
+
+/*
+ * Function to trace a ray for RT_MAX_BOUNCES maximum amount of bounces on scene
+ * objects and update it according to the objects it bounced off of.
+ * If no objects are touched, the ray's 'touch' variable is set to 0.
+ * If one or more objects are touched, they are stored inside the ray's
+ * 'objects_touch' array and the result from the shadow ray with the first object
+ * bounce is saved inside its 'light_color' variable.
+ *
+ * @param const t_data *data	-> pointer to the program data to read from
+ * @param t_ray *ray			-> pointer to the ray to trace and update
+ *
+ * @child_func touch_objects	-> function to update a ray's object bounce
+ */
 void		ray_advance(const t_data *data, t_ray *ray);
 
 /* ************************************************************************** */

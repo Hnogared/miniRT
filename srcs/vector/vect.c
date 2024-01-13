@@ -6,12 +6,20 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:48:18 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/08 16:00:47 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/13 12:59:05 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+/*
+ * Function to trace a ray, check if it touches the parameter object and update
+ * it if true.
+ *
+ * @param t_ray *ray	-> pointer to the ray to test and update
+ * @param t_object obj	-> object to check the collision with
+ * @param int i			-> objects array index of the object structure
+ */
 int	do_touch(t_ray *ray, t_object obj, int i)
 {
 	if (obj.type == SPHERE_OBJ)
@@ -25,7 +33,21 @@ int	do_touch(t_ray *ray, t_object obj, int i)
 	return (0);
 }
 
-static void	touch_object(const t_data *data, t_ray *ray)
+/*
+ * Function to trace a ray and update it according to the results of it touching
+ * an object of the scene or not.
+ * If the ray doesn't touch any object, its variable 'touch' is set to 0.
+ * If the ray touches one or more objects, the closest object is saved inside its
+ * 'objects_touch' array, its coordinates are set to their intersection point,
+ * its vector is reflected on it and its 'light_color' variable is set to the
+ * result of the shadow ray starting from the intersection point.
+ *
+ * @param const t_data *data	-> pointer to the program data to read from
+ * @param t_ray *ray			-> pointer to the ray to trace and update
+ *
+ * @parent_function ray_advance	-> function to trace and update a ray's bounces
+ */
+static void	touch_objects(const t_data *data, t_ray *ray)
 {
 	unsigned short	i;
 
@@ -52,6 +74,19 @@ static void	touch_object(const t_data *data, t_ray *ray)
 	ray->objects_touch[ray->s++] = data->scene_objects[ray->go];
 }
 
+/*
+ * Function to trace a ray for RT_MAX_BOUNCES maximum amount of bounces on scene
+ * objects and update it according to the objects it bounced off of.
+ * If no objects are touched, the ray's 'touch' variable is set to 0.
+ * If one or more objects are touched, they are stored inside the ray's
+ * 'objects_touch' array and the result from the shadow ray with the first object
+ * bounce is saved inside its 'light_color' variable.
+ *
+ * @param const t_data *data	-> pointer to the program data to read from
+ * @param t_ray *ray			-> pointer to the ray to trace and update
+ *
+ * @child_func touch_objects	-> function to update a ray's object bounce
+ */
 void	ray_advance(const t_data *data, t_ray *ray)
 {
 	ray->touch = 1;
@@ -63,6 +98,6 @@ void	ray_advance(const t_data *data, t_ray *ray)
 		ray->res = 0;
 		ray->sol = -1;
 		ray->go = -1;
-		touch_object(data, ray);
+		touch_objects(data, ray);
 	}
 }

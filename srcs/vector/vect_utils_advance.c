@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 15:12:02 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/13 11:57:34 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/13 13:00:14 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ t_coords	advance_on_vec_z_inf(t_coords origin, t_vector dir, int distance)
 {
 	t_coords	new;
 
-	new.x = dep.x;
-	new.y = dep.y;
-	new.z = dep.z - k * dir.z;
+	new.x = origin.x;
+	new.y = origin.y;
+	new.z = origin.z - distance * dir.z;
 	return (new);
 }
 

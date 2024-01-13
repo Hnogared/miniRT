@@ -2,3 +2,6 @@ objs
 miniRT
 *.o
 .*.swp
+unuseed
+unused
+test.sh

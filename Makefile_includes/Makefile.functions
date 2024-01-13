@@ -1,0 +1,82 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile.functions                                 :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/11/13 22:06:44 by hnogared          #+#    #+#              #
+#    Updated: 2024/01/13 22:04:31 by hnogared         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+# Makefile for functions declarations                                          #
+# **************************************************************************** #
+
+# * GRAPHICAL FUNCTIONS ****************************************************** #
+
+# SERIOUS variable disables fancy display if set to TRUE #
+ifneq ($(SERIOUS), TRUE)
+
+# Function to display a simple command with colors #
+ define custom_command
+	$(eval command = $(1))
+	$(eval custom_command_name = $(2))
+	@echo "$(MAKEFILE_NAME): $(custom_command_name)";\
+	$(command)
+ endef
+
+# Function to display a time consuming command colored in two times #
+ define custom_loading_command
+	$(eval command = $(1))
+	$(eval custom_command_name = $(2))
+	$(eval start_status := $(subst _, ,\
+		$(word $(shell shuf -i 2-$(words $(STATUS_MSGS)) -n 1), $(STATUS_MSGS))))
+	$(eval end_status := $(subst _, , $(word 1, $(STATUS_MSGS))))
+	@echo "$(MAKEFILE_NAME): [$(start_status)] $(custom_command_name)";		\
+	$(command); 															\
+	tmp=$$?;																\
+	if [ $$tmp -eq 0 ]; then												\
+		echo -n "\e[A\e[K$(MAKEFILE_NAME): [$(end_status)] ";				\
+		echo "$(custom_command_name)";										\
+	else																	\
+		echo "$(MAKEFILE_NAME): [ouch] $(custom_command_name)";				\
+	fi;																		\
+	exit $$tmp
+ endef
+
+# Function to display a loading bar with a given progress, total load and length #
+define put_loading
+	$(eval progress := $(1))
+	$(eval load := $(2))
+	$(eval bar_length := $(3))
+	@relative_progress=$$(( $(progress) * $(bar_length) / $(load) ));			\
+	status="$(progress) / $(load)";												\
+	if [ $(progress) -ne $(load) ]; then										\
+		echo -n "\n";															\
+	else																		\
+		$(eval end_status := $(subst _, , $(word 1, $(STATUS_MSGS)))) true;		\
+		status=$(end_status);													\
+	fi;																			\
+	echo -n "\e[K$(MAKEFILE_NAME): [$$status] ";								\
+	printf "[%.*s" $$relative_progress "$(MAX_PROG_BAR)";						\
+	printf "%-*s]\n" $$(( $(bar_length) - $$relative_progress )) "";			\
+	if [ $(progress) -ne $(load) ]; then										\
+		echo -n "\e[2A";														\
+	fi
+endef
+
+else # ifneq ($(SERIOUS), TRUE) #
+
+# Function to execute the command given as parameter #
+ define custom_command
+	$(1)
+ endef
+
+# Function to execute the command given as parameter #
+ define custom_loading_command
+	$(1)
+ endef
+
+endif # ifneq ($(SERIOUS), TRUE) #
+
+# **************************************************************************** #

@@ -1,139 +1,235 @@
 # **************************************************************************** #
-#    Makefile                                                                  #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
+#    Updated: 2024/01/13 22:26:55 by hnogared         ###   ########.fr        #
+#                                                                              #
 # **************************************************************************** #
 
-NAME			:=	miniRT
- 
-VPATH			:=	srcs:
+# Path to the Makefile's includes #
+MK_INCLUDES_DIR	:=	Makefile_includes
 
-SRCS_DIR		:=	srcs
-MLX_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, minilibx-linux)
-LFT_SRCS_DIR	:=	$(addprefix $(SRCS_DIR)/, extended_libft)
-SRCS			:=	main.c
- 
-OBJS_DIR		:=	objs
-OBJS			:=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
- 
-INCLUDES_DIR	:=	includes
+# Makefile for compilation variables declaration #
+include $(MK_INCLUDES_DIR)/Makefile.compilation_variables
 
-ARCHIVES_DIR	:=	archives
+# Makefile for graphical display variables declaration # 
+include $(MK_INCLUDES_DIR)/Makefile.graphical_variables
 
-MLX_ARCHIVES	:=	libmlx.a libmlx_Linux.a
-MLX_ARCHS_SRCS	:=	$(addprefix $(MLX_SRCS_DIR)/, $(MLX_ARCHIVES))
-MLX_ARCHS_DEPEND:=	$(addprefix $(ARCHIVES_DIR)/, $(MLX_ARCHIVES))
+# Makefile for functions definitions #
+include $(MK_INCLUDES_DIR)/Makefile.functions
 
-LFT_ARCHIVES	:=	libextended_ft.a
-LFT_ARCHS_SRCS	:=	$(addprefix $(LFT_SRCS_DIR)/, $(LFT_ARCHIVES))
-LFT_ARCHS_DEPEND:=	$(addprefix $(ARCHIVES_DIR)/, $(LFT_ARCHIVES))
+# * STANDARD RULES *********************************************************** #
 
-ARCHS_DEPEND	:=	$(MLX_ARCHS_DEPEND) $(LFT_ARCHS_DEPEND)
-
-MLX_LFLAGS		:=	-lmlx -lmlx_Linux -lX11 -lXext
-LFT_LFLAGS		:=	-lextended_ft
-
-CC				:=	gcc
-CFLAGS			:=	-g -Wall -Werror -Wextra
-LFLAGS			:=	-L $(ARCHIVES_DIR) $(MLX_LFLAGS) $(LFT_LFLAGS) -lm
-IFLAGS			:=	-I $(INCLUDES_DIR)
-
-RM				:=	rm -rf
+all:	intro $(NAME)
 
 
-ANSI_NC			:=	"\e[0m"
-ANSI_FG_BLA		:=	"\e[30m"
-ANSI_FG_RED		:=	"\e[31m"
-ANSI_FG_GRE		:=	"\e[32m"
-ANSI_FG_YEL		:=	"\e[33m"
-ANSI_FG_BLU		:=	"\e[34m"
-ANSI_FG_MAG		:=	"\e[35m"
-ANSI_FG_CYA		:=	"\e[36m"
-ANSI_FG_WHI		:=	"\e[37m"
-ANSI_FG_BBLA	:=	"\e[90m"
-ANSI_FG_BRED	:=	"\e[91m"
-ANSI_FG_BGRE	:=	"\e[92m"
-ANSI_FG_BYEL	:=	"\e[93m"
-ANSI_FG_BBLU	:=	"\e[94m"
-ANSI_FG_BMAG	:=	"\e[95m"
-ANSI_FG_BCYA	:=	"\e[96m"
-ANSI_FG_BWHI	:=	"\e[97m"
+## Compilation rules ##
+# Compile the executable depending on the libraries archives and header files, #
+#  as well as all the object files #
+$(NAME):	$(ARCHS_DEPEND) $(INCL_DEPEND) $(OBJS) | add_bonus_flag print_flags
+	$(call custom_loading_command,										\
+		$(CC) $(CFLAGS) -o $@ $(OBJS) $(AUTO_IFLAGS) $(AUTO_LFLAGS),	\
+		"$(THEME_COLOR)Creating executable \ \ : $(NAME)$(ANSI_NC)")
 
-# **************************************************************************** #
+# Compile the executable as the bonus build depending on the libraries #
+#  archives and header files, as well as all the object files #
+bonus:	$(NAME)
 
-all:	$(NAME)
+# Compile an object file depending on its source file and the object directory #
+$(OBJS_DIR)/%.o:	%.c $(ARCHS_DEPEND) $(INCL_DEPEND) | get_obj_load	\
+					$(OBJS_DIR) add_bonus_flag print_flags
+	$(call custom_loading_command,									\
+		$(CC) $(CFLAGS) -c $< -o $@ $(AUTO_IFLAGS) $(AUTO_LFLAGS),	\
+		"$(THEME_COLOR)Compiling object file : $@$(ANSI_NC)")
+	$(eval PROGRESS := $(shell echo $$(( $(PROGRESS) + 1 ))))
+	$(call put_loading, $(PROGRESS), $(LOAD), $(MAX_PROG_LENGTH))
 
-$(NAME):	$(ARCHS_DEPEND) $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS) $(IFLAGS) $(LFLAGS)
 
-$(OBJS_DIR)/%.o:	%.c | $(OBJS_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@ $(IFLAGS) $(LFLAGS)
-
+## Directories rules ##
+# Create the object directory if missing #
 $(OBJS_DIR):
-	mkdir $(OBJS_DIR)
+	$(call custom_command,										\
+		mkdir $(OBJS_DIR),										\
+		"$(THEME_COLOR)Created the $(OBJS_DIR)/ directory.")
 
+# Create the archive directory if missing #
 $(ARCHIVES_DIR):
-	mkdir $(ARCHIVES_DIR)
+	$(call custom_command,														\
+		mkdir $(ARCHIVES_DIR),													\
+		"$(THEME_COLOR)A wild $(ARCHIVES_DIR)/ directory appeared !$(ANSI_NC)")
 
+
+## Cleanup rules ##
+# Remove all object files in the $(OBJS_DIR) #
+ifeq ($(shell [ `ls $(OBJS_DIR)/*.o 2> /dev/null | wc -l` -ne 0 ] && echo true\
+		|| echo false), true)
 clean:
-	$(RM) $(OBJS)
+	$(call custom_command,										\
+		$(RM) $(OBJS),											\
+		"$(THEME_COLOR)Yeet and delete $(OBJS) !$(ANSI_NC)")
+endif
 
+# Remove all object files in the $(OBJS_DIR) and the executable #
+ifeq ($(shell [ -f $(NAME) ] && echo true || echo false), true)
 fclean:	clean
-	$(RM) $(NAME)
+	$(call custom_command,							\
+		$(RM) $(NAME),								\
+		"$(THEME_COLOR)Removed $(NAME).$(ANSI_NC)")
+endif
 
+# Remove all minilibx and libft archives from the archive dir #
+ifeq ($(shell [ `ls $(ARCHS_DEPEND) 2> /dev/null | wc -l` -ne 0 ] && echo true\
+		|| echo false), true)
 lclean:
-	$(RM) $(MLX_ARCHS_DEPEND) $(LFT_ARCHS_DEPEND)
+	$(call custom_command,												\
+		$(RM) $(ARCHS_DEPEND),											\
+		"$(THEME_COLOR)Deleted $(ARCHS_DEPEND), it's gone.$(ANSI_NC)")
+endif
 
+# Remove all object files and the object directory #
+ifeq ($(shell [ -d $(OBJS_DIR) ] && echo true || echo false), true)
 dclean:	clean
-	$(RM) $(OBJS_DIR)
+	$(call custom_command,												\
+		$(RM) $(OBJS_DIR),												\
+		"$(THEME_COLOR)Deleted the $(OBJS_DIR)/ directory.$(ANSI_NC)")
+endif
 
-re:	fclean all
+# Remove all object files and the executable and recompile #
+re:	fclean $(NAME)
 
-# **************************************************************************** #
+# Remove all object files and the executable and recompile with bonus features #
+re-bonus:	fclean bonus
 
+
+# * SETUP RULES ************************************************************** #
+
+# Calculate the amount of object files to compile for the loading bar #
+get_obj_load:
+ifndef CALL_MAKE
+	$(eval LOAD := $(shell $(MAKE) $(MAKECMDGOALS) -n SERIOUS=TRUE CALL_MAKE=0\
+		| grep '^gcc' | grep -v 'miniRT' | wc -l))
+	$(eval PROGRESS := 0)
+endif
+
+# Add the bonus compilation flag if 'bonus' is the called rule #
+add_bonus_flag:
+ifneq (,$(findstring bonus, $(MAKECMDGOALS)))
+	$(eval CFLAGS += -D RT_BONUS=1)
+endif
+
+# Display the flags currently used for compilation #
+print_flags:
+ifneq ($(COMPIL_LOAD), 0)
+	$(call custom_command, true, "compilation flags: $(CFLAGS)")
+else ifneq (,$(findstring re, $(MAKECMDGOALS)))
+	$(call custom_command, true, "compilation flags: $(CFLAGS)")
+endif
+
+
+# * LIBRARIES RULES ********************************************************** #
+
+## Minilibx making rules ##
+# Call the minilibx makefile to make #
 minilibx:
 	make -C $(MLX_SRCS_DIR)
 
+# Call the minilibx makefile to make the rule after '-' (ex: minilibx-clean) #
 minilibx-%:
 	make $* -C $(MLX_SRCS_DIR)
 
+# Call the minilibx makefile to make if the minilibx source archive is missing #
 $(MLX_SRCS_DIR)/%.a:
 	make -C $(MLX_SRCS_DIR)
 
+# Copy the minilibx archive into the archive directory #
+# Depends on the minilibx source archive and the archive directory #
 $(MLX_ARCHS_DEPEND):	$(MLX_ARCHS_SRCS) | $(ARCHIVES_DIR)
-	cp $^ $(ARCHIVES_DIR)
+	$(call custom_command, cp $^ $(ARCHIVES_DIR),\
+		"$(THEME_COLOR)Retrieved the minilibx $(MLX_ARCHIVES) files.$(ANSI_NC)")
 
-# **************************************************************************** #
+# Copy the minilibx header files into the includes directory #
+# Depends on the minilibx source include files #
+$(MLX_INCL_DEPEND):	$(MLX_INCL_SRCS)
+	$(call custom_command, cp $^ $(INCLUDES_DIR),\
+		"$(THEME_COLOR)Retrieved the minilibx $(MLX_INCLUDES) files.$(ANSI_NC)")
 
+
+## Libft making rules ##
+# Call the libft makefile to make #
 libft:
 	make -C $(LFT_SRCS_DIR)
 
+# Call the libft makefile to make the rule after '-' (ex: libft-clean) #
 libft-%:
 	make $* -C $(LFT_SRCS_DIR)
 
+# Call the libft makefile to make if the libft source archive is missing #
 $(LFT_SRCS_DIR)/%.a:
 	make -C $(LFT_SRCS_DIR)
 
+# Copy the libft archive into the archive directory #
+# Depends on the libft source archive and the archive directory #
 $(LFT_ARCHS_DEPEND):	$(LFT_ARCHS_SRCS) | $(ARCHIVES_DIR)
-	cp $^ $(ARCHIVES_DIR)
+	$(call custom_command, cp $^ $(ARCHIVES_DIR),\
+		"$(THEME_COLOR)Retrieved the libft $(LFT_ARCHIVES) files.$(ANSI_NC)")
 
-# **************************************************************************** #
+# Copy the libft header files into the includes directory #
+# Depends on the libft source include files #
+$(LFT_INCL_DEPEND):	$(LFT_INCL_SRCS)
+	$(call custom_command, cp $^ $(INCLUDES_DIR),\
+		"$(THEME_COLOR)Retrieved the libft $(LFT_INCLUDES) files.$(ANSI_NC)")
 
+
+# * MISCELANEOUS RULES ******************************************************* #
+
+# Display a short list of all available rules #
 help:
-	@echo "All available rules ("$(ANSI_FG_RED)"*"$(ANSI_NC)" = any name):";			\
-	echo $(ANSI_FG_BYEL)" making      "$(ANSI_NC)"> all  re  help";						\
-	echo -n $(ANSI_FG_GRE)" files       "$(ANSI_NC)"> $(NAME)  ";						\
-	echo -n "$(OBJS_DIR)/"$(ANSI_FG_RED)"*"$(ANSI_NC)".o  ";							\
-	echo "$(ARCHIVES_DIR)/"$(ANSI_FG_RED)"*"$(ANSI_NC)".a";								\
-	echo $(ANSI_FG_BBLU)" directories "$(ANSI_NC)"> $(OBJS_DIR)  $(ARCHIVES_DIR)";		\
-	echo $(ANSI_FG_RED)" cleanup     "$(ANSI_NC)"> clean  fclean  lclean  dclean\n";	\
-	echo -n $(ANSI_FG_BYEL)" mlx making  "$(ANSI_NC)"> minilibx  ";						\
-	echo "minilibx-"$(ANSI_FG_RED)"*"$(ANSI_NC);										\
-	echo -n $(ANSI_FG_GRE)" mlx files   "$(ANSI_NC)"> ";								\
-	echo "$(MLX_SRCS_DIR)/"$(ANSI_FG_RED)"*"$(ANSI_NC)".a\n";							\
-	echo -n $(ANSI_FG_BYEL)" lft making  "$(ANSI_NC)"> libft  ";						\
-	echo "libft-"$(ANSI_FG_RED)"*"$(ANSI_NC);											\
-	echo -n $(ANSI_FG_GRE)" lft files   "$(ANSI_NC)"> ";								\
-	echo "$(LFT_SRCS_DIR)/"$(ANSI_FG_RED)"*"$(ANSI_NC)".a"
+	@echo "\nMiniRT Makefile help - Available targets\n";				\
+	echo "$(ANSI_BOLD)BASIC TARGETS$(ANSI_NC)";							\
+	echo "\tall  re  bonus  re-bonus  help  test  norm";				\
+	echo "$(ANSI_BOLD)FILES TARGETS$(ANSI_NC)";							\
+	echo -n "\t$(NAME)";												\
+	echo -n "$(OBJS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).o  ";		\
+	echo "$(ARCHIVES_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a";		\
+	echo "$(ANSI_BOLD)DIRECTORIES TARGETS$(ANSI_NC)";					\
+	echo "\t$(OBJS_DIR)  $(ARCHIVES_DIR)";								\
+	echo "$(ANSI_BOLD)CLEANUP TARGETS$(ANSI_NC)";						\
+	echo "\tclean  fclean  lclean  dclean";								\
+	echo "$(ANSI_BOLD)MINILIBX TARGETS$(ANSI_NC)";						\
+	echo "\tminilibx  minilibx-$(ANSI_FG_RED)<target>$(ANSI_NC)";		\
+	echo "$(ANSI_BOLD)MINILIBX FILES TARGETS$(ANSI_NC)";				\
+	echo "\t$(MLX_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a";		\
+	echo "$(ANSI_BOLD)LIBFT TARGETS$(ANSI_NC)";							\
+	echo "\tlibft  libft-$(ANSI_FG_RED)<target>$(ANSI_NC)";				\
+	echo "$(ANSI_BOLD)LIBFT FILES TARGETS$(ANSI_NC)";					\
+	echo "\t$(LFT_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n"
+
+# Compile the executable if needed and run it with the tester script #
+test:	$(NAME)
+	@bash "$(MK_INCLUDES_DIR)/tester.sh"
+
+# Run the norm checking script #
+norm:
+	@bash "$(MK_INCLUDES_DIR)/normer.sh"
+
+# Run the intro script if compilations are taking place and serious series OFF #
+ifneq ($(SERIOUS), TRUE)
+ifneq ($(COMPIL_LOAD), 0)
+intro:
+	@bash "$(MK_INCLUDES_DIR)/intro.sh"
+endif
+endif
+
 
 # **************************************************************************** #
 
-.PHONY:	all clean fclean lclean dclean libft libft-% minilibx minilibx-% re help
+# Ignore the following files during rule completeness check
+.PHONY:	all clean fclean lclean dclean libft libft-% minilibx minilibx-% re	\
+		help test norm intro bonus re-bonus get_obj_load add_bonus_flags	\
+		print_flags
+
+# **************************************************************************** #

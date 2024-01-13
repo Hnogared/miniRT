@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2024/01/13 16:06:21 by hnogared         ###   ########.fr        #
+#    Updated: 2024/01/13 21:44:00 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ include $(MK_INCLUDES_DIR)/Makefile.functions
 
 # * STANDARD RULES *********************************************************** #
 
-all:	$(NAME)
+all:	intro $(NAME)
 
 ## Compilation rules ##
 # Compile the executable depending on the libraries archives and header files, #
@@ -63,7 +63,7 @@ endif
 
 # Display the flags currently used for compilation #
 print_flags:
-ifneq ($(COMPIL_LOAD),0)
+ifneq ($(COMPIL_LOAD), 0)
 	$(call custom_command, true, "compilation flags: $(CFLAGS)")
 else ifneq (,$(findstring re, $(MAKECMDGOALS)))
 	$(call custom_command, true, "compilation flags: $(CFLAGS)")
@@ -110,17 +110,10 @@ dclean:	clean
 		"$(THEME_COLOR)Deleted the $(OBJS_DIR)/ directory.$(ANSI_NC)")
 
 # Remove all object files and the executable, then recompile #
-re:	fclean all
+re:	fclean $(NAME)
 
 # Remove all object files and the executable, the recompile with bonus features #
 re-bonus:	fclean bonus
-
-
-intro-call:
-	$(call play_intro)
-
-# ??? #
-intro:	intro-call all
 
 
 # * LIBRARIES RULES ********************************************************** #
@@ -149,6 +142,7 @@ $(MLX_ARCHS_DEPEND):	$(MLX_ARCHS_SRCS) | $(ARCHIVES_DIR)
 $(MLX_INCL_DEPEND):	$(MLX_INCL_SRCS)
 	$(call custom_command, cp $^ $(INCLUDES_DIR),\
 		"$(THEME_COLOR)Retrieved the minilibx $(MLX_INCLUDES) files.$(ANSI_NC)")
+
 
 ## Libft making rules ##
 # Call the libft makefile to make #
@@ -200,11 +194,20 @@ help:
 	echo "$(ANSI_BOLD)LIBFT FILES TARGETS$(ANSI_NC)";					\
 	echo "\t$(LFT_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n"
 
-test:
+# Compile the executable if needed and run it with the tester script #
+test:	$(NAME)
 	@bash tester.sh
 
+# Run the norm checking script #
 norm:
 	@bash normer.sh
+
+# Run the intro script if compilations are taking place #
+ifneq ($(COMPIL_LOAD), 0)
+intro:
+	@bash intro.sh
+endif
+
 
 # **************************************************************************** #
 

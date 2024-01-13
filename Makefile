@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2024/01/13 21:44:53 by hnogared         ###   ########.fr        #
+#    Updated: 2024/01/13 22:19:45 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ include $(MK_INCLUDES_DIR)/Makefile.functions
 # * STANDARD RULES *********************************************************** #
 
 all:	intro $(NAME)
+
 
 ## Compilation rules ##
 # Compile the executable depending on the libraries archives and header files, #
@@ -47,6 +48,65 @@ $(OBJS_DIR)/%.o:	%.c $(ARCHS_DEPEND) $(INCL_DEPEND) | get_obj_load	\
 	$(eval PROGRESS := $(shell echo $$(( $(PROGRESS) + 1 ))))
 	$(call put_loading, $(PROGRESS), $(LOAD), $(MAX_PROG_LENGTH))
 
+
+## Directories rules ##
+# Create the object directory if missing #
+$(OBJS_DIR):
+	$(call custom_command,										\
+		mkdir $(OBJS_DIR),										\
+		"$(THEME_COLOR)Created the $(OBJS_DIR)/ directory.")
+
+# Create the archive directory if missing #
+$(ARCHIVES_DIR):
+	$(call custom_command,														\
+		mkdir $(ARCHIVES_DIR),													\
+		"$(THEME_COLOR)A wild $(ARCHIVES_DIR)/ directory appeared !$(ANSI_NC)")
+
+
+## Cleanup rules ##
+# Remove all object files in the $(OBJS_DIR) #
+ifeq ($(shell [ `ls $(OBJS_DIR)/*.o 2> /dev/null | wc -l` -ne 0 ] && echo true\
+		|| echo false), true)
+clean:
+	$(call custom_command,										\
+		$(RM) $(OBJS),											\
+		"$(THEME_COLOR)Yeet and delete $(OBJS) !$(ANSI_NC)")
+endif
+
+# Remove all object files in the $(OBJS_DIR) and the executable #
+ifeq ($(shell [ -f $(NAME) ] && echo true || echo false), true)
+fclean:	clean
+	$(call custom_command,							\
+		$(RM) $(NAME),								\
+		"$(THEME_COLOR)Removed $(NAME).$(ANSI_NC)")
+endif
+
+# Remove all minilibx and libft archives from the archive dir #
+ifeq ($(shell [ `ls $(ARCHS_DEPEND) 2> /dev/null | wc -l` -ne 0 ] && echo true\
+		|| echo false), true)
+lclean:
+	$(call custom_command,												\
+		$(RM) $(ARCHS_DEPEND),											\
+		"$(THEME_COLOR)Deleted $(ARCHS_DEPEND), it's gone.$(ANSI_NC)")
+endif
+
+# Remove all object files and the object directory #
+ifeq ($(shell [ -d $(OBJS_DIR) ] && echo true || echo false), true)
+dclean:	clean
+	$(call custom_command,												\
+		$(RM) $(OBJS_DIR),												\
+		"$(THEME_COLOR)Deleted the $(OBJS_DIR)/ directory.$(ANSI_NC)")
+endif
+
+# Remove all object files and the executable, then recompile #
+re:	fclean $(NAME)
+
+# Remove all object files and the executable, the recompile with bonus features #
+re-bonus:	fclean bonus
+
+
+# * SETUP RULES ************************************************************** #
+
 # Calculate the amount of object files to compile for the loading bar #
 get_obj_load:
 ifndef CALL_MAKE
@@ -68,52 +128,6 @@ ifneq ($(COMPIL_LOAD), 0)
 else ifneq (,$(findstring re, $(MAKECMDGOALS)))
 	$(call custom_command, true, "compilation flags: $(CFLAGS)")
 endif
-
-
-## Directories rules ##
-# Create the object directory if missing #
-$(OBJS_DIR):
-	$(call custom_command,										\
-		mkdir $(OBJS_DIR),										\
-		"$(THEME_COLOR)Created the $(OBJS_DIR)/ directory.")
-
-# Create the archive directory if missing #
-$(ARCHIVES_DIR):
-	$(call custom_command,														\
-		mkdir $(ARCHIVES_DIR),													\
-		"$(THEME_COLOR)A wild $(ARCHIVES_DIR)/ directory appeared !$(ANSI_NC)")
-
-
-## Cleanup rules ##
-# Remove all object files #
-clean:
-	$(call custom_command,										\
-		$(RM) $(OBJS),											\
-		"$(THEME_COLOR)Yeet and delete $(OBJS) !$(ANSI_NC)")
-
-# Remove all object files and the executable #
-fclean:	clean
-	$(call custom_command,							\
-		$(RM) $(NAME),								\
-		"$(THEME_COLOR)Removed $(NAME).$(ANSI_NC)")
-
-# Remove all minilibx and libft archives from the archive dir #
-lclean:
-	$(call custom_command,												\
-		$(RM) $(MLX_ARCHS_DEPEND) $(LFT_ARCHS_DEPEND),					\
-		"$(THEME_COLOR)Deleted $(ARCHS_DEPEND), it's gone.$(ANSI_NC)")
-
-# Remove all object files and the object directory #
-dclean:	clean
-	$(call custom_command,												\
-		$(RM) $(OBJS_DIR),												\
-		"$(THEME_COLOR)Deleted the $(OBJS_DIR)/ directory.$(ANSI_NC)")
-
-# Remove all object files and the executable, then recompile #
-re:	fclean $(NAME)
-
-# Remove all object files and the executable, the recompile with bonus features #
-re-bonus:	fclean bonus
 
 
 # * LIBRARIES RULES ********************************************************** #
@@ -196,16 +210,18 @@ help:
 
 # Compile the executable if needed and run it with the tester script #
 test:	$(NAME)
-	@bash tester.sh
+	@bash "$(MK_INCLUDES_DIR)/tester.sh"
 
 # Run the norm checking script #
 norm:
-	@bash normer.sh
+	@bash "$(MK_INCLUDES_DIR)/normer.sh"
 
-# Run the intro script if compilations are taking place #
+# Run the intro script if compilations are taking place and serious series OFF #
+ifneq ($(SERIOUS), TRUE)
 ifneq ($(COMPIL_LOAD), 0)
 intro:
-	@bash intro.sh
+	@bash "$(MK_INCLUDES_DIR)/intro.sh"
+endif
 endif
 
 

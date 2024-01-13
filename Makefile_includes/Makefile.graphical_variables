@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 21:59:24 by hnogared          #+#    #+#              #
-#    Updated: 2024/01/13 13:53:23 by hnogared         ###   ########.fr        #
+#    Updated: 2024/01/13 22:18:02 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # Makefile for graphical display variables declaration                         #
@@ -60,29 +60,6 @@ STATUS_MSGS	:=	OK						\
 
 # Color used for the message display #
 THEME_COLOR	:=	$(ANSI_FG_YEL)
-
-
-## Ascii texts ##
-# Mini ascii text #
-ASCII_MINI	:=	"@   @@@@   @@@@@    @@@@@   @@@@ @"	\
-				"\\e[B\\e[35D@@ @@@@@   @@@@@    @@@@@   @@@@ @"	\
-				"\\e[B\\e[35D@@@@@@@@   @@@@@    @@@@@@  @@@@ @"	\
-				"\\e[B\\e[35D@@@@@@@@   @@@@@    @@@@@@  @@@@ @"	\
-				"\\e[B\\e[35D@@@@@@@@   @@@@@    @@@@@@@ @@@@ @"	\
-				"\\e[B\\e[35D@ @ @@@@   @@@@@    @@@@@@@@@@@@ @"	\
-				"\\e[B\\e[35D@   @@@@   @@@@@    @@@@@@@@@@@@ @"	\
-				"\\e[B\\e[35D@   @@@@   @@@@@    @@@@@  @@@@@ @"	\
-				"\\e[B\\e[35D@   @@@@   @@@@@    @@@@@   @@@@ @"
-
-# Rt ascii text #
-ASCII_RT	:=	"%%%%%  %%%%%%"	\
-				"\\e[B\\e[14D%%  %%   %%"	\
-				"\\e[B\\e[12D%%%%%    %%"	\
-				"\\e[B\\e[12D%%  %%   %%"
-
-# Characters used to build frames #
-# Make sure to separate each one with whitespaces and keep the same amount #
-FRAME_CHARS	:=	"═" "║" "╔" "╗" "╚" "╝"
 
 
 ## Loading bar variables ##

@@ -6,18 +6,15 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 22:06:44 by hnogared          #+#    #+#              #
-#    Updated: 2023/12/08 11:28:33 by hnogared         ###   ########.fr        #
+#    Updated: 2024/01/13 13:42:26 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+# Makefile for functions declarations                                          #
+# **************************************************************************** #
 
-###############################################################
-# Makefile defining the functions needed by the main Makefile #
-###############################################################
+# * GRAPHICAL FUNCTIONS ****************************************************** #
 
-#SHELL	:=	/bin/bash
-
-## Graphical functions ##
-# SERIOUS variable deactivates fancy display if set to TRUE #
+# SERIOUS variable disables fancy display if set to TRUE #
 ifneq ($(SERIOUS), TRUE)
 
 # Function to display a simple command with colors #
@@ -164,3 +161,5 @@ define put_frame
 	frame="$$frame$$frame_bottom$(br_corner)";			\
 	echo -n "$(color)$$frame$(ANSI_NC)"
 endef
+
+# **************************************************************************** #

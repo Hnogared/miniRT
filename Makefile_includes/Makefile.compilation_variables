@@ -1,0 +1,190 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile.compilation_variables                     :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hnogared <hnogared@student.42perpigna      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/01/13 13:30:25 by hnogared          #+#    #+#              #
+#    Updated: 2024/01/13 13:41:25 by hnogared         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+# Makefile for compilation variables declaration                               #
+# **************************************************************************** #
+
+# * SETUP VARIABLES ********************************************************** #
+
+## Project structure ##
+# Executable name #
+NAME			:=	miniRT
+
+# Source code directories #
+SRCS_DIR			:=	srcs
+LIBS_SRCS_DIR		:=	$(addprefix $(SRCS_DIR)/, libraries)
+MLX_SRCS_DIR		:=	$(addprefix $(LIBS_SRCS_DIR)/, minilibx-linux)
+MLX_INCL_SRCS_DIR	:=	$(MLX_SRCS_DIR)
+LFT_SRCS_DIR		:=	$(addprefix $(LIBS_SRCS_DIR)/, extended_libft)
+LFT_INCL_SRCS_DIR	:=	$(addprefix $(LFT_SRCS_DIR)/, includes)
+
+# Object, archive and header files directories respectively #
+OBJS_DIR		:=	objs
+ARCHIVES_DIR	:=	archives
+INCLUDES_DIR	:=	includes
+
+# Complementary paths to all source code files #
+VPATH			:=	$(SRCS_DIR):				\
+					$(SRCS_DIR)/basis:			\
+					$(SRCS_DIR)/display:		\
+					$(SRCS_DIR)/error:			\
+					$(SRCS_DIR)/keyboard:		\
+					$(SRCS_DIR)/object:			\
+					$(SRCS_DIR)/parsing:		\
+					$(SRCS_DIR)/vector:			\
+					$(SRCS_DIR)/raytracing
+
+# Source files names #
+SRCS			:=	main.c					\
+					check_args.c			\
+					check_file.c			\
+					check_numbers.c			\
+					check_range_numbers.c	\
+					check_range_numbers_2.c	\
+					check_scene.c			\
+					error.c					\
+					get_file.c				\
+					get_object_color.c		\
+					image_handling.c		\
+					init_objs.c				\
+					init_objs_2.c			\
+					keyboard.c				\
+					object_creation.c		\
+					object_data_display.c	\
+					object_data_display_2.c	\
+					object_interaction.c	\
+					object_modification.c	\
+					orthonormal_basis.c		\
+					raytrace.c				\
+					render_window.c			\
+					rgb_color.c				\
+					rotation.c				\
+					set_view_rays.c			\
+					shadow_ray.c			\
+					switch_basis.c			\
+					vect.c					\
+					vect_add_subs.c			\
+					vect_calc.c				\
+					vect_prod.c				\
+					vect_try.c				\
+					vect_try_2.c			\
+					vect_utils.c			\
+					vect_utils_2.c			\
+					vect_utils_advance.c	\
+					window_handling.c		\
+					window_modification.c
+
+
+## Libraries files ##
+# Minilibx and libft header files #
+MLX_INCLUDES	:=	mlx.h mlx_int.h
+LFT_INCLUDES	:=	libft.h
+
+
+# Minilibx and libft archive files #
+MLX_ARCHIVES	:=	libmlx.a libmlx_Linux.a
+LFT_ARCHIVES	:=	libextended_ft.a
+
+
+## Files management ##
+# Compilation method and flags #
+CC				:=	gcc
+CFLAGS			:=	-g -Wall -Werror -Wextra
+IFLAGS			:=
+LFLAGS			:=	-lX11 -lXext -lm
+
+# File deletion method #
+RM				:=	rm -rf
+
+
+# * AUTOMATIC VARIABLES ****************************************************** #
+
+# Object files depending on the source files #
+OBJS			:=	$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
+
+
+## Libraries header files ##
+# Minilibx and libft header files source path #
+MLX_INCL_SRCS	:=	$(addprefix $(MLX_INCL_SRCS_DIR)/, $(MLX_INCLUDES))
+LFT_INCL_SRCS	:=	$(addprefix $(LFT_INCL_SRCS_DIR)/, $(LFT_INCLUDES))
+
+# Minilibx and libft header files separate dependencies #
+MLX_INCL_DEPEND	:=	$(addprefix $(INCLUDES_DIR)/, $(MLX_INCLUDES))
+LFT_INCL_DEPEND	:=	$(addprefix $(INCLUDES_DIR)/, $(LFT_INCLUDES))
+
+# Minilibx and libft header files dependencies for compilation #
+INCL_DEPEND		:=	$(MLX_INCL_DEPEND) $(LFT_INCL_DEPEND)
+
+
+## Libraries archives files ##
+# Minilibx and libft archive files source path #
+MLX_ARCHS_SRCS	:=	$(addprefix $(MLX_SRCS_DIR)/, $(MLX_ARCHIVES))
+LFT_ARCHS_SRCS	:=	$(addprefix $(LFT_SRCS_DIR)/, $(LFT_ARCHIVES))
+
+# Minilibx and libft archive files separate dependencies #
+MLX_ARCHS_DEPEND:=	$(addprefix $(ARCHIVES_DIR)/, $(MLX_ARCHIVES))
+LFT_ARCHS_DEPEND:=	$(addprefix $(ARCHIVES_DIR)/, $(LFT_ARCHIVES))
+
+# Minilibx and libft archive files dependencies for compilation #
+ARCHS_DEPEND	:=	$(MLX_ARCHS_DEPEND) $(LFT_ARCHS_DEPEND)
+
+
+## Compilation flags ##
+# Minilibx and libft flags to include their archive files #
+MLX_LFLAGS		:=	$(patsubst lib%.a,-l%,$(MLX_ARCHIVES))
+LFT_LFLAGS		:=	$(patsubst lib%.a,-l%,$(LFT_ARCHIVES))
+
+# Flags to include the manually given libraries, the minilibx and the libft #
+AUTO_LFLAGS		:=	-L $(ARCHIVES_DIR) $(MLX_LFLAGS) $(LFT_LFLAGS) $(LFLAGS)
+
+# Flags to include the manually given includes directories and $(INCLUDES_DIR) #
+AUTO_IFLAGS		:=	$(IFLAGS) -I $(INCLUDES_DIR)
+
+
+## Loading variables ##
+# The total load of a make task #
+LOAD		:=	0
+
+ifndef CALL_MAKE
+COMPIL_LOAD := $(shell $(MAKE) $(MAKECMDGOALS) -n SERIOUS=TRUE CALL_MAKE=0\
+	| grep '^gcc' | wc -l)
+endif
+
+# Track the progress of a make task #
+PROGRESS	:=	0
+
+
+# * PARAMETER VARIABLES ****************************************************** #
+
+# Force the program's opened window to the specified width #
+ifdef WIN_WIDTH
+CFLAGS	+=	-D WIN_WIDTH=$(WIN_WIDTH)
+endif
+
+# Force the program's opened window to the specified height #
+ifdef WIN_HEIGHT
+CFLAGS	+=	-D WIN_HEIGHT=$(WIN_HEIGHT)
+endif
+
+# Force the program's default pixel ratio #
+# Ex: A ratio of 2 would make each calculated pixel to be 2 screen pixels wide #
+ifdef PIXEL_RATIO
+CFLAGS	+=	-D DEFAULT_PIXEL_RATIO=$(PIXEL_RATIO)
+endif
+
+# Enable the bonus features compilation #
+# Same as 'make bonus', but allows avoiding to need total recompilation if #
+#  only one file is modified and the previous make was with bonus features #
+ifdef BONUS
+CFLAGS	+=	-D RT_BONUS=1
+endif
+
+# **************************************************************************** #

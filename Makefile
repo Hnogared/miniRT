@@ -6,7 +6,7 @@
 #    By: hnogared <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 19:48:41 by hnogared          #+#    #+#              #
-#    Updated: 2024/01/13 21:44:00 by hnogared         ###   ########.fr        #
+#    Updated: 2024/01/13 21:44:53 by hnogared         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -182,15 +182,15 @@ help:
 	echo -n "$(OBJS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).o  ";		\
 	echo "$(ARCHIVES_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a";		\
 	echo "$(ANSI_BOLD)DIRECTORIES TARGETS$(ANSI_NC)";					\
-	echo "\t$(OBJS_DIR)  $(ARCHIVES_DIR)";							\
+	echo "\t$(OBJS_DIR)  $(ARCHIVES_DIR)";								\
 	echo "$(ANSI_BOLD)CLEANUP TARGETS$(ANSI_NC)";						\
-	echo "\tclean  fclean  lclean  dclean";							\
+	echo "\tclean  fclean  lclean  dclean";								\
 	echo "$(ANSI_BOLD)MINILIBX TARGETS$(ANSI_NC)";						\
 	echo "\tminilibx  minilibx-$(ANSI_FG_RED)<target>$(ANSI_NC)";		\
 	echo "$(ANSI_BOLD)MINILIBX FILES TARGETS$(ANSI_NC)";				\
-	echo "\t$(MLX_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a";	\
+	echo "\t$(MLX_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a";		\
 	echo "$(ANSI_BOLD)LIBFT TARGETS$(ANSI_NC)";							\
-	echo "\tlibft  libft-$(ANSI_FG_RED)<target>$(ANSI_NC)";			\
+	echo "\tlibft  libft-$(ANSI_FG_RED)<target>$(ANSI_NC)";				\
 	echo "$(ANSI_BOLD)LIBFT FILES TARGETS$(ANSI_NC)";					\
 	echo "\t$(LFT_SRCS_DIR)/$(ANSI_FG_RED)<file_name>$(ANSI_NC).a\n"
 

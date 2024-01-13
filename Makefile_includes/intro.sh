@@ -5,14 +5,14 @@ frame_chars=("═" "║" "╔" "╗" "╚" "╝")
 ansi_nc="\e[0m"
 
 ansi_fg_violet="\e[38:5:57m"
-ansi_fg_orange="\e[38:5:214m"
+ansi_fg_yellow="\e[33m"
 ansi_fg_beige="\e[38:5:224m"
 
 ansi_bg_blue="\e[48:5:17m"
 ansi_bg_blue2="\e[48:5:18m"
 
 ansi_frame="${ansi_bg_blue}${ansi_fg_violet}"
-ansi_mini_color="${ansi_bg_blue2}${ansi_fg_orange}"
+ansi_mini_color="${ansi_bg_blue2}${ansi_fg_yellow}"
 ansi_rt_color="${ansi_bg_blue2}${ansi_fg_beige}"
 
 mini_frame_height=9

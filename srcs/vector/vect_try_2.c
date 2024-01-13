@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:19 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/09 00:13:18 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/13 11:43:32 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	try_plane_cyl_sup(t_ray *ray, t_coords side_pos, t_object cylinder,
 	t = t / prod_scal_vec(nn, ray->vector);
 	if (t >= 0 && (ray->res == 0 || t < ray->sol))
 	{
-		touch_pos = find_pos_touch(ray, t - 0.1f);
+		touch_pos = find_pos_touch(*ray, t - 0.1f);
 		if (dist(side_pos, touch_pos)
 			> cylinder.special_data.cylinder.radius + 0.01f)
 			return ;
@@ -78,7 +78,7 @@ static void	try_plane_cyl_inf(t_ray *ray, t_coords side_pos, t_object cylinder,
 	t = t / prod_scal_vec(nn, ray->vector);
 	if (t >= 0 && (ray->res == 0 || t < ray->sol))
 	{
-		touch_pos = find_pos_touch(ray, t - 0.1f);
+		touch_pos = find_pos_touch(*ray, t - 0.1f);
 		if (dist(side_pos, touch_pos)
 			> cylinder.special_data.cylinder.radius + 0.01f)
 			return ;
@@ -193,7 +193,7 @@ void	try_cylinder(t_ray *ray, t_object cyl, int i)
 	res = try_vertical_cylinder_side(aligned_ray, cyl);
 	if (res >= 0 && (ray->res == 0 || res < ray->sol))
 	{
-		aligned_ray.coords = find_pos_touch(&aligned_ray, res - 0.1f);
+		aligned_ray.coords = find_pos_touch(aligned_ray, res - 0.1f);
 		if (aligned_ray.coords.z <= (cyl.coords.z
 				+ (cyl.special_data.cylinder.height + 0.1f) / 2)
 			&& aligned_ray.coords.z >= (cyl.coords.z

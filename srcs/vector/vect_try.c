@@ -6,7 +6,7 @@
 /*   By: tlorne <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:37:10 by tlorne            #+#    #+#             */
-/*   Updated: 2024/01/09 00:13:07 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/13 11:43:07 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	try_light(t_ray *ray, t_object light, int i)
 
 	s = subs_vec_coords(ray->origin_coords, light.coords);
 	b = 2 * prod_scal_vec(ray->vector, s);
-	c = pow(magnitude_coord(ray->origin_coords), 2);
-	c += pow(magnitude_coord(light.coords), 2);
+	c = pow(magnitude_coords(ray->origin_coords), 2);
+	c += pow(magnitude_coords(light.coords), 2);
 	c -= 2 * prod_scal_coords(light.coords, ray->origin_coords);
 	c -= pow((light.special_data.light.radius), 2);
 	delta = pow(b, 2) - 4 * c;
@@ -43,7 +43,7 @@ void	try_light(t_ray *ray, t_object light, int i)
 		t = good_sol(delta, b, 1);
 		if (t >= 0 && (ray->res == 0 || t < ray->sol))
 		{
-			ray->coords = find_pos_touch(ray, t);
+			ray->coords = find_pos_touch(*ray, t);
 			ray->sol = t;
 			ray->res = 2;
 			ray->go = i;
@@ -96,8 +96,8 @@ void	try_sphere(t_ray *ray, t_object sphere, int i)
 
 	s = subs_vec_coords(ray->origin_coords, sphere.coords);
 	b = 2 * prod_scal_vec(ray->vector, s);
-	c = pow(magnitude_coord(ray->origin_coords), 2);
-	c += pow(magnitude_coord(sphere.coords), 2);
+	c = pow(magnitude_coords(ray->origin_coords), 2);
+	c += pow(magnitude_coords(sphere.coords), 2);
 	c -= 2 * prod_scal_coords(sphere.coords, ray->origin_coords);
 	c -= pow((sphere.special_data.sphere.radius), 2);
 	delta = b * b - 4 * c;
@@ -106,7 +106,7 @@ void	try_sphere(t_ray *ray, t_object sphere, int i)
 		t = good_sol(delta, b, 1);
 		if (t >= 0 && (ray->res == 0 || t < ray->sol))
 		{
-			ray->coords = find_pos_touch(ray, t - 0.1f);
+			ray->coords = find_pos_touch(*ray, t - 0.1f);
 			ray->sol = t;
 			ray->res = 2;
 			ray->go = i;
@@ -154,7 +154,7 @@ void	try_plane(t_ray *ray, t_object plane, int i)
 	t = t / prod_scal_vec(n, ray->vector);
 	if (t >= 0 && (ray->res == 0 || t < ray->sol))
 	{
-		ray->coords = find_pos_touch(ray, t - 0.1f);
+		ray->coords = find_pos_touch(*ray, t - 0.1f);
 		ray->sol = t;
 		ray->res = 1;
 		ray->go = i;

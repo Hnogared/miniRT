@@ -6,7 +6,7 @@
 /*   By: hnogared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:09:21 by hnogared          #+#    #+#             */
-/*   Updated: 2024/01/08 16:03:11 by hnogared         ###   ########.fr       */
+/*   Updated: 2024/01/10 03:37:03 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,8 @@ static int	init_data(t_data *data, const char *file_name)
  */
 int	main(int argc, char **argv)
 {
-	t_data		data;
-	int			status;
+	t_data	data;
+	int		status;
 
 	status = 0;
 	ft_bzero(&data, sizeof(t_data));

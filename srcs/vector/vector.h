@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                         ::::::::     :::   */
-/*   vector.h                                            :+:    :+:   :+:     */
+/*   vector.h                                           :+:      :+:    :+:   */
 /*                                                            +:+   +:+ +:+   */
 /*   By: hnogared <hnogared@student.42perpignan.fr         +#+    +#+  +:+    */
 /*                                                      +#+     +#+#+#+#+#+   */
 /*   Created: 2024/01/09 03:04:55 by hnogared         #+#            #+#      */
-/*   Updated: 2024/01/09 03:08:24 by hnogared       ########        ###.lol   */
+/*   Updated: 2024/01/13 11:46:17 by hnogared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,16 +239,54 @@ void		try_plane(t_ray *ray, t_object plane, int i);
 void		try_cylinder(t_ray *ray, t_object cyl, int i);
 
 /* ************************************************************************** */
-/* vect_utils_3.c                                                             */
+/* vect_utils.c                                                               */
 /* ************************************************************************** */
-float		magnitude(t_vector n);
-float		magnitude_coord(t_coords n);
+/*
+ * Function to return the magnitude of a vector.
+ *
+ * @param t_vector vector	-> vector structure to get the magnitude from
+ * @return float			-> magnitude of the vector
+ */
+float		magnitude(t_vector vector);
+
+/*
+ * Function to return the magnitude of coordinates.
+ *
+ * @param t_coords coords	-> coords structure to get the magnitude from
+ * @return float			-> magnitude of the coordinates
+ */
+float		magnitude_coords(t_coords coords);
+
+/*
+ * Function to get the distance between two coords structures.
+ *
+ * @param t_coords a	-> first coordinates of the distance calculation
+ * @param t_coords b	-> second coordinates of the distance calculation
+ * @return float		-> distance between the two coordinates.
+ */
 float		dist(t_coords a, t_coords b);
-t_vector	normalise(t_vector n);
-t_vector	calc_ref_form(t_vector i, t_vector n);
+
+/*
+ * Function to normalise a vector, which means setting its magnitude to 1 while
+ * keeping its orientation.
+ *
+ * @param t_vector vector	-> vector to normalize
+ * @return t_vector			-> normalized vector
+ */
+t_vector	normalise(t_vector vector);
+
+/*
+ * Function to return the reflection of an incident vector relative to a normal
+ * vector.
+ *
+ * @param t_vector incident_vec	-> the incident vector to reflect
+ * @param t_vector normal_vec	-> the normal vector for the reflection direction
+ * @return t_vector				-> the vector resulting from the reflection
+ */
+t_vector	calc_ref_form(t_vector incident_vec, t_vector normal_vec);
 
 /* ************************************************************************** */
-/* vect_utils_4.c                                                             */
+/* vect_utils_2.c                                                             */
 /* ************************************************************************** */
 /*
  * Function to return true if two vectors are the same, false otherwise.
@@ -258,9 +296,48 @@ t_vector	calc_ref_form(t_vector i, t_vector n);
  * @return bool				-> the result of the comparison
  */
 bool		is_vector_equal(t_vector vector1, t_vector vector2);
+
+/*
+ * Function to convert a degrees angle in radians.
+ *
+ * @param float degree_angle	-> angle in degrees to convert
+ * @return float				-> the converted radians angle
+ */
 float		to_rad(float degree_angle);
+
+/*
+ * Function to return the smallest positive solution of a quadratic equation for
+ * which the delta has already been calculated if there is one, else return a
+ * negative solution.
+ * This is used when probing for intersections between a ray and an object.
+ * The smallest positive solution would be the closest intersection with the
+ * object following the ray, while the smallest negative solution would be the
+ * closest intersection following the ray backwards (useful for trippy display).
+ *
+ * @param float delta	-> delta value of the quadratic equation to test
+ * @param float b		-> second factor of the quadratic equation
+ * @param float a		-> first factor of the quadratic equation
+ * @return float		-> the found solution
+ */
 float		good_sol(float delta, float b, float a);
-t_coords	find_pos_touch(t_ray *ray, float t);
+
+/*
+ * Function to return the coordinates resulting from tracing a ray for a given
+ * distance, starting from its origin coordinates.
+ *
+ * @param t_ray ray			-> ray to trace for shifting the coordinates
+ * @param float distance	-> distance to travel following the ray
+ * @return t_coords			-> the shifted coordinates
+ */
+t_coords	find_pos_touch(t_ray ray, float t);
+
+/*
+ * Function to return the product of a vector and a float as a vector.
+ *
+ * @param t_vector vector	-> vector to multiply to
+ * @param float num			-> float to multiply with
+ * @return t_vector			-> the vector resulting from the product
+ */
 t_vector	prod_vec_float(t_vector a, float k);
 
 /* ************************************************************************** */
